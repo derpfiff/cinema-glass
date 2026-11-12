@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>Jellyfin.Plugin.CinemaGlass</RootNamespace>
+    <AssemblyName>Jellyfin.Plugin.CinemaGlass</AssemblyName>
+    <AssemblyVersion>1.2.1.0</AssemblyVersion>
+    <FileVersion>1.2.1.0</FileVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <!-- Gebaut gegen die Bibliotheken des eigenen Servers (nach ../lib kopiert), damit die Version sicher passt -->
+    <Reference Include="MediaBrowser.Common"><HintPath>../lib/MediaBrowser.Common.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="MediaBrowser.Controller"><HintPath>../lib/MediaBrowser.Controller.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="MediaBrowser.Model"><HintPath>../lib/MediaBrowser.Model.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Configuration/configPage.html" LogicalName="CinemaGlass.configPage.html" />
+    <!-- Theme-Dateien direkt aus dem Repository: eine Quelle für Plugin und Handinstallation -->
+    <EmbeddedResource Include="../../css/appletv.css" LogicalName="CinemaGlass.theme.css" />
+    <EmbeddedResource Include="../../js/appletv.js" LogicalName="CinemaGlass.core.js" />
+    <EmbeddedResource Include="../../js/extras-seerr.js" LogicalName="CinemaGlass.seerr.js" />
+    <EmbeddedResource Include="../../js/extras-ratings.js" LogicalName="CinemaGlass.ratings.js" />
+  </ItemGroup>
+</Project>

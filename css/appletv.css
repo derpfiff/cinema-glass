@@ -1,0 +1,2319 @@
+/* ===== src-css/01-base.css ===== */
+/* ==========================================================================
+   Apple-TV-App-Klon (tvOS 26, Liquid Glass) für Jellyfin 12.x – Fassung 2
+   Einbinden: Dashboard › Allgemein › Branding › Eigenes CSS (Inhalt einfügen)
+   Maßstab: 1 tvOS-Pixel (bei 1920×1080) = calc(100vw / 1920) = var(--u)
+   Elemente mit Präfix .atv- gehören dem JavaScript-Teil (appletv.js) und
+   werden hier nicht gestaltet; html.atv-js markiert "JS ist aktiv".
+   ========================================================================== */
+
+:root {
+  --u: calc(100vw / 1920);                 /* tvOS-Pixel */
+  --tv-bg: #000000;                        /* gemessen, Bild 03 */
+  --tv-bg-2: #1c1c1e;                      /* Web-Dark, Modal */
+  --tv-bg-3: #2b2b2b;                      /* abgesetzter Block */
+  --tv-text: #fff;
+  --tv-text-1: rgba(255, 255, 255, .92);
+  --tv-text-2: rgba(255, 255, 255, .64);
+  --tv-text-3: rgba(255, 255, 255, .5);
+  --tv-dim: .57;                           /* Regaltitel ohne Fokus */
+  --tv-blue: #0a84ff;
+  --tv-red: #ff453a;
+  --tv-green: #34c759;
+  --tv-hair: rgba(255, 255, 255, .12);
+  --tv-hair-strong: rgba(255, 255, 255, .16);
+  --tv-glass: rgba(255, 255, 255, .14);    /* Glas über dunklem Bild */
+  --tv-glass-dark: rgba(40, 40, 40, .5);   /* tv.apple.com More-Button */
+  --tv-glass-blur: blur(28px) saturate(1.8);
+  --tv-glass-blur-strong: blur(60px) saturate(2.2);
+  --tv-ease: cubic-bezier(.2, .8, .2, 1);
+  --tv-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, "Helvetica Neue", Inter, Arial, sans-serif;
+
+  /* Layout (tvOS-Maße in vw, Mobilwert als Minimum, 1920-Wert als Maximum) */
+  --tv-gutter: clamp(25px, 4.1667vw, 80px);          /* 80 @1920 */
+  --tv-poster-w: clamp(144px, 13.5417vw, 260px);     /* 260 @1920 */
+  --tv-wide-w: clamp(240px, 16.6667vw, 320px);       /* 320 @1920 */
+  --tv-gap: clamp(10px, 2.0833vw, 40px);             /* 40 @1920 */
+  --tv-shelf-title: clamp(17px, 1.6146vw, 31px);     /* 31/700 @1920 */
+  --tv-shelf-sub: clamp(13px, 1.354vw, 26px);        /* 26/400 @1920 */
+  --tv-title-to-cards: clamp(12px, 2.0833vw, 40px);  /* 40 @1920 */
+  --tv-shelf-gap: clamp(28px, 4.6875vw, 90px);       /* 90 @1920 */
+  --tv-focus-pad: clamp(14px, 1.3vw, 25px);          /* Platz für Skalierung ×1,09 */
+  --tv-header-h: clamp(36px, 2.4vw, 46px);           /* iPad-Kapsel ≈ 46 pt */
+  --tv-btn-h: clamp(40px, 2.6vw, 50px);              /* Web 40 … tvOS 66 (gekappt) */
+}
+
+/* ---------- Grundfläche ---------- */
+html { background: var(--tv-bg) !important; }
+body { background: transparent !important; color: var(--tv-text); }
+body, .skinBody, .backgroundContainer, .mainAnimatedPage, .page, .pageContainer,
+.backgroundContainer.withBackdrop, .backgroundContainer-transparent {
+  background-color: transparent !important;
+}
+html, body, .skinBody {
+  font-family: var(--tv-font) !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  color: var(--tv-text);
+}
+body * { font-family: var(--tv-font); }
+.material-icons, .material-icons *, [class*="material-icons"] { font-family: "Material Icons" !important; }
+::selection { background: rgba(10, 132, 255, .5); color: #fff; }
+* { scrollbar-width: none; }
+*::-webkit-scrollbar { display: none; }
+a, .button-link, .textActionButton, .emby-button.button-link { color: inherit; text-decoration: none; }
+.backdropContainer { background: var(--tv-bg) !important; }
+/* Jellyfins Vollbild-Hintergrundbild (unscharf) nur sehr leise, Kontrast für #000000 */
+.backdropImage { opacity: .22; filter: saturate(1.2) blur(10px); transform: scale(1.05); }
+.padded-left { padding-left: var(--tv-gutter) !important; }
+.padded-right { padding-right: var(--tv-gutter) !important; }
+.padded-top, .padded-top-page { padding-top: calc(var(--tv-header-h) + 28px) !important; }
+
+/* Tastaturfokus: dezenter heller Ring (kein Jellyfin-Cyan) */
+:focus { outline: none; }
+:focus-visible, .emby-button:focus-visible, .paper-icon-button-light:focus-visible, .MuiButtonBase-root:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, .75) !important;
+  outline-offset: 3px;
+}
+
+/* ---------- Typografie-Rollen ---------- */
+h1, h2, h3, .sectionTitle, .pageTitle, .formDialogHeaderTitle, .MuiTypography-h1, .MuiTypography-h2, .MuiTypography-h3 {
+  font-weight: 700;
+  letter-spacing: .012em;        /* SF Pro ab 20 pt: leicht positiv */
+  color: var(--tv-text);
+}
+.secondary, .fieldDescription, .listItemBodyText.secondary, .MuiTypography-colorTextSecondary { color: var(--tv-text-2) !important; }
+
+/* ---------- Jellyfin-Cyan (#00a4dc) überall entfernen ---------- */
+.emby-checkbox:checked + span + .checkboxOutline, .emby-checkbox:checked + span + .checkboxOutline .checkboxIcon,
+.emby-radio:checked + span .emby-radio-icon-checked, .inputLabelFocused, .selectLabelFocused, .textareaLabelFocused,
+.mdl-slider, .emby-slider, .progressring-spiner, .itemProgressBarForeground, .countIndicator, .playedIndicator,
+.navMenuOption-selected, .emby-tab-button-active, .raised.button-submit, .button-submit, .cardOverlayFab-primary,
+.MuiButton-containedPrimary, .MuiButton-textPrimary, .MuiLinearProgress-bar, .MuiLinearProgress-root,
+.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track, .MuiCheckbox-colorPrimary.Mui-checked, .MuiRadio-colorPrimary.Mui-checked,
+.MuiToggleButton-primary.Mui-selected, .MuiChip-colorPrimary, .MuiTabs-indicator, .MuiTab-root.Mui-selected,
+.MuiCircularProgress-colorPrimary, .MuiSlider-colorPrimary, .MuiLink-root, .MuiTypography-colorPrimary,
+.MuiBadge-colorPrimary .MuiBadge-badge, .MuiButtonGroup-colorPrimary, .MuiSvgIcon-colorPrimary, .MuiIconButton-colorPrimary,
+.MuiListItemButton-root.Mui-selected, .MuiMenuItem-root.Mui-selected, .MuiFormLabel-root.Mui-focused,
+.MuiInput-underline::after, .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+.MuiButton-outlinedPrimary, .MuiPaginationItem-root.Mui-selected, .MuiAlert-standardInfo {
+  --jf-cyan-removed: 1;
+}
+.MuiButton-textPrimary, .MuiLink-root, .MuiTypography-colorPrimary, .MuiFormLabel-root.Mui-focused,
+.MuiSvgIcon-colorPrimary, .MuiIconButton-colorPrimary, .MuiTab-root.Mui-selected, .MuiCheckbox-colorPrimary.Mui-checked,
+.MuiRadio-colorPrimary.Mui-checked, .MuiCircularProgress-colorPrimary, .MuiSlider-colorPrimary, .MuiButton-outlinedPrimary {
+  color: var(--tv-text) !important;
+}
+.MuiLinearProgress-root { background-color: rgba(255, 255, 255, .15) !important; border-radius: 999px; }
+.MuiLinearProgress-bar { background-color: rgba(255, 255, 255, .75) !important; border-radius: 999px; }
+.MuiTabs-indicator { background-color: #fff !important; height: 2px; border-radius: 2px; }
+.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track { background-color: var(--tv-green) !important; opacity: 1 !important; }
+.MuiSwitch-switchBase.Mui-checked .MuiSwitch-thumb { color: #fff; }
+.MuiToggleButton-primary.Mui-selected { background: rgba(255, 255, 255, .92) !important; color: #000 !important; }
+.MuiChip-colorPrimary { background: rgba(255, 255, 255, .14) !important; color: #fff !important; }
+.MuiInput-underline::after { border-color: #fff !important; }
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, .6) !important; }
+.MuiListItemButton-root.Mui-selected, .MuiMenuItem-root.Mui-selected { background: rgba(255, 255, 255, .1) !important; }
+.MuiPaginationItem-root.Mui-selected { background: #fff !important; color: #000 !important; }
+.MuiAlert-standardInfo { background: rgba(10, 132, 255, .15) !important; color: #fff !important; }
+.MuiButton-containedPrimary, .MuiButtonGroup-containedPrimary .MuiButton-root {
+  background: rgba(255, 255, 255, .92) !important; color: #000 !important; box-shadow: none !important;
+}
+.MuiButton-root { text-transform: none !important; font-family: var(--tv-font); font-weight: 600; letter-spacing: 0; }
+/* Inline-Farben aus Jellyfin (Gerätekarten u. ä.) */
+[style*="rgb(0, 164, 220)"], [style*="#00a4dc"], [style*="#00A4DC"] { background-color: #2c2d33 !important; }
+
+/* ===== src-css/02-nav.css ===== */
+/* ==========================================================================
+   Kopfzeile: schwebende Glas-Kapsel (iPad/Mac-Vorbild, Bild 09)
+   DOM 12.x: header.MuiAppBar > .MuiToolbar > [.MuiStack (Start + Bibliotheken)]
+             [.MuiBox (SyncPlay, Cast, Suche)] [.MuiBox (Avatar)]
+   ========================================================================== */
+header.MuiAppBar-root, header.MuiPaper-root {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  pointer-events: none;                    /* Fläche blockiert den Hero nicht */
+  align-items: center;
+}
+header.MuiAppBar-root .MuiToolbar-root { pointer-events: auto; }
+
+/* Die Kapsel = erste Toolbar (die mit den Tabs); Player/Dashboard ausgenommen */
+header.MuiAppBar-root > .MuiToolbar-root:first-child:not(.videoOsd-appBar):not(.dashboard-appBar) {
+  position: relative;
+  width: max-content;
+  max-width: calc(100vw - 2 * var(--tv-gutter) - 120px);
+  min-height: 0 !important;
+  height: var(--tv-header-h);
+  margin: 12px auto 0;
+  padding: 3px !important;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  isolation: isolate;
+  color: #fff;
+}
+/* Glas als eigene Schicht (so bleibt position: fixed für den Avatar möglich) */
+header.MuiAppBar-root > .MuiToolbar-root:first-child:not(.videoOsd-appBar):not(.dashboard-appBar)::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, .08);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(180%);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .25), inset 0 0 0 1px var(--tv-hair), inset 0 1px 0 rgba(255, 255, 255, .18);
+}
+/* Nur das Jellyfin-Logo (Login-Seite): keine Kapsel */
+header.MuiAppBar-root > .MuiToolbar-root:first-child:has(> .MuiStack-root > a:only-child) { display: none; }
+
+/* Tabs */
+header .MuiToolbar-root > .MuiStack-root { display: flex; flex-direction: row; align-items: center; gap: 2px; min-width: 0; }
+header .MuiToolbar-root > .MuiStack-root a.MuiButton-root {
+  height: calc(var(--tv-header-h) - 6px);
+  min-width: 0;
+  margin: 0 !important;
+  padding: 0 clamp(12px, 1vw, 18px) !important;
+  border-radius: 999px !important;
+  color: rgba(255, 255, 255, .86) !important;
+  background: transparent !important;
+  font-size: clamp(14px, .9vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background .25s var(--tv-ease), color .25s var(--tv-ease);
+}
+header .MuiToolbar-root > .MuiStack-root a.MuiButton-root:hover { background: rgba(255, 255, 255, .1) !important; }
+/* gewählter Tab = hellere, getönte Glas-Pille (iPad), nicht deckend */
+header .MuiToolbar-root > .MuiStack-root a.MuiButton-root.MuiButton-colorPrimary,
+header .MuiToolbar-root > .MuiStack-root a.MuiButton-root[aria-current="page"],
+body:has(.homePage:not(.hide)) header .MuiToolbar-root > .MuiStack-root a.MuiButton-root:first-child {
+  background: rgba(255, 255, 255, .22) !important;
+  color: #fff !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12), inset 0 1px 0 rgba(255, 255, 255, .2);
+}
+/* Icons der Tabs weg, Logo+Servername → "Start"/"Home" */
+header .MuiToolbar-root > .MuiStack-root a.MuiButton-root .MuiButton-startIcon,
+header .MuiToolbar-root > .MuiStack-root a.MuiButton-root .MuiButton-startIcon img { display: none !important; }
+header .MuiToolbar-root > .MuiStack-root a.MuiButton-root:first-child:not(:only-child) { font-size: 0 !important; }
+header .MuiToolbar-root > .MuiStack-root a.MuiButton-root:first-child:not(:only-child)::after {
+  content: "Home"; font-size: clamp(14px, .9vw, 17px); font-weight: 600;
+}
+html[lang|="de"] header .MuiToolbar-root > .MuiStack-root a.MuiButton-root:first-child:not(:only-child)::after { content: "Start"; }
+/* Favoriten-Tab (Apple hat Watchlist als Regal), SyncPlay, Cast weg */
+header .MuiToolbar-root a[href*="home?tab=1"],
+.MuiToolbar-root button[aria-label="SyncPlay"],
+.MuiToolbar-root button[aria-label="Cast to Device"],
+.MuiToolbar-root button[aria-label="Auf Gerät übertragen"],
+.headerSyncButton, .headerCastButton, .headerAudioPlayerButton { display: none !important; }
+
+/* Mittlere Box (enthält die Lupe): nicht wachsen, Lupe in der Kapsel rechts */
+header.MuiAppBar-root > .MuiToolbar-root:first-child > .MuiBox-root:not(:last-child) {
+  flex: 0 0 auto; display: flex; align-items: center; margin: 0; padding: 0;
+}
+header .MuiToolbar-root a.MuiIconButton-root[href*="search"] {
+  width: calc(var(--tv-header-h) - 6px); height: calc(var(--tv-header-h) - 6px);
+  padding: 0; margin: 0 2px 0 4px; border-radius: 50%;
+  color: rgba(255, 255, 255, .86); transition: background .25s var(--tv-ease);
+}
+header .MuiToolbar-root a.MuiIconButton-root[href*="search"]:hover { background: rgba(255, 255, 255, .12); }
+header .MuiToolbar-root a.MuiIconButton-root[href*="search"] svg { font-size: clamp(18px, 1.2vw, 22px); }
+body:has(#searchPage:not(.hide)) header .MuiToolbar-root a.MuiIconButton-root[href*="search"] { background: rgba(255, 255, 255, .22); }
+
+/* Profil: rechts außen, fest (tvOS-Profil), aus der Kapsel herausgenommen */
+header.MuiAppBar-root > .MuiToolbar-root:first-child:not(.videoOsd-appBar):not(.dashboard-appBar) > .MuiBox-root:last-child {
+  position: fixed; top: calc(12px + (var(--tv-header-h) - 36px) / 2); right: var(--tv-gutter); z-index: 5; pointer-events: auto;
+}
+header .MuiToolbar-root button[aria-label="User Menu"], header .MuiToolbar-root button[aria-label="Benutzermenü"] { padding: 0; }
+.MuiAvatar-root {
+  width: 36px !important; height: 36px !important;
+  background: rgba(255, 255, 255, .12) !important;
+  -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+  box-shadow: inset 0 0 0 1px var(--tv-hair), 0 4px 16px rgba(0, 0, 0, .25);
+  color: rgba(255, 255, 255, .9) !important;
+  font-size: 15px;
+}
+.MuiAvatar-root .MuiAvatar-fallback { width: 22px; height: 22px; }
+
+/* Zweite Toolbar (Bibliotheksseite: Titel, Zähler, Filter) */
+header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) {
+  width: 100%; box-sizing: border-box; min-height: 0 !important; margin-top: 18px;
+  padding: 0 var(--tv-gutter) !important;
+  display: flex; align-items: center; gap: 10px;
+}
+header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) > button.MuiButton-root {
+  padding: 0 !important; margin: 0; min-width: 0; color: #fff; background: transparent !important;
+}
+header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) .MuiTypography-h2 {
+  font-size: var(--tv-shelf-title); font-weight: 700; letter-spacing: .012em;
+}
+header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) .MuiButton-endIcon svg { font-size: 1.2em; opacity: .6; }
+header .MuiChip-root {
+  height: 24px; border-radius: 999px; background: rgba(255, 255, 255, .12); color: var(--tv-text-2); font-weight: 600; font-size: 13px;
+}
+header .MuiChip-root .MuiChip-label { padding: 0 10px; }
+/* Werkzeuge rechts als Glas-Pille; "Alle abspielen"/Zufall (blaue Gruppe) weg */
+header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) > .MuiStack-root { margin-left: auto; gap: 8px; align-items: center; justify-content: flex-end; }
+header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) .MuiButtonGroup-contained { display: none; }
+header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) .MuiButtonGroup-text {
+  background: rgba(255, 255, 255, .1); border-radius: 999px; padding: 2px;
+  -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+  box-shadow: inset 0 0 0 1px var(--tv-hair);
+}
+header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) .MuiButtonGroup-text .MuiButton-root {
+  width: 36px; height: 36px; min-width: 0; padding: 0; border: 0 !important; border-radius: 50% !important; color: #fff;
+}
+header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) .MuiButtonGroup-text .MuiButton-root:hover { background: rgba(255, 255, 255, .14); }
+header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) .MuiButtonGroup-text .MuiButton-root.Mui-disabled { color: rgba(255, 255, 255, .3); }
+
+/* Dashboard-Toolbar (Zurück + Avatar) und Player-Toolbar: schlicht */
+header .MuiToolbar-root.dashboard-appBar, header .MuiToolbar-root.videoOsd-appBar { min-height: 56px; padding: 0 16px !important; }
+header .MuiToolbar-root.dashboard-appBar .MuiIconButton-root, header .MuiToolbar-root.videoOsd-appBar .MuiIconButton-root {
+  width: 40px; height: 40px; border-radius: 50%; color: #fff;
+  background: rgba(255, 255, 255, .1);
+  -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+  box-shadow: inset 0 0 0 1px var(--tv-hair);
+}
+header .MuiToolbar-root.videoOsd-appBar p.MuiTypography-root, .osdHeader .MuiToolbar-root p.MuiTypography-root { font-weight: 600; font-size: 17px; margin-left: 12px; color: rgba(255, 255, 255, .92); }
+.osdHeader .MuiToolbar-root.videoOsd-appBar { min-height: 56px; padding: 8px 16px !important; margin: 0; }
+.osdHeader .MuiToolbar-root.videoOsd-appBar .MuiIconButton-root {
+  width: 40px; height: 40px; border-radius: 50%; color: #fff; background: rgba(255, 255, 255, .14);
+  -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur); box-shadow: inset 0 0 0 1px var(--tv-hair);
+}
+
+/* Altes Jellyfin-Header-Element (nur noch im Player/Login vorhanden) */
+.skinHeader { background: transparent !important; backdrop-filter: none !important; }
+.headerButton { border-radius: 50%; color: #fff !important; }
+.pageTitleWithLogo, .pageTitleWithDefaultLogo { display: none !important; }
+
+/* ---------- Seitenleiste (Jellyfin-Drawer) als Glas-Panel wie tvOS 26 ---------- */
+.mainDrawer {
+  background: rgba(20, 20, 24, .62) !important;
+  -webkit-backdrop-filter: blur(60px) saturate(180%); backdrop-filter: blur(60px) saturate(180%);
+  border-radius: 34px !important;
+  margin: 16px; height: calc(100% - 32px) !important;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .45), inset 0 0 0 1px var(--tv-hair), inset 0 1px 0 rgba(255, 255, 255, .14);
+  overflow: hidden;
+}
+.mainDrawer-scrollContainer { padding: 14px 8px; }
+.navMenuOption {
+  border-radius: 999px !important; margin: 2px 0 !important; padding: 0 20px !important; height: 52px;
+  display: flex; align-items: center; color: #fff !important; font-weight: 500; font-size: 17px;
+  transition: background .2s var(--tv-ease), color .2s var(--tv-ease);
+}
+.navMenuOption:hover, .navMenuOption:focus { background: rgba(255, 255, 255, .12) !important; }
+.navMenuOption-selected, .navMenuOption-selected:hover { background: #fff !important; color: #000 !important; font-weight: 700; }
+.navMenuOption-selected .navMenuOptionIcon { color: #000 !important; }
+.navMenuOptionIcon { margin-right: 16px; font-size: 22px; color: inherit; }
+.sidebarHeader, .drawerContent h3 { color: rgba(255, 255, 255, .55); font-size: 14px; font-weight: 600; padding: 22px 20px 6px; letter-spacing: .01em; }
+.drawer-backdrop, .mainDrawer-background { background: rgba(0, 0, 0, .35) !important; }
+
+/* ===== src-css/03-shelves.css ===== */
+/* ==========================================================================
+   Regale (Startseite, Detailseite, Suche) – Maße aus Bild 03 (1920×1080):
+   Titel 31/700 bei x=80, 40 px Luft, Karten 260×390 im 300er-Raster,
+   90 px bis zum nächsten Titel; Titel nicht fokussierter Regale 57 %.
+   ========================================================================== */
+.homePage .homeSectionsContainer { padding-top: calc(var(--tv-header-h) + 12px + 36px); }
+html.atv-js .homePage .homeSectionsContainer { padding-top: 0; }   /* Hero (JS) sitzt davor */
+.homePage .pageTabContent { padding-top: 0 !important; }
+
+/* Bibliothekskacheln ("Meine Medien") zeigt Apple nicht als Regal */
+.verticalSection:has(.homeLibraryCard), .verticalSection:has([data-type="CollectionFolder"]),
+.verticalSection:has([data-type="UserView"]), .section0:has(.homeLibraryCard) { display: none !important; }
+
+.verticalSection, .emby-scroller-container { margin: 0 0 calc(var(--tv-shelf-gap) - var(--tv-focus-pad)) !important; padding: 0 !important; }
+.verticalSection:last-child { margin-bottom: 40px !important; }
+.homeSectionsContainer .verticalSection:empty, .verticalSection.hide { display: none; }
+
+/* Titelzeile */
+.sectionTitleContainer, .sectionTitleContainer-cards {
+  margin: 0 !important; padding: 0 var(--tv-gutter) !important; display: flex; align-items: center;
+}
+.sectionTitle, .sectionTitle-cards, .sectionTitleContainer .sectionTitle, h2.sectionTitle {
+  font-size: var(--tv-shelf-title) !important;
+  line-height: 1.2;
+  font-weight: 700 !important;
+  letter-spacing: .012em;
+  color: var(--tv-text);
+  margin: 0 !important;
+  padding: 0 !important;
+  transition: opacity .3s var(--tv-ease), color .3s var(--tv-ease);
+}
+h2.sectionTitle.padded-left, .sectionTitle-cards.padded-left { padding-left: var(--tv-gutter) !important; }
+.sectionTitleTextButton, .sectionTitleTextButton:hover, .sectionTitleTextButton:focus {
+  padding: 0 !important; margin: 0 !important; color: var(--tv-text) !important; background: transparent !important;
+}
+.sectionTitleTextButton .material-icons, .sectionTitleTextButton .chevron_right { display: none !important; } /* tvOS: kein Chevron */
+.sectionTitleContainer h2.sectionTitle { margin-right: 0 !important; }
+/* Regal ohne Fokus: Titel gedimmt (Bild 03 "Top 10 Movies") */
+.homeSectionsContainer:has(.card:hover) .verticalSection:not(:has(.card:hover)) .sectionTitle,
+.searchResults:has(.card:hover) .verticalSection:not(:has(.card:hover)) .sectionTitle,
+.detailPageSecondaryContainer:has(.card:hover) .verticalSection:not(:has(.card:hover)) .sectionTitle { opacity: var(--tv-dim); }
+
+/* Scroller: randlos, Karten laufen unter den rechten Bildschirmrand */
+.emby-scroller, .padded-top-focusscale, .padded-bottom-focusscale {
+  padding: 0 !important; margin: 0 !important; overflow: visible;
+}
+.itemsContainer.scrollSlider {
+  display: flex !important; flex-wrap: nowrap; align-items: flex-start;
+  gap: var(--tv-gap);
+  padding: var(--tv-title-to-cards) 0 var(--tv-focus-pad) var(--tv-gutter) !important;
+  margin: 0 !important;
+  scroll-padding-left: var(--tv-gutter);
+}
+.itemsContainer.scrollSlider::after { content: ""; flex: 0 0 var(--tv-gutter); } /* Luft am Ende */
+/* Scroll-Pfeile: erst beim Überfahren des Regals, als Glas-Kreise rechts neben dem Titel */
+.emby-scrollbuttons {
+  padding: 0 var(--tv-gutter) 0 0 !important; margin: 0 !important; top: 0 !important;
+  height: calc(var(--tv-shelf-title) * 1.2); align-items: center;
+  opacity: 0; transition: opacity .25s linear;
+}
+.verticalSection:hover .emby-scrollbuttons, .emby-scroller-container:hover .emby-scrollbuttons { opacity: 1; }
+.emby-scrollbuttons-button {
+  width: 32px !important; height: 32px !important; padding: 0 !important; margin: 0 0 0 8px !important;
+  border-radius: 50% !important; color: #fff !important;
+  background: rgba(255, 255, 255, .1) !important;
+  -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+  box-shadow: inset 0 0 0 1px var(--tv-hair);
+}
+.emby-scrollbuttons-button .material-icons { font-size: 20px; }
+.emby-scrollbuttons-button:disabled, .emby-scrollbuttons-button[disabled] { opacity: .3; }
+
+/* Regal-Untertitel (z. B. "Watchlist · Dinge, die du …"), falls vorhanden */
+.sectionTitleContainer .sectionSubtitle, .verticalSection .sectionSubtitle {
+  font-size: var(--tv-shelf-sub); color: rgba(255, 255, 255, .7); margin-top: 12px;
+}
+
+/* Vertikales Raster (Bibliothek, Listen): Poster 260, Lücken 40/60 */
+.itemsContainer.vertical-wrap {
+  display: flex !important; flex-wrap: wrap; align-items: flex-start;
+  gap: clamp(20px, 3.125vw, 60px) var(--tv-gap);
+  padding: var(--tv-focus-pad) var(--tv-gutter) 40px !important;
+}
+/* Listenansicht (Folgen, Titel) */
+.itemsContainer.vertical-list { padding: 0 var(--tv-gutter); }
+
+/* Buchstabenleiste (Apple: nicht vorhanden) und Listen-Zähler weg */
+.alphaPicker, .alphaPicker-fixed-right, .alphaPicker-fixed, .listCountBadge { display: none !important; }
+
+/* ===== src-css/04-cards.css ===== */
+/* ==========================================================================
+   Karten – Poster 2:3 (260×390 @1920, Radius 7,7 % = 20 px), 16:9-Karte
+   320×180 mit Metazeile im Bild, Fokus ×1,092 + Schatten 0 20px 40px .5,
+   kein Rahmen, kein translateY. Text liegt IM Bild (tvOS 26).
+   ========================================================================== */
+.card { padding: 0 !important; margin: 0 !important; flex: 0 0 auto; container-type: inline-size; } /* cqw = Kartenbreite */
+.card.overflowPortraitCard, .card.portraitCard, .card.overflowSquareCard, .card.squareCard { width: var(--tv-poster-w) !important; }
+.card.overflowBackdropCard, .card.backdropCard { width: var(--tv-wide-w) !important; }
+.card.overflowSmallBackdropCard, .card.smallBackdropCard { width: calc(var(--tv-wide-w) * .8) !important; }
+.cardBox, .cardBox.cardBox-bottompadded {
+  position: relative; margin: 0 !important; padding: 0 !important;
+  border-radius: 7.7cqw;
+  transition: transform .35s var(--tv-ease), box-shadow .35s var(--tv-ease);
+  transform-origin: center center;
+}
+.overflowBackdropCard .cardBox, .backdropCard .cardBox { border-radius: 6cqw; }
+.cardScalable { border-radius: inherit; background: transparent; overflow: visible; box-shadow: none; }
+.cardPadder, .cardPadder-overflowPortrait, .cardPadder-portrait { padding-bottom: 150% !important; background: #1c1c1e !important; border-radius: inherit; }
+.cardPadder-overflowBackdrop, .cardPadder-backdrop { padding-bottom: 56.25% !important; }
+.cardPadder-overflowSquare, .cardPadder-square { padding-bottom: 100% !important; }
+.cardImageIcon { color: rgba(255, 255, 255, .25) !important; font-size: 28cqw !important; }
+.cardImageContainer, .cardContent, .cardOverlayContainer, .blurhash-canvas { border-radius: inherit !important; }
+.cardImageContainer { background-color: #1c1c1e; overflow: hidden; }
+/* Haarlinie + Glanzkante (Liquid-Glass-Kante, sehr schwach) */
+.cardScalable::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 3; border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08), inset 0 1px 0 rgba(255, 255, 255, .12);
+  transition: box-shadow .35s var(--tv-ease);
+}
+/* Fokus/Hover */
+.card:hover .cardBox, .card:focus-within .cardBox, .card:focus .cardBox, .cardBox:focus {
+  transform: scale(1.092) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, .5);
+  z-index: 4;
+}
+.card:hover .cardScalable::after, .card:focus-within .cardScalable::after {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), inset 0 1px 0 rgba(255, 255, 255, .25);
+}
+.card:hover, .card:focus-within { z-index: 4; position: relative; }
+
+/* Jellyfin-Overlay: nur leichter Scrim + "···" (tv.apple.com), kein Play-Knopf, kein Herz */
+.cardOverlayContainer { background: rgba(0, 0, 0, .2) !important; transition: opacity .15s linear; }
+.cardOverlayContainer .cardOverlayFab-primary,
+.cardOverlayContainer .cardOverlayButton-br .cardOverlayButton:not(:last-child),
+.cardOverlayContainer .cardOverlayButton-br .MuiButtonBase-root:not(:last-child) { display: none !important; }
+.cardOverlayButton-br { right: 4cqw !important; bottom: 4cqw !important; gap: 0; border: 0 !important; }
+.cardOverlayButton-br .cardOverlayButton, .cardOverlayButton-br .MuiButtonBase-root {
+  width: 28px !important; height: 28px !important; min-width: 0; padding: 0 !important; margin: 0 !important;
+  border-radius: 50% !important; border: 0 !important;
+  background: var(--tv-glass-dark) !important; color: #fff !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.8); backdrop-filter: blur(20px) saturate(1.8);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+}
+.cardOverlayButtonIcon { font-size: 18px !important; width: auto !important; height: auto !important; }
+.cardOverlayButton-br .more_vert::before { content: "more_horiz"; }
+.cardOverlayButton-br .more_vert { font-size: 0 !important; }
+.cardOverlayButton-br .more_vert::before { font-size: 18px; font-family: "Material Icons"; }
+
+/* Text liegt im Bild: Titel unten (Poster) bzw. Titel + Metazeile unten links (16:9) */
+.card:where(:not(.personCard):not([data-type="Person"]):not(.loginSquareCard)) .cardText {
+  position: absolute; left: 4.6cqw; right: 4.6cqw; margin: 0; padding: 0; z-index: 2;
+  color: #fff; line-height: 1.25; pointer-events: none;
+}
+.card .cardText a, .card .cardText bdi { color: inherit; font: inherit; }
+.card .cardText-first { font-size: clamp(12px, 8.85cqw, 23px); font-weight: 600; }
+.card .cardText-secondary { font-size: clamp(11px, 7.2cqw, 23px); font-weight: 500; color: rgba(255, 255, 255, .82); }
+
+/* Poster: Jahr nie, Titel nur bei Fokus (zentriert 24 px über der Unterkante, wie Genre-Zeile) */
+.overflowPortraitCard:not([data-type="Person"]) .cardText-secondary, .portraitCard .cardText-secondary,
+.overflowSquareCard .cardText-secondary, .squareCard .cardText-secondary { display: none !important; }
+.overflowPortraitCard:not([data-type="Person"]) .cardText-first, .portraitCard .cardText-first,
+.overflowSquareCard .cardText-first, .squareCard .cardText-first {
+  bottom: 9.2cqw; text-align: center; font-weight: 500; font-size: clamp(12px, 8.85cqw, 23px);
+  color: rgba(255, 255, 255, .92);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  opacity: 0; transition: opacity .25s var(--tv-ease);
+}
+.overflowPortraitCard:hover .cardText-first, .portraitCard:hover .cardText-first, .overflowSquareCard:hover .cardText-first, .squareCard:hover .cardText-first,
+.overflowPortraitCard:focus-within .cardText-first, .portraitCard:focus-within .cardText-first { opacity: 1; }
+/* Verlauf hinter der Zeile, nur bei Fokus */
+.overflowPortraitCard .cardImageContainer::after, .portraitCard .cardImageContainer::after,
+.overflowSquareCard .cardImageContainer::after, .squareCard .cardImageContainer::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, .6), transparent 40%);
+  opacity: 0; transition: opacity .25s var(--tv-ease);
+}
+.overflowPortraitCard:hover .cardImageContainer::after, .portraitCard:hover .cardImageContainer::after,
+.overflowSquareCard:hover .cardImageContainer::after, .squareCard:hover .cardImageContainer::after,
+.card:focus-within .cardImageContainer::after { opacity: 1; }
+
+/* 16:9-Karten ("Weiterschauen", "Als Nächstes", Folgen): Legibility-Verlauf + Zeile im Bild */
+.overflowBackdropCard .cardImageContainer::after, .backdropCard .cardImageContainer::after,
+.overflowSmallBackdropCard .cardImageContainer::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, .55), rgba(0, 0, 0, .3) 22%, transparent 45%);
+}
+.overflowBackdropCard .cardText-first, .backdropCard .cardText-first, .overflowSmallBackdropCard .cardText-first {
+  bottom: 13.5cqw; left: 6.25cqw; right: 16cqw; font-size: clamp(12px, 7.2cqw, 23px); font-weight: 600; text-align: left;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* nur eine Zeile vorhanden (z. B. "Als Nächstes"): Titel auf die Grundlinie der Metazeile */
+.cardBox:not(:has(.cardText-secondary)) .cardText-first { bottom: 4.4cqw; }
+.overflowBackdropCard .cardText-secondary, .backdropCard .cardText-secondary, .overflowSmallBackdropCard .cardText-secondary {
+  bottom: 4.4cqw; left: 6.25cqw; right: 16cqw; display: flex; align-items: center; gap: 2cqw;
+  font-size: clamp(11px, 7.2cqw, 23px); font-weight: 500; color: rgba(255, 255, 255, .82);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+/* ▶-Glyph vor der Zeile (14 px @320) */
+.overflowBackdropCard .cardText-secondary::before, .backdropCard .cardText-secondary::before {
+  content: ""; flex: 0 0 auto; width: 0; height: 0;
+  border-left: 4.4cqw solid rgba(255, 255, 255, .82); border-top: 2.6cqw solid transparent; border-bottom: 2.6cqw solid transparent;
+}
+/* Fortschritt: 36×4 px links in der Zeile (Spur .30, Füllung .65), statt voller Breite */
+.innerCardFooter, .innerCardFooter.fullInnerCardFooter {
+  position: absolute; left: 13cqw; right: auto; bottom: calc(4.4cqw + (7.2cqw * 1.25 - 1.25cqw) / 2);
+  width: 11.25cqw; height: 1.25cqw; min-height: 3px; padding: 0 !important; margin: 0 !important;
+  background: none !important; border-radius: 999px; z-index: 2; overflow: visible;
+}
+.innerCardFooter .cardText, .innerCardFooter .cardText-first, .innerCardFooter .cardText-secondary { display: none !important; }
+.itemProgressBar, .innerCardFooter .itemProgressBar {
+  position: static !important; height: 100% !important; min-height: 3px; margin: 0 !important;
+  background: rgba(255, 255, 255, .3) !important; border-radius: 999px; overflow: hidden;
+}
+.itemProgressBarForeground { background: rgba(255, 255, 255, .65) !important; border-radius: 999px; }
+/* Zeile rückt neben den Balken, wenn einer da ist */
+.cardBox:has(.itemProgressBar) .cardText-secondary { left: calc(13cqw + 11.25cqw + 2.4cqw); }
+.cardBox:has(.itemProgressBar) .cardText-secondary::before { position: absolute; left: calc(-11.25cqw - 2.4cqw - 6.75cqw); }
+.overflowBackdropCard .cardText-first .textActionButton, .cardText-first .textActionButton { pointer-events: auto; }
+
+/* Zähler / Gesehen: Glas-Pille oben links (tvOS "New"-Pille), 18-px-Text @1920 */
+.cardIndicators { left: 4.6cqw !important; right: auto !important; top: 4.6cqw !important; z-index: 3; display: flex; gap: 4px; }
+.countIndicator, .playedIndicator, .indicator {
+  background: rgba(0, 0, 0, .35) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.8); backdrop-filter: blur(20px) saturate(1.8);
+  color: #fff !important; font-weight: 600; font-size: clamp(11px, 6.9cqw, 18px) !important;
+  border-radius: 999px !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+  min-width: 10cqw; height: 10cqw; min-height: 20px; line-height: 10cqw; padding: 0 2.6cqw;
+  text-shadow: none;
+}
+.playedIndicator .material-icons { font-size: 1em !important; line-height: inherit; }
+.cardFooter { padding: 0; }
+.cardDefaultText { color: rgba(255, 255, 255, .7); font-weight: 600; }
+.defaultCardBackground1 { background-color: #3a3c45 !important; }
+.defaultCardBackground2 { background-color: #44404b !important; }
+.defaultCardBackground3 { background-color: #3b4448 !important; }
+.defaultCardBackground4 { background-color: #4a4440 !important; }
+.defaultCardBackground5 { background-color: #3d4a44 !important; }
+
+/* Personen: runde Avatare 142 px (tv.apple.com) / 180 (tvOS), Name/Rolle darunter zentriert */
+.card.personCard, .card[data-type="Person"] { width: clamp(94px, 7.4vw, 142px) !important; }
+.personCard .cardPadder, .card[data-type="Person"] .cardPadder { padding-bottom: 100% !important; }
+.personCard .cardBox, .card[data-type="Person"] .cardBox { border-radius: 0; }
+.personCard .cardScalable, .card[data-type="Person"] .cardScalable,
+.personCard .cardImageContainer, .card[data-type="Person"] .cardImageContainer,
+.personCard .cardOverlayContainer, .card[data-type="Person"] .cardOverlayContainer,
+.personCard .cardPadder, .card[data-type="Person"] .cardPadder, .personCard .blurhash-canvas { border-radius: 50% !important; }
+.personCard .cardScalable::after, .card[data-type="Person"] .cardScalable::after { border-radius: 50%; }
+.personCard .cardText, .card[data-type="Person"] .cardText {
+  position: static; text-align: center; padding: 0 2px; margin: 0; line-height: 1.3; pointer-events: auto;
+}
+.personCard .cardText-first, .card[data-type="Person"] .cardText-first { margin-top: 10px; font-size: clamp(12px, .83vw, 16px); font-weight: 500; color: rgba(255, 255, 255, .92); }
+.personCard .cardText-secondary, .card[data-type="Person"] .cardText-secondary { display: block !important; font-size: clamp(11px, .73vw, 14px); font-weight: 400; color: var(--tv-text-2); }
+.personCard .cardOverlayButton-br, .card[data-type="Person"] .cardOverlayButton-br { display: none !important; }
+/* Zweite Zeile (z. B. "S1:E2 - Titel") ebenfalls anklickbar (Weiterschauen: Serie öffnen) */
+.card .cardText-secondary .textActionButton { pointer-events: auto; cursor: pointer; }
+.card .cardText-first .textActionButton:hover, .card .cardText-secondary .textActionButton:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ===== src-css/05-detail.css ===== */
+/* ==========================================================================
+   Detailseite (Film/Serie/Folge): Key-Art 16:9 vollflächig, Textblock unten
+   links (Logo → Beschreibung → Faktenzeile → Pille + Glas-Kreise), rechts
+   unten Regie/Genres, darunter Regale. Referenz: sevd-p00, f1d-p00.
+   ========================================================================== */
+:root { --hero-h: min(100vh, 56.25vw); }   /* 16:9 Key-Art, max. Bildschirmhöhe (auch für .backdropContainer außerhalb der Seite) */
+.itemDetailPage {
+  --hero-block-top: calc(var(--hero-h) - 590 * var(--u)); /* Oberkante Logo */
+  position: relative;
+  margin-top: -48px;                        /* unter die (transparente) Kopfzeile */
+  padding-top: 0 !important;
+  background: var(--tv-bg);
+}
+/* Key-Art: Jellyfin legt das Bild in .backdropContainer (fixed, ganze Seite) –
+   hier wird daraus ein 16:9-Hero oben, der mitscrollt (tv.apple.com) */
+.itemDetailPage .itemBackdrop { display: none !important; }
+body:has(.itemDetailPage:not(.hide)) .backdropContainer {
+  display: block !important; position: absolute !important; top: 0; left: 0; right: 0; bottom: auto;
+  height: var(--hero-h); overflow: hidden; z-index: 0; background: #000 !important;
+}
+body:has(.itemDetailPage:not(.hide)) .backdropContainer .backdropImage {
+  position: absolute; inset: 0; opacity: 1 !important; filter: none !important; transform: none !important;
+  background-size: cover !important; background-position: center 20% !important; background-repeat: no-repeat;
+  transition: opacity .5s ease;
+}
+body:has(.itemDetailPage:not(.hide)) .backgroundContainer.withBackdrop { background: transparent !important; }
+body:has(.itemDetailPage:not(.hide)) .backdropContainer::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(to top, var(--tv-bg) 0, rgba(0, 0, 0, .96) 4%, rgba(0, 0, 0, 0) 18%),
+    linear-gradient(transparent 60%, rgba(0, 0, 0, .13) 64%, rgba(0, 0, 0, .21) 68%, rgba(0, 0, 0, .3) 75%, rgba(0, 0, 0, .45) 100%),
+    linear-gradient(to right, rgba(0, 0, 0, .35), rgba(0, 0, 0, 0) 55%);
+}
+.itemDetailPage .itemBackdrop.noBackdrop { background: linear-gradient(to bottom, #2a2b33, var(--tv-bg)); }
+
+/* Logo: in der Textspalte, max. 420×150 tvOS, linksbündig unten */
+.itemDetailPage .detailLogo {
+  position: absolute !important; z-index: 2;
+  left: var(--tv-gutter) !important; right: auto !important; top: var(--hero-block-top) !important;
+  width: min(420 * var(--u), 70vw) !important; height: calc(150 * var(--u)) !important;
+  margin: 0 !important; transform: none !important;
+  background-position: left bottom !important; background-size: contain !important; background-repeat: no-repeat;
+  filter: drop-shadow(0 4px 24px rgba(0, 0, 0, .45));
+  pointer-events: none;
+}
+.itemDetailPage:has(.detailLogo[style*="url"]) .nameContainer { display: none; }
+
+/* Textblock */
+.detailPageWrapperContainer { position: relative; z-index: 1; padding: 0 !important; margin: 0 !important; background: transparent !important; }
+.detailPagePrimaryContainer {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start;
+  box-sizing: border-box; min-height: var(--hero-h);
+  padding: calc(var(--hero-block-top) + 150 * var(--u) + 17 * var(--u)) var(--tv-gutter) calc(48 * var(--u)) !important;
+  margin: 0 !important; background: transparent !important;
+}
+.itemDetailPage:not(:has(.detailLogo[style*="url"])) .detailPagePrimaryContainer { padding-top: var(--hero-block-top) !important; }
+.detailRibbon, .infoWrapper, .detailPagePrimaryContent, .detailSection { display: contents !important; }
+.detailImageContainer { display: none !important; }
+.nameContainer { order: 1; margin: 0 0 calc(17 * var(--u)); max-width: 60vw; }
+.detailSectionContent { order: 2; margin: 0 0 calc(14 * var(--u)); max-width: min(620 * var(--u), 90vw); }
+.itemMiscInfo, .itemMiscInfo-primary { order: 3; margin: 0 0 calc(22 * var(--u)) !important; }
+.itemMiscInfo-secondary { order: 3; margin: 0 0 calc(22 * var(--u)) !important; }
+.mainDetailButtons { order: 4; }
+.trackSelections { order: 5; }
+.nextUpSection, .detailSection > .verticalSection { order: 6; }
+
+/* Titel ohne Logo: Title 2 (57/700, Tracking −0,5 px), Folgen: Serienname klein + Folgentitel */
+h1.itemName, .nameContainer .itemName {
+  font-size: clamp(28px, 2.97vw, 57px) !important; font-weight: 700 !important; letter-spacing: -.009em;
+  line-height: 1.05; margin: 0; color: #fff; text-shadow: 0 2px 24px rgba(0, 0, 0, .4);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+h1.parentName { font-size: clamp(14px, 1.04vw, 20px); font-weight: 600; color: rgba(255, 255, 255, .7); margin: 0 0 6px; }
+h1.parentName a { color: inherit; }
+h3.itemName.subtitle { font-size: clamp(22px, 2.1vw, 40px); font-weight: 700; margin: 0; line-height: 1.1; }
+.itemDetailPage:has(.detailLogo[style*="url"]) h1.parentName { display: none; }
+
+/* Beschreibung: 2 Zeilen, danach MORE-Pille (Jellyfin-Aufklapper) */
+h3.tagline, p.itemGenres:empty, .itemTags, .itemExternalLinks, .seriesRecordingEditor:empty { display: none !important; }
+p.itemGenres, .itemGenres a { font-size: clamp(13px, 1.04vw, 20px); font-weight: 600; color: #fff; margin: 0 0 8px; }
+.overview, .overview.detail-clamp-text, p.overview {
+  font-size: clamp(14px, 1.15vw, 22px); line-height: 1.4; font-weight: 400; color: rgba(255, 255, 255, .7);
+  margin: 0; max-width: 100%;
+  display: -webkit-box; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical; overflow: hidden;
+}
+.overview-controls { margin-top: 6px; text-align: left; display: flex !important; justify-content: flex-start !important; }
+.overview-expand, .overview-controls button {
+  display: inline-flex; align-items: center; height: 18px; padding: 0 8px; border: 0; border-radius: 9px;
+  background: rgba(255, 255, 255, .64) !important; color: #fff !important; font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .02em; cursor: pointer;
+}
+.detail-clamp-text.expanded, .overview.expanded { -webkit-line-clamp: unset !important; display: block; }
+
+/* Faktenzeile: "2021 · 2h 35m · FSK-12 · ★ 8,1" – 20 px .64, Rating als umrandete Pille */
+.itemMiscInfo {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0 10px;
+  font-size: clamp(12px, 1.04vw, 20px); font-weight: 400; color: var(--tv-text-2);
+}
+.mediaInfoItem { margin: 0 !important; color: var(--tv-text-2); display: inline-flex; align-items: center; gap: 4px; position: relative; }
+.mediaInfoItem + .mediaInfoItem { margin-left: 14px !important; }
+.mediaInfoItem + .mediaInfoItem::before { content: "·"; position: absolute; left: -15px; top: 50%; transform: translateY(-50%); opacity: .8; }
+.mediaInfoItem.mediaInfoOfficialRating, .mediaInfoText.mediaInfoOfficialRating {
+  border: 1px solid rgba(255, 255, 255, .64); border-radius: 3px; padding: 0 5px; line-height: 1.3;
+  font-size: .72em; font-weight: 600; background: transparent !important; color: var(--tv-text-2);
+}
+.mediaInfoItem.mediaInfoText { background: transparent !important; }
+.starRatingContainer .starIcon, .starIcon { color: var(--tv-text-2) !important; font-size: 1em !important; }
+.mediaInfoCriticRating { color: var(--tv-text-2); padding-left: 1.25em; background-size: 1em; }
+.mediaInfoTimerIcon, .mediaInfoIconItem, .mediaInfoResolutionIcon, .endsAt { color: var(--tv-text-2); }
+.itemMiscInfo .endsAt, .itemMiscInfo .mediaInfoItem:has(.endsAt) { display: none !important; }
+
+/* Buttons: Pille 193×40 (Web) … 50 hoch @1920, Kreise gleich hoch, Lücke 12, Glas */
+.mainDetailButtons { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0 !important; padding: 0; }
+.detailButton, button.detailButton, .detailButton.button-flat {
+  width: var(--tv-btn-h) !important; height: var(--tv-btn-h) !important; min-width: 0 !important;
+  margin: 0 !important; padding: 0 !important; border-radius: 50% !important;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--tv-glass-dark) !important; color: #fff !important; border: 0 !important;
+  -webkit-backdrop-filter: var(--tv-glass-blur-strong); backdrop-filter: var(--tv-glass-blur-strong);
+  box-shadow: inset .5px .5px 0 rgba(255, 255, 255, .25), inset 0 0 0 1px rgba(255, 255, 255, .08);
+  transition: transform .25s var(--tv-ease), background .2s;
+}
+.detailButton:hover { background: rgba(255, 255, 255, .18) !important; }
+.detailButton:active { transform: scale(.96); }
+.detailButton, .detailButton-content { flex-direction: row !important; }
+.detailButton-content { display: flex; align-items: center; justify-content: center; gap: .45em; }
+.detailButton-icon { font-size: calc(var(--tv-btn-h) * .5) !important; margin: 0 !important; color: inherit; line-height: 1; }
+.btnPlay.detailButton, .btnResume.detailButton {
+  width: auto !important; min-width: calc(var(--tv-btn-h) * 4.825) !important; padding: 0 30px 0 24px !important;
+  border-radius: 999px !important; background: rgba(255, 255, 255, .92) !important; color: rgba(0, 0, 0, .88) !important;
+  -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none;
+  font-size: clamp(15px, .94vw, 18px); font-weight: 600;
+}
+.btnPlay.detailButton:hover, .btnResume.detailButton:hover { background: #fff !important; }
+.btnPlay .detailButton-icon { font-size: calc(var(--tv-btn-h) * .55) !important; }
+.btnPlay.detailButton .detailButton-content::after { content: "Play"; font-size: clamp(15px, .94vw, 18px); font-weight: 600; color: inherit; white-space: nowrap; }
+html[lang|="de"] .btnPlay.detailButton .detailButton-content::after { content: "Abspielen"; }
+/* Icons wie Apple: + / ✓ für Merkliste (Favorit), ⋯ für Mehr, ▶ Trailer */
+.btnUserRating .detailButton-icon.favorite { font-size: 0 !important; }
+.btnUserRating .detailButton-icon.favorite::before { content: "add"; font-family: "Material Icons"; font-size: calc(var(--tv-btn-h) * .55); }
+.btnUserRating .detailButton-icon.favorite.ratedItem::before { content: "check"; }
+.btnMoreCommands .detailButton-icon.more_vert { font-size: 0 !important; }
+.btnMoreCommands .detailButton-icon.more_vert::before { content: "more_horiz"; font-family: "Material Icons"; font-size: calc(var(--tv-btn-h) * .5); }
+.btnPlaystate .playstatebutton-icon-played { color: #fff !important; }
+.btnPlaystate:has(.playstatebutton-icon-played) { background: rgba(255, 255, 255, .92) !important; color: #000 !important; }
+.btnPlaystate:has(.playstatebutton-icon-played) .detailButton-icon { color: #000 !important; }
+.btnShuffle, .btnInstantMix, .btnDownload, .btnSplitVersions, .btnReplay, .btnCancelSeriesTimer, .btnCancelTimer { display: none !important; }
+.trackSelections { display: none !important; }   /* Spurwahl im Player (Apple: nicht im Hero) */
+
+/* Regie / Genres rechts unten (Apple: "Starring … / Director …") */
+.itemDetailsGroup {
+  position: absolute; right: var(--tv-gutter); top: calc(var(--hero-h) - 180 * var(--u)); transform: translateY(-100%);
+  max-width: min(360 * var(--u), 30vw); margin: 0; text-align: right;
+  font-size: clamp(12px, .78vw, 15px); line-height: 1.4;
+}
+.detailsGroupItem { display: block; margin: 0 0 2px; }
+.detailsGroupItem .label, .detailsGroupItem .MuiTypography-root.label { display: inline; color: var(--tv-text-2) !important; font-size: inherit; font-weight: 400; margin-right: 5px; }
+.detailsGroupItem .label::after { content: " "; }
+.detailsGroupItem > div, .detailsGroupItem .focuscontainer-x { display: inline; }
+.detailsGroupItem a, .detailsGroupItem a.button-link, .detailsGroupItem .MuiBox-root { color: var(--tv-text-3) !important; font-weight: 400; font-size: inherit; transition: color .2s; }
+.detailsGroupItem a:hover { color: var(--tv-text-1) !important; }
+/* nur erste (Regie/Creator) und letzte Gruppe (Genres); Jellyfin 12 hüllt jede Gruppe in ein klassenloses div */
+.itemDetailsGroup > div:has(> .detailsGroupItem):is(.itemDetailsGroup > div:has(> .detailsGroupItem) ~ div):has(~ div:has(> .detailsGroupItem)) { display: none !important; }
+html.atv-js .itemDetailsGroup { display: none; }                            /* JS liefert Starring/Director */
+
+/* Regale unter dem Hero */
+.detailPageSecondaryContainer { padding: calc(48 * var(--u)) 0 60px !important; margin: 0 !important; background: transparent !important; }
+.detailPageSecondaryContainer > .verticalSection, .detailVerticalSection { padding: 0 !important; margin: 0 0 calc(var(--tv-shelf-gap) - var(--tv-focus-pad)) !important; }
+.detailVerticalSection .sectionTitle, .detailVerticalSection h2.sectionTitle { padding-left: var(--tv-gutter) !important; }
+.detailVerticalSection .emby-scroller.no-padding { padding: 0 !important; }
+.detailVerticalSection .itemsContainer.vertical-wrap { padding-top: var(--tv-focus-pad) !important; }
+.nextUpSection, .detailSection > .verticalSection { width: 100%; margin: calc(40 * var(--u)) calc(-1 * var(--tv-gutter)) 0 !important; }
+/* Erstes Regal im Hero-Container ("Als Nächstes"/"Staffeln") unter das Hero-Ende schieben:
+   Textblock endet ≈ 160 tvOS-px über dem Hero-Ende, Regal beginnt 48 darunter → 208 Luft */
+.detailSection > .verticalSection:not(.hide):not(.detailSection > .verticalSection:not(.hide) ~ *) { margin-top: calc(208 * var(--u)) !important; }
+.nextUpSection .sectionTitle { padding-left: var(--tv-gutter) !important; }
+.nextUpItems.vertical-wrap { padding: var(--tv-focus-pad) var(--tv-gutter) 0 !important; }
+html.atv-js .nextUpSection, html.atv-js #childrenCollapsible { display: none !important; } /* JS: Staffel-Dropdown + Episodenregal */
+#castCollapsible .itemsContainer.scrollSlider { gap: clamp(14px, 1.46vw, 28px); }
+
+/* Folgen-/Listenzeilen (Staffelseite, Alben) */
+.listItem, .listItem-border { border-radius: 14px !important; border: 0 !important; padding: 10px 12px !important; margin: 0 var(--tv-gutter) 4px; transition: background .2s var(--tv-ease); }
+.listItem:hover, .listItem:focus-within { background: rgba(255, 255, 255, .08) !important; }
+.listItemImage { border-radius: 10px !important; background-color: #1c1c1e; }
+.listItemBody .listItemBodyText { font-weight: 600; color: #fff; }
+.listItemBody .secondary, .listItemBodyText.secondary { color: var(--tv-text-2); font-weight: 400; }
+.listItemIndex, .listItemMediaInfo .mediaInfoItem { color: var(--tv-text-3); }
+.listItem .itemProgressBar { position: static !important; width: 100px; height: 3px; margin-top: 6px !important; }
+
+/* ===== src-css/06-player.css ===== */
+/* ==========================================================================
+   Video-Player (tvOS-26-Transportleiste): weicher Verlauf, Glas-Scrubber
+   12 px / Radius 6 / 80er-Rand, Zeiten unter dem Balken, Glas-Kreise 70 px
+   rechts über dem Balken, Skip/Up-Next als Glas. Titelblock links: JS.
+   ========================================================================== */
+.videoPlayerContainer { background: #000; }
+/* Während der Wiedergabe: alte Kopfzeile, Tab-Leiste, Suche, Avatar weg */
+body:has(.videoPlayerContainer) .skinHeader:not(.osdHeader), .skinHeader.focuscontainer-x.osdHeader, body:has(.videoPlayerContainer) .mainDrawer,
+body:has(.videoPlayerContainer) header.MuiAppBar-root .MuiBox-root:last-child,
+body:has(.videoPlayerContainer) header .MuiToolbar-root a.MuiIconButton-root[href*="search"] { display: none !important; }
+.videoOsdBottom, .videoOsdBottom.videoOsdBottom-maincontrols {
+  background: linear-gradient(to top, rgba(0, 0, 0, .55), rgba(0, 0, 0, .25) 50%, transparent) !important;
+  padding: 0 var(--tv-gutter) calc(40 * var(--u)) !important;
+  min-height: calc(300 * var(--u));
+  align-items: flex-end;
+}
+.osdHeader, .skinHeader.osdHeader { background: linear-gradient(to bottom, rgba(0, 0, 0, .5), transparent) !important; }
+.skinHeader.osdHeader.MuiBox-root { position: fixed; top: 0 !important; left: 0; right: 0; }
+.osdControls { display: flex; flex-direction: column; width: 100%; padding: 0 !important; }
+.osdMainTextContainer { order: 1; padding: 0 !important; margin-bottom: calc(14 * var(--u)); }
+h3.osdTitle { font-size: clamp(22px, 2.19vw, 42px); font-weight: 700; letter-spacing: .005em; margin: 0; color: #fff; }
+.osdSecondaryMediaInfo, .osdMediaStatus { font-size: clamp(13px, 1.15vw, 22px); color: rgba(255, 255, 255, .9); }
+/* Tasten: oberhalb des Balkens, rechts */
+.osdControls > .buttons { order: 2; display: flex; align-items: center; margin: 0 0 calc(32 * var(--u)) !important; padding: 0 !important; width: 100%; }
+.osdControls > .buttons > div:first-child { display: flex; align-items: center; gap: clamp(8px, 1.3vw, 25px); }
+.osdTimeText { margin: 0 0 0 16px !important; font-size: clamp(13px, 1.1vw, 21px); color: rgba(255, 255, 255, .7); font-variant-numeric: tabular-nums; }
+.btnRewind, .btnFastForward, .volumeButtons, .btnUserRating.paper-icon-button-light, .btnRecord, .btnAirPlay { display: none !important; }
+.osdControls .paper-icon-button-light, .osdControls .btnPause {
+  width: clamp(44px, 3.65vw, 70px) !important; height: clamp(44px, 3.65vw, 70px) !important; padding: 0 !important; margin: 0 !important;
+  border-radius: 50% !important; color: #fff !important;
+  background: rgba(255, 255, 255, .16) !important;
+  -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+  box-shadow: inset .5px .5px 0 rgba(255, 255, 255, .35), inset 0 0 0 1px rgba(255, 255, 255, .08), 0 8px 40px rgba(0, 0, 0, .35);
+  transition: transform .2s var(--tv-ease), background .2s;
+}
+.osdControls .paper-icon-button-light:hover, .osdControls .btnPause:hover { background: rgba(255, 255, 255, .26) !important; transform: scale(1.06); }
+.osdControls .paper-icon-button-light .material-icons { font-size: clamp(22px, 1.7vw, 32px) !important; width: auto; height: auto; }
+.osdControls > .buttons > .btnSubtitles { margin-left: auto !important; }
+.osdControls > .buttons > .btnSubtitles, .osdControls > .buttons > .btnAudio, .osdControls > .buttons > .btnVideoOsdSettings,
+.osdControls > .buttons > .btnPip, .osdControls > .buttons > .btnFullscreen { margin-left: clamp(8px, 1.3vw, 25px) !important; }
+.osdControls > .buttons > .btnSubtitles { margin-left: auto !important; }
+/* Balken-Zeile: Balken volle Breite, Zeiten darunter */
+.osdControls > .flex.flex-direction-row { order: 3; flex-wrap: wrap; width: 100%; padding: 0 !important; }
+.osdControls .sliderContainer.mdl-slider-container { flex: 0 0 100% !important; order: 0; height: calc(12 * var(--u)); min-height: 10px; margin: 0; }
+.osdControls .startTimeText { order: 1; margin: calc(16 * var(--u)) 0 0 !important; }
+.osdControls .endTimeText { order: 2; margin: calc(16 * var(--u)) 0 0 auto !important; }
+.osdPositionText, .osdDurationText, .startTimeText, .endTimeText {
+  font-size: clamp(13px, 1.1vw, 21px); font-weight: 600; color: rgba(255, 255, 255, .92); font-variant-numeric: tabular-nums; padding: 0 !important;
+}
+/* Scrubber: beide Hälften transluzent, helle Oberkante, kein Knopf */
+.osdControls input.osdPositionSlider.mdl-slider { height: calc(12 * var(--u)); min-height: 10px; margin: 0; top: 0; color: #fff; }
+.osdControls .mdl-slider-background-flex-container { top: 0; height: 100%; padding: 0; }
+.osdControls .mdl-slider-background-flex {
+  height: calc(12 * var(--u)) !important; min-height: 10px; margin: 0 !important;
+  background: rgba(0, 0, 0, .35) !important; border-radius: 999px; overflow: hidden;
+  -webkit-backdrop-filter: blur(20px) saturate(1.6); backdrop-filter: blur(20px) saturate(1.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), inset 0 0 0 1px rgba(255, 255, 255, .06);
+}
+.osdControls .mdl-slider-background-flex-inner { height: 100%; }
+.osdControls .mdl-slider-background-lower { background: rgba(255, 255, 255, .65) !important; height: 100%; border-radius: 999px 0 0 999px; }
+.osdControls .mdl-slider-background-upper { background: rgba(255, 255, 255, .14) !important; height: 100%; }
+.mdl-slider::-webkit-slider-thumb, .osdPositionSlider::-webkit-slider-thumb {
+  width: 3px !important; height: calc(22 * var(--u)) !important; min-height: 16px; border-radius: 2px !important;
+  background: #fff !important; border: 0 !important; box-shadow: 0 0 6px rgba(0, 0, 0, .5) !important; transform: none !important;
+}
+.mdl-slider.mdl-slider-hoverthumb::-webkit-slider-thumb { opacity: 0; transition: opacity .15s; }
+.mdl-slider.mdl-slider-hoverthumb:hover::-webkit-slider-thumb, .mdl-slider.mdl-slider-hoverthumb:active::-webkit-slider-thumb { opacity: 1; }
+.sliderMarkerContainer { top: 0 !important; height: calc(12 * var(--u)); }
+.sliderMarker { background: rgba(255, 255, 255, .5) !important; width: 2px !important; height: 100% !important; border-radius: 1px; }
+.sliderBubble {
+  background: rgba(40, 40, 40, .7) !important; color: #fff; border-radius: 10px; padding: 4px 6px;
+  -webkit-backdrop-filter: var(--tv-glass-blur-strong); backdrop-filter: var(--tv-glass-blur-strong);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2), 0 8px 40px rgba(0, 0, 0, .55);
+}
+.sliderBubble .chapterThumbContainer, .sliderBubble img { border-radius: 8px; }
+.osdPoster { border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, .6); }
+/* Lautstärke-Slider (falls sichtbar) */
+.osdVolumeSlider { color: #fff; }
+
+/* Intro/Abspann überspringen: Glas-Pille 52 px unten rechts */
+.skip-button, .skip-button-container .skip-button, .skipIntro, .btnSkipIntro {
+  height: clamp(40px, 2.7vw, 52px); padding: 0 clamp(18px, 1.46vw, 28px); border-radius: 999px !important; border: 0 !important;
+  background: rgba(255, 255, 255, .18) !important; color: #fff !important; font-size: clamp(15px, 1.25vw, 24px); font-weight: 600;
+  -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+  box-shadow: inset .5px .5px 0 rgba(255, 255, 255, .35), inset 0 0 0 1px rgba(255, 255, 255, .08), 0 8px 40px rgba(0, 0, 0, .4);
+  text-transform: none; letter-spacing: 0;
+}
+.skip-button:hover, .skip-button:focus { background: rgba(255, 255, 255, .92) !important; color: #000 !important; }
+/* Als Nächstes: Glas-Karte unten rechts */
+.upNextContainer { background: transparent !important; }
+.upNextDialog {
+  background: rgba(30, 30, 30, .6) !important; border-radius: 24px !important; padding: 18px 22px !important;
+  -webkit-backdrop-filter: blur(40px) saturate(1.8); backdrop-filter: blur(40px) saturate(1.8);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 20px 60px rgba(0, 0, 0, .5);
+  margin: 0 var(--tv-gutter) calc(140 * var(--u)) auto !important; max-width: 560px;
+}
+.upNextDialog-nextVideoText, .upNextDialog-title { font-weight: 700; color: #fff; }
+.upNextDialog-countdownText { color: var(--tv-text-2); }
+.upNextDialog .raised, .upNextDialog .emby-button { border-radius: 999px !important; }
+.upNextDialog .btnStartNow { background: rgba(255, 255, 255, .92) !important; color: #000 !important; }
+.upNextDialog .btnCancel { background: rgba(255, 255, 255, .14) !important; color: #fff !important; }
+/* Mini-Player */
+.nowPlayingBar {
+  background: rgba(30, 30, 30, .65) !important; border: 0 !important; border-radius: 22px; margin: 0 12px 12px; width: calc(100% - 24px);
+  -webkit-backdrop-filter: blur(40px) saturate(180%); backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: inset 0 0 0 1px var(--tv-hair), 0 20px 50px rgba(0, 0, 0, .55);
+}
+.nowPlayingBarPositionSlider::-webkit-slider-runnable-track, .nowPlayingBar .mdl-slider-background-lower { background: #fff !important; }
+
+/* Überspringen-Pille: rechts bündig mit der Player-Leiste (gleicher Seitenrand), knapp ÜBER der Steuerzeile (Apple TV).
+   Jellyfin setzt den Container sonst fest auf bottom: 8rem und die Pille mit margin-right: 6rem. */
+.skip-button-container { bottom: calc(235 * var(--u)) !important; }
+.skip-button-container .skip-button, .skip-button { margin-right: var(--tv-gutter) !important; margin-left: auto !important; }
+/* Steuerleiste ausgeblendet: Pille rückt nach unten in die Ecke (bleibt sonst auf der hohen Position, falls die Erkennung nicht greift) */
+body:has(.videoOsdBottom.hide) .skip-button-container { bottom: calc(110 * var(--u)) !important; transition: bottom .25s var(--tv-ease); }
+@media (max-width: 800px) {
+  .skip-button-container { bottom: calc(150px + env(safe-area-inset-bottom, 0px)) !important; }
+  body:has(.videoOsdBottom.hide) .skip-button-container { bottom: calc(28px + env(safe-area-inset-bottom, 0px)) !important; }
+  .skip-button-container .skip-button, .skip-button { margin-right: 16px !important; }
+}
+
+/* ===== src-css/07-search-login.css ===== */
+/* ==========================================================================
+   Suche: Feld zentriert 600×44, Radius 22, Glas, Lupe innen; Ergebnisse als
+   Regale; Personen rund. Login: Pastell-Blur, runde Profile 170, Glas-Karte.
+   ========================================================================== */
+.searchFields { padding: calc(var(--tv-header-h) + 12px + 36px) var(--tv-gutter) 8px !important; }
+.searchFieldsInner { position: relative; max-width: 600px; margin: 0 auto; width: 100%; }
+.searchfields-icon {
+  position: absolute; left: 16px; top: 50%; transform: translateY(-50%); z-index: 1;
+  font-size: 22px !important; color: rgba(255, 255, 255, .55); margin: 0 !important;
+}
+.searchFieldsInner .inputContainer { margin: 0; width: 100%; }
+input.searchfields-txtSearch, .searchFields .emby-input {
+  height: 44px; padding: 0 20px 0 48px !important; border-radius: 22px !important; border: 0 !important;
+  background: rgba(255, 255, 255, .12) !important; color: #fff !important; font-size: 17px !important;
+  -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+  box-shadow: inset 0 0 0 1px var(--tv-hair), inset 0 1px 0 rgba(255, 255, 255, .16);
+}
+input.searchfields-txtSearch:focus { background: rgba(255, 255, 255, .16) !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .3), 0 0 0 4px rgba(10, 132, 255, .35) !important; }
+input.searchfields-txtSearch::placeholder { color: rgba(255, 255, 255, .5); }
+.searchResults { padding-top: 28px !important; }
+.searchResults .verticalSection { margin-bottom: calc(var(--tv-shelf-gap) - var(--tv-focus-pad)) !important; }
+.searchResults h2.sectionTitle { padding-left: var(--tv-gutter) !important; }
+.searchResults .noItemsMessage, .noItemsMessage { color: var(--tv-text-2); text-align: center; padding: 40px var(--tv-gutter); }
+/* Studios/Ordner (quadratische Standardkarten) wie Pillen mit Namen */
+.searchResults .card[data-type="Studio"] .cardText-first { opacity: 1; }
+.searchResults .card[data-type="Studio"] .cardImageContainer.defaultCardBackground { background: #2a2b33 !important; }
+
+/* ---------- Login / Serverwahl ---------- */
+#loginPage, .standalonePage, .loginPage, #selectServerPage {
+  background:
+    radial-gradient(60% 50% at 15% 10%, rgba(255, 196, 160, .55), transparent 70%),
+    radial-gradient(50% 45% at 80% 15%, rgba(140, 190, 235, .5), transparent 70%),
+    radial-gradient(70% 55% at 50% 95%, rgba(90, 140, 185, .55), transparent 70%),
+    linear-gradient(180deg, #6f93ad, #4d7592 55%, #3e6682) !important;
+  min-height: 100vh; margin-top: -48px; padding-top: 48px !important; color: #fff;
+}
+.standalonePage .padded-left, .standalonePage .padded-right { background: transparent !important; }
+#loginPage .padded-bottom-page.margin-auto-y, #selectServerPage .margin-auto-y { padding-top: 10vh !important; }
+.manualLoginForm, .loginDisclaimerContainer, #loginPage .readOnlyContent, .selectServerContainer, .visualLoginForm {
+  max-width: 420px !important; margin-left: auto !important; margin-right: auto !important;
+}
+.manualLoginForm {
+  padding: 32px 28px 24px; border-radius: 36px;
+  background: rgba(30, 34, 40, .42) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(1.6); backdrop-filter: blur(40px) saturate(1.6);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22), inset 0 1px 0 rgba(255, 255, 255, .3), 0 24px 80px rgba(0, 0, 0, .35);
+}
+.manualLoginForm > .padded-left, .manualLoginForm > .padded-right { padding: 0 !important; }
+.loginPage h1.sectionTitle, #loginPage h1.sectionTitle, #selectServerPage h1.sectionTitle {
+  font-size: 22px !important; font-weight: 700; text-align: center; margin: 0 0 18px !important; letter-spacing: 0;
+}
+.manualLoginForm .inputContainer { margin: 0 0 12px; }
+.manualLoginForm .inputLabel, .inputLabel, .selectLabel, .textareaLabel { color: rgba(255, 255, 255, .75) !important; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+.manualLoginForm .emby-input, .emby-input, .emby-textarea, .emby-select, .selectContainer select {
+  height: 44px; border-radius: 12px !important; border: 0 !important; padding: 0 14px !important;
+  background: rgba(255, 255, 255, .14) !important; color: #fff !important; font-size: 16px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+}
+.emby-textarea { height: auto; padding: 10px 14px !important; }
+.emby-input:focus, .emby-textarea:focus, .emby-select:focus { background: rgba(255, 255, 255, .18) !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35), 0 0 0 4px rgba(10, 132, 255, .4) !important; outline: 0 !important; }
+.emby-select-withcolor > option { background: #2c2c30; color: #fff; }
+.selectArrow { color: rgba(255, 255, 255, .6); }
+.checkboxContainer { margin: 4px 0 14px; }
+.checkboxLabel { color: rgba(255, 255, 255, .85); font-size: 15px; }
+.checkboxOutline { border-radius: 7px !important; border: 0 !important; background: rgba(255, 255, 255, .18) !important; width: 22px; height: 22px; }
+.emby-checkbox:checked + span + .checkboxOutline { background: var(--tv-blue) !important; }
+.checkboxIcon { color: #fff !important; font-size: 18px; }
+/* Buttons: Primär = Blau (tvOS-Alert), Sekundär = Glas, alles Pillen */
+.raised, .emby-button.raised, button.raised {
+  border-radius: 999px !important; border: 0 !important; height: 48px; padding: 0 22px !important;
+  font-weight: 600 !important; font-size: 16px; text-transform: none !important; letter-spacing: 0;
+  background: rgba(255, 255, 255, .16) !important; color: #fff !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14) !important;
+  -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+  transition: background .2s, transform .2s var(--tv-ease);
+}
+.raised:hover { background: rgba(255, 255, 255, .24) !important; }
+.raised.button-submit, .button-submit, html body button.raised.button-submit, .emby-button.button-submit {
+  background: var(--tv-blue) !important; color: #fff !important; box-shadow: none !important;
+}
+.raised.button-submit:hover { background: #2b93ff !important; }
+.raised.button-delete, .button-delete { background: rgba(255, 69, 58, .85) !important; color: #fff !important; }
+.manualLoginForm .button-submit { width: 100%; margin: 8px 0 0; }
+#loginPage .readOnlyContent { margin-top: 14px !important; display: flex; flex-direction: column; gap: 8px; }
+#loginPage .btnQuick, #loginPage .btnForgotPassword, .btnManual, .btnAddServer, .btnSelectServer {
+  background: rgba(255, 255, 255, .14) !important; color: #fff !important;
+}
+#loginPage .btnForgotPassword { background: transparent !important; box-shadow: none !important; color: rgba(255, 255, 255, .8) !important; height: 40px; }
+.loginDisclaimerContainer, .loginDisclaimer { color: rgba(255, 255, 255, .75); text-align: center; font-size: 13px; }
+/* Benutzerkacheln ("Wer schaut?"): Kreise 170, Name 22 px darunter, "+" = manuelle Anmeldung */
+#divUsers, .visualLoginForm .itemsContainer { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; padding: 0 var(--tv-gutter); }
+.card.squareCard.loginSquareCard, .card.overflowSquareCard.loginSquareCard { width: clamp(110px, 8.85vw, 170px) !important; }
+.loginSquareCard .cardBox { border-radius: 50%; }
+.loginSquareCard .cardScalable, .loginSquareCard .cardPadder-square, .loginSquareCard .cardContent, .loginSquareCard .cardImageContainer, .loginSquareCard .cardScalable::after { border-radius: 50% !important; }
+.loginSquareCard .cardPadder-square { background: rgba(255, 255, 255, .25) !important; }
+.loginSquareCard .cardImageContainer.defaultCardBackground { background: rgba(255, 255, 255, .28) !important; }
+.loginSquareCard .cardImageIcon { color: rgba(255, 255, 255, .9) !important; font-size: 40cqw !important; }
+.loginSquareCard .cardText { position: static; text-align: center; margin-top: 30px; font-size: clamp(14px, 1.15vw, 22px); font-weight: 400; color: rgba(255, 255, 255, .75); }
+.loginSquareCard:hover .cardText, .loginSquareCard:focus-within .cardText { color: #fff; }
+.loginSquareCard:hover .cardBox, .loginSquareCard:focus-within .cardBox { transform: scale(1.15) !important; box-shadow: 0 24px 60px rgba(0, 0, 0, .35); }
+html.atv-js #divUsers { display: none !important; }   /* JS zeichnet die Profilwahl */
+/* Serverwahl */
+.scrollSlider.servers { justify-content: center; gap: 25px; }
+.selectServerContainer .btnAddServer { margin-top: 20px; }
+
+/* ===== src-css/08-dialogs-admin.css ===== */
+/* ==========================================================================
+   Dialoge, Menüs, Toasts (Glas) · Dashboard/Einstellungen sauber dunkel
+   ========================================================================== */
+.dialogBackdrop, .dialogBackdrop.dialogBackdropOpened { background: rgba(0, 0, 0, .5) !important; }
+.dialog, .formDialog, .dialog.dialog-fixedSize, .dialog.alertDialog, .popover {
+  background: rgba(40, 40, 40, .72) !important;
+  -webkit-backdrop-filter: var(--tv-glass-blur-strong); backdrop-filter: var(--tv-glass-blur-strong);
+  border: 0 !important; border-radius: 24px !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2), inset 0 1px 0 rgba(255, 255, 255, .25), 0 8px 40px rgba(0, 0, 0, .55) !important;
+  color: var(--tv-text);
+  animation: tv-pop .2s var(--tv-ease);
+}
+@keyframes tv-pop { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
+.dialog.dialog-fullscreen { border-radius: 0 !important; background: var(--tv-bg) !important; backdrop-filter: none !important; }
+.dialog.formDialog.centeredDialog { padding: 10px 6px; min-width: 320px; }
+.formDialogHeader-clear .formDialogHeaderTitle { font-size: 20px; }
+.formDialogFooter-flex { gap: 8px; }
+/* Aktionsmenü (Kontextmenü / Untertitel / Audio) */
+.actionSheet, .actionSheet.centeredDialog, .dialog.actionSheet { border-radius: 20px !important; min-width: 260px; }
+.actionSheetContent { padding: 6px !important; background: transparent !important; }
+h1.actionSheetTitle, .actionSheetTitle { font-size: 13px !important; font-weight: 600; color: var(--tv-text-2); margin: 10px 14px 6px !important; letter-spacing: .02em; }
+.actionSheetScroller { padding: 0; }
+.actionSheetMenuItem, .listItem-button.actionSheetMenuItem {
+  height: 44px; border-radius: 12px !important; padding: 0 12px !important; margin: 0; color: var(--tv-text-1) !important; font-size: 15px;
+  transition: background .12s;
+}
+.actionSheetMenuItem:hover, .actionSheetMenuItem:focus { background: rgba(255, 255, 255, .1) !important; }
+.actionSheetMenuItem .actionsheetMenuItemIcon, .actionsheetMenuItemIcon { color: rgba(255, 255, 255, .85) !important; font-size: 20px !important; width: 20px; margin-right: 14px; }
+.actionsheetMenuItemIcon.check { color: #fff !important; }
+.actionSheetItemText, .listItemBodyText.actionSheetItemText { font-size: 15px; font-weight: 500; }
+.actionSheetMenuItem:has(.delete) .actionSheetItemText, .actionSheetMenuItem:has(.delete) .actionsheetMenuItemIcon { color: var(--tv-red) !important; }
+.actionsheetDivider { background: rgba(255, 255, 255, .15) !important; margin: 4px 10px; }
+/* Formular-Dialoge */
+.formDialogHeader { background: transparent !important; border: 0 !important; padding: 18px 18px 8px !important; }
+.formDialogHeaderTitle { font-size: 20px; font-weight: 700; }
+.formDialogContent { background: transparent !important; }
+.formDialogFooter { background: transparent !important; border: 0 !important; padding: 12px 18px 18px !important; }
+.formDialogFooterItem { margin: 0 6px; }
+.dialog .raised { height: 44px; }
+/* MUI-Menüs (Benutzermenü, Sortierung …) */
+.MuiPopover-paper, .MuiMenu-paper, .MuiPaper-root.MuiMenu-paper {
+  background: rgba(40, 40, 40, .72) !important; background-image: none !important; color: #fff !important;
+  -webkit-backdrop-filter: var(--tv-glass-blur-strong); backdrop-filter: var(--tv-glass-blur-strong);
+  border-radius: 14px !important; padding: 4px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2), 0 8px 40px rgba(0, 0, 0, .55) !important;
+}
+.MuiMenuItem-root { border-radius: 9px; min-height: 36px; font-size: 14px; font-weight: 500; margin: 1px 0; }
+.MuiMenuItem-root:hover { background: rgba(255, 255, 255, .1) !important; }
+.MuiListItemIcon-root { color: rgba(255, 255, 255, .85) !important; min-width: 34px !important; }
+.MuiListSubheader-root { background: transparent !important; color: var(--tv-text-2) !important; font-size: 12px; font-weight: 600; line-height: 32px; }
+.MuiDivider-root { border-color: rgba(255, 255, 255, .12) !important; }
+.MuiTooltip-tooltip { background: rgba(40, 40, 40, .9) !important; border-radius: 8px; font-size: 12px; }
+/* Toast: Glas-Pille oben mittig (tvOS), 52 hoch */
+.toast {
+  position: fixed !important; top: calc(12px + var(--tv-header-h) + 14px) !important; bottom: auto !important; left: 50% !important; right: auto !important;
+  transform: translateX(-50%) !important; margin: 0 !important; z-index: 99999;
+  height: 52px; padding: 0 22px !important; display: flex; align-items: center; border-radius: 26px !important;
+  background: rgba(40, 40, 40, .72) !important; color: #fff !important; font-size: 16px; font-weight: 600;
+  -webkit-backdrop-filter: var(--tv-glass-blur-strong); backdrop-filter: var(--tv-glass-blur-strong);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2), 0 8px 40px rgba(0, 0, 0, .55);
+}
+.toast.toastVisible { transform: translateX(-50%) !important; }
+/* Ladeanzeige */
+.mdl-spinner__layer, .docspinner { color: #fff; }
+.mdl-spinner__layer-1, .mdl-spinner__layer-2, .mdl-spinner__layer-3, .mdl-spinner__layer-4 { border-color: #fff !important; }
+
+/* ---------- Dashboard / Einstellungen ---------- */
+.MuiDrawer-paper, .MuiDrawer-docked .MuiPaper-root {
+  background: #1b1c22 !important; border-right: 1px solid rgba(255, 255, 255, .06) !important; color: #fff !important;
+}
+.MuiDrawer-paper .MuiListItemButton-root { border-radius: 10px; margin: 1px 10px; padding: 8px 14px; }
+.MuiDrawer-paper .MuiListItemButton-root:hover { background: rgba(255, 255, 255, .08) !important; }
+.MuiDrawer-paper .MuiListItemButton-root.Mui-selected { background: rgba(255, 255, 255, .14) !important; }
+.MuiDrawer-paper .MuiListItemIcon-root { color: rgba(255, 255, 255, .8) !important; }
+.MuiDrawer-paper .MuiListItemText-primary { font-size: 15px; font-weight: 500; }
+.MuiDrawer-paper .MuiListSubheader-root { background: transparent !important; }
+.MuiDrawer-paper .MuiListItem-root:first-child img, .MuiDrawer-paper .MuiAvatar-root img { border-radius: 8px; }
+#dashboardPage, .type-interior, .content-primary { background: transparent !important; color: var(--tv-text); }
+.content-primary, .content-secondary, .readOnlyContent { color: var(--tv-text); }
+.MuiPaper-root:not(.MuiAppBar-root):not(.MuiDrawer-paper):not(.MuiMenu-paper):not(.MuiPopover-paper) {
+  background: #1b1c22 !important; background-image: none !important; color: #fff !important; border-radius: 18px !important; box-shadow: none !important;
+}
+.MuiCard-root, .paperList, .itemsContainer.paperList, .verticalSection .paperList, .MuiDataGrid-root, .MuiTableContainer-root {
+  background: #1b1c22 !important; border-radius: 18px !important; border: 1px solid rgba(255, 255, 255, .06) !important; overflow: hidden; color: #fff;
+}
+.paperList .listItem { margin: 0; border-radius: 0 !important; }
+.MuiTableCell-root { border-color: rgba(255, 255, 255, .08) !important; color: #fff !important; }
+.MuiTableHead-root .MuiTableCell-root { color: var(--tv-text-2) !important; }
+.MuiDataGrid-root { --DataGrid-rowBorderColor: rgba(255, 255, 255, .08); }
+.MuiDataGrid-columnHeaders, .MuiDataGrid-columnHeader, .MuiDataGrid-footerContainer { background: #1b1c22 !important; border-color: rgba(255, 255, 255, .08) !important; }
+.MuiButton-contained, .MuiButton-root.MuiButton-contained { border-radius: 999px !important; background: rgba(255, 255, 255, .92) !important; color: #000 !important; box-shadow: none !important; }
+.MuiButton-outlined { border-radius: 999px !important; border-color: rgba(255, 255, 255, .3) !important; color: #fff !important; }
+.MuiButton-text { border-radius: 999px !important; }
+.MuiIconButton-root { color: rgba(255, 255, 255, .85); }
+.MuiCardHeader-title, .MuiTypography-h5, .MuiTypography-h6, .MuiTypography-h4 { font-weight: 700; letter-spacing: 0; }
+.MuiFormControl-root .MuiInputBase-root, .MuiOutlinedInput-root, .MuiFilledInput-root {
+  background: rgba(255, 255, 255, .1) !important; border-radius: 12px !important; color: #fff !important;
+}
+.MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, .14) !important; }
+.MuiFilledInput-root::before, .MuiFilledInput-root::after { display: none; }
+.MuiInputLabel-root { color: var(--tv-text-2) !important; }
+.MuiCheckbox-root, .MuiRadio-root { color: rgba(255, 255, 255, .6) !important; }
+.MuiCheckbox-root.Mui-checked svg, .MuiRadio-root.Mui-checked svg { color: var(--tv-blue) !important; }
+.MuiSwitch-track { background-color: rgba(255, 255, 255, .25) !important; }
+.MuiChip-root { border-radius: 999px; }
+.MuiAlert-root { border-radius: 14px; }
+.MuiTabs-root .MuiTab-root { text-transform: none; font-weight: 600; color: var(--tv-text-2); }
+.MuiTabs-root .MuiTab-root.Mui-selected { color: #fff; }
+.MuiSkeleton-root { background: rgba(255, 255, 255, .08) !important; }
+/* Alte Jellyfin-Einstellungsseiten (Anzeige, Startseite, Untertitel …) */
+.userPreferencesPage .listItem, .settingsPage .listItem { margin: 0; }
+.fieldDescription, .checkboxFieldDescription { color: var(--tv-text-2); font-size: 13px; }
+.sectionTitle.sectionTitle-cards ~ .fieldDescription { margin-top: 4px; }
+.emby-select-withcolor { padding-right: 36px !important; }
+.inputContainer, .selectContainer, .checkboxContainer-withDescription { margin-bottom: 1.2em; }
+.verticalSection.verticalSection-extrabottompadding { margin-bottom: 2em !important; }
+.page.type-interior .readOnlyContent, .page.type-interior .content-primary { padding-top: 0; }
+.mainDrawer-scrollContainer .navMenuOption .navMenuOptionText { font-size: 16px; }
+.listItem-indent, .itemsContainer.paperList .listItem { border-radius: 0 !important; }
+.paging, .listPaging { color: var(--tv-text-2); }
+.btnPreviousPage, .btnNextPage { color: #fff; }
+/* Fortschrittsringe / Aktivitäts-Punkte im Dashboard */
+.activityItem .listItemIcon, .listItemIcon:not(.listItemIcon-transparent) { background: rgba(255, 255, 255, .1) !important; color: #fff !important; }
+
+/* ===== src-css/09-mobile.css ===== */
+/* ==========================================================================
+   Mobil (≤ 640 px, Referenz 390×844: sevm-*, Bild 20/21): Poster 144 (2 + An-
+   schnitt), Lücke 10, Rand 25, Titel 17/700, Glas-Tab-Leiste unten (aus dem
+   Jellyfin-Drawer), Suche als Kreis rechts unten, Hochkant-Hero aus dem Poster.
+   ========================================================================== */
+@media (max-width: 640px) {
+  :root {
+    --tv-gutter: 25px;
+    --tv-poster-w: 36.92vw;            /* 144 @390 */
+    --tv-wide-w: 87.2vw;               /* 340 @390 */
+    --tv-gap: 10px;
+    --tv-shelf-title: 17px;
+    --tv-title-to-cards: 12px;
+    --tv-shelf-gap: 48px;
+    --tv-focus-pad: 10px;
+    --tv-btn-h: 40px;
+  }
+  /* Kopfzeile: keine Kapsel; Avatar klein oben rechts; Menü-Knopf weg (Tabs liegen unten) */
+  header.MuiAppBar-root > .MuiToolbar-root:first-child:not(.videoOsd-appBar):not(.dashboard-appBar) {
+    width: auto; max-width: none; height: 0; margin: 0; padding: 0 !important; overflow: visible; isolation: auto;
+  }
+  header.MuiAppBar-root > .MuiToolbar-root:first-child:not(.videoOsd-appBar):not(.dashboard-appBar)::before { display: none; }
+  header .MuiToolbar-root button[aria-label="Open Menu"], header .MuiToolbar-root button[aria-label="Menü öffnen"] { display: none !important; }
+  header.MuiAppBar-root > .MuiToolbar-root:first-child > .MuiBox-root:last-child { top: 12px; right: 16px; }
+  .MuiAvatar-root { width: 30px !important; height: 30px !important; }
+  /* Lupe: eigener Glas-Kreis unten rechts (iOS-26-Tab-Leiste) */
+  header .MuiToolbar-root a.MuiIconButton-root[href*="search"] {
+    position: fixed; right: 12px; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); z-index: 1300;
+    width: 50px; height: 50px; margin: 0; border-radius: 50%; color: #fff;
+    background: rgba(40, 40, 40, .55);
+    -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), inset 0 1px 0 rgba(255, 255, 255, .22), 0 8px 30px rgba(0, 0, 0, .35);
+    display: flex; align-items: center; justify-content: center;
+  }
+  header .MuiToolbar-root a.MuiIconButton-root[href*="search"] svg { font-size: 24px; }
+  /* Drawer → Glas-Tab-Leiste unten: Start · Bibliotheken (Einstellungen/Abmelden über den Avatar) */
+  div:has(> .mainDrawer) { display: contents !important; }   /* Jellyfin hält den Drawer-Wrapper versteckt */
+  .mainDrawer, .mainDrawer.transition, .mainDrawer.touch-menu-la {
+    position: fixed !important; top: auto !important; bottom: calc(8px + env(safe-area-inset-bottom, 0px)) !important;
+    left: 12px !important; right: 74px !important; width: auto !important; height: 56px !important;
+    margin: 0 !important; transform: none !important; visibility: visible !important; opacity: 1 !important;
+    display: flex !important; z-index: 1300 !important; border-radius: 999px !important; overflow: hidden;
+    background: rgba(40, 40, 40, .55) !important;
+    -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), inset 0 1px 0 rgba(255, 255, 255, .22), 0 8px 30px rgba(0, 0, 0, .35);
+  }
+  .mainDrawer-scrollContainer {
+    display: flex !important; flex-direction: row; align-items: stretch; width: 100%; height: 100%; padding: 4px !important; margin: 0;
+    overflow-x: auto; overflow-y: hidden;
+  }
+  .mainDrawer-scrollContainer > div:first-child:empty, .mainDrawer .sidebarHeader, .mainDrawer .adminMenuOptions, .mainDrawer .userMenuOptions,
+  .mainDrawer .customMenuOptions:empty, .mainDrawer .lnkSyncPlay { display: none !important; }
+  .mainDrawer .libraryMenuOptions { display: contents; }
+  .mainDrawer .navMenuOption {
+    flex: 1 1 0; min-width: 64px; height: auto !important; margin: 0 !important; padding: 0 6px !important;
+    flex-direction: column; justify-content: center; gap: 2px; border-radius: 999px !important;
+    font-size: 10px !important; font-weight: 500; color: rgba(255, 255, 255, .9) !important; background: transparent !important;
+  }
+  .mainDrawer .navMenuOption .navMenuOptionIcon { margin: 0; font-size: 22px; }
+  .mainDrawer .navMenuOption .navMenuOptionText { font-size: 10px; line-height: 1; white-space: nowrap; }
+  .mainDrawer .navMenuOption-selected, .mainDrawer .navMenuOption-selected:hover { background: rgba(255, 255, 255, .22) !important; color: var(--tv-blue) !important; font-weight: 600; }
+  .mainDrawer .navMenuOption-selected .navMenuOptionIcon { color: var(--tv-blue) !important; }
+  .drawer-backdrop, .mainDrawer-background, .mainDrawerHandle { display: none !important; }
+  body { padding-bottom: 80px; }
+
+  /* Alte Jellyfin-Kopfzeile (.skinHeader, mobil aktiv): nur Zurück-Knopf + Seitentitel, Rest weg */
+  .skinHeader:not(.osdHeader) {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1100; height: 56px;
+    background: transparent !important; pointer-events: none;
+  }
+  .skinHeader:not(.osdHeader) .headerTop { height: 56px; padding: 8px 12px; align-items: center; }
+  .skinHeader .headerLeft, .skinHeader .headerRight { pointer-events: none; }
+  .skinHeader .headerButton { pointer-events: auto; }
+  .skinHeader:not(.osdHeader) .headerBackButton {
+    width: 40px; height: 40px; margin: 0; padding: 0; border-radius: 50%; color: #fff !important;
+    background: rgba(40, 40, 40, .5); -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+  }
+  .skinHeader .headerHomeButton, .skinHeader .mainDrawerButton, .skinHeader .headerSyncButton, .skinHeader .headerCastButton,
+  .skinHeader .headerSearchButton, .skinHeader .headerUserButton, .skinHeader .headerAudioPlayerButton, .skinHeader .headerTabs,
+  .skinHeader .headerSelectedPlayer { display: none !important; }
+  .skinHeader:not(.osdHeader) .pageTitle {
+    position: absolute; left: 50%; top: 8px; transform: translateX(-50%); height: 40px; margin: 0; max-width: 56%;
+    display: flex; align-items: center; justify-content: center; font-size: 17px; font-weight: 600; color: #fff;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 8px rgba(0, 0, 0, .5);
+  }
+  .skinHeader .pageTitleWithLogo { display: none !important; }
+  .itemDetailPage ~ .skinHeader .pageTitle, body:has(.itemDetailPage:not(.hide)) .skinHeader .pageTitle { display: none; }
+
+  /* Startseite / Regale */
+  .homePage .homeSectionsContainer { padding-top: 64px; }
+  .homePage .pageTabContent, .libraryPage .pageTabContent { padding-top: 0 !important; }
+  .sectionTitle, h2.sectionTitle { letter-spacing: 0; }
+  .emby-scrollbuttons { display: none !important; }
+  .card .cardText-first { font-size: 12px; }
+  .card .cardText-secondary { font-size: 11px; }
+  .overflowPortraitCard .cardText-first, .portraitCard .cardText-first { font-size: 13px; bottom: 7cqw; }
+  .countIndicator, .playedIndicator, .indicator { min-width: 22px; height: 22px; line-height: 22px; font-size: 12px !important; }
+  .itemsContainer.vertical-wrap { gap: 24px var(--tv-gap); padding-top: 8px !important; }
+  header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) { margin-top: 60px; padding: 0 var(--tv-gutter) !important; flex-wrap: wrap; }
+  .libraryPage:not(.itemDetailPage):not(.homePage) > .padded-bottom-page { padding-top: 56px !important; }
+  header.MuiAppBar-root > .MuiToolbar-root:nth-child(2) .MuiTypography-h2 { font-size: 22px; }
+  .libraryPage:not(.itemDetailPage):not(.homePage) .padded-bottom-page { padding-top: 12px; }
+
+  /* Suche */
+  .searchFields { padding: 64px var(--tv-gutter) 4px !important; }
+  input.searchfields-txtSearch { height: 40px; font-size: 16px !important; }
+  .searchfields-icon { font-size: 20px !important; left: 14px; }
+
+  /* Detailseite: Hochkant-Hero aus dem Poster, alles zentriert */
+  :root { --hero-h: min(171vw, 80vh); }
+  .itemDetailPage { --hero-block-top: calc(var(--hero-h) - 310px); }
+  body:has(.itemDetailPage:not(.hide)) .backdropContainer { display: none !important; }
+  .itemDetailPage .detailImageContainer.hide-desktop {
+    display: block !important; position: absolute; top: 0; left: 0; right: 0; height: var(--hero-h); z-index: 0; overflow: hidden; background: #000;
+  }
+  html .itemDetailPage .detailImageContainer.hide-desktop .card.portraitCard, html .itemDetailPage .detailImageContainer.hide-desktop .card,
+  .itemDetailPage .detailImageContainer.hide-desktop .cardBox,
+  .itemDetailPage .detailImageContainer.hide-desktop .cardScalable, .itemDetailPage .detailImageContainer.hide-desktop .cardImageContainer,
+  .itemDetailPage .detailImageContainer.hide-desktop .cardPadder, .itemDetailPage .detailImageContainer.hide-desktop .blurhash-canvas {
+    position: absolute !important; inset: 0 !important; width: 100% !important; min-width: 100% !important; max-width: none !important; height: 100% !important; padding: 0 !important; margin: 0 !important;
+    border-radius: 0 !important; transform: none !important; box-shadow: none !important; container-type: normal;
+  }
+  .itemDetailPage .detailImageContainer.hide-desktop .cardImageContainer { background-size: cover !important; background-position: 50% 15% !important; }
+  .itemDetailPage .detailImageContainer.hide-desktop .cardScalable::after { display: none; }
+  .itemDetailPage .detailImageContainer.hide-desktop::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(to top, var(--tv-bg) 0, rgba(0, 0, 0, .97) 6%, rgba(0, 0, 0, 0) 26%),
+      linear-gradient(transparent 45%, rgba(0, 0, 0, .25) 60%, rgba(0, 0, 0, .55) 100%);
+  }
+  .itemDetailPage .detailLogo[style*="url"] { display: block !important; }
+  .itemDetailPage .detailLogo {
+    left: 50% !important; transform: translateX(-50%) !important; width: min(300px, 76vw) !important; height: 90px !important;
+    background-position: center bottom !important; top: var(--hero-block-top) !important;
+  }
+  .detailPagePrimaryContainer { align-items: center; padding: calc(var(--hero-block-top) + 90px + 12px) 12px 24px !important; text-align: center; }
+  .itemDetailPage:not(:has(.detailLogo[style*="url"])) .detailPagePrimaryContainer { padding-top: var(--hero-block-top) !important; }
+  .nameContainer { max-width: 100%; margin-bottom: 10px; }
+  h1.itemName, .nameContainer .itemName { font-size: 34px !important; letter-spacing: -.01em; }
+  h3.itemName.subtitle { font-size: 24px; }
+  .detailSectionContent { max-width: 100%; width: 100%; text-align: left; margin-bottom: 10px; }
+  .overview, p.overview { font-size: 15px; line-height: 1.35; }
+  .itemMiscInfo { justify-content: center; font-size: 13px; gap: 0 6px; margin-bottom: 14px !important; }
+  .mediaInfoItem + .mediaInfoItem { margin-left: 12px !important; }
+  .mainDetailButtons { justify-content: center; width: 100%; gap: 12px; }
+  .mainDetailButtons { flex-wrap: nowrap; gap: 10px; }
+  .btnPlay.detailButton, .btnResume.detailButton { flex: 1 1 auto; min-width: 0 !important; max-width: 181px; padding: 0 18px 0 14px !important; font-size: 16px; }
+  .itemDetailsGroup { position: static; order: 7; width: 100%; max-width: none; margin-top: 56px; text-align: left; font-size: 13px; transform: none; }
+  .dialog.dialog-fullscreen-lowres { border-radius: 0 !important; background: var(--tv-bg) !important; backdrop-filter: none !important; }
+  .detailsGroupItem { margin-bottom: 4px; }
+  .nextUpSection, .detailSection > .verticalSection { margin: 24px -12px 0 !important; text-align: left; }
+  .detailSection > .verticalSection:not(.hide):not(.detailSection > .verticalSection:not(.hide) ~ *) { margin-top: 64px !important; }
+  .detailPageSecondaryContainer { padding-top: 24px !important; }
+  .card.personCard, .card[data-type="Person"] { width: 94px !important; }
+
+  /* Player */
+  .videoOsdBottom, .videoOsdBottom.videoOsdBottom-maincontrols { padding: 0 16px 20px !important; min-height: 160px; }
+  .osdControls .paper-icon-button-light, .osdControls .btnPause { width: 44px !important; height: 44px !important; }
+  .osdControls .paper-icon-button-light .material-icons { font-size: 22px !important; }
+  .osdControls > .buttons { margin-bottom: 14px !important; }
+  .osdControls > .buttons > .btnSubtitles, .osdControls > .buttons > .btnAudio, .osdControls > .buttons > .btnVideoOsdSettings,
+  .osdControls > .buttons > .btnPip, .osdControls > .buttons > .btnFullscreen { margin-left: 8px !important; }
+  .osdTimeText { display: none; }
+  .osdControls .sliderContainer.mdl-slider-container, .osdControls .mdl-slider-background-flex, .osdControls input.osdPositionSlider.mdl-slider { height: 8px; min-height: 8px; }
+  .osdControls .startTimeText, .osdControls .endTimeText { margin-top: 8px !important; font-size: 13px; }
+  h3.osdTitle { font-size: 20px; }
+  .skip-button, .skip-button-container .skip-button { height: 40px; font-size: 15px; padding: 0 16px; }
+  .upNextDialog { margin: 0 12px 100px !important; }
+  .nowPlayingBar { margin: 0 8px 80px; width: calc(100% - 16px); }
+
+  /* Login */
+  #loginPage .padded-bottom-page.margin-auto-y { padding-top: 6vh !important; }
+  .manualLoginForm { padding: 24px 18px 18px; border-radius: 28px; }
+  /* Dialoge: unten anliegend */
+  .dialog:not(.actionSheet):not(.dialog-fullscreen) { border-radius: 24px 24px 0 0 !important; }
+  .toast { top: 16px !important; max-width: calc(100vw - 32px); }
+}
+
+/* ---------- Bewegung reduzieren ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
+  .card:hover .cardBox, .card:focus-within .cardBox { transform: none !important; }
+}
+
+/* ===== src-css/10-integration.css ===== */
+/* ==========================================================================
+   10 Integration (CSS + JS zusammen): Dopplungen und Mobil-Login
+   ========================================================================== */
+@media (max-width: 800px) {
+  html.atv-js.atv-tabbar-on header .MuiToolbar-root a.MuiIconButton-root[href*="search"] { display: none !important; }
+  #loginPage .manualLoginForm, #loginPage .readOnlyContent, #loginPage .visualLoginForm { width: calc(100vw - 40px) !important; max-width: 420px !important; box-sizing: border-box !important; margin-left: auto !important; margin-right: auto !important; }
+  #loginPage .manualLoginForm *, #loginPage .readOnlyContent * { box-sizing: border-box; }
+  #loginPage .manualLoginForm .emby-input, #loginPage .manualLoginForm .inputContainer { width: 100% !important; max-width: 100% !important; }
+}
+
+/* Auf der Anmeldeseite gibt es keine Seitenleiste / Mobil-Pille */
+body:has(#loginPage:not(.hide)) .mainDrawer,
+body:has(#loginPage:not(.hide)) .mainDrawer-scrollContainer { display: none !important; }
+
+/* ===== src-css/11-round2.css ===== */
+/* ==========================================================================
+   11 Runde 2 (Echtbetrieb 12.3): Suche, Personenkarten, Flackern, QA-Crawl
+   ========================================================================== */
+
+/* --- Kopfzeile: alle Icon-Knöpfe in der Kapsel-Mitte (SyncPlay, Cast, …) weg, nur die Lupe bleibt --- */
+header.MuiAppBar-root .MuiToolbar-root > .MuiBox-root:not(:last-child) > button.MuiIconButton-root { display: none !important; }
+/* Player (12.3 zeigt die normale Kopfzeile): Kapsel und Zusatz-Icons weg, nur Zurück + Titel */
+body:has(.videoPlayerContainer) header.MuiAppBar-root > .MuiToolbar-root:first-child:not(.videoOsd-appBar) { display: none !important; }
+.osdHeader .MuiToolbar-root > .MuiBox-root button.MuiIconButton-root, .osdHeader .headerRight { display: none !important; }
+
+/* --- Suche --- */
+.searchFieldsInner { position: relative; }
+.searchFieldsInner .inputContainer { position: relative; }
+/* Lupe an der Unterkante des Feldes verankern (das Label darüber ändert beim Fokus seine Höhe) */
+.searchfields-icon { top: auto !important; bottom: 11px !important; transform: none !important; height: 22px; line-height: 22px; }
+.searchFields .inputLabel, .searchFields label { position: absolute; width: 0; height: 0; overflow: hidden; margin: 0; }
+input.searchfields-txtSearch { margin: 0; }
+.searchResults { max-width: 1920px; margin: 0 auto; }
+/* Native Vorschlagsliste (ohne JS): zentrierte Glas-Pillen */
+.searchSuggestions .sectionTitle { text-align: center; padding: 0 !important; margin-bottom: 14px !important; }
+.searchSuggestionsList { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 900px; margin: 0 auto; padding: 0 var(--tv-gutter) !important; }
+.searchSuggestionsList > div { margin: 0; }
+.searchSuggestionsList a.button-link, .searchSuggestionsList .emby-button.button-link {
+  display: inline-flex; align-items: center; height: 40px; padding: 0 16px; border-radius: 20px; font-size: 15px; font-weight: 500;
+  color: rgba(255, 255, 255, .9); background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px var(--tv-hair);
+  -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur); transition: background .15s, color .15s;
+}
+.searchSuggestionsList a.button-link:hover, .searchSuggestionsList a.button-link:focus-visible { background: rgba(255, 255, 255, .18); color: #fff; }
+
+/* --- Karten: Hover ist eine leichte Aufhellung, nie schwarz; Text nie beschnitten --- */
+.cardOverlayContainer, .card:hover .cardOverlayContainer, .cardOverlayContainer.itemAction { background: rgba(255, 255, 255, .06) !important; }
+.card .cardText.cardTextCentered.cardText-first, .card .cardText.cardTextCentered.cardText-secondary { text-align: left; }
+.overflowPortraitCard:not(.personCard):not([data-type="Person"]) .cardText.cardTextCentered.cardText-first,
+.portraitCard .cardText.cardTextCentered.cardText-first, .squareCard .cardText.cardTextCentered.cardText-first,
+.overflowSquareCard .cardText.cardTextCentered.cardText-first { text-align: center; }
+.overflowBackdropCard .cardText-first, .backdropCard .cardText-first, .overflowSmallBackdropCard .cardText-first,
+.overflowBackdropCard .cardText-secondary, .backdropCard .cardText-secondary, .overflowSmallBackdropCard .cardText-secondary { right: 6.25cqw; text-align: left !important; }
+.overflowBackdropCard .cardText-first .textActionButton, .backdropCard .cardText-first .textActionButton { text-align: left; }
+.card .cardText { line-height: 1.3; }
+.card .cardText a { white-space: inherit; }
+/* Personen-/Studio-/Genre-Karten: kein Play-Knopf, kein Overlay-Klick (startete die Wiedergabe), nur der Link */
+.personCard .cardOverlayContainer, .card[data-type="Person"] .cardOverlayContainer, .card[data-type="Studio"] .cardOverlayContainer,
+.card[data-type="Genre"] .cardOverlayContainer, .card[data-type="MusicGenre"] .cardOverlayContainer, .card[data-type="Tag"] .cardOverlayContainer,
+.card[data-type="Folder"] .cardOverlayContainer, .card[data-type="CollectionFolder"] .cardOverlayContainer, .card[data-type="UserView"] .cardOverlayContainer {
+  pointer-events: none !important;
+}
+.personCard .cardOverlayContainer *, .card[data-type="Person"] .cardOverlayContainer * { display: none !important; }
+.cardOverlayFab-primary, .cardOverlayContainer .cardOverlayFab-primary, button.cardOverlayFab-primary { display: none !important; pointer-events: none !important; }
+/* Besetzungsnamen immer sichtbar (nicht erst bei Fokus) */
+.overflowPortraitCard.personCard .cardText-first, .overflowPortraitCard[data-type="Person"] .cardText-first,
+.personCard .cardText-first, .card[data-type="Person"] .cardText-first {
+  opacity: 1 !important; position: static !important; white-space: normal; text-overflow: clip; bottom: auto;
+  text-align: center; font-weight: 500; display: -webkit-box !important; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  height: auto !important; max-height: 2.7em; line-height: 1.3 !important; padding: 0 2px !important;
+}
+.personCard .cardImageContainer::after, .card[data-type="Person"] .cardImageContainer::after { display: none; }
+.personCard:hover .cardText-first, .card[data-type="Person"]:hover .cardText-first { color: #fff; }
+.personCard .cardText-secondary, .card[data-type="Person"] .cardText-secondary { display: -webkit-box !important; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; }
+/* Regal-Scroller braucht Platz für die Namen unter den Kreisen */
+#castCollapsible .itemsContainer.scrollSlider, .searchResults .verticalSection:has(.personCard) .itemsContainer.scrollSlider,
+.searchResults .verticalSection:has([data-type="Person"]) .itemsContainer.scrollSlider { padding-bottom: 8px !important; }
+
+/* --- Detailseiten ohne Key-Art (Person, Sammlung, Genre …): kompakter Kopf statt leerem Hero --- */
+body:has(.itemDetailPage:not(.hide)):not(:has(.backdropContainer .backdropImage[style*="url("])):not(:has(.itemDetailPage.atv-detail-on)):not(:has(.itemDetailPage.atv-person-on)) .itemDetailPage {
+  --hero-h: 0px; --hero-block-top: calc(var(--tv-header-h) + 60px);
+}
+body:has(.itemDetailPage:not(.hide)):not(:has(.backdropContainer .backdropImage[style*="url("])):not(:has(.itemDetailPage.atv-detail-on)):not(:has(.itemDetailPage.atv-person-on)) .detailPagePrimaryContainer {
+  min-height: 0; padding-top: var(--hero-block-top) !important;
+}
+body:has(.itemDetailPage:not(.hide)):not(:has(.backdropContainer .backdropImage[style*="url("])):not(:has(.itemDetailPage.atv-detail-on)):not(:has(.itemDetailPage.atv-person-on)) .itemDetailPage .detailLogo { top: var(--hero-block-top) !important; }
+body:has(.itemDetailPage:not(.hide)):not(:has(.backdropContainer .backdropImage[style*="url("])):not(:has(.itemDetailPage.atv-detail-on)):not(:has(.itemDetailPage.atv-person-on)) .itemDetailsGroup {
+  position: static; transform: none; text-align: left; max-width: 620px; margin-top: 14px; order: 5;
+}
+body:has(.itemDetailPage:not(.hide)):not(:has(.backdropContainer .backdropImage[style*="url("])):not(:has(.itemDetailPage.atv-detail-on)):not(:has(.itemDetailPage.atv-person-on)) .detailSection > .verticalSection:not(.hide):not(.detailSection > .verticalSection:not(.hide) ~ *) { margin-top: 48px !important; }
+body:has(.itemDetailPage:not(.hide)):not(:has(.backdropContainer .backdropImage[style*="url("])):not(:has(.itemDetailPage.atv-detail-on)):not(:has(.itemDetailPage.atv-person-on)) .detailPageSecondaryContainer { padding-top: 24px !important; }
+
+/* --- Flackern beim Zurückgehen: regelt appletv-js.css (Klassen atv-native / atv-detail-on / atv-person-on,
+       Wrapper opacity 0 → 1, .atv-detail/.atv-person faden ein). Hier bewusst keine zweite Logik. --- */
+html.atv-js .itemDetailPage.atv-person-on .detailPageSecondaryContainer { padding-top: 0 !important; }
+/* Unter dem JS-Hero bleibt vom nativen Primärbereich nur der leere Rahmen: keine Luft */
+html.atv-js .itemDetailPage.atv-detail-on .detailPagePrimaryContainer, html.atv-js .itemDetailPage.atv-detail-on .detailPagePrimaryContent,
+html.atv-js .itemDetailPage.atv-detail-on .detailSection { padding-top: 0 !important; padding-bottom: 0 !important; min-height: 0 !important; }
+html.atv-js .itemDetailPage.atv-detail-on .detailPagePrimaryContainer:not(:has(.verticalSection:not(.hide))) { height: 0 !important; overflow: hidden; }
+html.atv-js .itemDetailPage.atv-person-on .detailSection > .verticalSection:not(.hide) { margin: 0 0 calc(var(--tv-shelf-gap) - var(--tv-focus-pad)) !important; width: 100%; }
+html.atv-js .itemDetailPage.atv-person-on .detailPagePrimaryContainer { padding-left: 0 !important; padding-right: 0 !important; }
+html.atv-js .itemDetailPage.atv-person-on .detailSection > .verticalSection .sectionTitle { padding-left: var(--tv-gutter) !important; }
+
+/* --- Listenseiten (Genre, Studio, Als Nächstes): Werkzeugleiste als Glas-Pillen rechts --- */
+.itemsViewSettingsContainer, .listTopPaging, .listBottomPaging {
+  padding: 0 var(--tv-gutter) !important; margin: 0 !important; justify-content: flex-end; gap: 8px; min-height: 0;
+}
+.itemsViewSettingsContainer.padded-top { padding-top: calc(var(--tv-header-h) + 32px) !important; padding-bottom: 12px !important; }
+.itemsViewSettingsContainer .paging, .listTopPaging .paging, .listBottomPaging .paging { color: var(--tv-text-2); font-size: 14px; margin-right: auto; }
+.itemsViewSettingsContainer .btnPlay, .itemsViewSettingsContainer .btnShuffle, .listTopPaging .btnPlay { display: none !important; }
+.itemsViewSettingsContainer .button-flat, .itemsViewSettingsContainer .paper-icon-button-light, .itemsViewSettingsContainer .btnSort,
+.itemsViewSettingsContainer .btnFilter, .itemsViewSettingsContainer .btnSelectView, .listBottomPaging .button-flat, .listTopPaging .button-flat {
+  height: 36px; padding: 0 14px; border-radius: 18px; color: #fff; font-size: 14px; font-weight: 600; text-transform: none;
+  background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px var(--tv-hair);
+  -webkit-backdrop-filter: var(--tv-glass-blur); backdrop-filter: var(--tv-glass-blur);
+}
+.itemsViewSettingsContainer .button-flat:hover, .itemsViewSettingsContainer .paper-icon-button-light:hover { background: rgba(255, 255, 255, .18); }
+.itemsViewSettingsContainer .paper-icon-button-light { width: 36px; padding: 0; border-radius: 50%; }
+.itemsViewSettingsContainer .material-icons { font-size: 20px; }
+.listBottomPaging, .listPaging { padding-top: 12px !important; }
+
+/* --- Popover/Menüs: weniger Sättigung (kein Rotstich über Postern), dunklere Tönung --- */
+.MuiPopover-paper, .MuiMenu-paper, .MuiPaper-root.MuiMenu-paper, .actionSheet, .actionSheet.centeredDialog, .dialog.actionSheet {
+  background: rgba(30, 30, 34, .9) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(1.2); backdrop-filter: blur(40px) saturate(1.2);
+}
+.MuiMenu-paper .MuiList-root { padding: 2px 0; }
+
+/* --- Dashboard: restliche Cyan-Quellen (12.3) --- */
+.MuiListItemButton-root.Mui-selected, a.MuiListItemButton-root[aria-current], .MuiListItemButton-root.active { background: rgba(255, 255, 255, .14) !important; }
+.MuiListItemButton-root:hover { background: rgba(255, 255, 255, .08) !important; }
+.MuiButton-contained, .MuiButton-containedPrimary, .MuiButton-containedSecondary, .MuiLoadingButton-root.MuiButton-contained { background: rgba(255, 255, 255, .92) !important; color: #000 !important; }
+.MuiButton-contained.MuiButton-colorError { background: var(--tv-red) !important; color: #fff !important; }
+.MuiChip-filled, .MuiChip-filledPrimary, .MuiChip-colorPrimary.MuiChip-filled { background: rgba(255, 255, 255, .14) !important; color: #fff !important; }
+.MuiLink-root, a.MuiLink-root { color: #fff !important; text-decoration-color: rgba(255, 255, 255, .4); }
+.MuiCheckbox-colorPrimary, .MuiCheckbox-root svg, .MuiRadio-root svg { color: rgba(255, 255, 255, .75) !important; }
+.MuiCheckbox-root.Mui-checked svg, .MuiRadio-root.Mui-checked svg { color: var(--tv-blue) !important; }
+.MuiButton-outlined, .MuiButton-outlinedPrimary { color: #fff !important; border-color: rgba(255, 255, 255, .3) !important; }
+.MuiAvatar-root.MuiAvatar-colorDefault, .MuiListItemAvatar-root .MuiAvatar-root { background: rgba(255, 255, 255, .12) !important; color: #fff !important; }
+.MuiIconButton-colorPrimary, .MuiSvgIcon-colorPrimary, .MuiTypography-colorPrimary { color: #fff !important; }
+.MuiFab-primary { background: rgba(255, 255, 255, .92) !important; color: #000 !important; }
+.MuiTableRow-root:hover, .MuiDataGrid-row:hover { background: rgba(255, 255, 255, .05) !important; }
+
+/* --- Mobil (Runde 2): Abstände unter der doppelten Kopfzeile --- */
+@media (max-width: 640px) {
+  .libraryPage:not(.itemDetailPage):not(.homePage) > .padded-bottom-page { padding-top: 4px !important; }
+  .libraryPage.withTabs:not(.homePage) .pageTabContent { padding-top: 14px !important; }
+  .libraryPage.withTabs:not(.homePage) .pageTabContent .sectionTitleContainer:first-child, .libraryPage.withTabs:not(.homePage) .pageTabContent > .verticalSection:first-child .sectionTitle { padding-top: 6px; }
+  .userPreferencesPage > .padded-top, .userPreferencesPage .padded-left.padded-top, .page.userPreferencesPage .padded-top { padding-top: 36px !important; }
+  .itemsViewSettingsContainer.padded-top { padding-top: 12px !important; }
+  .mainDrawer-scrollContainer .navMenuOption-selected .navMenuOptionText { color: var(--tv-blue); }
+}
+
+/* --- Fokus-Zoom wurde beschnitten: Jellyfin setzt `contain: layout style paint` auf .card; Paint-Containment
+       schneidet die um 9 % vergrößerte Karte (und die Namen unter den Personenkreisen) an der Kartengrenze ab --- */
+.card, .card.overflowPortraitCard, .card.portraitCard, .card.overflowBackdropCard, .card.backdropCard, .card.overflowSquareCard, .card.squareCard, .card.personCard {
+  contain: none !important; overflow: visible !important;
+}
+.cardBox, .cardScalable { contain: none !important; }
+
+/* --- MUI-Komponenten (Einstellungen 12.x): eigene Schriftfamilie überschreibt den Element-Selektor --- */
+.MuiTypography-root, .MuiButton-root, .MuiInputBase-root, .MuiInputBase-input, .MuiFormLabel-root, .MuiFormControlLabel-label,
+.MuiMenuItem-root, .MuiListItemText-primary, .MuiListItemText-secondary, .MuiChip-label, .MuiTab-root, .MuiAlert-message,
+.MuiTableCell-root, .MuiListSubheader-root, .MuiFormHelperText-root, .MuiSelect-select, .MuiAutocomplete-input, .MuiTooltip-tooltip {
+  font-family: var(--tv-font) !important;
+}
+/* Speichern-Pille nicht über die ganze Breite */
+.raised.block.button-submit, .button-submit.block, button.raised.block.button-submit { max-width: 420px; margin-left: 0; }
+.manualLoginForm .button-submit { max-width: none; }
+
+/* ===== src-css/12-dashboard.css ===== */
+/* ==========================================================================
+   12 Dashboard/Admin (Jellyfin 12.x lädt das Branding-CSS NICHT auf
+   /dashboard-Seiten; diese Datei wird deshalb zusätzlich über appletv-js.css
+   ausgeliefert – siehe build/css/dashboard.css). Nur Farben/Radien, kein Layout.
+   ========================================================================== */
+.MuiDrawer-paper, .MuiDrawer-docked .MuiPaper-root { background: #1b1c22 !important; border-right: 1px solid rgba(255, 255, 255, .06) !important; color: #fff !important; }
+.MuiDrawer-paper .MuiListItemButton-root { border-radius: 10px; margin: 1px 10px; padding: 8px 14px; }
+.MuiDrawer-paper .MuiListItemButton-root:hover { background: rgba(255, 255, 255, .08) !important; }
+.MuiDrawer-paper .MuiListItemButton-root.Mui-selected, .MuiDrawer-paper .MuiListItemButton-root.active, .MuiDrawer-paper a.MuiListItemButton-root[aria-current="page"] { background: rgba(255, 255, 255, .14) !important; }
+.MuiDrawer-paper .MuiListItemIcon-root { color: rgba(255, 255, 255, .8) !important; }
+.MuiDrawer-paper .MuiListSubheader-root { background: transparent !important; color: rgba(255, 255, 255, .55) !important; }
+.MuiDrawer-paper .MuiListItem-root img, .MuiDrawer-paper .MuiAvatar-root img { border-radius: 8px; }
+html:has(.dashboard-appBar), html:has(.dashboard-appBar) body { background: #000000 !important; }
+.dashboard-appBar { background: transparent !important; }
+.dashboard-appBar .MuiIconButton-root { color: #fff; }
+#dashboardPage, .type-interior, .content-primary { background: transparent !important; color: #fff; }
+.MuiPaper-root:not(.MuiAppBar-root):not(.MuiDrawer-paper):not(.MuiMenu-paper):not(.MuiPopover-paper):not(.MuiDialog-paper) { background: #1b1c22 !important; background-image: none !important; color: #fff !important; border-radius: 18px !important; box-shadow: none !important; }
+.MuiDialog-paper { background: #1f2026 !important; border-radius: 24px !important; color: #fff !important; }
+.MuiCard-root, .paperList, .MuiDataGrid-root, .MuiTableContainer-root { background: #1b1c22 !important; border-radius: 18px !important; border: 1px solid rgba(255, 255, 255, .06) !important; overflow: hidden; color: #fff; }
+.MuiTableCell-root { border-color: rgba(255, 255, 255, .08) !important; color: #fff !important; }
+.MuiTableHead-root .MuiTableCell-root { color: rgba(255, 255, 255, .64) !important; }
+.MuiDataGrid-root { --DataGrid-rowBorderColor: rgba(255, 255, 255, .08); }
+.MuiDataGrid-columnHeaders, .MuiDataGrid-columnHeader, .MuiDataGrid-footerContainer { background: #1b1c22 !important; border-color: rgba(255, 255, 255, .08) !important; }
+.MuiTableRow-root:hover, .MuiDataGrid-row:hover { background: rgba(255, 255, 255, .05) !important; }
+/* Jellyfin-Cyan (#00a4dc) → Weiß/Grau; Rot bleibt */
+.MuiButton-contained, .MuiButton-containedPrimary, .MuiLoadingButton-root.MuiButton-contained { border-radius: 999px !important; background: rgba(255, 255, 255, .92) !important; color: #000 !important; box-shadow: none !important; text-transform: none !important; font-weight: 600; }
+.MuiButton-contained.MuiButton-containedError, .MuiButton-contained.MuiButton-colorError { background: #ff453a !important; color: #fff !important; }
+.MuiButton-outlined, .MuiButton-outlinedPrimary { border-radius: 999px !important; color: #fff !important; border-color: rgba(255, 255, 255, .3) !important; text-transform: none !important; }
+.MuiButton-text, .MuiButton-textPrimary { border-radius: 999px !important; color: #fff !important; text-transform: none !important; }
+.MuiFab-primary { background: rgba(255, 255, 255, .92) !important; color: #000 !important; }
+.MuiChip-filled, .MuiChip-filledPrimary, .MuiChip-colorPrimary { background: rgba(255, 255, 255, .14) !important; color: #fff !important; border-radius: 999px; }
+.MuiLink-root, a.MuiLink-root { color: #fff !important; text-decoration-color: rgba(255, 255, 255, .4); }
+.MuiCheckbox-colorPrimary, .MuiCheckbox-root svg, .MuiRadio-root svg { color: rgba(255, 255, 255, .75) !important; }
+.MuiCheckbox-root.Mui-checked svg, .MuiRadio-root.Mui-checked svg { color: #0a84ff !important; }
+.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track { background-color: #34c759 !important; opacity: 1 !important; }
+.MuiSwitch-track { background-color: rgba(255, 255, 255, .25) !important; }
+.MuiAvatar-root.MuiAvatar-colorDefault, .MuiListItemAvatar-root .MuiAvatar-root { background: rgba(255, 255, 255, .12) !important; color: #fff !important; }
+.MuiIconButton-colorPrimary, .MuiSvgIcon-colorPrimary, .MuiTypography-colorPrimary, .MuiTab-root.Mui-selected { color: #fff !important; }
+.MuiTabs-indicator { background-color: #fff !important; }
+.MuiLinearProgress-root { background-color: rgba(255, 255, 255, .15) !important; border-radius: 999px; }
+.MuiLinearProgress-bar { background-color: rgba(255, 255, 255, .75) !important; border-radius: 999px; }
+.MuiLinearProgress-colorSuccess .MuiLinearProgress-bar, .MuiLinearProgress-barColorSuccess { background-color: #34c759 !important; }
+.MuiLinearProgress-colorError .MuiLinearProgress-bar, .MuiLinearProgress-barColorError { background-color: #ff453a !important; }
+.MuiFormControl-root .MuiInputBase-root, .MuiOutlinedInput-root, .MuiFilledInput-root { background: rgba(255, 255, 255, .1) !important; border-radius: 12px !important; color: #fff !important; }
+.MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, .14) !important; }
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, .6) !important; }
+.MuiInputLabel-root, .MuiFormLabel-root.Mui-focused { color: rgba(255, 255, 255, .64) !important; }
+.MuiAlert-standardInfo { background: rgba(10, 132, 255, .15) !important; color: #fff !important; border-radius: 14px; }
+.MuiPaginationItem-root.Mui-selected { background: #fff !important; color: #000 !important; }
+.MuiMenu-paper, .MuiPopover-paper { background: rgba(30, 30, 34, .95) !important; background-image: none !important; color: #fff !important; border-radius: 14px !important; }
+.MuiMenuItem-root:hover { background: rgba(255, 255, 255, .1) !important; }
+.MuiTooltip-tooltip { background: rgba(40, 40, 40, .95) !important; border-radius: 8px; }
+/* Gerätekarten / Aktivitätsicons mit Inline-Cyan */
+[style*="rgb(0, 164, 220)"], [style*="#00a4dc"], [style*="#00A4DC"] { background-color: #2c2d33 !important; }
+.activityItem .MuiAvatar-root, .MuiListItemAvatar-root .MuiAvatar-colorDefault { background: rgba(255, 255, 255, .12) !important; }
+/* Alte Jellyfin-Seiten im Dashboard (Benutzer, Bibliotheken, geplante Aufgaben, Plugins) */
+.dashboardDocument, .type-interior { background: transparent !important; }
+.card.squareCard.scalableCard .cardBox.visualCardBox, .visualCardBox { background: #1b1c22 !important; border-radius: 14px !important; box-shadow: none !important; overflow: hidden; }
+.visualCardBox .cardImage.defaultCardBackground, .defaultCardBackground { background: #30323a !important; }
+.visualCardBox .cardFooter { background: transparent !important; }
+.visualCardBox .cardText { color: #fff; }
+.visualCardBox .cardText-secondary { color: rgba(255, 255, 255, .64); }
+.fab.submit, .emby-button.fab { background: rgba(255, 255, 255, .92) !important; color: #000 !important; border-radius: 50% !important; }
+.raised.button-submit, .button-submit, .emby-button.raised.button-submit { background: #0a84ff !important; color: #fff !important; border-radius: 999px !important; }
+.raised, .emby-button.raised { border-radius: 999px !important; background: rgba(255, 255, 255, .14) !important; color: #fff !important; text-transform: none !important; }
+.raised.button-delete, .button-delete { background: rgba(255, 69, 58, .85) !important; color: #fff !important; }
+.emby-input, .emby-select, .emby-textarea { background: rgba(255, 255, 255, .1) !important; border-radius: 12px !important; border: 0 !important; color: #fff !important; }
+.emby-checkbox:checked + span + .checkboxOutline { background: #0a84ff !important; border-radius: 7px; }
+.checkboxOutline { background: rgba(255, 255, 255, .16) !important; border-radius: 7px !important; border: 0 !important; }
+.inputLabelFocused, .selectLabelFocused { color: #fff !important; }
+.listItem:hover { background: rgba(255, 255, 255, .06) !important; }
+.taskProgressOuter, .taskProgressInner { border-radius: 999px; }
+.taskProgressInner { background: rgba(255, 255, 255, .75) !important; }
+.paperList .listItem-border { border-color: rgba(255, 255, 255, .06) !important; }
+.sectionTitle a, .sectionTitleTextButton { color: #fff !important; }
+.MuiAppBar-root.MuiPaper-root { background: transparent !important; box-shadow: none !important; }
+
+/* ===== src-css/13-cards2.css ===== */
+/* ==========================================================================
+   13 Karten: Ecken ohne Fremdfarben, Hover ohne Ring/Scrim, More-Knopf innen
+   Ursache: .cardPadder (Platzhalter #1c1c1e, nur 3px Radius) lag hinter dem Bild,
+   dazu ein Haarlinien-Ring (.cardScalable::after), der beim Hover heller wurde.
+   ========================================================================== */
+.cardPadder, .cardPadder-overflowPortrait, .cardPadder-portrait, .cardPadder-overflowBackdrop, .cardPadder-backdrop,
+.cardPadder-overflowSquare, .cardPadder-square { background: transparent !important; box-shadow: none !important; border-radius: 0 !important; }
+.cardImageContainer, .cardContent { background-color: #1c1c1e; }
+.cardImageContainer.blurhashed, .cardImageContainer[style*="url("] { background-color: transparent; }
+.cardScalable::after, .card:hover .cardScalable::after, .card:focus-within .cardScalable::after { box-shadow: none !important; background: none !important; }
+.cardOverlayContainer, .card:hover .cardOverlayContainer, .cardOverlayContainer.itemAction { background: transparent !important; }
+/* More-Knopf (⋮): vollständig innerhalb der Rundung, Glas-Kreis */
+.cardOverlayButton-br { right: 10px !important; bottom: 10px !important; left: auto !important; padding: 0 !important; margin: 0 !important; }
+.cardOverlayButton-br .cardOverlayButton, .cardOverlayButton-br .MuiButtonBase-root {
+  width: 30px !important; height: 30px !important; min-width: 0 !important; padding: 0 !important; border-radius: 50% !important;
+  background: rgba(40, 41, 46, .72) !important; color: #fff !important; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .35) !important; display: inline-flex; align-items: center; justify-content: center;
+}
+.cardOverlayButton-br .cardOverlayButton .material-icons, .cardOverlayButton-br .cardOverlayButton svg { font-size: 18px !important; }
+
+/* Poster-Titel beim Hover: sauber UNTER dem Poster (nicht im Bild), zentriert, ohne Verlauf im Poster */
+.overflowPortraitCard:not([data-type="Person"]) .cardFooter, .portraitCard .cardFooter, .overflowSquareCard .cardFooter, .squareCard .cardFooter { position: relative !important; padding: 12px 6px 0 !important; min-height: 0; }
+.overflowPortraitCard:not([data-type="Person"]) .cardText, .portraitCard .cardText, .overflowSquareCard .cardText, .squareCard .cardText { position: relative !important; inset: auto !important; bottom: auto !important; left: auto !important; right: auto !important; height: auto !important; }
+.overflowPortraitCard:not([data-type="Person"]) .cardText-first, .portraitCard .cardText-first, .overflowSquareCard .cardText-first, .squareCard .cardText-first {
+  text-align: center !important; font-size: clamp(12px, .9vw, 16px) !important; font-weight: 600; color: rgba(255, 255, 255, .92); transform: translateY(-4px);
+  transition: opacity .25s var(--tv-ease), transform .25s var(--tv-ease);
+}
+.overflowPortraitCard:hover .cardText-first, .portraitCard:hover .cardText-first, .overflowSquareCard:hover .cardText-first, .squareCard:hover .cardText-first,
+.overflowPortraitCard:focus-within .cardText-first, .portraitCard:focus-within .cardText-first { transform: none; }
+.overflowPortraitCard .cardImageContainer::after, .portraitCard .cardImageContainer::after, .overflowSquareCard .cardImageContainer::after, .squareCard .cardImageContainer::after { display: none !important; }
+
+/* Poster-Titel beim Hover: sauber UNTER dem Poster (nicht im Bild), zentriert, kein Verlauf im Poster.
+   Gilt für Home (.overflowPortraitCard) UND Bibliotheks-/Serienlisten (.portraitCard). */
+.overflowPortraitCard:not([data-type="Person"]) .cardFooter, .portraitCard .cardFooter, .overflowSquareCard .cardFooter, .squareCard .cardFooter { position: relative !important; padding: 12px 6px 0 !important; min-height: 0; }
+.overflowPortraitCard:not([data-type="Person"]) .cardText, .portraitCard .cardText, .overflowSquareCard .cardText, .squareCard .cardText { position: relative !important; inset: auto !important; bottom: auto !important; left: auto !important; right: auto !important; height: auto !important; }
+.overflowPortraitCard:not([data-type="Person"]) .cardText-first, .portraitCard .cardText-first, .overflowSquareCard .cardText-first, .squareCard .cardText-first {
+  text-align: center !important; font-size: clamp(12px, .9vw, 16px) !important; font-weight: 600; color: rgba(255, 255, 255, .92); transform: translateY(-4px);
+  transition: opacity .25s var(--tv-ease), transform .25s var(--tv-ease);
+}
+.overflowPortraitCard:hover .cardText-first, .portraitCard:hover .cardText-first, .overflowSquareCard:hover .cardText-first, .squareCard:hover .cardText-first,
+.overflowPortraitCard:focus-within .cardText-first, .portraitCard:focus-within .cardText-first { transform: none; }
+.overflowPortraitCard .cardImageContainer::after, .portraitCard .cardImageContainer::after, .overflowSquareCard .cardImageContainer::after, .squareCard .cardImageContainer::after { display: none !important; }
+
+/* Hover-Überlagerung: Jellyfin legt beim Hover einen zweiten Link (a.cardImageContainer) über das Poster.
+   Er darf keine Platzhalterfarbe tragen (deckte das Bild ab = "schwarzes Cover" auf Film-/Serienlisten). */
+a.cardImageContainer, .cardOverlayContainer .cardImageContainer, .cardOverlayContainer a { background-color: transparent !important; }
+
+/* Hover-Schatten nur unter dem Poster, nicht unter Poster + Titelzeile (sonst entsteht ein dunkler Kasten um den Titel) */
+.card:hover .cardBox, .card:focus-within .cardBox, .card:focus .cardBox, .cardBox:focus { box-shadow: none !important; background: transparent !important; }
+.card:hover .cardScalable, .card:focus-within .cardScalable, .card:focus .cardScalable { box-shadow: 0 20px 40px rgba(0, 0, 0, .5) !important; }
+.cardFooter, .card:hover .cardFooter { background: transparent !important; box-shadow: none !important; }
+
+/* ===== src-css/14-search-clean.css ===== */
+/* ==========================================================================
+   14 Suche aufgeräumt: keine "Suggestions" (weder Jellyfin-Liste noch Vorschlags-Pillen).
+   Oben das Suchfeld, darunter direkt Poster (Treffer bzw. "Zuletzt hinzugefügt").
+   ========================================================================== */
+.searchSuggestions, .verticalSection.searchSuggestions, #searchPage .searchSuggestionsList, .searchSuggestionsList { display: none !important; }
+.atv-search__pills { display: none !important; }
+.atv-search > .atv-search__title:first-child { display: none !important; }
+
+/* ===== src-css/15-native-backdrop.css ===== */
+/* Jellyfin zeigt auf Detailseiten selbst einen ZUFÄLLIGEN Hintergrund (.backdropContainer), das Theme-Bild (.atv-detail__art) ist
+   Backdrop 0. Folge: erst ein Bild (z. B. Frau), dann blendet das andere (Mann) ein. Mit aktivem Theme-Skript nur das Theme-Bild zeigen. */
+html.atv-js body:has(.itemDetailPage:not(.hide):not(.atv-native)) .backdropContainer { opacity: 0 !important; transition: none !important; }
+
+/* ===== src-css/16-loading.css ===== */
+/* Ladezustand von Detail-/Personenseiten: statt leerer dunkler Fläche ein dezenter Kringel (erst nach 150 ms, schnelle Seiten zeigen ihn nie).
+   Endet, sobald die Theme-Ansicht da ist (atv-detail-on / atv-person-on) oder der Fallback (atv-native) greift. */
+@keyframes atv-spin { to { transform: rotate(360deg); } }
+@keyframes atv-spin-in { from { opacity: 0; } to { opacity: 1; } }
+/* Nur EIN Ladekringel: Jellyfins eigener (.docspinner, klein) ist aus, unserer läuft immer dann, wenn Jellyfin lädt */
+html.atv-js .docspinner { display: none !important; }
+html.atv-js body:has(.docspinner.mdlSpinnerActive)::after,
+html.atv-js body:has(.itemDetailPage:not(.hide):not(.atv-detail-on):not(.atv-person-on):not(.atv-native))::after {
+  content: ""; position: fixed; left: 50%; top: 50%; width: 42px; height: 42px; margin: -21px 0 0 -21px; z-index: 5; pointer-events: none;
+  border: 3px solid rgba(255, 255, 255, .16); border-top-color: rgba(255, 255, 255, .9); border-radius: 50%;
+  animation: atv-spin .8s linear infinite, atv-spin-in .25s ease .15s both;
+}
+
+/* ===== src-css/17-mobile-top.css ===== */
+/* ==========================================================================
+   17 Mobil (iPhone): Navigation OBEN, kein Desktop-Gefühl. Nur unter 800 px, Desktop bleibt unverändert.
+   Jellyfin Mobile hat unten schon eine eigene Tab-Leiste (Home/Downloads/Einstellungen) → unsere Leiste liegt oben in einer Zeile
+   zwischen Zurück-Knopf und Profil: [‹]  ( Home  Filme  Serien  ⌕ )  [Profil]
+   ========================================================================== */
+@media (max-width: 800px) {
+  :root { --m-top: calc(env(safe-area-inset-top, 0px) + 6px); --m-gut: 16px; }
+
+  /* Seite darf nie als Ganzes seitwärts scrollen (nur die Regale) */
+  html, body, .skinBody, .mainAnimatedPages, .page, .backdropContainer { overflow-x: clip; max-width: 100%; }
+  body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 20px) !important; }
+
+  /* Glas-Leiste nach oben */
+  .mainDrawer, .mainDrawer.transition, .mainDrawer.touch-menu-la {
+    top: var(--m-top) !important; bottom: auto !important; left: 56px !important; right: 60px !important; height: 44px !important;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), inset 0 1px 0 rgba(255, 255, 255, .22), 0 6px 20px rgba(0, 0, 0, .35);
+  }
+  .mainDrawer-scrollContainer { padding: 3px 40px 3px 3px !important; scrollbar-width: none; gap: 0; }
+  .mainDrawer-scrollContainer::-webkit-scrollbar { display: none; }
+  .mainDrawer .navMenuOption {
+    flex: 1 0 auto; min-width: 0; padding: 0 6px !important; flex-direction: row; gap: 0; font-size: 12.5px !important; font-weight: 600; letter-spacing: -.005em;
+    color: rgba(255, 255, 255, .88) !important;
+  }
+  .mainDrawer .navMenuOption .navMenuOptionIcon { display: none; }
+  .mainDrawer .navMenuOption .navMenuOptionText { font-size: 12.5px; white-space: nowrap; }
+  .mainDrawer .navMenuOption-selected, .mainDrawer .navMenuOption-selected:hover { background: rgba(255, 255, 255, .94) !important; color: #000 !important; }
+  .mainDrawer .navMenuOption-selected .navMenuOptionText { color: #000; }
+  /* Lupe: Kreis am rechten Ende der Leiste (statt unten rechts) */
+  header .MuiToolbar-root a.MuiIconButton-root[href*="search"] {
+    bottom: auto !important; top: calc(var(--m-top) + 2px); right: 62px; width: 38px; height: 38px; z-index: 1301;
+    background: rgba(255, 255, 255, .16); box-shadow: none; color: #fff !important; opacity: 1 !important;
+  }
+  /* Seitentitel der Jellyfin-Kopfzeile weg (die Leiste ersetzt ihn) */
+  .skinHeader .pageTitle, header .pageTitle { display: none !important; }
+  /* Zurück-Knopf und Profil auf dieselbe Zeile wie die Leiste */
+  .skinHeader .headerBackButton, .skinHeader .headerButtonLeft { top: var(--m-top); }
+  header.MuiAppBar-root > .MuiToolbar-root:first-child > .MuiBox-root:last-child { top: calc(var(--m-top) + 4px); right: 14px; }
+  .MuiAvatar-root { width: 36px !important; height: 36px !important; }
+  /* Inhalt beginnt unter der Leiste (Hero/Detail laufen bewusst darunter durch) */
+  .libraryPage:not(.itemDetailPage):not(.homePage) > .padded-bottom-page { padding-top: calc(var(--m-top) + 52px) !important; }
+
+  /* Regale: nur die Regale scrollen seitwärts, nativ mit Fingerwisch, Gutter 16 px */
+  .emby-scroller, .emby-scroller-container { overflow-x: auto !important; overflow-y: hidden !important; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+  .emby-scroller::-webkit-scrollbar { display: none; }
+  .itemsContainer.scrollSlider { padding-left: var(--m-gut) !important; padding-right: var(--m-gut) !important; }
+  .padded-top-focusscale { padding-top: 4px !important; } .padded-bottom-focusscale { padding-bottom: 8px !important; }
+  .sectionTitle, .sectionTitleContainer-cards { padding-left: var(--m-gut) !important; font-size: 19px !important; }
+  .emby-scrollbuttons { display: none !important; }
+  .overflowPortraitCard { width: 36vw !important; max-width: 160px; }
+  .overflowBackdropCard, .overflowSmallBackdropCard { width: 64vw !important; max-width: 300px; }
+
+  /* Bibliothek: 3-Spalten-Raster wie die Apple-TV-App auf dem iPhone */
+  .itemsContainer.vertical-wrap { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; padding: 0 var(--m-gut) !important; }
+  .itemsContainer.vertical-wrap > .card, .itemsContainer.vertical-wrap > .portraitCard { width: auto !important; max-width: none !important; margin: 0 !important; }
+
+  /* Touch: keine Hover-Overlays auf Postern (Play-Symbol, Drei-Punkte); Menü per langem Druck */
+  .cardOverlayContainer, .cardOverlayButton, .cardOverlayButton-br, .cardOverlayFab-primary { display: none !important; }
+  .card:hover .cardScalable, .card:focus-within .cardScalable { transform: none !important; box-shadow: none !important; }
+
+  /* EIN Scroll pro Ebene: Seite nur vertikal, jede Regalzeile nur horizontal; die Leiste selbst wischt nicht */
+  .mainDrawer-scrollContainer { overflow: hidden !important; justify-content: space-between; }
+  .mainDrawer .navMenuOption { flex: 1 0 auto; min-width: 0; padding: 0 6px !important; justify-content: center; }
+  .emby-scroller, .itemsContainer.scrollSlider { overscroll-behavior-x: contain; }
+
+  /* Zurück-Knopf und Profil bleiben immer stehen (Jellyfins Kopfzeile fährt sonst beim Scrollen weg und wieder ein) */
+  .skinHeader, .skinHeader.headroom--unpinned, .skinHeader.headroom--pinned, .skinHeader.semiTransparent { transform: none !important; transition: none !important; }
+  /* Filter-/Titelzeile von Listen (Movies ▾, Filter, Sortieren, Ansicht, Seiten): scrollt mit dem Inhalt weg statt festzukleben */
+  header.MuiAppBar-root { position: absolute !important; top: 0; left: 0; right: 0; }
+  /* Raster mittig mit gleichen Rändern */
+  .itemsContainer.vertical-wrap { box-sizing: border-box; width: 100%; }
+
+  /* Listenseiten: Raster direkt unter der (mitscrollenden) Filterzeile; Leer-Meldung über die ganze Breite zentriert */
+  .padded-bottom-page:has(> .itemsContainer.vertical-wrap) { padding-top: 14px !important; }
+  .noItemsMessage { grid-column: 1 / -1; width: 100%; box-sizing: border-box; text-align: center !important; padding: 48px 24px; }
+  .noItemsMessage h1, .noItemsMessage p { text-align: center; margin-left: auto; margin-right: auto; }
+}
+
+/* Kleine iPhones (SE, mini: ≤ 390 px): Leiste enger, damit Home · Filme · Serien ganz lesbar bleiben */
+@media (max-width: 390px) {
+  .mainDrawer, .mainDrawer.transition, .mainDrawer.touch-menu-la { left: 52px !important; right: 56px !important; }
+  .mainDrawer-scrollContainer { padding: 3px 38px 3px 3px !important; gap: 0; }
+  .mainDrawer .navMenuOption { padding: 0 4px !important; font-size: 12px !important; }
+  .mainDrawer .navMenuOption .navMenuOptionText { font-size: 12px; letter-spacing: -.02em; }
+  header .MuiToolbar-root a.MuiIconButton-root[href*="search"] { right: 58px; width: 34px; height: 34px; top: calc(var(--m-top) + 5px); }
+}
+
+/* Mobil: Menüs/Dialoge nie höher als der sichtbare Bereich (sonst unten hart abgeschnitten), eigenes Scrollen */
+@media (max-width: 800px) {
+  .MuiMenu-paper, .MuiPopover-paper, .MuiMenu-list { max-height: calc(100dvh - 24px - env(safe-area-inset-bottom, 0px)) !important; overflow-y: auto !important; }
+  .MuiMenu-paper, .MuiPopover-paper { -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+  .actionSheetContent, .dialog, .formDialog { max-height: calc(100dvh - 24px - env(safe-area-inset-bottom, 0px)) !important; overflow-y: auto !important; overscroll-behavior: contain; }
+
+  /* Beschreibungen: MEHR/WENIGER liegt UNTER dem Text (JS setzt die Pille hinter den Textblock), aufgeklappt ohne inneren Scroll */
+  html.atv-js .atv-more.atv-more--below { position: static !important; display: flex !important; width: fit-content; margin: 8px 0 4px auto !important; align-self: flex-end; }
+  html.atv-js .atv-hero__lockup .atv-more.atv-more--below { margin: 8px auto 4px !important; align-self: center; }
+  html.atv-js .atv-clamp.is-open { overflow-y: visible !important; }
+}
+
+
+/* ==========================================================================
+   Mobil, reduziert (Rückmeldung vom echten iPhone in der Jellyfin-App):
+   - KEINE Tab-Leiste mehr: Movies/Shows/Sammlungen liegen als Kategorie-Chips unter dem Hero auf der Startseite
+   - Zurück-Knopf nur auf Detailseiten (und Suche/Einstellungen), nicht auf Home und Listen
+   - Detailseiten zeigen oben NUR den Zurück-Knopf (kein Profil, keine Suche)
+   - Home/Listen: oben rechts nur zwei Glas-Kreise: Suche + Profil
+   ========================================================================== */
+@media (max-width: 800px) {
+  .mainDrawer, .mainDrawer.transition, .mainDrawer.touch-menu-la { display: none !important; }
+  header .MuiToolbar-root a.MuiIconButton-root[href*="search"] { display: none !important; }
+
+  /* Jellyfins eigene Kopfzeilen-Knöpfe weg (Position/Größe in der App unzuverlässig); unsere Kopfzeile #atv-mbar übernimmt */
+  .skinHeader:not(.osdHeader), .skinHeader:not(.osdHeader) * { display: none !important; }   /* alte Jellyfin-Kopfzeile (Zurück/Home/Titel) komplett aus */
+  header.MuiAppBar-root > .MuiToolbar-root:first-child > .MuiBox-root:first-child,
+  header.MuiAppBar-root > .MuiToolbar-root:first-child > .MuiStack-root { display: none !important; }
+  /* Profilmenü liegt über allem (auch über unseren Kreisen): erneutes Tippen auf das Profil trifft den Hintergrund und schließt das Menü */
+  .MuiPopover-root, .MuiMenu-root, .MuiModal-root { z-index: 1500 !important; }
+  .MuiMenu-paper, .MuiPopover-paper { margin-top: 10px; }
+  header.MuiAppBar-root > .MuiToolbar-root:first-child > .MuiBox-root:last-child {
+    position: fixed !important; top: var(--m-top) !important; right: 16px !important; width: 44px; height: 44px; opacity: 0; pointer-events: none; z-index: 1;   /* bleibt als Anker für das Profilmenü */
+  }
+
+  /* Eigene Kopfzeile: Zurück links, Suche + Profil rechts, 44-px-Glas-Kreise, 12 px Abstand */
+  #atv-mbar { display: none; }
+  html.atv-mbar-on #atv-mbar {
+    display: flex; position: fixed; z-index: 1301; top: var(--m-top); left: 16px; right: 16px; height: 44px; justify-content: space-between; align-items: center; pointer-events: none;
+  }
+  .atv-mb__right { display: flex; gap: 12px; margin-left: auto; }
+  .atv-mb__btn {
+    pointer-events: auto; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #fff; text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
+    background: rgba(40, 40, 42, .55); -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), inset 0 1px 0 rgba(255, 255, 255, .2), 0 8px 24px rgba(0, 0, 0, .3);
+    transition: transform .2s var(--tv-ease);
+  }
+  .atv-mb__btn:active { transform: scale(.92); }
+  .atv-mb__btn svg { width: 24px; height: 24px; fill: currentColor; }
+  .atv-mb__avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+  .atv-mb__back { display: none; }
+  /* Welche Knöpfe wo: Home/Liste = Suche + Profil · Detail = nur Zurück · Suche = Zurück + Profil · Einstellungen = nur Zurück */
+  html.atv-page-detail .atv-mb__back, html.atv-pg-search .atv-mb__back, html.atv-pg-settings .atv-mb__back { display: flex; }
+  html.atv-page-detail .atv-mb__right, html.atv-pg-settings .atv-mb__right { display: none; }
+  html.atv-pg-search .atv-mb__search { display: none; }
+
+  /* Inhalt beginnt unter der einen Symbolzeile */
+  .libraryPage:not(.itemDetailPage):not(.homePage) > .padded-bottom-page { padding-top: calc(var(--m-top) + 56px) !important; }
+  .padded-bottom-page:has(> .itemsContainer.vertical-wrap) { padding-top: 6px !important; margin-top: -54px; }
+  header.MuiAppBar-root { padding-top: 0; }
+
+  /* Listen (Movies/Shows/Sammlungen): großer Titel links auf Höhe der Kreise, darunter die Filter als Pillen (wie die Apple-TV-App) */
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root { margin-top: var(--m-top) !important; padding-top: 0 !important; padding-left: 16px !important; padding-right: 16px !important; display: block; }
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > button:first-child {
+    height: 44px; padding: 0 !important; min-width: 0; margin: 0 !important; max-width: calc(100vw - 150px); justify-content: flex-start; text-transform: none;
+    font-size: 30px !important; font-weight: 800 !important; letter-spacing: -.025em; line-height: 44px; color: #fff;
+  }
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > button:first-child * { font-size: inherit; font-weight: inherit; line-height: inherit; }
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > button:first-child svg { width: 18px; height: 18px; margin-left: 6px; opacity: .7; }
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > div:nth-child(2) { display: none !important; }            /* Zähler */
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > div:nth-child(3) { display: flex; justify-content: flex-start; padding: 0; margin-top: 8px; height: auto; }
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > div:nth-child(3) > div:nth-child(1) { display: none; }
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > div:nth-child(3) > div:nth-child(3) { display: none !important; }   /* Seiten-Pfeile */
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > div:nth-child(3) > div:nth-child(2) { margin: 0; }
+
+  /* Hero: dezenter Verlauf oben, damit die Glas-Kreise auf jedem Bild lesbar bleiben */
+  html.atv-js .atv-hero::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 130px; z-index: 3; pointer-events: none; background: linear-gradient(to bottom, rgba(0, 0, 0, .5), transparent); }
+
+  /* Kategorie-Chips (Movies · Shows · Sammlungen) unter dem Hero */
+  .atv-chips { display: flex; gap: 10px; padding: 4px 16px 18px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+  .atv-chips::-webkit-scrollbar { display: none; }
+  .atv-chip {
+    flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 18px 0 14px; border-radius: 999px; text-decoration: none;
+    color: #fff; font-size: 15px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap;
+    background: linear-gradient(180deg, rgba(120, 120, 128, .38), rgba(120, 120, 128, .24));
+    -webkit-backdrop-filter: blur(24px) saturate(1.6); backdrop-filter: blur(24px) saturate(1.6);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), inset 0 1px 0 rgba(255, 255, 255, .2), 0 8px 22px rgba(0, 0, 0, .28);
+    transition: transform .2s var(--tv-ease), background .2s;
+  }
+  .atv-chip:active { transform: scale(.96); background: rgba(120, 120, 128, .5); }
+  .atv-chip svg { width: 19px; height: 19px; fill: currentColor; opacity: .92; }
+}
+
+/* Kleine iPhones: Chips etwas kompakter, damit alle drei ohne Anschnitt in die Breite passen */
+@media (max-width: 390px) {
+  .atv-chips { gap: 7px; padding-left: 12px; padding-right: 12px; }
+  .atv-chip { height: 40px; padding: 0 13px 0 10px; gap: 6px; font-size: 13.5px; }
+  .atv-chip svg { width: 17px; height: 17px; }
+}
+
+/* ===== src-css/18-polish.css ===== */
+/* ==========================================================================
+   18 Feinschliff: Lesbarkeit der 16:9-Karten, Fortschrittsbalken, Episoden-
+   regal (Staffel-Titel, Pfeile, Play-Symbol), Player-Leiste, Mobil-Raster.
+   ========================================================================== */
+
+/* ---------- 16:9-Karten (Weiterschauen, Als Nächstes, Folgen) ----------
+   Vorher: schwacher Verlauf (Text auf hellen Bildern unlesbar), Metazeile ohne
+   Auslassungspunkte abgeschnitten, Fortschritt als 36-px-Strich mitten im Text. */
+.overflowBackdropCard .cardBox, .backdropCard .cardBox, .overflowSmallBackdropCard .cardBox {
+  --c-pad: clamp(10px, 5.4cqw, 20px);
+  --c-f1: clamp(13px, 6.5cqw, 20px);
+  --c-f2: clamp(12px, 5.5cqw, 17px);
+  --c-bar: 0px;
+}
+.overflowBackdropCard .cardBox:has(.itemProgressBar), .backdropCard .cardBox:has(.itemProgressBar),
+.overflowSmallBackdropCard .cardBox:has(.itemProgressBar) { --c-bar: calc(3px + clamp(7px, 3cqw, 11px)); }
+/* Verlauf liegt auf .cardScalable (über Bild UND Hover-Ebene): am Bild-Link selbst verschwand er beim Überfahren */
+.overflowBackdropCard .cardImageContainer::after, .backdropCard .cardImageContainer::after,
+.overflowSmallBackdropCard .cardImageContainer::after { display: none !important; }
+.card.overflowBackdropCard .cardScalable::after, .card.backdropCard .cardScalable::after, .card.overflowSmallBackdropCard .cardScalable::after,
+.card.overflowBackdropCard:hover .cardScalable::after, .card.backdropCard:hover .cardScalable::after,
+.card.overflowBackdropCard:focus-within .cardScalable::after, .card.backdropCard:focus-within .cardScalable::after {
+  background: linear-gradient(to top, rgba(0, 0, 0, .86) 0%, rgba(0, 0, 0, .62) 24%, rgba(0, 0, 0, .22) 50%, rgba(0, 0, 0, 0) 68%) !important;
+  z-index: 1;
+}
+.overflowBackdropCard .cardOverlayContainer, .backdropCard .cardOverlayContainer, .overflowSmallBackdropCard .cardOverlayContainer { z-index: 2; }
+/* Fortschrittslinie über dem Verlauf: der Bild-Link darf dafür keine eigene Ebene bilden (contain: strict und Einblend-Animation aus) */
+.overflowBackdropCard a.cardImageContainer, .backdropCard a.cardImageContainer, .overflowSmallBackdropCard a.cardImageContainer { animation: none !important; opacity: 1; contain: none !important; }
+.overflowBackdropCard .innerCardFooter, .backdropCard .innerCardFooter, .overflowSmallBackdropCard .innerCardFooter { z-index: 3 !important; }
+.overflowBackdropCard .cardText, .backdropCard .cardText, .overflowSmallBackdropCard .cardText {
+  left: var(--c-pad) !important; right: var(--c-pad) !important; line-height: 1.25 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, .55);
+}
+.overflowBackdropCard .cardText-first, .backdropCard .cardText-first, .overflowSmallBackdropCard .cardText-first {
+  bottom: calc(var(--c-pad) + var(--c-bar) + var(--c-f2) * 1.25 + 2px) !important;
+  font-size: var(--c-f1) !important; font-weight: 600; letter-spacing: .005em;
+  display: block !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.overflowBackdropCard .cardBox:not(:has(.cardText-secondary)) .cardText-first,
+.backdropCard .cardBox:not(:has(.cardText-secondary)) .cardText-first,
+.overflowSmallBackdropCard .cardBox:not(:has(.cardText-secondary)) .cardText-first { bottom: calc(var(--c-pad) + var(--c-bar)) !important; }
+.overflowBackdropCard .cardText-secondary, .backdropCard .cardText-secondary, .overflowSmallBackdropCard .cardText-secondary {
+  bottom: calc(var(--c-pad) + var(--c-bar)) !important;
+  font-size: var(--c-f2) !important; font-weight: 500; color: rgba(255, 255, 255, .78);
+  display: block !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.overflowBackdropCard .cardText-secondary > *, .backdropCard .cardText-secondary > * { display: inline !important; }
+/* Play-Dreieck vor der Metazeile: läuft im Text mit (kein absolut gesetztes Extra-Element mehr) */
+.overflowBackdropCard .cardText-secondary::before, .backdropCard .cardText-secondary::before,
+.overflowBackdropCard .cardBox:has(.itemProgressBar) .cardText-secondary::before,
+.backdropCard .cardBox:has(.itemProgressBar) .cardText-secondary::before {
+  content: ""; position: static !important; display: inline-block; vertical-align: baseline; width: 0; height: 0; margin: 0 .5em 0 0;
+  border-left: .62em solid rgba(255, 255, 255, .78); border-top: .38em solid transparent; border-bottom: .38em solid transparent;
+}
+.cardBox:has(.itemProgressBar) .cardText-secondary { left: var(--c-pad) !important; }
+/* Platz für den „···“-Knopf nur, solange er zu sehen ist */
+.overflowBackdropCard.card-hoverable:hover .cardText, .backdropCard.card-hoverable:hover .cardText { right: 50px !important; }
+/* Fortschritt: schmale Linie über die ganze Kartenbreite, unter dem Text */
+.overflowBackdropCard .innerCardFooter, .backdropCard .innerCardFooter, .overflowSmallBackdropCard .innerCardFooter,
+.overflowBackdropCard .innerCardFooter.fullInnerCardFooter, .backdropCard .innerCardFooter.fullInnerCardFooter {
+  left: var(--c-pad) !important; right: var(--c-pad) !important; width: auto !important;
+  bottom: var(--c-pad) !important; height: 3px !important; min-height: 3px;
+}
+.overflowBackdropCard .itemProgressBar, .backdropCard .itemProgressBar { background: rgba(255, 255, 255, .28) !important; }
+.overflowBackdropCard .itemProgressBarForeground, .backdropCard .itemProgressBarForeground { background: #fff !important; }
+/* Poster mit Fortschritt (Bibliothek): Linie unten im Bild statt Strich links */
+.portraitCard .innerCardFooter, .overflowPortraitCard .innerCardFooter, .squareCard .innerCardFooter, .overflowSquareCard .innerCardFooter {
+  left: 7cqw !important; right: 7cqw !important; width: auto !important; bottom: 6cqw !important; height: 3px !important; min-height: 3px;
+}
+.portraitCard .itemProgressBarForeground, .overflowPortraitCard .itemProgressBarForeground { background: #fff !important; }
+@media (max-width: 800px) {
+  .overflowBackdropCard .cardBox, .backdropCard .cardBox { --c-pad: 12px; --c-f1: 15px; --c-f2: 13px; }
+}
+
+/* Gesehen-Haken / Zähler: immer weiß auf dunklem Glas (war auf hellen Postern dunkel) */
+.playedIndicator, .countIndicator, .indicator { color: #fff !important; background: rgba(0, 0, 0, .5) !important; }
+.playedIndicator .material-icons, .playedIndicator svg { color: #fff !important; fill: #fff; }
+
+/* Personen ohne Foto: runder Platzhalter statt frei schwebendem Symbol */
+.personCard .cardScalable, .card[data-type="Person"] .cardScalable { background: #1c1c1e; }
+.personCard .cardImageIcon, .card[data-type="Person"] .cardImageIcon { font-size: 44cqw !important; color: rgba(255, 255, 255, .28) !important; }
+
+/* ---------- Episodenregal (JS) ---------- */
+/* Staffel-Knopf: „font: inherit“ aus dem Button-Reset machte ihn winzig – wieder Regaltitel-Größe */
+html.atv-js .atv-shelf button.atv-season {
+  font-size: var(--tv-shelf-title); font-weight: 700; letter-spacing: .012em; line-height: 1.2; color: #fff;
+  padding: 4px 10px 4px 0; border-radius: 10px; transition: opacity .2s;
+}
+html.atv-js .atv-shelf button.atv-season:hover { opacity: .8; }
+html.atv-js .atv-shelf button.atv-season svg { width: .78em; height: .78em; margin: .06em 0 0 .05em; color: rgba(255, 255, 255, .55); transform: none !important; }
+html.atv-js .atv-shelf__head { margin-bottom: calc(var(--tv-title-to-cards) - 12px); min-height: 34px; }
+html.atv-js .atv-shelf__count { font-size: clamp(13px, 1.05vw, 20px); margin-left: 4px; }
+/* Folgenkarte: kräftigerer Verlauf, sanfter Hover */
+html.atv-js .atv-ep { box-shadow: none; }
+html.atv-js .atv-ep::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+html.atv-js .atv-ep__grad { height: 78%; background: linear-gradient(to top, rgba(0, 0, 0, .92) 0%, rgba(0, 0, 0, .78) 34%, rgba(0, 0, 0, .4) 66%, rgba(0, 0, 0, 0) 100%); }
+html.atv-js .atv-ep__scrim { display: none; }
+html.atv-js .atv-ep__img { transition: transform .5s var(--tv-ease); }
+@media (hover: hover) {
+  html.atv-js .atv-ep:hover { transform: translateY(-3px); box-shadow: 0 18px 36px rgba(0, 0, 0, .45); }
+  html.atv-js .atv-ep:hover .atv-ep__img { transform: scale(1.04); }
+}
+html.atv-js .atv-ep__title { font-size: clamp(14px, 1.02vw, 19px); }
+html.atv-js .atv-ep__desc { font-size: clamp(12px, .86vw, 15px); font-weight: 400; color: rgba(255, 255, 255, .72); }
+html.atv-js .atv-ep__tag { font-size: clamp(10px, .7vw, 12px); font-weight: 600; color: rgba(255, 255, 255, .62); }
+html.atv-js .atv-ep__foot { font-size: clamp(11px, .8vw, 14px); color: rgba(255, 255, 255, .72); }
+html.atv-js .atv-ep__bar { flex: 0 0 auto; }
+html.atv-js .atv-ep__bar i { background: #fff; }
+/* Staffel-Menü: scrollt bei vielen Staffeln, etwas luftiger */
+html.atv-js .atv-menu { max-height: min(60vh, 420px); overflow-y: auto; scrollbar-width: thin; border-radius: 14px; min-width: 220px; }
+html.atv-js .atv-menu button.atv-menu__item { padding: 9px 12px; font-size: 15px; font-weight: 500; }
+html.atv-js .atv-menu button.atv-menu__item.is-selected { font-weight: 600; }
+
+/* Bewertungs-Badges: Stern/Tomate als Symbol (kein Schriftzeichen), gleiche Höhe wie die übrigen Badges */
+html.atv-js .atv-badge--star svg { width: 1.05em; height: 1.05em; margin-right: .3em; }
+html.atv-js .atv-badge--rt svg { width: 1.25em; height: 1.25em; margin-right: .3em; color: #fa5a44; }
+html.atv-js .atv-detail__facts { row-gap: 6px; }
+
+/* ---------- Player ---------- */
+/* Rechte Tastengruppe hing an der Untertitel-Taste („margin-left: auto“): ohne Untertitel rutschten
+   Ton/Einstellungen/Vollbild in die Mitte. Jetzt füllt die Zeitangabe den Zwischenraum. */
+.osdControls > .buttons > .btnSubtitles { margin-left: clamp(8px, 1.3vw, 25px) !important; }
+.osdControls > .buttons > .osdTimeText { flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.osdControls > .buttons:not(:has(> .osdTimeText:not(.hide))) > div:first-child { margin-right: auto; }
+/* Ton-Auswahl: Wellenform statt Musiknote */
+.osdControls .btnAudio .material-icons.audiotrack { font-size: 0 !important; }
+.osdControls .btnAudio .material-icons.audiotrack::before { content: "graphic_eq"; font-family: "Material Icons"; font-size: clamp(22px, 1.7vw, 32px); }
+/* Lautstärke am Rechner (Maus): Stumm-Taste + Glas-Regler; auf Touch-Geräten regelt das Gerät */
+@media (hover: hover) and (pointer: fine) and (min-width: 801px) {
+  .osdControls .volumeButtons { display: flex !important; flex: 0 0 auto; align-items: center; gap: 12px; margin: 0 0 0 clamp(8px, 1.3vw, 25px) !important; }
+  .osdControls .volumeButtons .buttonMute { display: inline-flex !important; flex: 0 0 auto; align-items: center; justify-content: center; }
+  .osdControls .volumeButtons .osdVolumeSliderContainer.mdl-slider-container { flex: 0 0 clamp(70px, 6vw, 110px) !important; width: clamp(70px, 6vw, 110px) !important; min-width: 0 !important; margin: 0 6px 0 0 !important; height: 8px; min-height: 8px; order: 0; }
+  .osdControls .osdVolumeSliderContainer .mdl-slider-background-flex { height: 8px !important; min-height: 8px; }
+  .osdControls .osdVolumeSliderContainer input.mdl-slider { height: 8px; min-height: 8px; width: 100% !important; }
+}
+
+/* ---------- Mobil: ein Raster (16 px) für Titel, Karten, Episodenregal und Infoblock ---------- */
+@media (max-width: 800px) {
+  :root { --tv-gutter: 16px; }
+  html.atv-js .atv-shelf__head { padding: 0 16px; margin-bottom: 4px; }
+  html.atv-js .atv-shelf__scroller { padding: 6px 16px 12px; scroll-padding-left: 16px; }
+  html.atv-js .atv-menu { left: 16px; }
+  html.atv-js .atv-about { margin: 16px 16px 32px; }
+  html.atv-js .atv-shelf button.atv-season { font-size: 19px; }
+  /* Detailseite: Abspielen über die volle Breite, Trailer teilt sich die zweite Zeile mit den Kreisen */
+  html.atv-js .atv-detail__actions { width: 100%; }
+  html.atv-js .atv-detail__actions > .atv-pill:first-child { flex: 1 1 100%; height: 48px; }
+  html.atv-js .atv-detail__actions > .atv-pill--glass { flex: 1 1 0; min-width: 0; }
+  html.atv-js .atv-detail__facts { gap: 6px 8px; }
+}
+
+/* „Mehr von Staffel N“ (Folgenseite): Jellyfin blättert zur aktuellen Folge und setzte sie bündig an den
+   Bildschirmrand (ohne Seitenrand). Rand deshalb am Scroller statt im Karten-Container. */
+.moreFromSeasonSection .emby-scroller { margin-left: var(--tv-gutter) !important; }
+.moreFromSeasonSection .itemsContainer.scrollSlider { padding-left: 0 !important; scroll-padding-left: 0; }
+
+/* ===== src-css/19-apple.css ===== */
+/* ==========================================================================
+   19 Näher an tv.apple.com (Referenz: Serienseite, Staffel-Regal):
+   Blätterpfeile mittig am Regalrand statt oben rechts, Folgenkarten ohne
+   Play-Kreis (Dreieck klein in der Fußzeile), „···“ immer sichtbar.
+   ========================================================================== */
+:root { --tv-paddle: 44px; }
+/* Folgenkarten */
+html.atv-js .atv-ep { border-radius: 14px; }
+html.atv-js .atv-ep__play { display: none !important; }
+html.atv-js .atv-ep__foot { min-height: 20px; padding-right: 34px; }
+html.atv-js .atv-ep__foot svg.atv-ep__go { width: .95em; height: .95em; margin-right: -3px; flex: 0 0 auto; display: none; }
+html.atv-js .atv-ep.is-next .atv-ep__foot svg.atv-ep__go, html.atv-js .atv-ep:hover .atv-ep__foot svg.atv-ep__go { display: block; }
+html.atv-js .atv-ep.is-next .atv-ep__foot, html.atv-js .atv-ep:hover .atv-ep__foot { color: #fff; }
+html.atv-js .atv-shelf button.atv-ep__more { opacity: 1; right: 8px; bottom: 8px; width: 30px; height: 30px; background: transparent; -webkit-backdrop-filter: none; backdrop-filter: none; color: rgba(255, 255, 255, .85); }
+html.atv-js .atv-shelf button.atv-ep__more:hover, html.atv-js .atv-shelf button.atv-ep__more:focus-visible { background: rgba(255, 255, 255, .22); color: #fff; }
+html.atv-js .atv-ep__more svg { width: 18px; height: 18px; }
+
+/* Episodenregal: Rahmen für Scroller + Pfeile */
+html.atv-js .atv-shelf__wrap { position: relative; }
+html.atv-js .atv-shelf__arrows {
+  position: absolute; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; pointer-events: none;
+  padding: 0 max(6px, calc((var(--tv-gutter) - var(--tv-paddle)) / 2)); opacity: 0; transition: opacity .25s linear;
+}
+html.atv-js .atv-shelf:hover .atv-shelf__arrows, html.atv-js .atv-shelf__arrows:focus-within { opacity: 1; }
+html.atv-js .atv-shelf button.atv-shelf__arrow, .emby-scrollbuttons .emby-scrollbuttons-button {
+  pointer-events: auto; width: var(--tv-paddle) !important; height: var(--tv-paddle) !important; border-radius: 50% !important;
+  display: inline-flex; align-items: center; justify-content: center; color: #fff !important; padding: 0 !important;
+  background: rgba(38, 38, 42, .62) !important; -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), 0 8px 24px rgba(0, 0, 0, .35);
+  transition: background .2s, opacity .2s, transform .2s var(--tv-ease);
+}
+html.atv-js .atv-shelf button.atv-shelf__arrow:hover, .emby-scrollbuttons .emby-scrollbuttons-button:hover { background: rgba(255, 255, 255, .92) !important; color: #000 !important; transform: scale(1.06); }
+html.atv-js .atv-shelf button.atv-shelf__arrow:disabled, .emby-scrollbuttons .emby-scrollbuttons-button:disabled,
+.emby-scrollbuttons .emby-scrollbuttons-button[disabled] { opacity: 0 !important; pointer-events: none; }
+html.atv-js .atv-shelf__arrow svg { width: 26px; height: 26px; }
+.emby-scrollbuttons .emby-scrollbuttons-button .material-icons { font-size: 28px !important; }
+@media (hover: none), (max-width: 800px) { html.atv-js .atv-shelf__arrows { display: none; } }
+
+/* Jellyfins eigene Regale: dieselben Pfeile, mittig über den Karten an den Rändern */
+@media (hover: hover) and (min-width: 801px) {
+  .emby-scroller-container { position: relative; }
+  .emby-scroller-container > .emby-scrollbuttons {
+    position: absolute !important; float: none !important; left: 0; right: 0; bottom: var(--tv-focus-pad);
+    top: calc(var(--tv-shelf-title) * 1.2 + var(--tv-title-to-cards)) !important; height: auto !important; width: auto !important;
+    display: flex !important; align-items: center; justify-content: space-between; pointer-events: none; z-index: 6;
+    padding: 0 max(6px, calc((var(--tv-gutter) - var(--tv-paddle)) / 2)) !important; margin: 0 !important;
+  }
+  .emby-scroller-container > .emby-scrollbuttons .emby-scrollbuttons-button { margin: 0 !important; }
+}
+
+/* Mobil wie tv.apple.com: Abspielen-Pille und Kreise in EINER Zeile, Trailer darunter, Fakten linksbündig */
+@media (max-width: 800px) {
+  html.atv-js .atv-detail__actions { flex-wrap: wrap; gap: 10px; }
+  html.atv-js .atv-detail__actions > .atv-pill:first-child { flex: 1 1 0; min-width: 0; height: 46px; order: 0; }
+  html.atv-js .atv-detail__actions > .atv-circle { order: 1; width: 46px; height: 46px; }
+  html.atv-js .atv-detail__actions > .atv-pill--glass { order: 2; flex: 1 1 100%; height: 42px; }
+  html.atv-js .atv-detail__facts { justify-content: flex-start; align-self: stretch; }
+}
+
+/* Startseite, 16:9-Karten: klare Trennung der zwei Zeilen.
+   Obere Zeile = Titel mit „›“ (öffnet die Serie/den Film), Bild + ▶-Zeile = spielt ab. */
+.homePage .overflowBackdropCard .cardText-first .textActionButton::after {
+  content: ""; display: inline-block; width: .42em; height: .42em; margin: 0 0 .12em .4em; vertical-align: middle;
+  border-top: 2px solid currentColor; border-right: 2px solid currentColor; transform: rotate(45deg); opacity: .6;
+  transition: opacity .2s, transform .2s var(--tv-ease);
+}
+.homePage .overflowBackdropCard .cardText-first .textActionButton:hover { text-decoration: none !important; }
+.homePage .overflowBackdropCard .cardText-first .textActionButton:hover::after { opacity: 1; transform: translateX(2px) rotate(45deg); }
+.homePage .overflowBackdropCard .cardText-secondary .textActionButton { cursor: pointer; }
+.homePage .overflowBackdropCard .cardText-secondary .textActionButton:hover { text-decoration: none !important; color: #fff; }
+.homePage .overflowBackdropCard .cardText-secondary:hover { color: #fff; }
+.homePage .overflowBackdropCard .cardText-secondary:hover::before { border-left-color: #fff; }
+
+/* ===== src-css/20-mobile-nav.css ===== */
+/* ==========================================================================
+   20 Mobil (Jellyfin-App): ein einziger Zurück-Knopf, auch auf Listen
+   - Die App blendet in Jellyfins Kopfzeile einen eigenen Pfeil „←“ ein (im Browser nicht): er schwebte
+     mittig oben neben unserem Glas-Knopf. Weg damit, unser Knopf übernimmt.
+   - Listen (Filme/Serien/Sammlungen) hatten gar kein Zurück: jetzt Glas-Knopf links, Titel rückt daneben.
+   - Der Ansicht-Umschalter hinter dem Titel (kleines Dreieck) ist als Knopf erkennbar.
+   ========================================================================== */
+@media (max-width: 800px) {
+  header.MuiAppBar-root > .MuiToolbar-root:first-child > button.MuiIconButton-root,
+  header.MuiAppBar-root > .MuiToolbar-root:first-child > .MuiIconButton-root:not(a[href*="search"]),
+  header.MuiAppBar-root > .MuiToolbar-root > button:has(> svg[data-testid="ArrowBackIcon"]),
+  header.MuiAppBar-root button[aria-label="Zurück"], header.MuiAppBar-root button[aria-label="Back"] { display: none !important; }
+
+  /* Listen: oben nur die drei Glas-Kreise (Zurück · Suche · Profil), der große Titel steht in einer eigenen Zeile darunter */
+  html.atv-pg-list .atv-mb__back { display: flex; }
+  html.atv-pg-list header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root { margin-top: calc(var(--m-top) + 54px) !important; }
+  html.atv-pg-list header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > button:first-child {
+    margin-left: 0 !important; max-width: calc(100vw - 32px); font-size: 32px !important; height: 42px; line-height: 42px; overflow: hidden;
+  }
+  html.atv-pg-list header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > button:first-child .MuiTypography-root {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+  }
+  /* Ansicht-Umschalter hinter dem Titel: schlichtes Dreieck, kein eigener Kreis */
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > button:first-child svg,
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > button:first-child .MuiButton-endIcon svg {
+    width: 26px !important; height: 26px !important; margin-left: 2px; opacity: .55; flex: 0 0 auto; background: none; box-shadow: none; color: #fff;
+  }
+  header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root > button:first-child .MuiButton-endIcon { margin: 0; display: inline-flex; flex: 0 0 auto; }
+  html.atv-pg-list .libraryPage:not(.itemDetailPage):not(.homePage) > .padded-bottom-page { padding-top: calc(var(--m-top) + 122px) !important; }
+  html.atv-pg-list .padded-bottom-page:has(> .itemsContainer.vertical-wrap) { padding-top: 6px !important; margin-top: -112px; }
+  html.atv-pg-list header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root { padding-bottom: 12px !important; }
+  /* Wischgeste: während des Ziehens nichts markieren/scrollen */
+  html.atv-swiping, html.atv-swiping body { overflow: hidden !important; overscroll-behavior: none; -webkit-user-select: none; user-select: none; }
+}
+
+/* ===== src-css/21-player-ios.css ===== */
+/* ==========================================================================
+   21 Player näher an der Apple-TV-App (Referenz: iPhone-Screenshots)
+   - Titelblock über dem Balken: kleine Zeile (Folge), große Zeile (Serie/Film) – kommt aus dem JS
+   - oben links ein Glas-Kreis mit ✕ statt Pfeil + Titelzeile
+   - Touch-Geräte: 10 s zurück · Pause · 10 s vor groß in der Bildmitte; rechts über dem Balken Untertitel/Ton/Einstellungen
+   ========================================================================== */
+.atv-osd-title { order: 1; margin: 0 0 clamp(10px, 1.1vw, 20px); text-shadow: 0 1px 12px rgba(0, 0, 0, .5); pointer-events: none; }
+.atv-osd-title__sub { font-size: clamp(13px, 1.15vw, 22px); font-weight: 600; color: rgba(255, 255, 255, .86); line-height: 1.3; }
+.atv-osd-title__main { font-size: clamp(22px, 2.2vw, 42px); font-weight: 800; letter-spacing: -.01em; color: #fff; line-height: 1.12; }
+html.atv-osd-titled .osdControls > .osdMainTextContainer { display: none !important; }
+/* Kopfzeile des Players: nur der Schließen-Knopf */
+html.atv-osd-titled .videoOsd-appBar p, html.atv-osd-titled .videoOsd-appBar .MuiTypography-root, html.atv-osd-titled .osdHeader .pageTitle { display: none !important; }
+.videoOsd-appBar > button.MuiIconButton-root:first-child, .videoOsd-appBar > .MuiIconButton-root:first-of-type {
+  display: inline-flex !important; position: relative; width: 44px !important; height: 44px !important; padding: 0 !important; margin: max(14px, env(safe-area-inset-top, 0px)) 0 0 clamp(16px, 4.1667vw, 80px) !important;
+  border-radius: 50% !important; color: #fff !important; background: rgba(40, 40, 42, .55) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 8px 24px rgba(0, 0, 0, .3);
+}
+.videoOsd-appBar > button.MuiIconButton-root:first-child svg { display: none; }
+.videoOsd-appBar > button.MuiIconButton-root:first-child::before, .videoOsd-appBar > button.MuiIconButton-root:first-child::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 20px; height: 2.5px; margin: -1.25px 0 0 -10px; border-radius: 2px; background: currentColor; transform: rotate(45deg);
+}
+.videoOsd-appBar > button.MuiIconButton-root:first-child::after { transform: rotate(-45deg); }
+.videoOsd-appBar { padding-left: 0 !important; min-height: 0 !important; }
+
+@media (hover: none) and (pointer: coarse) {
+  .videoOsdBottom, .videoOsdBottom.videoOsdBottom-maincontrols { padding: 0 max(20px, env(safe-area-inset-left, 0px)) calc(18px + env(safe-area-inset-bottom, 0px)) !important; min-height: 46vh; }
+  .osdControls { position: relative; }
+  .osdControls > .buttons { justify-content: flex-end; margin-bottom: 12px !important; min-height: 44px; }
+  .osdControls > .buttons > .osdTimeText, .osdControls > .buttons > .btnFullscreen { display: none !important; }
+  /* Transport in die Bildmitte */
+  .osdControls > .buttons > div:first-child {
+    position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); margin: 0 !important; gap: clamp(28px, 9vw, 72px) !important; z-index: 2;
+  }
+  .osdControls > .buttons > div:first-child > .btnPreviousTrack, .osdControls > .buttons > div:first-child > .btnNextTrack,
+  .osdControls > .buttons > div:first-child > .btnPreviousChapter, .osdControls > .buttons > div:first-child > .btnNextChapter { display: none !important; }
+  .osdControls > .buttons > div:first-child > .btnRewind, .osdControls > .buttons > div:first-child > .btnFastForward { display: inline-flex !important; width: 62px !important; height: 62px !important; }
+  .osdControls > .buttons > div:first-child > .btnPause { width: 88px !important; height: 88px !important; }
+  .osdControls > .buttons > div:first-child > .btnPause .material-icons { font-size: 46px !important; }
+  .osdControls > .buttons > div:first-child > .btnRewind .material-icons, .osdControls > .buttons > div:first-child > .btnFastForward .material-icons { font-size: 32px !important; }
+  .osdControls > .buttons > div:first-child > button { background: rgba(28, 28, 30, .6) !important; }
+  /* Sprung-Tasten: runde Pfeile mit Sekundenzahl statt Doppel-Dreieck (Jellyfin-Standard: 10 s zurück, 30 s vor) */
+  .osdControls .btnRewind .material-icons.fast_rewind, .osdControls .btnFastForward .material-icons.fast_forward { font-size: 0 !important; }
+  .osdControls .btnRewind .material-icons.fast_rewind::before { content: "replay_10"; font-family: "Material Icons"; font-size: 34px; }
+  .osdControls .btnFastForward .material-icons.fast_forward::before { content: "forward_30"; font-family: "Material Icons"; font-size: 34px; }
+  .atv-osd-title { position: absolute; left: 0; bottom: calc(100% - 44px); right: 190px; margin: 0; }
+  .atv-osd-title__sub { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .atv-osd-title__main { font-size: 24px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .videoOsd-appBar > button.MuiIconButton-root:first-child { margin-left: max(18px, env(safe-area-inset-left, 0px)) !important; }
+}
+
+/* ---------- Handy-Startseite: Seitenpunkte wie in der App (aktiver Punkt = Strich), Regaltitel größer mit „›“ ---------- */
+@media (max-width: 800px) {
+  html.atv-js button.atv-hero__dot.is-active { width: 22px; height: 8px; border-radius: 4px; }
+  :root { --tv-shelf-title: 21px; }
+  .sectionTitle, h2.sectionTitle { font-weight: 800 !important; letter-spacing: -.01em !important; }
+  .sectionTitleTextButton .material-icons.chevron_right { display: inline-block !important; font-size: 26px !important; margin: -3px 0 0 2px; color: rgba(255, 255, 255, .5); vertical-align: middle; }
+  html.atv-js .atv-shelf button.atv-season { font-size: 21px; font-weight: 800; }
+}
+
+/* Wischgeste: zwei eigene bildschirmfüllende Ebenen am <body> (Abbild der vorigen Seite unten, Abbild der aktuellen oben) */
+.atv-ghost { position: fixed; left: 0; top: 0; right: 0; bottom: 0; z-index: 1240; overflow: hidden; pointer-events: none; background: var(--tv-bg); will-change: transform; }
+.atv-ghost * { pointer-events: none !important; animation: none !important; transition: none !important; }
+.atv-ghost--top { z-index: 1250; border-radius: 38px; box-shadow: -16px 0 40px rgba(0, 0, 0, .6); }
+/* während der Wischgeste: Glas-Knöpfe oben (Zurück, Suche, Profil) ausblenden */
+#atv-mbar { transition: opacity .15s linear; }
+html.atv-swipe-ui #atv-mbar { opacity: 0 !important; pointer-events: none; }
+
+/* Player: ✕ fest in der linken oberen Ecke (bündig mit Titelblock und Balken), unabhängig von Jellyfins Kopfzeilen-Polster */
+.videoOsd-appBar > button.MuiIconButton-root:first-child, .videoOsd-appBar > .MuiIconButton-root:first-of-type {
+  position: fixed !important; margin: 0 !important; z-index: 3;
+  top: max(16px, env(safe-area-inset-top, 0px)); left: clamp(16px, 4.1667vw, 80px);
+}
+@media (hover: none) and (pointer: coarse) {
+  .videoOsd-appBar > button.MuiIconButton-root:first-child, .videoOsd-appBar > .MuiIconButton-root:first-of-type { left: max(20px, env(safe-area-inset-left, 0px)) !important; margin: 0 !important; }
+}
+
+/* Handy-Hero: Zeile „Film · Genre · Genre [FSK]“ bleibt mittig; Bewertungs-Badges (IMDb, RT …) bekommen eine eigene Zeile
+   darunter statt alles in eine Zeile zu quetschen (lief links und rechts aus dem Bild). */
+@media (max-width: 800px) {
+  html.atv-js .atv-hero__meta { flex-wrap: wrap; justify-content: center; row-gap: 8px; column-gap: 8px; max-width: 100%; white-space: normal; }
+  html.atv-js .atv-hero__meta > span:not(.atv-badge):not(.atv-coin) { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100% - 110px); }
+  html.atv-js .atv-hero__meta:has(.atv-badge--rating)::after { content: ""; flex: 0 0 100%; height: 0; order: 1; }
+  html.atv-js .atv-hero__meta .atv-badge--rating { order: 2; margin-left: 0 !important; }
+  html.atv-js .atv-hero__meta .atv-badge { margin-left: 0; flex: 0 0 auto; }
+}
+
+/* Rückkehr nach der Wischgeste: die echte Seite baut sich unter dem Abbild auf – ohne Einblend-Animationen,
+   damit der Tausch nicht als Neuladen sichtbar wird */
+html.atv-swap .mainAnimatedPage, html.atv-swap .mainAnimatedPage *, html.atv-swap header.MuiAppBar-root * { animation-duration: 0s !important; animation-delay: 0s !important; transition: none !important; }
+html.atv-swap .lazy-image-fadein, html.atv-swap .lazy-image-fadein-fast { opacity: 1 !important; }
+
+/* ===== src-css/22-gate.css ===== */
+/* Seitenwechsel: Seite bleibt unsichtbar, bis sie fertig aufgebaut ist (JS setzt html.atv-gate), dazu ein Ladekreis.
+   Danach blendet sie in einem Stück ein – nichts klappt nachträglich auf. */
+html.atv-gate .mainAnimatedPage:not(.hide), html.atv-gate header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root { opacity: 0 !important; pointer-events: none; }
+html.atv-gate .atv-ghost .mainAnimatedPage, html.atv-gate .atv-ghost .MuiToolbar-root { opacity: 1 !important; }
+html.atv-gate-out .mainAnimatedPage:not(.hide), html.atv-gate-out header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root { animation: atv-gate-in .22s ease-out; }
+@keyframes atv-gate-in { from { opacity: 0; } to { opacity: 1; } }
+#atv-gate-spin { display: none; position: fixed; left: 50%; top: 46%; width: 30px; height: 30px; margin: -15px 0 0 -15px; z-index: 1100; border-radius: 50%; pointer-events: none;
+  border: 3px solid rgba(255, 255, 255, .18); border-top-color: rgba(255, 255, 255, .85); }
+html.atv-gate #atv-gate-spin { display: block; opacity: 0; animation: atv-spin .8s linear infinite, atv-gate-in .2s linear .28s forwards; }
+html.atv-gate .docspinner { display: none !important; }   /* Jellyfins eigener Ladekreis: nicht doppelt */
+
+/* Abbilder der Wischgeste sind von der Lade-Sperre ausgenommen (sonst wären sie unsichtbar) */
+html.atv-gate .atv-ghost .mainAnimatedPage:not(.hide), html.atv-gate .atv-ghost header.MuiAppBar-root > .MuiToolbar-root + .MuiToolbar-root,
+html.atv-gate-out .atv-ghost .mainAnimatedPage:not(.hide) { opacity: 1 !important; animation: none !important; }
+.atv-ghost header.MuiAppBar-root { background: transparent !important; box-shadow: none !important; }
+
+/* Seite einer einzelnen Folge: Jellyfins „Mehr von Staffel“ entfällt, es gilt das Folgenregal des Themes; aktuelle Folge markiert */
+html.atv-js .itemDetailPage.atv-detail-on.atv-detail-episodes .moreFromSeasonSection { display: none !important; }
+html.atv-js .atv-ep.is-current::after { box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .85); }
+/* Ladekreise: nie zwei gleichzeitig. Solange das Theme die Seite zurückhält oder ein Abbild der Wischgeste steht, schweigen Jellyfins eigene. */
+html.atv-gate .docspinner, html.atv-gate .MuiCircularProgress-root, html.atv-gate .mdl-spinner,
+html.atv-swap .docspinner, html.atv-swap .MuiCircularProgress-root, html.atv-swap .mdl-spinner, html.atv-swap #atv-gate-spin,
+html.atv-swiping .docspinner, html.atv-swiping .MuiCircularProgress-root, html.atv-swiping #atv-gate-spin { display: none !important; }
+
+/* Abbild hält nach dem Loslassen: Berührungen landen auf ihm (nicht auf der noch unfertigen Seite darunter) */
+.atv-ghost.atv-ghost--hold { pointer-events: auto !important; touch-action: none; }
+
+/* Ein einziger Ladekringel: der schon vorhandene des Themes (body::after) läuft auch, solange eine Seite zurückgehalten wird;
+   der zusätzliche Kringel der Lade-Sperre entfällt. Während der Wischgeste/des Abbilds gar keiner. */
+#atv-gate-spin { display: none !important; }
+html.atv-js.atv-gate body::after {
+  content: ""; position: fixed; left: 50%; top: 50%; width: 42px; height: 42px; margin: -21px 0 0 -21px; z-index: 5; pointer-events: none;
+  border: 3px solid rgba(255, 255, 255, .16); border-top-color: rgba(255, 255, 255, .9); border-radius: 50%;
+  animation: atv-spin .8s linear infinite, atv-spin-in .25s ease .25s both;
+}
+html.atv-js.atv-swap body::after, html.atv-js.atv-swiping body::after { content: none !important; display: none !important; }
+
+/* ===== src-css/23-episode-menu.css ===== */
+/* ··· an einer Folge: kleines Glas-Menü am Knopf (kein Seitenwechsel) und Infobox mit dem ganzen Text */
+html.atv-js .atv-menu.atv-menu--float { position: fixed; left: 0; top: 0; margin: 0; z-index: 1400; min-width: 232px; max-width: calc(100vw - 16px); font-family: var(--tv-font); }
+html.atv-js .atv-menu--actions button.atv-menu__item { padding: 11px 14px; gap: 12px; font-size: 15px; font-weight: 500; }
+html.atv-js .atv-menu--actions .atv-menu__item svg { visibility: visible; width: 18px; height: 18px; flex: 0 0 auto; opacity: .9; }
+html.atv-js .atv-menu--actions button.atv-menu__item + button.atv-menu__item { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08); }
+.atv-sheet { position: fixed; inset: 0; z-index: 1450; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(0, 0, 0, .6);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font-family: var(--tv-font); color: #fff; animation: atv-sheet-bg .18s ease-out; }
+.atv-sheet.is-out { opacity: 0; transition: opacity .16s linear; }
+@keyframes atv-sheet-bg { from { opacity: 0; } to { opacity: 1; } }
+@keyframes atv-sheet-in { from { transform: translateY(18px); opacity: 0; } to { transform: none; opacity: 1; } }
+.atv-sheet__box { position: relative; width: min(560px, 100%); max-height: min(86vh, 860px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  border-radius: 22px; background: #1c1c1e; box-shadow: 0 30px 80px rgba(0, 0, 0, .65), inset 0 0 0 1px rgba(255, 255, 255, .1); animation: atv-sheet-in .22s cubic-bezier(.2, .8, .2, 1); }
+.atv-sheet__box::-webkit-scrollbar { display: none; }
+.atv-sheet__img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #111; }
+.atv-sheet__body { padding: 18px 20px 22px; }
+.atv-sheet__tag { font-size: 12px; font-weight: 600; letter-spacing: .6px; color: rgba(255, 255, 255, .6); }
+.atv-sheet__title { margin: 4px 0 2px; font-size: 24px; font-weight: 800; letter-spacing: -.01em; line-height: 1.15; }
+.atv-sheet__series { font-size: 14px; color: rgba(255, 255, 255, .6); }
+.atv-sheet__facts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-top: 10px; font-size: 13px; color: rgba(255, 255, 255, .64); }
+.atv-sheet__actions { display: flex; align-items: center; gap: 10px; margin: 16px 0 4px; }
+html.atv-js .atv-sheet .atv-pill { flex: 1 1 auto; height: 46px; min-width: 0; font-size: 17px; padding: 0 22px; border: 0; cursor: pointer; font-family: inherit; }
+html.atv-js .atv-sheet .atv-pill svg, html.atv-js .atv-sheet .atv-circle svg, .atv-sheet__close svg, html.atv-js .atv-sheet .atv-badge svg { fill: currentColor; display: block; }
+html.atv-js .atv-sheet .atv-circle { width: 46px; height: 46px; border: 0; cursor: pointer; background: rgba(120, 120, 128, .3); }
+html.atv-js .atv-sheet .atv-circle.is-on { background: rgba(255, 255, 255, .92); color: #000; }
+.atv-sheet__text { margin: 14px 0 0; font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, .88); white-space: pre-line; }
+.atv-sheet__credits { margin-top: 14px; font-size: 13px; line-height: 1.5; color: rgba(255, 255, 255, .85); }
+.atv-sheet__credits p { margin: 0 0 4px; } .atv-sheet__credits .atv-label { color: rgba(255, 255, 255, .55); }
+.atv-sheet__close { position: absolute; right: 12px; top: 12px; z-index: 2; width: 34px; height: 34px; padding: 0; border: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;
+  color: #fff; background: rgba(30, 30, 32, .6); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16); }
+.atv-sheet__close svg { width: 18px; height: 18px; }
+@media (max-width: 800px) {
+  .atv-sheet { align-items: flex-end; padding: 0; }
+  .atv-sheet__box { width: 100%; max-height: 88vh; border-radius: 24px 24px 0 0; padding-bottom: env(safe-area-inset-bottom, 0px); animation-name: atv-sheet-up; }
+  @keyframes atv-sheet-up { from { transform: translateY(40%); opacity: .4; } to { transform: none; opacity: 1; } }
+}
+
+/* Trailer-Fenster (Knopf „Trailer“ auf der Detailseite): eingebetteter YouTube-Player */
+.atv-trailer { position: fixed; inset: 0; z-index: 1500; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, .94); animation: atv-sheet-bg .2s ease-out; }
+.atv-trailer__stage { width: min(100vw, calc((100vh - 120px) * 16 / 9)); aspect-ratio: 16 / 9; max-height: 100vh; background: #000; }
+.atv-trailer__stage iframe { display: block; width: 100%; height: 100%; border: 0; background: #000; }
+.atv-trailer__close { position: absolute; z-index: 2; left: max(16px, env(safe-area-inset-left, 0px)); top: max(16px, env(safe-area-inset-top, 0px)); width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;
+  color: #fff; background: rgba(40, 40, 42, .7); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16); }
+.atv-trailer__close svg { width: 22px; height: 22px; fill: currentColor; }
+
+/* Vorspann → Film: letztes Bild des Vorspanns nicht stehen lassen */
+html.atv-vid-gap .videoPlayerContainer video { opacity: 0 !important; }
+/* während des Vorspanns: Jellyfins Kopfzeilen-Titel (Dateiname des Vorspanns) aus, auch bevor der eigene Titel steht */
+html.atv-osd-intro .videoOsd-appBar p, html.atv-osd-intro .videoOsd-appBar .MuiTypography-root, html.atv-osd-intro .osdHeader .pageTitle, html.atv-osd-intro .osdControls > .osdMainTextContainer { display: none !important; }
+html.atv-js .videoOsd-appBar p, html.atv-js .videoOsd-appBar .MuiTypography-root { display: none !important; }   /* Titel steht unten links (JS) */
+.atv-gap-art { position: absolute; inset: 0; z-index: 1; background: #000 center 20% / cover no-repeat; pointer-events: none; animation: atv-sheet-bg .25s ease-out; transition: opacity .4s ease; }
+.atv-gap-art.is-out { opacity: 0; }
+
+/* Zeitbalken im Player: sichtbar bleibt der schmale Balken, die Greiffläche zum Spulen ist aber 40 px hoch
+   (vorher nur so hoch wie der Balken: 10 px am Rechner, 8 px am Handy – man traf ihn kaum) */
+.osdControls .sliderContainer.mdl-slider-container { position: relative; overflow: visible; }
+.osdControls input.osdPositionSlider.mdl-slider {
+  position: absolute !important; left: 0; width: 100% !important; height: 40px !important; min-height: 40px !important;
+  top: 50% !important; margin: -20px 0 0 !important; z-index: 2; cursor: pointer; background: transparent !important;
+}
+.osdControls input.osdPositionSlider.mdl-slider::-webkit-slider-runnable-track { background: transparent !important; height: 40px; }
+
+/* ===== src-css/25-versions-update.css ===== */
+/* Fassungen eines Films (Kinofassung / Extended …) als Pillen unter den Knöpfen */
+html.atv-js .atv-detail__versions { display: flex; margin-top: 2px; }
+html.atv-js .atv-detail button.atv-verpick { font-size: clamp(15px, 1.15vw, 20px); font-weight: 700; padding: 4px 0; gap: 6px; }
+html.atv-js .atv-detail button.atv-verpick svg { width: .8em; height: .8em; color: rgba(255, 255, 255, .55); transform: none !important; }
+html.atv-js .atv-detail button.atv-verpick small { font-size: .78em; font-weight: 400; color: rgba(255, 255, 255, .6); margin-left: 4px; }
+html.atv-js .atv-menu--versions .atv-menu__item small, html.atv-js .atv-menu--quality .atv-menu__item small { margin-left: auto; padding-left: 16px; font-size: 13px; color: rgba(255, 255, 255, .55); }
+html.atv-js .atv-menu--versions button.atv-menu__item { padding: 10px 12px; font-size: 15px; }
+html.atv-js .atv-menu__head { padding: 8px 14px 6px; font-size: 12px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; color: rgba(255, 255, 255, .5); }
+@media (max-width: 800px) { html.atv-js .atv-detail__versions { order: 4; justify-content: center; } }
+html.atv-js .atv-about__link { color: inherit; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .3); text-underline-offset: 3px; }
+html.atv-js .atv-about__link:hover { color: #fff; text-decoration-color: #fff; }
+/* Update-Hinweis für Admins */
+.atv-update { position: fixed; z-index: 1300; left: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 6px; max-width: min(420px, calc(100vw - 32px)); padding: 6px 6px 6px 16px; border-radius: 999px;
+  background: rgba(44, 44, 48, .78); color: #fff; font-family: var(--tv-font); -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8); box-shadow: 0 10px 30px rgba(0, 0, 0, .45), inset 0 0 0 1px rgba(255, 255, 255, .14); }
+.atv-update__link { display: flex; flex-direction: column; min-width: 0; color: #fff; text-decoration: none; font-size: 13px; line-height: 1.25; }
+.atv-update__link strong { font-weight: 700; } .atv-update__link span { color: rgba(255, 255, 255, .65); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.atv-update__close { flex: 0 0 auto; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(120, 120, 128, .3); color: #fff; cursor: pointer; }
+.atv-update__close svg { width: 16px; height: 16px; fill: currentColor; }
+@media (max-width: 800px) { .atv-update { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); } }
+
+/* Herunterladen: Kreis-Knopf auf der Detailseite, Hinweis-Pille */
+html.atv-js .atv-circle[hidden] { display: none !important; }
+.atv-toast { position: fixed; left: 50%; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); z-index: 10001; transform: translateX(-50%) translateY(10px); opacity: 0; padding: 10px 18px; border-radius: 999px; background: rgba(44, 44, 48, .8); color: #fff;
+  font: 600 14px var(--tv-font); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); box-shadow: 0 10px 30px rgba(0, 0, 0, .4), inset 0 0 0 1px rgba(255, 255, 255, .14); transition: opacity .25s, transform .25s; pointer-events: none; white-space: nowrap; }
+.atv-toast.is-on { opacity: 1; transform: translateX(-50%); }
+@media (max-width: 800px) { .atv-toast { bottom: calc(96px + env(safe-area-inset-bottom, 0px)); } html.atv-js .atv-detail__actions > .atv-circle { width: 44px; height: 44px; } }
+
+/* Download-Fortschritt (Jellyfin-App): Pille unten und Ring am Download-Knopf */
+.atv-dlp { position: fixed; z-index: 1290; left: 12px; right: 12px; bottom: calc(92px + env(safe-area-inset-bottom, 0px)); margin: 0 auto; width: fit-content; max-width: calc(100vw - 24px); display: flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px; border-radius: 999px;
+  background: rgba(44, 44, 48, .82); color: #fff; font-family: var(--tv-font); -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8); box-shadow: 0 10px 30px rgba(0, 0, 0, .45), inset 0 0 0 1px rgba(255, 255, 255, .14);
+  opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity .25s, transform .25s; }
+.atv-dlp.is-on { opacity: 1; transform: none; }
+.atv-dlp__ring { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; background: conic-gradient(#fff calc(var(--p, 0) * 1%), rgba(255, 255, 255, .22) 0); -webkit-mask: radial-gradient(circle, transparent 9px, #000 10px); mask: radial-gradient(circle, transparent 9px, #000 10px); }
+.atv-dlp.is-unknown .atv-dlp__ring { background: conic-gradient(#fff 25%, rgba(255, 255, 255, .22) 0); animation: atv-spin 1s linear infinite; }
+.atv-dlp__text { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+.atv-dlp__text strong { font-size: 13px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 62vw; }
+.atv-dlp__text small { font-size: 12px; color: rgba(255, 255, 255, .7); font-variant-numeric: tabular-nums; }
+html.atv-js .atv-circle--dl.is-loading { position: relative; }
+html.atv-js .atv-circle--dl.is-loading::after { content: ""; position: absolute; inset: -3px; border-radius: 50%; pointer-events: none; background: conic-gradient(#fff calc(var(--p, 0) * 1%), transparent 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px)); mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px)); }
+@media (min-width: 801px) { .atv-dlp { bottom: 24px; } }
+
+/* Suche ohne Treffer: Jellyfins eigener Hinweis entfällt, das Theme zeigt bereits einen (sonst steht er doppelt da) */
+html.atv-js #searchPage .noItemsMessage { display: none !important; }

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Cinema Glass</title></head>
+<body>
+<div id="CinemaGlassConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-checkbox">
+  <div data-role="content">
+    <div class="content-primary">
+      <form id="CinemaGlassForm">
+        <div class="sectionTitleContainer flex align-items-center"><h2 class="sectionTitle">Cinema Glass</h2></div>
+        <p>Nach dem Speichern die Seite im Browser neu laden; Apps einmal ganz schließen und wieder öffnen.</p>
+
+        <h3>Grundlagen</h3>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="EnableTheme"><span>Aussehen (Farben, Glas, Karten, Player)</span></label>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="EnableClient"><span>Funktionen (alles Folgende)</span></label>
+
+        <h3>Oberfläche</h3>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="Hero"><span>Hero-Banner auf der Startseite</span></label>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="DetailPage"><span>Eigene Film- und Serienseite (Folgenregal, Infos, Besetzung)</span></label>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="HomeCardPlay"><span>Karten auf der Startseite spielen direkt ab</span></label>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="EpisodeMenu"><span>Eigenes „···“-Menü und Infofenster bei Folgen</span></label>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="VersionPicker"><span>Versionsauswahl als Schaltflächen</span></label>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="TrailerModal"><span>Trailer im eigenen Fenster (eingebettetes YouTube)</span></label>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="IntroTransition"><span>Sauberer Übergang vom Vorspann zum Film</span></label>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="PageGate"><span>Seiten erst zeigen, wenn sie fertig aufgebaut sind</span></label>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="SwipeBack"><span>Zurückwischen in der Handy-App</span></label>
+
+        <h3>Downloads (nur Handy/App)</h3>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="Downloads"><span>Download-Knöpfe bei Filmen, Folgen und Staffeln</span></label>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="DownloadProgress"><span>Fortschrittsanzeige beim Umwandeln</span></label>
+
+        <h3>Anfragen über Seerr</h3>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="Seerr"><span>Fehlende Titel in der Suche zeigen und anfragen lassen</span></label>
+        <div class="inputContainer"><input is="emby-input" type="text" data-k="SeerrUrl" label="Seerr-Adresse (vom Jellyfin-Server aus erreichbar, z. B. http://seerr:5055)"></div>
+        <div class="inputContainer"><input is="emby-input" type="password" data-k="SeerrApiKey" label="Seerr-API-Schlüssel" autocomplete="off"></div>
+        <div class="inputContainer"><input is="emby-input" type="text" data-k="SeerrUserId" label="Seerr-Nutzernummer für Anfragen (leer = Hauptkonto)"></div>
+
+        <h3>Bewertungen</h3>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="Ratings"><span>Bewertungen (IMDb, Rotten Tomatoes …) über MDBList</span></label>
+        <div class="inputContainer"><input is="emby-input" type="password" data-k="MdbListApiKey" label="MDBList-API-Schlüssel" autocomplete="off"></div>
+
+        <h3>Sonstiges</h3>
+        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="UpdateCheck"><span>Admins auf neue Versionen hinweisen (ein Abruf pro Tag bei GitHub)</span></label>
+
+        <div style="margin-top:2em"><button is="emby-button" type="submit" class="raised button-submit block"><span>Speichern</span></button></div>
+      </form>
+    </div>
+  </div>
+  <script type="text/javascript">
+    (function () {
+      var pluginId = '6f2c1c0e-4c0b-4d57-9a55-3a1f0c7f9b21';
+      var page = document.querySelector('#CinemaGlassConfigPage');
+      function fields() { return page.querySelectorAll('[data-k]'); }
+      page.addEventListener('pageshow', function () {
+        Dashboard.showLoadingMsg();
+        ApiClient.getPluginConfiguration(pluginId).then(function (cfg) {
+          fields().forEach(function (el) {
+            var v = cfg[el.getAttribute('data-k')];
+            if (el.type === 'checkbox') el.checked = !!v; else el.value = v == null ? '' : v;
+          });
+          Dashboard.hideLoadingMsg();
+        });
+      });
+      page.querySelector('#CinemaGlassForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        Dashboard.showLoadingMsg();
+        ApiClient.getPluginConfiguration(pluginId).then(function (cfg) {
+          fields().forEach(function (el) {
+            cfg[el.getAttribute('data-k')] = el.type === 'checkbox' ? el.checked : el.value.trim();
+          });
+          ApiClient.updatePluginConfiguration(pluginId, cfg).then(Dashboard.processPluginConfigurationUpdateResult);
+        });
+        return false;
+      });
+    })();
+  </script>
+</div>
+</body>
+</html>

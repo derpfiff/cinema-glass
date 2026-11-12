@@ -1,0 +1,28 @@
+[
+  {
+    "guid": "6f2c1c0e-4c0b-4d57-9a55-3a1f0c7f9b21",
+    "name": "Cinema Glass",
+    "description": "Kino-Oberfläche im Glas-Stil für die Jellyfin-Weboberfläche: Hero-Banner, Folgenregal, Player-Feinschliff, Downloads, Seerr-Anfragen und Bewertungen. Jede Funktion ist einzeln schaltbar.",
+    "overview": "Oberfläche im Kino-Glas-Stil mit schaltbaren Zusatzfunktionen",
+    "owner": "derpfiff",
+    "category": "General",
+    "versions": [
+      {
+        "version": "1.2.1.0",
+        "changelog": "Siehe Repository.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.2.1.0.zip",
+        "checksum": "d42443824bd1867df01a3d362ea2a390",
+        "timestamp": "2026-11-12T23:15:33Z"
+      },
+      {
+        "version": "1.2.0.0",
+        "changelog": "Siehe Repository.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.2.0.0.zip",
+        "checksum": "3349158d30b10d999da14cff78f814d2",
+        "timestamp": "2026-11-12T23:13:19Z"
+      }
+    ]
+  }
+]
