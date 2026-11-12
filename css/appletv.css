@@ -2317,3 +2317,26 @@ html.atv-js .atv-circle--dl.is-loading::after { content: ""; position: absolute;
 
 /* Suche ohne Treffer: Jellyfins eigener Hinweis entfällt, das Theme zeigt bereits einen (sonst steht er doppelt da) */
 html.atv-js #searchPage .noItemsMessage { display: none !important; }
+
+
+/* --- Überspringen-Knopf: Höhe kommt aus dem Skript (knapp über der Steuerleiste, sonst unten in der Ecke) und er bleibt
+   sichtbar, solange Vorspann/Abspann läuft – auch ohne offene Steuerleiste --- */
+html.atv-js .skip-button-container, html.atv-js body:has(.videoOsdBottom.hide) .skip-button-container {
+  bottom: calc(var(--atv-skip-bottom, 28px) + env(safe-area-inset-bottom, 0px)) !important; transition: bottom .25s var(--tv-ease);
+}
+html.atv-js.atv-skip-on .skip-button-container .skip-button {
+  display: flex !important; width: -webkit-fit-content; width: fit-content; opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transition: opacity .2s !important;
+}
+
+/* --- Positionsmarke im Balken: runder Punkt in Balkenstärke statt hohem Strich; nur beim Anfassen/Überfahren sichtbar --- */
+.osdControls { --atv-bar-h: max(10px, calc(12 * var(--u))); }
+@media (max-width: 800px) { .osdControls { --atv-bar-h: 8px; } }
+html.atv-js .mdl-slider::-webkit-slider-thumb, html.atv-js .osdPositionSlider::-webkit-slider-thumb {
+  width: calc(var(--atv-bar-h, 10px) + 6px) !important; height: calc(var(--atv-bar-h, 10px) + 6px) !important; min-height: 0 !important;
+  border-radius: 50% !important; background: #fff !important; box-shadow: 0 1px 6px rgba(0, 0, 0, .45) !important;
+  opacity: 0; transition: opacity .15s;
+}
+html.atv-js .mdl-slider:hover::-webkit-slider-thumb, html.atv-js .mdl-slider:active::-webkit-slider-thumb,
+html.atv-js .mdl-slider:focus-visible::-webkit-slider-thumb { opacity: 1; }
+/* Der Zeitbalken hat eine 40 px hohe Greiffläche: Punkt darin senkrecht auf den sichtbaren Balken setzen */
+html.atv-js .osdControls input.osdPositionSlider::-webkit-slider-thumb { margin-top: calc((40px - var(--atv-bar-h, 10px) - 6px) / 2) !important; }
