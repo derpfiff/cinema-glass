@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/img/banner.svg" alt="Cinema Glass – Kino-Oberfläche für Jellyfin" width="100%"></p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/Version-1.2.4-7a5cff?style=flat-square">
+  <img alt="Version" src="https://img.shields.io/badge/Version-1.2.5-7a5cff?style=flat-square">
   <img alt="Jellyfin" src="https://img.shields.io/badge/Jellyfin-12.4-22c1ff?style=flat-square">
   <img alt="Art" src="https://img.shields.io/badge/Plugin-mit_Einstellungsseite-ff5c8a?style=flat-square">
   <img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-MIT-9aa4b2?style=flat-square">
