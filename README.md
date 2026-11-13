@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/img/banner.svg" alt="Cinema Glass – Kino-Oberfläche für Jellyfin" width="100%"></p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/Version-1.3.0-7a5cff?style=flat-square">
+  <img alt="Version" src="https://img.shields.io/badge/Version-1.4.0-7a5cff?style=flat-square">
   <img alt="Jellyfin" src="https://img.shields.io/badge/Jellyfin-12.4-22c1ff?style=flat-square">
   <img alt="Art" src="https://img.shields.io/badge/Plugin-mit_Einstellungsseite-ff5c8a?style=flat-square">
   <img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-MIT-9aa4b2?style=flat-square">
@@ -20,6 +20,7 @@ Glasflächen, ruhige Typografie. Dazu Funktionen, die über ein Theme hinausgehe
 |---|---|
 | **Serienseite mit Folgenregal** – Staffelwahl, Fortschritt, Besetzung<br>![Folgenregal](docs/img/desktop-folgen.jpg) | **Filmseite** – Logo, Bewertungen, Fassungen wie bei den Staffeln wählbar<br>![Filmseite mit Versionsauswahl](docs/img/desktop-film-fassungen.jpg) |
 | **Suche findet auch, was fehlt** – Regal „Nicht in deiner Mediathek“ über Seerr<br>![Suche mit Seerr](docs/img/desktop-suche-seerr.jpg) | **Anfragen ohne Umweg** – Staffeln und Qualitätsprofil direkt wählen<br>![Anfrage](docs/img/desktop-anfrage.jpg) |
+| **TV-Seite** – Live-Programm und Mediathek auf einer Seite (mit dem Plugin „Mediathek“)<br>![TV-Seite](docs/img/desktop-tv.jpg) | **Mediathek wie eine Bibliothek** – Reihen, Suche, Serien mit Staffeln; Karten spielen direkt ab<br>![Mediathek](docs/img/desktop-tv-mediathek.jpg) |
 | **Regale auf der Startseite** – Karten spielen direkt ab<br>![Regale](docs/img/desktop-regale.jpg) | **Alles schaltbar** – eine Einstellungsseite im Dashboard<br>![Einstellungen](docs/img/desktop-einstellungen.jpg) |
 
 <p align="center">
@@ -80,6 +81,7 @@ jeweilige Funktion unsichtbar – es gibt keine Fehlermeldung und nichts geht ka
 | **[Local Intros](https://github.com/dkanada/jellyfin-plugin-intros)** (Katalog „Jellyfin Stable“) | eigener Vorspann vor Filmen; Cinema Glass sorgt für den sauberen Übergang | kein Vorspann, der Film startet direkt |
 | **[Intro Skipper](https://github.com/intro-skipper/intro-skipper)** (eigenes Repository des Plugins) | Knopf „Intro überspringen“ bei Serien, im Stil der Oberfläche | kein Überspringen-Knopf |
 | **[Merge Versions](https://github.com/danieladov/jellyfin-plugin-mergeversions)** (eigenes Repository des Plugins) | fasst mehrere Fassungen eines Films zusammen; Cinema Glass zeigt dann die Versionsauswahl | keine Versionsauswahl (geht auch von Hand über „Versionen gruppieren“) |
+| **[Mediathek](https://github.com/derpfiff/jellyfin-mediathek)** (eigenes Repository des Plugins) | Live-TV und Mediathek der öffentlich-rechtlichen Sender; Cinema Glass macht daraus die TV-Seite und zeigt Treffer in der Suche als „Aus der Mediathek“ | kein Eintrag „TV“ (bzw. nur Jellyfins eigenes Live-TV) |
 | **[Seerr](https://github.com/seerr-team/seerr)** (Jellyseerr/Overseerr, eigener Dienst) | fehlende Titel in der Suche finden und anfragen | kein Regal „Nicht in deiner Mediathek“ |
 | **[MDBList](https://mdblist.com)** (kostenloser API-Schlüssel) | Bewertungen von IMDb, Rotten Tomatoes usw. | keine Bewertungs-Plaketten |
 

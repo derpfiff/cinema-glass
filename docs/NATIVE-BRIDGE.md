@@ -92,7 +92,7 @@ Meldet die App einen Kanal **`atvPlay`** mit Antwort an (`WKScriptMessageHandler
 - `items` ist die Warteschlange, wie Jellyfin-Web sie abspielen wollte, ab dem ersten Titel: bei Serien die folgenden Folgen, davor gegebenenfalls ein Vorspann des Servers (`isIntro`). Als Vorspann gilt, was vor dem ersten Film bzw. der ersten Folge steht und selbst keins von beiden ist.
 - `startPositionTicks`, `mediaSourceId` und die Spurnummern gelten für den ersten eigentlichen Titel. Die Spurnummern zählen wie beim Server (`MediaStreams[].Index`).
 - Antwort der App: `{ "handled": true }` – das Theme bricht die Wiedergabe im Web ohne Fehlermeldung ab – oder `{ "handled": false }` bzw. keine Antwort: der Web-Player spielt wie gewohnt.
-- Übergeben werden nur Videos, die auf dem Server liegen. Live-TV, entfernte Trailer, Platzhalter und gemischte Warteschlangen bleiben im Web-Player.
+- Übergeben werden Videos, die auf dem Server liegen, und Videos aus Kanälen (z. B. einer Mediathek); deren Adresse nennt der Server in `PlaybackInfo`. Live-TV, entfernte Trailer, Platzhalter und gemischte Warteschlangen bleiben im Web-Player.
 - Die App holt die Datei unverändert über `GET /Videos/{itemId}/stream?static=true&mediaSourceId=…` und meldet die Wiedergabe über `POST /Sessions/Playing`, `/Sessions/Playing/Progress` und `/Sessions/Playing/Stopped`.
 
 ## Fortschritt zurückmelden (Sache der App)
