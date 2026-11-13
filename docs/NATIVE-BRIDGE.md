@@ -61,6 +61,8 @@ Das Element-Vollbild von WebKit hängt die Web-Ansicht in ein zweites Fenster um
 
 Die App schaltet ihr Fenster um und antwortet mit dem Zustand, der danach gilt: `{ "fullscreen": true }`. `state` ändert nichts und fragt nur ab; das Theme nutzt es nach Größenänderungen, um mitzubekommen, wenn das Vollbild am Fenster selbst beendet wurde. Die Seite erhält weiter `fullscreenchange` und sieht `document.fullscreenElement`, Jellyfin-Web verhält sich also wie im Browser. Esc beendet das Vollbild.
 
+In der App setzt das Theme außerdem die Klasse `atv-native` auf `<html>` und, solange ihr Fenster im Vollbild ist, `atv-native-fs`. Das Stylesheet rückt damit das ✕ des Players im Fenster unter die drei Fensterknöpfe und im Vollbild in die Ecke.
+
 ## Fortschritt zurückmelden (Sache der App)
 
 Nach Offline-Wiedergabe an den Server, sobald er erreichbar ist (Pfade gegen `/api-docs/openapi.json` des Servers prüfen):

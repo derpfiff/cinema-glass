@@ -2340,3 +2340,12 @@ html.atv-js .mdl-slider:hover::-webkit-slider-thumb, html.atv-js .mdl-slider:act
 html.atv-js .mdl-slider:focus-visible::-webkit-slider-thumb { opacity: 1; }
 /* Der Zeitbalken hat eine 40 px hohe Greiffläche: Punkt darin senkrecht auf den sichtbaren Balken setzen */
 html.atv-js .osdControls input.osdPositionSlider::-webkit-slider-thumb { margin-top: calc((40px - var(--atv-bar-h, 10px) - 6px) / 2) !important; }
+
+/* Mac-App JellyDesk: Die Seite reicht dort bis an die Fensteroberkante, oben links liegen die drei Fensterknöpfe.
+   Das ✕ des Players sitzt deshalb fest links in der Ecke direkt darunter, im Vollbild (ohne Fensterknöpfe) in der Ecke. */
+html.atv-native .videoOsd-appBar > button.MuiIconButton-root:first-child, html.atv-native .videoOsd-appBar > .MuiIconButton-root:first-of-type {
+  top: 32px !important; left: 12px !important; margin: 0 !important;
+}
+html.atv-native.atv-native-fs .videoOsd-appBar > button.MuiIconButton-root:first-child, html.atv-native.atv-native-fs .videoOsd-appBar > .MuiIconButton-root:first-of-type {
+  top: 12px !important; left: 12px !important;
+}
