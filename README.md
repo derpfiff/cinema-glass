@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/img/banner.svg" alt="Cinema Glass – Kino-Oberfläche für Jellyfin" width="100%"></p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/Version-1.2.2-7a5cff?style=flat-square">
+  <img alt="Version" src="https://img.shields.io/badge/Version-1.2.3-7a5cff?style=flat-square">
   <img alt="Jellyfin" src="https://img.shields.io/badge/Jellyfin-12.4-22c1ff?style=flat-square">
   <img alt="Art" src="https://img.shields.io/badge/Plugin-mit_Einstellungsseite-ff5c8a?style=flat-square">
   <img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-MIT-9aa4b2?style=flat-square">
@@ -38,6 +38,7 @@ Ein Teil der Funktionen ist kein Aussehen, sondern behebt Stellen, an denen Jell
 |---|---|---|
 | **Vorspann ([Local Intros](https://github.com/dkanada/jellyfin-plugin-intros))** | Während des Vorspanns steht dessen Dateiname im Player. Zwischen Vorspann und Film bleibt das letzte Bild des Vorspanns stehen oder es wird schwarz. Eine gewählte Fassung wird ignoriert. | Kein Titel während des Vorspanns, in der Lücke steht das Hintergrundbild des Films, der Film wird schon vorgeladen, die gewählte Fassung startet. |
 | **Trailer** | Jellyfins eigene Trailer-Wiedergabe endet in den Apps oft mit „Wiedergabefehler“. | Der hinterlegte Trailer läuft in einem eigenen Fenster. Gibt es keinen, erscheint der Knopf gar nicht erst. |
+| **Mac-App [JellyDesk](https://github.com/derpfiff/JellyDesk)** | Am Rechner gibt es keine Downloads und keine Offline-Wiedergabe. | Download-Knöpfe auch am Mac, die App lädt und spielt offline ab; das Vollbild läuft über das Fenster der App und damit ohne Sprung. |
 | **Downloads in der Jellyfin-App** | Die App kann herunterladen, der Befehl steckt aber im Menü einzelner Titel – nicht für ganze Staffeln oder Serien – und es gibt keinen Fortschritt, solange der Server umwandelt. | Download-Knopf bei Film, Folge, Staffel und ganzer Serie, dazu eine Fortschrittsanzeige. |
 | **Mehrere Fassungen ([Merge Versions](https://github.com/danieladov/jellyfin-plugin-mergeversions))** | Die Auswahl steckt in einem unscheinbaren Aufklappfeld. | Auswahl wie bei den Staffeln, mit Laufzeit je Fassung. |
 | **Fehlende Titel ([Seerr](https://github.com/seerr-team/seerr))** | Eigene Webseite, eigene Anmeldung. | Regal „Nicht in deiner Mediathek“ in der Suche und auf Personenseiten, Anfrage mit Staffeln und Qualitätsprofil an Ort und Stelle. |

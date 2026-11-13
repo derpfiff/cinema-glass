@@ -27,7 +27,7 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
     public string ConfigurationStamp()
     {
         var c = Configuration;
-        var text = string.Join('|', c.EnableTheme, c.EnableClient, c.Hero, c.DetailPage, c.HomeCardPlay, c.EpisodeMenu, c.VersionPicker, c.TrailerModal, c.IntroTransition, c.SwipeBack, c.PageGate, c.Downloads, c.DownloadProgress, c.UpdateCheck, c.Seerr, c.Ratings, c.SeerrUrl.Length, c.SeerrApiKey.Length, c.MdbListApiKey.Length, GetType().Assembly.ManifestModule.ModuleVersionId);
+        var text = string.Join('|', c.EnableTheme, c.EnableClient, c.Hero, c.DetailPage, c.HomeCardPlay, c.EpisodeMenu, c.VersionPicker, c.TrailerModal, c.IntroTransition, c.SwipeBack, c.PageGate, c.Downloads, c.DownloadProgress, c.NativeApp, c.UpdateCheck, c.Seerr, c.Ratings, c.SeerrUrl.Length, c.SeerrApiKey.Length, c.MdbListApiKey.Length, GetType().Assembly.ManifestModule.ModuleVersionId);
         return ((uint)StringComparer.Ordinal.GetHashCode(text) ^ 0x9e3779b9).ToString("x8", System.Globalization.CultureInfo.InvariantCulture);
     }
 

@@ -1,6 +1,6 @@
 # Brücke zu einer eigenen nativen App
 
-Das Theme kann Downloads an eine eigene App übergeben, die Jellyfin in einem `WKWebView` zeigt (z. B. ein macOS-Client mit Offline-Verwaltung). Die App muss dafür nur einen Nachrichtenkanal anmelden – am Theme ist nichts einzustellen.
+Das Theme kann Downloads an eine eigene App übergeben, die Jellyfin in einem `WKWebView` zeigt, und ihr das Vollbild überlassen. Die App dazu ist [JellyDesk](https://github.com/derpfiff/JellyDesk) für macOS. Die App muss dafür nur Nachrichtenkanäle anmelden; im Plugin gehört dazu der Schalter „JellyDesk unterstützen“ (ab Werk an).
 
 ## Was die App bereitstellt
 
@@ -50,6 +50,16 @@ Pro Titel eine Nachricht (bei Staffeln mehrere nacheinander, ca. 150 ms Abstand)
 - **Andere Qualitäten**: `/Videos/{id}/stream.mp4?static=false&videoCodec=h264&audioCodec=aac&videoBitRate=…&maxHeight=…`. Der Server rechnet während des Ladens um und schickt einen fortlaufenden MP4-Strom: **kein `Content-Length`, kein Range, nicht fortsetzbar**. Fortschritt über `estimatedBytes` schätzen; bricht die Verbindung ab, von vorn laden. Das Ergebnis ist H.264/AAC in MP4 und läuft mit AVKit.
 - Originale sind oft MKV mit DTS/TrueHD – dafür braucht die App einen Player wie VLCKit oder MPVKit.
 - Zeiten sind Jellyfin-Ticks (10 000 000 pro Sekunde).
+
+## Vollbild über das Fenster der App
+
+Das Element-Vollbild von WebKit hängt die Web-Ansicht in ein zweites Fenster um; dabei springt das Bild. Meldet die App zusätzlich einen Kanal **`atvWindow`** mit Antwort an (`WKScriptMessageHandlerWithReply`), leitet das Theme jede Vollbild-Anfrage der Seite dorthin um – Knopf im Player, Doppelklick, Taste F:
+
+```json
+{ "type": "fullscreen", "version": 1, "action": "enter | exit | toggle | state" }
+```
+
+Die App schaltet ihr Fenster um und antwortet mit dem Zustand, der danach gilt: `{ "fullscreen": true }`. `state` ändert nichts und fragt nur ab; das Theme nutzt es nach Größenänderungen, um mitzubekommen, wenn das Vollbild am Fenster selbst beendet wurde. Die Seite erhält weiter `fullscreenchange` und sieht `document.fullscreenElement`, Jellyfin-Web verhält sich also wie im Browser. Esc beendet das Vollbild.
 
 ## Fortschritt zurückmelden (Sache der App)
 

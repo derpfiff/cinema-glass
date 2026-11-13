@@ -66,6 +66,7 @@ public class CinemaGlassController : ControllerBase
                 pageGate = c.PageGate,
                 downloads = c.Downloads,
                 downloadProgress = c.DownloadProgress,
+                nativeApp = c.NativeApp,
                 updateCheck = c.UpdateCheck,
                 seerr = c.Seerr && c.SeerrUrl.Length > 0 && c.SeerrApiKey.Length > 0,
                 ratings = c.Ratings && c.MdbListApiKey.Length > 0

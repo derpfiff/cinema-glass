@@ -21,6 +21,7 @@ public class PluginConfiguration : BasePluginConfiguration
     public bool PageGate { get; set; } = true;
     public bool Downloads { get; set; } = true;
     public bool DownloadProgress { get; set; } = true;
+    public bool NativeApp { get; set; } = true;        // Zusammenspiel mit der Mac-App JellyDesk (Downloads, Vollbild)
     public bool UpdateCheck { get; set; } = false;
 
     // Anfragen über Seerr (Jellyseerr/Overseerr)
