@@ -2524,3 +2524,23 @@ html.atv-pg-tv header.MuiAppBar-root > .MuiToolbar-root:nth-child(n+2), html.atv
 .atv-tv__tab:hover { background: rgba(255, 255, 255, .18); }
 .atv-tv__tab.is-on { background: #fff; color: #000; }
 .atv-tv__grid--wide { grid-template-columns: repeat(auto-fill, minmax(clamp(200px, 19vw, 320px), 1fr)); }
+
+/* Startseite: Fernsehen steht auf der TV-Seite, nicht hier (siehe tvHomeClean) */
+.homeSectionsContainer .atv-home-tv { display: none !important; }
+
+/* Mediathek-Treffer: Ladeansicht und Untergruppe */
+.atv-tv__subtitle { margin: clamp(26px, 2.6vw, 44px) 0 clamp(12px, 1.2vw, 18px); font-size: clamp(15px, 1.15vw, 20px); font-weight: 650; color: var(--tv-text-2); }
+.atv-tv__skel { pointer-events: none; }
+.atv-tv__skel .atv-tv__pic { display: block; aspect-ratio: 2 / 3; border-radius: 14px; background: linear-gradient(100deg, rgba(255,255,255,.05) 30%, rgba(255,255,255,.11) 50%, rgba(255,255,255,.05) 70%); background-size: 220% 100%; animation: atv-tv-skel 1.3s linear infinite; }
+.atv-tv__skel .atv-tv__name { display: block; width: 62%; height: 1em; border-radius: 6px; background: rgba(255,255,255,.07); }
+@keyframes atv-tv-skel { from { background-position: 120% 0; } to { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { .atv-tv__skel .atv-tv__pic { animation: none; } }
+/* Unterlängen (g, p, y) der zweiten Titelzeile nicht abschneiden */
+.atv-tv__name { padding-bottom: .14em; }
+
+/* Live-Fernsehen: ohne Zeitleiste und Zeitangabe (ein laufendes Programm lässt sich hier nicht spulen); Pause bleibt */
+html.atv-osd-live .osdControls .sliderContainer.mdl-slider-container:not(.osdVolumeSliderContainer),
+html.atv-osd-live .osdControls .osdTimeText,
+html.atv-osd-live .osdControls .btnPreviousTrack, html.atv-osd-live .osdControls .btnNextTrack,
+html.atv-osd-live .osdControls .btnPreviousChapter, html.atv-osd-live .osdControls .btnNextChapter { display: none !important; }
+html.atv-osd-live .osdControls > .buttons > div:first-child { margin-right: auto; }
