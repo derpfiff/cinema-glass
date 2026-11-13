@@ -2353,3 +2353,11 @@ html.atv-native.atv-native-fs .videoOsd-appBar > button.MuiIconButton-root:first
 /* Mac-App JellyDesk: Die Seite selbst federt seitlich nicht nach, wenn ein waagerechtes Wischen neben oder am Ende eines
    Regals bei ihr ankommt. */
 html.atv-native, html.atv-native body { overscroll-behavior-x: none; }
+
+/* Mac-App JellyDesk: Jellyfin hält unter der Kopfzeile einen Platzhalter frei und stellt dessen Höhe per Skript erst beim
+   resize-Ereignis nach. Beim Wechsel zwischen Fenster und Vollbild kommt dieses Ereignis in der App erst nach der Animation an,
+   und die ganze Seite rutschte dann sichtbar um ein paar Pixel nach. Hier folgt der Platzhalter derselben Rechnung wie die
+   Kapsel (Höhe + 2 × 3 px Innenabstand + 12 px Abstand nach oben) und stimmt damit in jedem Augenblick. */
+html.atv-native header.MuiAppBar-root:not(:has(> .MuiToolbar-root:nth-child(2))):has(> .MuiToolbar-root:first-child:not(.videoOsd-appBar):not(.dashboard-appBar)):not(:has(> .MuiToolbar-root:first-child > .MuiStack-root > a:only-child)) + div[style*="flex-shrink"] {
+  height: calc(var(--tv-header-h) + 18px) !important;
+}
