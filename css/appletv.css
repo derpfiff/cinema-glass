@@ -1020,6 +1020,9 @@ h1.actionSheetTitle, .actionSheetTitle { font-size: 13px !important; font-weight
 /* Formular-Dialoge */
 .formDialogHeader { background: transparent !important; border: 0 !important; padding: 18px 18px 8px !important; }
 .formDialogHeaderTitle { font-size: 20px; font-weight: 700; }
+/* Mittig gesetzte Dialoge (Hinweise, Fehlermeldungen): Jellyfin gibt der Überschrift links einen Außenabstand, rechts keinen;
+   sie stand dadurch neben der Achse von Text und Knopf. */
+.formDialogHeader.justify-content-center .formDialogHeaderTitle { margin-left: 0 !important; margin-right: 0 !important; text-align: center; }
 .formDialogContent { background: transparent !important; }
 .formDialogFooter { background: transparent !important; border: 0 !important; padding: 12px 18px 18px !important; }
 .formDialogFooterItem { margin: 0 6px; }
