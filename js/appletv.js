@@ -1044,6 +1044,64 @@
     // Herunterladen-Knöpfe nur dort, wo es eine Download-Verwaltung gibt: in der App bzw. auf Handy/Tablet
     // Eigene Desktop-App (WKWebView) mit Download-Verwaltung: Nachrichtenkanal „atvDownload“ (siehe docs/NATIVE-BRIDGE.md)
     function nativeBridge() { if (!on('nativeApp')) return null; try { var h = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.atvDownload; return h && typeof h.postMessage === 'function' ? h : null; } catch (e) { return null; } }
+    /* Wiedergabe im Player der eigenen Desktop-App (JellyDesk). Jellyfin-Web fragt vor jedem Abspielen seine
+       „preplayintercept“-Plugins. Als solches meldet sich das Theme an (window.CinemaGlassBridge, vom Server-Plugin in die
+       Plugin-Liste der Weboberfläche eingetragen). Bietet die App den Kanal „atvPlay“ an, bekommt sie die Warteschlange,
+       die gerade abgespielt werden sollte; übernimmt sie, endet die Wiedergabe im Web an dieser Stelle ohne Fehlermeldung.
+       Im Browser und ohne App antwortet das Plugin sofort mit „weiter“ und ändert nichts. */
+    function playBridge() { if (!on('nativeApp')) return null; try { var h = window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.atvPlay; return h && typeof h.postMessage === 'function' ? h : null; } catch (e) { return null; } }
+    function playable(it) {
+        return !!it && !!it.Id && it.MediaType === 'Video' && !it.IsPlaceHolder && !it.IsFolder
+            && it.LocationType !== 'Remote' && it.LocationType !== 'Virtual'
+            && it.Type !== 'TvChannel' && it.Type !== 'Program' && it.Type !== 'LiveTvChannel' && it.Type !== 'LiveTvProgram';
+    }
+    function playMessage(options) {
+        var a = api(), first = options.item;
+        if (!apiReady() || !playable(first)) return null;
+        var list = Array.isArray(options.items) && options.items.length ? options.items : [first];
+        var start = typeof options.startIndex === 'number' && list[options.startIndex] ? options.startIndex : Math.max(0, list.indexOf(first));
+        list = list.slice(start, start + 200);
+        if (!list.every(playable)) return null;   // gemischte Warteschlangen (Fotos, Live-TV) bleiben im Web-Player
+        // Vorspann: was der Server vor den ersten Film bzw. die erste Folge gestellt hat und selbst keins von beiden ist
+        var main = -1;
+        for (var i = 0; i < list.length; i++) { if (list[i].Type === 'Movie' || list[i].Type === 'Episode') { main = i; break; } }
+        return {
+            type: 'play', version: 1,
+            serverUrl: typeof a.serverAddress === 'function' ? a.serverAddress() : location.origin,
+            serverId: first.ServerId || (typeof a.serverId === 'function' ? a.serverId() : ''),
+            userId: userId(), accessToken: a.accessToken(),
+            startIndex: 0,
+            startPositionTicks: options.startPositionTicks > 0 ? Math.floor(options.startPositionTicks) : 0,
+            mediaSourceId: options.mediaSourceId || null,
+            audioStreamIndex: typeof options.audioStreamIndex === 'number' ? options.audioStreamIndex : null,
+            subtitleStreamIndex: typeof options.subtitleStreamIndex === 'number' ? options.subtitleStreamIndex : null,
+            items: list.map(function (it, i) {
+                return {
+                    itemId: it.Id, title: it.Name || '', itemType: it.Type || 'Video', seriesName: it.SeriesName || '',
+                    seasonNumber: typeof it.ParentIndexNumber === 'number' ? it.ParentIndexNumber : null,
+                    episodeNumber: typeof it.IndexNumber === 'number' ? it.IndexNumber : null,
+                    year: it.ProductionYear || null, runTimeTicks: it.RunTimeTicks || 0,
+                    isIntro: main > 0 && i < main
+                };
+            })
+        };
+    }
+    function BridgePlugin() { this.name = 'Cinema Glass'; this.type = 'preplayintercept'; this.id = 'cinemaglassbridge'; this.priority = 100; }
+    BridgePlugin.prototype.intercept = function (options) {
+        var h = playBridge(), msg = null;
+        if (!h || !options) return Promise.resolve();
+        try { msg = playMessage(options); } catch (e) { msg = null; }
+        if (!msg) return Promise.resolve();
+        var asked;
+        try { asked = h.postMessage(msg); } catch (e) { return Promise.resolve(); }
+        if (!asked || typeof asked.then !== 'function') return Promise.resolve();
+        // Antwortet die App nicht (ältere Version, Fehler), spielt der Web-Player wie gewohnt.
+        return asked.then(function (r) { return !!(r && r.handled); }, function () { return false; })
+            .then(function (handled) { if (handled) return Promise.reject(); });
+    };
+    window.__cinemaGlassBridgeClass = BridgePlugin;
+    if (typeof window.__cinemaGlassBridge === 'function') { try { window.__cinemaGlassBridge(BridgePlugin); } catch (e) {} }
+
     /* Vollbild in der eigenen Desktop-App (JellyDesk). Das Element-Vollbild von WebKit hängt die Web-Ansicht in ein zweites
        Fenster um, und dabei springt das Bild. Bietet die App den Kanal „atvWindow“ an, geht jede Vollbild-Anfrage der Seite
        (Knopf im Player, Doppelklick, Taste F) stattdessen an sie: die App schaltet ihr eigenes Fenster ins Vollbild, die Seite

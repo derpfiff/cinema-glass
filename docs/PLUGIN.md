@@ -38,7 +38,7 @@ Das Paket ist gegen Jellyfin 12.4 gebaut. Für andere Serverversionen selbst bau
 | Regale folgen dem Trackpad | Jellyfins eigene Behandlung: beim seitlichen Wischen ruckt das Regal und zieht nach (außer in Firefox) |
 | Zurückwischen | keine Wischgeste in der Handy-App |
 | Download-Knöpfe / Fortschritt | keine Download-Knöpfe bzw. keine Anzeige |
-| JellyDesk unterstützen | in der Mac-App [JellyDesk](https://github.com/derpfiff/JellyDesk) keine Download-Knöpfe, Vollbild über WebKit statt über das Fenster der App |
+| JellyDesk unterstützen | in der Mac-App [JellyDesk](https://github.com/derpfiff/JellyDesk) keine Download-Knöpfe, Vollbild über WebKit statt über das Fenster der App, Wiedergabe im Web-Player statt im Player der App |
 | Seerr | kein Regal „Nicht in deiner Mediathek“, keine Anfragen |
 | Bewertungen | keine Bewertungs-Plaketten |
 | Update-Hinweis | kein Abruf bei GitHub (mit Plugin unnötig, Updates kommen über den Katalog) |
@@ -81,7 +81,7 @@ Dashboard → Plugins → Cinema Glass → deinstallieren, Jellyfin neu starten.
 | Pfad | Inhalt |
 |---|---|
 | `css/appletv.css`, `js/*.js` | Aussehen und Funktionen – dieselben Dateien wie bei der Handinstallation |
-| `plugin/src/Web/InjectStartupFilter.cs` | hängt Stylesheet und Skript in die Startseite der Weboberfläche |
+| `plugin/src/Web/InjectStartupFilter.cs` | hängt Stylesheet und Skript in die Startseite der Weboberfläche und trägt das Wiedergabe-Plugin in deren Plugin-Liste (`config.json`) ein |
 | `plugin/src/Web/CinemaGlassController.cs` | liefert beides aus (`/CinemaGlass/theme.css`, `/CinemaGlass/client.js`) und leitet an Seerr/MDBList weiter |
 | `plugin/src/Configuration/` | Einstellungen und Einstellungsseite |
 

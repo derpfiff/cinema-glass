@@ -1,6 +1,6 @@
 # Brücke zu einer eigenen nativen App
 
-Das Theme kann Downloads an eine eigene App übergeben, die Jellyfin in einem `WKWebView` zeigt, und ihr das Vollbild überlassen. Die App dazu ist [JellyDesk](https://github.com/derpfiff/JellyDesk) für macOS. Die App muss dafür nur Nachrichtenkanäle anmelden; im Plugin gehört dazu der Schalter „JellyDesk unterstützen“ (ab Werk an).
+Das Theme kann Downloads und die Wiedergabe an eine eigene App übergeben, die Jellyfin in einem `WKWebView` zeigt, und ihr das Vollbild überlassen. Die App dazu ist [JellyDesk](https://github.com/derpfiff/JellyDesk) für macOS. Die App muss dafür nur Nachrichtenkanäle anmelden; im Plugin gehört dazu der Schalter „JellyDesk unterstützen“ (ab Werk an).
 
 ## Was die App bereitstellt
 
@@ -64,6 +64,36 @@ Die App schaltet ihr Fenster um und antwortet mit dem Zustand, der danach gilt: 
 Über denselben Kanal meldet das Theme das Seitenverhältnis des laufenden Videos (`{ "type": "video", "version": 1, "aspect": 1.78 }`), sobald es bekannt ist oder sich ändert. Die App passt damit die Darstellung während des Wechsels an.
 
 In der App setzt das Theme außerdem die Klasse `atv-native` auf `<html>` und, solange ihr Fenster im Vollbild ist, `atv-native-fs`. Das Stylesheet rückt damit das ✕ des Players im Fenster unter die drei Fensterknöpfe und im Vollbild in die Ecke.
+
+## Wiedergabe im Player der App
+
+Meldet die App einen Kanal **`atvPlay`** mit Antwort an (`WKScriptMessageHandlerWithReply`), fragt das Theme sie vor jeder Wiedergabe, ob sie übernimmt. Technisch meldet sich das Theme bei Jellyfin-Web als Plugin der Art `preplayintercept` an; dafür trägt das Server-Plugin den Namen `CinemaGlassBridge` in die Plugin-Liste der Weboberfläche (`/web/config.json`) ein und stellt in der Startseite eine gleichnamige Funktion bereit. Im Browser und ohne den Kanal antwortet das Plugin sofort mit „weiter“.
+
+```json
+{
+  "type": "play",
+  "version": 1,
+  "serverUrl": "https://server",
+  "serverId": "…",
+  "userId": "…",
+  "accessToken": "…",
+  "startIndex": 0,
+  "startPositionTicks": 0,
+  "mediaSourceId": null,
+  "audioStreamIndex": null,
+  "subtitleStreamIndex": null,
+  "items": [
+    { "itemId": "…", "title": "Titel", "itemType": "Movie | Episode | Video", "seriesName": "",
+      "seasonNumber": null, "episodeNumber": null, "year": 2001, "runTimeTicks": 137000000000, "isIntro": false }
+  ]
+}
+```
+
+- `items` ist die Warteschlange, wie Jellyfin-Web sie abspielen wollte, ab dem ersten Titel: bei Serien die folgenden Folgen, davor gegebenenfalls ein Vorspann des Servers (`isIntro`). Als Vorspann gilt, was vor dem ersten Film bzw. der ersten Folge steht und selbst keins von beiden ist.
+- `startPositionTicks`, `mediaSourceId` und die Spurnummern gelten für den ersten eigentlichen Titel. Die Spurnummern zählen wie beim Server (`MediaStreams[].Index`).
+- Antwort der App: `{ "handled": true }` – das Theme bricht die Wiedergabe im Web ohne Fehlermeldung ab – oder `{ "handled": false }` bzw. keine Antwort: der Web-Player spielt wie gewohnt.
+- Übergeben werden nur Videos, die auf dem Server liegen. Live-TV, entfernte Trailer, Platzhalter und gemischte Warteschlangen bleiben im Web-Player.
+- Die App holt die Datei unverändert über `GET /Videos/{itemId}/stream?static=true&mediaSourceId=…` und meldet die Wiedergabe über `POST /Sessions/Playing`, `/Sessions/Playing/Progress` und `/Sessions/Playing/Stopped`.
 
 ## Fortschritt zurückmelden (Sache der App)
 
