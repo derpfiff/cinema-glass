@@ -2349,3 +2349,7 @@ html.atv-native .videoOsd-appBar > button.MuiIconButton-root:first-child, html.a
 html.atv-native.atv-native-fs .videoOsd-appBar > button.MuiIconButton-root:first-child, html.atv-native.atv-native-fs .videoOsd-appBar > .MuiIconButton-root:first-of-type {
   top: 12px !important; left: 12px !important;
 }
+
+/* Mac-App JellyDesk: Die Seite selbst federt seitlich nicht nach, wenn ein waagerechtes Wischen neben oder am Ende eines
+   Regals bei ihr ankommt. */
+html.atv-native, html.atv-native body { overscroll-behavior-x: none; }

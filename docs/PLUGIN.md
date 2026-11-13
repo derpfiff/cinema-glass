@@ -35,6 +35,7 @@ Das Paket ist gegen Jellyfin 12.4 gebaut. Für andere Serverversionen selbst bau
 | Trailer im eigenen Fenster | Jellyfins eigene Trailer-Wiedergabe |
 | Übergang Vorspann → Film | Titel und Standbild wie von Jellyfin geliefert |
 | Seiten erst fertig zeigen | Seiten erscheinen sofort und bauen sich sichtbar auf |
+| Regale folgen dem Trackpad | Jellyfins eigene Behandlung: beim seitlichen Wischen ruckt das Regal und zieht nach (außer in Firefox) |
 | Zurückwischen | keine Wischgeste in der Handy-App |
 | Download-Knöpfe / Fortschritt | keine Download-Knöpfe bzw. keine Anzeige |
 | JellyDesk unterstützen | in der Mac-App [JellyDesk](https://github.com/derpfiff/JellyDesk) keine Download-Knöpfe, Vollbild über WebKit statt über das Fenster der App |
