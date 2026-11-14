@@ -430,7 +430,15 @@
         bPrev.addEventListener('click', function () { grid.scrollBy({ left: -grid.clientWidth * .8, behavior: 'smooth' }); });
         bNext.addEventListener('click', function () { grid.scrollBy({ left: grid.clientWidth * .8, behavior: 'smooth' }); });
         grid.addEventListener('scroll', function () { clearTimeout(syncArrows.t); syncArrows.t = setTimeout(syncArrows, 80); }, { passive: true });
-        if (results) results.parentNode.insertBefore(sec, results.nextSibling); else page.appendChild(sec);
+        // Immer unter den Treffern der eigenen Bibliothek. Jellyfin legt seinen Trefferbereich manchmal erst nach diesem
+        // Regal an; dann stünde „Nicht in deiner Mediathek“ darüber. Der Platz wird deshalb nachgehalten.
+        function place() {
+            var res = page.querySelector('.searchResults');
+            if (res && res.parentNode) { if (res.nextElementSibling !== sec) res.parentNode.insertBefore(sec, res.nextSibling); }
+            else if (!sec.parentNode) page.appendChild(sec);
+        }
+        place();
+        if (window.MutationObserver) new MutationObserver(place).observe(page, { childList: true });
         var last = '', ctrl = null, timer = null;
         // Fehler sichtbar, mit "Erneut versuchen"; läuft automatisch neu, sobald das Netz zurück ist oder die App wieder vorne ist
         function showErr(code) {
