@@ -2719,6 +2719,7 @@ html.atv-js .atv-part--missing:hover .atv-seerr__poster img, html.atv-js .atv-pa
   html.atv-js .atv-series .atv-shelf__head { flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin-bottom: 4px; }
   html.atv-js .atv-series .atv-shelf__title { font-size: 19px; font-weight: 800; letter-spacing: -.01em; }
   html.atv-js .atv-series .atv-shelf__count { margin-left: 0; }
+}
 /* Qualitäts-Abzeichen auf Karten (4K, HDR, DV): oben rechts, denn oben links sitzen Zähler und Gesehen-Marke, unten
    Titel und Fortschritt. Kein Zeigerziel, damit Klicks weiter die Karte treffen. */
 .atv-qb { position: absolute; top: 4.6cqw; right: 4.6cqw; z-index: 3; display: flex; gap: 3px; pointer-events: none; }
@@ -2739,3 +2740,35 @@ html.atv-js .atv-part--missing:hover .atv-seerr__poster img, html.atv-js .atv-pa
 @container (max-width: 110px) {
   .atv-qb__res:not(:only-child) { display: none; }
 }
+
+/* ---------- Qualitäts-Zeichen (statt Text): Doppel-D + „Vision“/„Atmos“, 4K Ultra HD, HDR ---------- */
+.atv-ql { display: inline-flex; align-items: center; gap: .32em; line-height: 1; color: inherit; white-space: nowrap; }
+.atv-ql b { font-weight: 800; letter-spacing: .02em; }
+.atv-ql i { font-style: normal; font-weight: 700; }
+.atv-ql__dd { height: .82em; width: auto; fill: currentColor; flex: none; }
+.atv-ql--dv b, .atv-ql--atmos b { font-weight: 600; letter-spacing: .01em; }
+.atv-ql--4k b { font-size: 1.12em; font-style: italic; letter-spacing: -.02em; }
+.atv-ql--4k i { font-size: .46em; line-height: 1.05; letter-spacing: .08em; text-align: left; }
+.atv-ql--hdr b { letter-spacing: .06em; }
+.atv-ql--hdr i { font-size: .72em; margin-left: -.18em; align-self: flex-start; }
+html.atv-js .atv-badge--logo { letter-spacing: 0; }
+
+/* Marken auf Karten: auf Plakaten unten links. Oben sitzen Gesehen-Haken und Fassungszähler; daneben wurde es auf
+   schmalen Handy-Karten eng, und die Marken schoben sich an den Haken. Querformat-Karten tragen unten ihren Titel,
+   dort bleiben die Marken oben rechts. */
+.card.portraitCard .atv-qb, .card.overflowPortraitCard .atv-qb { top: auto; right: auto; left: 4.6cqw; bottom: 5.4cqw; }
+.atv-qb > span { height: 18px; padding: 0 6px; font-size: 9.5px; background: rgba(0, 0, 0, .55); }
+@container (max-width: 150px) { .atv-qb > span { height: 15px; padding: 0 5px; font-size: 8px; } }
+
+/* Fassungszähler („2“ bei mehreren Fassungen): Glas-Pille wie der Haken statt Jellyfins blauem Kreis, und neben dem
+   Haken statt darunter. */
+.mediaSourceIndicator {
+  left: 4.6cqw !important; top: 4.6cqw !important; right: auto !important; z-index: 3;
+  background: rgba(0, 0, 0, .5) !important; -webkit-backdrop-filter: blur(20px) saturate(1.8); backdrop-filter: blur(20px) saturate(1.8);
+  color: #fff !important; font-weight: 600; font-size: clamp(11px, 6.9cqw, 18px) !important; text-shadow: none;
+  border-radius: 999px !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+  width: auto !important; min-width: max(10cqw, 20px); height: max(10cqw, 20px) !important; line-height: max(10cqw, 20px) !important;
+  padding: 0 2.6cqw !important; box-sizing: border-box; text-align: center; display: block;
+}
+.cardScalable:has(.mediaSourceIndicator) .cardIndicators { left: calc(4.6cqw + max(10cqw, 20px) + 4px) !important; }
+@media (max-width: 800px) { .mediaSourceIndicator { min-width: 22px; height: 22px !important; line-height: 22px !important; font-size: 12px !important; } .cardScalable:has(.mediaSourceIndicator) .cardIndicators { left: calc(4.6cqw + 26px) !important; } }
