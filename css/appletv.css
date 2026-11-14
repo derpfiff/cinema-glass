@@ -2779,3 +2779,10 @@ html.atv-js .atv-badge--logo { letter-spacing: 0; }
 .atv-ql--file img { display: block; height: 1.05em; width: auto; max-width: 7.5em; filter: brightness(0) invert(1); opacity: .95; }
 .atv-qb .atv-ql--file img { height: 1.15em; }
 html.atv-js .atv-badge--logo .atv-ql--file img { height: .95em; }
+/* Eigene Zeichen auf der Film- und Folgenseite stehen frei, ohne den Rahmen der Text-Abzeichen: Sie bringen ihre
+   eigene Form mit, ein Rahmen darum wäre ein Rahmen im Rahmen. */
+html.atv-js .atv-badge--file { border: 0 !important; padding: 0 !important; height: auto !important; border-radius: 0 !important; background: none !important; margin-left: max(8px, calc(10 * var(--atv-u))); margin-right: max(2px, calc(4 * var(--atv-u))); }
+html.atv-js .atv-badge--file .atv-ql--file img { height: max(17px, calc(24 * var(--atv-u))); max-width: none; }
+/* Herz: gefüllt und rot, sobald der Titel gefällt */
+html.atv-js .atv-circle.is-on svg path[d^="M12 21.35"], html.atv-js .atv-circle--fav.is-on svg { fill: #ff375f; color: #ff375f; }
+html.atv-js .atv-circle svg path[d^="M12 21.35"] { fill: #ff375f; }

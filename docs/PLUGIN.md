@@ -33,7 +33,7 @@ Das Paket ist gegen Jellyfin 12.4 gebaut. Für andere Serverversionen selbst bau
 | Karten spielen direkt ab | Klick auf eine Karte öffnet wie gewohnt die Seite |
 | „···“-Menü bei Folgen | „···“ öffnet die Seite der Folge |
 | Versionsauswahl | Jellyfins eigene Auswahl |
-| Qualitäts-Abzeichen | keine Marken für 4K, HDR, Dolby Vision und Atmos – weder auf Karten noch auf der Film- und Folgenseite |
+| Qualitäts-Abzeichen | keine Marken für 4K, HDR, Dolby Vision und Atmos auf der Film- und Folgenseite |
 | Trailer im eigenen Fenster | Jellyfins eigene Trailer-Wiedergabe |
 | Übergang Vorspann → Film | Titel und Standbild wie von Jellyfin geliefert |
 | Seiten erst fertig zeigen | Seiten erscheinen sofort und bauen sich sichtbar auf |

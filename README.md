@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/img/banner.svg" alt="Cinema Glass – Kino-Oberfläche für Jellyfin" width="100%"></p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/Version-1.6.4-7a5cff?style=flat-square">
+  <img alt="Version" src="https://img.shields.io/badge/Version-1.6.5-7a5cff?style=flat-square">
   <img alt="Jellyfin" src="https://img.shields.io/badge/Jellyfin-12.4-22c1ff?style=flat-square">
   <img alt="Art" src="https://img.shields.io/badge/Plugin-mit_Einstellungsseite-ff5c8a?style=flat-square">
   <img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-MIT-9aa4b2?style=flat-square">
@@ -31,7 +31,7 @@ Glasflächen, ruhige Typografie. Dazu Funktionen, die über ein Theme hinausgehe
   <img src="docs/img/handy-download.jpg" alt="Download am Handy" width="19%">
 </p>
 
-Filme und Folgen in 4K, HDR oder Dolby Vision tragen auf ihren Karten eine kleine Marke; die Film- und Folgenseite nennt zusätzlich Dolby Atmos.
+Die Film- und Folgenseite zeigt, ob ein Titel in 4K, HDR, Dolby Vision oder mit Dolby Atmos vorliegt.
 
 ## Mehr als ein Theme: was es an Jellyfin und anderen Plugins glattzieht
 
