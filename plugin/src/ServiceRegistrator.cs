@@ -13,5 +13,7 @@ public class ServiceRegistrator : IPluginServiceRegistrator
     {
         serviceCollection.AddSingleton<IStartupFilter, InjectStartupFilter>();
         serviceCollection.AddHttpClient("CinemaGlass", c => c.Timeout = TimeSpan.FromSeconds(40));
+        // Setzt die im Theme gewählte Download-Qualität durch, wenn die Jellyfin-App selbst beim Server anfragt.
+        serviceCollection.Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(o => o.Filters.Add<DownloadQualityFilter>());
     }
 }
