@@ -2663,3 +2663,20 @@ body.dashboardDocument header.MuiAppBar-root > .MuiToolbar-root.dashboard-appBar
 body.dashboardDocument header.MuiAppBar-root { align-items: stretch !important; }
 /* Listen im Inhalt der Verwaltung (z. B. „Aktivität“) als Karte wie die Flächen daneben */
 body.dashboardDocument .content-primary .MuiList-root { background: #1b1c22 !important; border-radius: 18px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+/* Live-Sender am Handy: Der Titelblock steht über der Zeile mit „−10 s“, Regler und „LIVE“ statt auf ihr. (Bei Filmen
+   steht an dieser Stelle nichts, dort darf er tiefer sitzen.) */
+html.atv-osd-live .atv-osd-title { bottom: calc(100% + 8px); right: 0; }
+/* Einschalt-Bild im Hochformat: Das Bild der Sendung ist quer. Bildschirmfüllend beschnitten bliebe nur ein unkenntlicher
+   Ausschnitt; es steht deshalb ganz und im Querformat da, dahinter derselbe Ausschnitt weichgezeichnet, der Text darunter. */
+.atv-tune__pic { display: none; }
+@media (orientation: portrait) {
+  .atv-tune { flex-direction: column; justify-content: center; align-items: stretch; }
+  .atv-tune__bg { filter: blur(30px); transform: scale(1.25); opacity: .38; }
+  .atv-tune__pic { display: block; position: relative; width: calc(100% - 32px); margin: 0 16px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 18px; box-shadow: 0 18px 50px rgba(0, 0, 0, .55), inset 0 0 0 1px rgba(255, 255, 255, .1); }
+  .atv-tune__text { padding: 22px 20px 0; max-width: none; }
+}
+/* Handy quer, Live-Sender: Der Titelblock sitzt höher als bei Filmen; die runden Knöpfe in der Bildmitte rücken deshalb
+   etwas nach oben, damit sie ihn nicht berühren. */
+@media (orientation: landscape) and (max-height: 500px) {
+  html.atv-osd-live .osdControls > .buttons > div:first-child { top: 36%; }
+}
