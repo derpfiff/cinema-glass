@@ -2623,3 +2623,15 @@ html.atv-osd-live .osdControls > .buttons > div:first-child { margin-right: auto
 @media (prefers-reduced-motion: reduce) { .atv-tune__wait i { animation: none; } .atv-tune { transition: none; } }
 /* Live-Fernsehen: „CH 1 · Sender“ steht schon in der Titelzeile */
 html.atv-osd-live.atv-osd-titled .osdControls > .osdSecondaryMediaInfo { display: none !important; }
+
+/* Suchfeld der TV-Seite: Die Hervorhebung beim Tippen trägt die Pille selbst; der allgemeine Fokusring legte zusätzlich
+   einen eckigen weißen Rahmen um das Eingabefeld. */
+.atv-tv__field input, .atv-tv__field input:focus, .atv-tv__field input:focus-visible { outline: none !important; box-shadow: none !important; border: 0 !important; background: transparent !important; -webkit-appearance: none; appearance: none; }
+/* Suche: Titel der Mediathek nur einmal, unter „Aus der Mediathek“ */
+.searchResults .atv-search-tvdup { display: none !important; }
+/* Verwaltung (Dashboard) auf dem Handy: Der Menü-Knopf bleibt, über ihn erreicht man alle Bereiche (Benutzer, Bibliotheken,
+   Plugins …). Ausgeblendet gehört er nur auf den Seiten, die das Theme selbst gestaltet. */
+@media (max-width: 800px) {
+  body.dashboardDocument header.MuiAppBar-root > .MuiToolbar-root.dashboard-appBar { display: flex !important; align-items: center; justify-content: flex-start !important; min-height: 52px; padding: calc(env(safe-area-inset-top, 0px) + 4px) 10px 4px !important; pointer-events: auto; }
+  body.dashboardDocument header.MuiAppBar-root > .MuiToolbar-root.dashboard-appBar > button.MuiIconButton-root:first-child { display: inline-flex !important; color: #fff; margin: 0 auto 0 0 !important; }
+}
