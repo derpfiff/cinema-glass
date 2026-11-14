@@ -53,6 +53,30 @@ Plugin-Einstellungen (`<Jellyfin-Konfiguration>/plugins/configurations/CinemaGla
 `4k`, `hdr`, `hdr10`, `hdr10plus`, `hlg`, `dv` und `atmos`. Die Dateien werden einfarbig weiß dargestellt. Im Paket und
 im Repository liegen keine solchen Dateien; die Zeichen von Dolby, UHD und HDR10+ sind Marken ihrer Inhaber.
 
+Die bekannten Zeichen gibt es als SVG bei [Wikimedia Commons](https://commons.wikimedia.org); von dort holt man sie
+sich selbst:
+
+| Datei im Ordner | Datei bei Wikimedia Commons |
+|---|---|
+| `4k.svg` | `Ultra HD - Logo (transparent).svg` |
+| `dv.svg` | `Dolby Vision 2021 logo.svg` |
+| `atmos.svg` | `Logo Dolby Atmos.svg` |
+| `hdr10.svg` | `HDR 10 logo (black).svg` |
+| `hdr10plus.svg` | `HDR 10 plus logo (black).svg` |
+
+```sh
+cd "<Jellyfin-Konfiguration>/plugins/configurations" && mkdir -p CinemaGlass-logos && cd CinemaGlass-logos
+get() { curl -fsSL -o "$1" "https://commons.wikimedia.org/wiki/Special:FilePath/$2"; }
+get 4k.svg        "Ultra%20HD%20-%20Logo%20%28transparent%29.svg"
+get dv.svg        "Dolby%20Vision%202021%20logo.svg"
+get atmos.svg     "Logo%20Dolby%20Atmos.svg"
+get hdr10.svg     "HDR%2010%20logo%20%28black%29.svg"
+get hdr10plus.svg "HDR%2010%20plus%20logo%20%28black%29.svg"
+```
+
+Danach Jellyfin neu starten. Die Dateien müssen für das Konto lesbar sein, unter dem Jellyfin läuft. Ob und wofür man
+die Zeichen verwenden darf, regeln ihre Inhaber; für die Anzeige auf dem eigenen Server ist das üblich.
+
 ### Seerr
 
 - **Adresse:** so, wie der Jellyfin-Server Seerr erreicht (z. B. `http://seerr:5055`), nicht die Adresse aus dem Browser.
