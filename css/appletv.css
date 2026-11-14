@@ -2501,6 +2501,9 @@ html.atv-pg-tv header.MuiAppBar-root > .MuiToolbar-root:nth-child(n+2), html.atv
 .atv-tv__dl.is-done svg { fill: #111; }
 .atv-tv__card.has-progress .atv-tv__dl { bottom: 19px; }
 @keyframes atv-tv-pulse { 50% { opacity: .45; } }
+/* Jellyfins eigene Lautstärke-Einblendung (schwarzes Feld oben rechts beim Wischen oder Scrollen): Der Player hat hier
+   seinen Regler in der Leiste, zwei Anzeigen zugleich wären doppelt. Die Helligkeits-Einblendung am Handy bleibt. */
+.iconOsd:not(:has([class*="brightness"])) { display: none !important; }
 /* Sender anpassen */
 .atv-tv__shelf--live .atv-tv__title { display: flex; align-items: center; gap: 14px; }
 .atv-tv__edit { margin-left: auto; height: 30px; padding: 0 14px; border: 0; border-radius: 999px; background: rgba(255, 255, 255, .12); color: var(--tv-text-2, rgba(255, 255, 255, .72)); font: inherit; font-size: 13px; font-weight: 600; letter-spacing: 0; cursor: pointer; transition: background .2s var(--tv-ease), color .2s var(--tv-ease); }
