@@ -2502,6 +2502,8 @@ html.atv-pg-tv header.MuiAppBar-root > .MuiToolbar-root:nth-child(n+2), html.atv
 .atv-tv__dl svg { width: 17px; height: 17px; fill: #fff; }
 .atv-tv__card:hover .atv-tv__dl, .atv-tv__card:focus-visible .atv-tv__dl, .atv-tv__dl.is-busy, .atv-tv__dl.is-done { opacity: 1; }
 .atv-tv__dl:hover { background: rgba(255, 255, 255, .28); }
+/* Ohne Maus gibt es kein Darüberfahren: auf Handy und Tablet steht der Knopf immer da. */
+@media (hover: none) { .atv-tv__dl { opacity: 1; width: 34px; height: 34px; } }
 .atv-tv__dl.is-busy { animation: atv-tv-pulse 1s ease-in-out infinite; }
 .atv-tv__dl.is-done { background: rgba(255, 255, 255, .9); }
 .atv-tv__dl.is-done svg { fill: #111; }
@@ -2557,6 +2559,18 @@ html.atv-pg-tv header.MuiAppBar-root > .MuiToolbar-root:nth-child(n+2), html.atv
 .atv-tv__tab:hover { background: rgba(255, 255, 255, .18); }
 .atv-tv__tab.is-on { background: #fff; color: #000; }
 .atv-tv__grid--wide { grid-template-columns: repeat(auto-fill, minmax(clamp(200px, 19vw, 320px), 1fr)); }
+/* Handy: zwei Karten nebeneinander statt einer bildschirmfüllenden; Suchfeld und Serienkopf beginnen unter den Knöpfen
+   der Handy-Leiste. */
+@media (max-width: 800px) {
+  .atv-tv__grid--wide { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
+  .atv-tvhub.is-searching .atv-tv__searchbar { padding-top: calc(env(safe-area-inset-top, 0px) + 70px); }
+  .atv-tv__detail { padding-top: calc(env(safe-area-inset-top, 0px) + 70px); }
+  .atv-tv__dhead { flex-direction: column; align-items: stretch; gap: 14px; }
+  .atv-tv__dposter { width: 100%; }
+  .atv-tv__tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-left: calc(-1 * var(--tv-gutter)); margin-right: calc(-1 * var(--tv-gutter)); padding: 0 var(--tv-gutter); }
+  .atv-tv__tabs::-webkit-scrollbar { display: none; }
+  .atv-tv__tab { flex: none; }
+}
 
 /* Startseite: Fernsehen steht auf der TV-Seite, nicht hier (siehe tvHomeClean) */
 .homeSectionsContainer .atv-home-tv { display: none !important; }
