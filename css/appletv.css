@@ -2772,3 +2772,6 @@ html.atv-js .atv-badge--logo { letter-spacing: 0; }
 }
 .cardScalable:has(.mediaSourceIndicator) .cardIndicators { left: calc(4.6cqw + max(10cqw, 20px) + 4px) !important; }
 @media (max-width: 800px) { .mediaSourceIndicator { min-width: 22px; height: 22px !important; line-height: 22px !important; font-size: 12px !important; } .cardScalable:has(.mediaSourceIndicator) .cardIndicators { left: calc(4.6cqw + 26px) !important; } }
+/* Filterfeld über langen Folgenlisten */
+.atv-tv__finder { max-width: 520px; margin-bottom: clamp(14px, 1.6vw, 26px); }
+.atv-tv__finder[hidden] { display: none; }
