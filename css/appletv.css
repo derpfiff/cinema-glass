@@ -2488,6 +2488,30 @@ html.atv-pg-tv header.MuiAppBar-root > .MuiToolbar-root:nth-child(n+2), html.atv
 .atv-tv__len { left: auto; right: 8px; top: auto; bottom: 8px; font-weight: 600; }
 .atv-tv__bar { position: absolute; left: 10px; right: 10px; bottom: 9px; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, .32); overflow: hidden; }
 .atv-tv__bar i { display: block; height: 100%; border-radius: 3px; background: #fff; }
+.atv-tv__card.has-progress .atv-tv__len { bottom: 19px; }
+.atv-tv__seen { position: absolute; right: 8px; top: 8px; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: rgba(0, 0, 0, .55); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.atv-tv__seen svg { width: 14px; height: 14px; fill: #fff; }
+/* Herunterladen (nur in der App): erscheint beim Überfahren der Karte */
+.atv-tv__dl { position: absolute; left: 8px; bottom: 8px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: rgba(0, 0, 0, .55); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); opacity: 0; transition: opacity .2s var(--tv-ease), background .2s var(--tv-ease); cursor: pointer; }
+.atv-tv__dl svg { width: 17px; height: 17px; fill: #fff; }
+.atv-tv__card:hover .atv-tv__dl, .atv-tv__card:focus-visible .atv-tv__dl, .atv-tv__dl.is-busy, .atv-tv__dl.is-done { opacity: 1; }
+.atv-tv__dl:hover { background: rgba(255, 255, 255, .28); }
+.atv-tv__dl.is-busy { animation: atv-tv-pulse 1s ease-in-out infinite; }
+.atv-tv__dl.is-done { background: rgba(255, 255, 255, .9); }
+.atv-tv__dl.is-done svg { fill: #111; }
+.atv-tv__card.has-progress .atv-tv__dl { bottom: 19px; }
+@keyframes atv-tv-pulse { 50% { opacity: .45; } }
+/* Sender anpassen */
+.atv-tv__shelf--live .atv-tv__title { display: flex; align-items: center; gap: 14px; }
+.atv-tv__edit { margin-left: auto; height: 30px; padding: 0 14px; border: 0; border-radius: 999px; background: rgba(255, 255, 255, .12); color: var(--tv-text-2, rgba(255, 255, 255, .72)); font: inherit; font-size: 13px; font-weight: 600; letter-spacing: 0; cursor: pointer; transition: background .2s var(--tv-ease), color .2s var(--tv-ease); }
+.atv-tv__edit:hover, .atv-tv__edit:focus-visible { background: rgba(255, 255, 255, .22); color: #fff; outline: none; }
+.atv-tvhub.is-editing .atv-tv__edit { background: #fff; color: #111; }
+.atv-tv__editnote { margin: 0 0 14px; padding: 0 var(--tv-gutter); text-align: left; }
+.atv-tvhub.is-editing .atv-tv__shelf--live .atv-tv__row { flex-wrap: wrap; overflow: visible; row-gap: clamp(16px, 1.6vw, 28px); }
+.atv-tv__off { display: none; position: absolute; inset: 0; align-items: center; justify-content: center; background: rgba(0, 0, 0, .5); font-size: 12.5px; font-weight: 700; color: #fff; }
+.atv-tv__card.is-off .atv-tv__off { display: flex; }
+.atv-tv__card.is-off .atv-tv__pic img { filter: grayscale(1) brightness(.55); }
+.atv-tv__card.is-off .atv-tv__name, .atv-tv__card.is-off .atv-tv__sub { opacity: .45; }
 .atv-tv__name { margin-top: 10px; font-size: clamp(13px, .95vw, 17px); font-weight: 650; line-height: 1.25; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 .atv-tv__sub { margin-top: 3px; font-size: clamp(12px, .82vw, 14.5px); color: var(--tv-text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 

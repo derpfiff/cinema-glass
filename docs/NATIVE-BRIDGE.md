@@ -49,6 +49,7 @@ Pro Titel eine Nachricht (bei Staffeln mehrere nacheinander, ca. 150 ms Abstand)
 - **`quality: "orig"`**: `/Items/{id}/Download`, die Datei wie auf dem Server, mit `Content-Length`, fortsetzbar (Range).
 - **Andere Qualitäten**: `/Videos/{id}/stream.mp4?static=false&videoCodec=h264&audioCodec=aac&videoBitRate=…&maxHeight=…`. Der Server rechnet während des Ladens um und schickt einen fortlaufenden MP4-Strom: **kein `Content-Length`, kein Range, nicht fortsetzbar**. Fortschritt über `estimatedBytes` schätzen; bricht die Verbindung ab, von vorn laden. Das Ergebnis ist H.264/AAC in MP4 und läuft mit AVKit.
 - Originale sind oft MKV mit DTS/TrueHD – dafür braucht die App einen Player wie VLCKit oder MPVKit.
+- Titel aus dem Kanal des Plugins „Mediathek“ (Knopf auf den Karten der TV-Seite): `url` zeigt auf `/Mediathek/vod/…` desselben Servers, der die Datei des Senders durchreicht (MP4, H.264/AAC, mit `Content-Length` und Range). `quality` ist `orig`, `itemType` `Movie` oder `Video`.
 - Zeiten sind Jellyfin-Ticks (10 000 000 pro Sekunde).
 
 ## Vollbild über das Fenster der App

@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/img/banner.svg" alt="Cinema Glass – Kino-Oberfläche für Jellyfin" width="100%"></p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/Version-1.4.3-7a5cff?style=flat-square">
+  <img alt="Version" src="https://img.shields.io/badge/Version-1.4.4-7a5cff?style=flat-square">
   <img alt="Jellyfin" src="https://img.shields.io/badge/Jellyfin-12.4-22c1ff?style=flat-square">
   <img alt="Art" src="https://img.shields.io/badge/Plugin-mit_Einstellungsseite-ff5c8a?style=flat-square">
   <img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-MIT-9aa4b2?style=flat-square">
@@ -81,7 +81,7 @@ jeweilige Funktion unsichtbar – es gibt keine Fehlermeldung und nichts geht ka
 | **[Local Intros](https://github.com/dkanada/jellyfin-plugin-intros)** (Katalog „Jellyfin Stable“) | eigener Vorspann vor Filmen; Cinema Glass sorgt für den sauberen Übergang | kein Vorspann, der Film startet direkt |
 | **[Intro Skipper](https://github.com/intro-skipper/intro-skipper)** (eigenes Repository des Plugins) | Knopf „Intro überspringen“ bei Serien, im Stil der Oberfläche | kein Überspringen-Knopf |
 | **[Merge Versions](https://github.com/danieladov/jellyfin-plugin-mergeversions)** (eigenes Repository des Plugins) | fasst mehrere Fassungen eines Films zusammen; Cinema Glass zeigt dann die Versionsauswahl | keine Versionsauswahl (geht auch von Hand über „Versionen gruppieren“) |
-| **[Mediathek](https://github.com/derpfiff/jellyfin-mediathek)** (eigenes Repository des Plugins) | Live-TV und Mediathek der öffentlich-rechtlichen Sender; Cinema Glass macht daraus die TV-Seite und zeigt Treffer in der Suche als „Aus der Mediathek“ | kein Eintrag „TV“ (bzw. nur Jellyfins eigenes Live-TV) |
+| **[Mediathek](https://github.com/derpfiff/jellyfin-mediathek)** (eigenes Repository des Plugins) | Live-TV und Mediathek der öffentlich-rechtlichen Sender; Cinema Glass macht daraus die TV-Seite (Sender je Konto aus- und einblendbar, „Weiterschauen“ mit gemerkter Stelle, in JellyDesk auch Herunterladen) und zeigt Treffer in der Suche als „Aus der Mediathek“ | kein Eintrag „TV“ (bzw. nur Jellyfins eigenes Live-TV) |
 | **[Seerr](https://github.com/seerr-team/seerr)** (Jellyseerr/Overseerr, eigener Dienst) | fehlende Titel in der Suche finden und anfragen | kein Regal „Nicht in deiner Mediathek“ |
 | **[MDBList](https://mdblist.com)** (kostenloser API-Schlüssel) | Bewertungen von IMDb, Rotten Tomatoes usw. | keine Bewertungs-Plaketten |
 
