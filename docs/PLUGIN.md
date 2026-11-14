@@ -45,6 +45,14 @@ Das Paket ist gegen Jellyfin 12.4 gebaut. Für andere Serverversionen selbst bau
 | Bewertungen | keine Bewertungs-Plaketten |
 | Update-Hinweis | kein Abruf bei GitHub (mit Plugin unnötig, Updates kommen über den Katalog) |
 
+### Eigene Zeichen für die Qualitäts-Marken
+
+Das Theme zeichnet die Marken selbst (Schrift und ein einfaches Symbol). Wer auf seinem Server andere Zeichen verwenden
+möchte und dazu berechtigt ist, legt sie als `.svg` oder `.png` in den Ordner `CinemaGlass-logos` neben den
+Plugin-Einstellungen (`<Jellyfin-Konfiguration>/plugins/configurations/CinemaGlass-logos/`). Erkannt werden die Namen
+`4k`, `hdr`, `hdr10`, `hdr10plus`, `hlg`, `dv` und `atmos`. Die Dateien werden einfarbig weiß dargestellt. Im Paket und
+im Repository liegen keine solchen Dateien; die Zeichen von Dolby, UHD und HDR10+ sind Marken ihrer Inhaber.
+
 ### Seerr
 
 - **Adresse:** so, wie der Jellyfin-Server Seerr erreicht (z. B. `http://seerr:5055`), nicht die Adresse aus dem Browser.

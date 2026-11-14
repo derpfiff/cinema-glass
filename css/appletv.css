@@ -2775,3 +2775,7 @@ html.atv-js .atv-badge--logo { letter-spacing: 0; }
 /* Filterfeld über langen Folgenlisten */
 .atv-tv__finder { max-width: 520px; margin-bottom: clamp(14px, 1.6vw, 26px); }
 .atv-tv__finder[hidden] { display: none; }
+/* Eigene Zeichen vom Server: einfarbig weiß eingefärbt, damit sie zu Glas-Pille und Umrandung passen */
+.atv-ql--file img { display: block; height: 1.05em; width: auto; max-width: 7.5em; filter: brightness(0) invert(1); opacity: .95; }
+.atv-qb .atv-ql--file img { height: 1.15em; }
+html.atv-js .atv-badge--logo .atv-ql--file img { height: .95em; }

@@ -47,12 +47,58 @@ public class CinemaGlassController : ControllerBase
         }
     }
 
+    // Eigene Zeichen für die Qualitäts-Marken: Dateien dieses Namens (.svg oder .png) im Ordner „CinemaGlass-logos“ neben
+    // den Plugin-Einstellungen ersetzen die gezeichneten Marken des Themes. So kann jeder auf seinem Server die Zeichen
+    // verwenden, zu denen er berechtigt ist; im Paket liegen keine.
+    private static readonly string[] LogoNames = { "4k", "hdr", "hdr10", "hdr10plus", "hlg", "dv", "atmos" };
+
+    internal static string LogoFolder =>
+        Path.Combine(Path.GetDirectoryName(Plugin.Instance!.ConfigurationFilePath) ?? ".", "CinemaGlass-logos");
+
+    internal static string? LogoFile(string name)
+    {
+        if (Array.IndexOf(LogoNames, name) < 0)
+        {
+            return null;
+        }
+
+        foreach (var ext in new[] { ".svg", ".png" })
+        {
+            var path = Path.Combine(LogoFolder, name + ext);
+            if (System.IO.File.Exists(path))
+            {
+                return path;
+            }
+        }
+
+        return null;
+    }
+
+    internal static string[] Logos() => LogoNames.Where(n => LogoFile(n) is not null).ToArray();
+
+    [HttpGet("logo/{name}")]
+    [AllowAnonymous]
+    public ActionResult GetLogo([FromRoute] string name)
+    {
+        var path = Plugin.Instance is null ? null : LogoFile(name);
+        if (path is null)
+        {
+            return NotFound();
+        }
+
+        Response.Headers["Cache-Control"] = "public, max-age=86400";
+        // Als Bild eingebunden führt ein SVG keine Skripte aus; die Kopfzeile verhindert es auch beim direkten Aufruf.
+        Response.Headers["Content-Security-Policy"] = "default-src 'none'; style-src 'unsafe-inline'";
+        return PhysicalFile(path, path.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) ? "image/svg+xml" : "image/png");
+    }
+
     private static object Flags()
     {
         var c = Plugin.Instance!.Configuration;
         return new
         {
             version = Plugin.Instance.Version.ToString(3),
+            logos = Logos(),
             features = new
             {
                 hero = c.Hero,
