@@ -32,6 +32,7 @@ public class PluginConfiguration : BasePluginConfiguration
     public string SeerrUrl { get; set; } = string.Empty;
     public string SeerrApiKey { get; set; } = string.Empty;
     public string SeerrUserId { get; set; } = string.Empty;   // optional: Anfragen laufen als dieser Seerr-Nutzer
+    public bool Discover { get; set; } = true;         // „Entdecken“: Empfehlungen für fehlende Titel (nur mit eingerichtetem Seerr)
 
     // Bewertungen über MDBList
     public bool Ratings { get; set; } = false;

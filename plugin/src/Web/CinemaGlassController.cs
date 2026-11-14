@@ -118,6 +118,7 @@ public class CinemaGlassController : ControllerBase
                 shelfWheel = c.ShelfWheel,
                 updateCheck = c.UpdateCheck,
                 seerr = c.Seerr && c.SeerrUrl.Length > 0 && c.SeerrApiKey.Length > 0,
+                discover = c.Discover,
                 ratings = c.Ratings && c.MdbListApiKey.Length > 0
             }
         };

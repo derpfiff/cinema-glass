@@ -145,6 +145,21 @@
             .then(function (b) { blobCache[url] = URL.createObjectURL(b); im.src = blobCache[url]; })
             .catch(function () { im.dispatchEvent(new Event('error')); });
     }
+    // Plakate erst holen, wenn die Karte in Sichtweite kommt: lange Regale und Reihen weit unten auf der Seite lösten
+    // sonst Dutzende Bildabrufe aus, die niemand sieht.
+    var lazyIo = null;
+    function lazyImg(c, im, url) {
+        if (!url || blobCache[url] || !window.IntersectionObserver) { loadImg(im, url); return; }
+        if (!lazyIo) lazyIo = new IntersectionObserver(function (es) {
+            es.forEach(function (e) {
+                if (!e.isIntersecting) return;
+                lazyIo.unobserve(e.target);
+                var job = e.target.__atvImg; e.target.__atvImg = null;
+                if (job) loadImg(job[0], job[1]);
+            });
+        }, { rootMargin: '400px 600px' });
+        c.__atvImg = [im, url]; lazyIo.observe(c);
+    }
     // Titel: TMDB liefert für manche (unveröffentlichte) Titel eine fremdsprachige „Übersetzung“ in anderer Schrift –
     // dann den Originaltitel zeigen, sofern der lateinisch geschrieben ist.
     function title(r) {
@@ -184,7 +199,7 @@
         var box = el('div', 'atv-seerr__poster'); c.appendChild(box);
         var im = el('img'); im.alt = ''; im.loading = 'lazy';
         im.addEventListener('error', function () { im.remove(); c.classList.add('atv-seerr__card--noimg'); box.appendChild(document.createTextNode(title(r))); });
-        box.appendChild(im); loadImg(im, posterUrl(r.posterPath));
+        box.appendChild(im); lazyImg(c, im, posterUrl(r.posterPath));
         c.appendChild(el('div', 'atv-seerr__name', title(r)));
         c.appendChild(el('div', 'atv-seerr__sub', [r.mediaType === 'tv' ? T.series : T.movie, year(r)].filter(Boolean).join(' · ')));
         setStatus(c, r);
@@ -200,6 +215,10 @@
     }
 
     /* ------------------------------------------------------------ Anfrage */
+    // Neuer Stand eines Titels (angefragt, inzwischen vorhanden): Regale, die Ergebnisse zwischenspeichern, hören mit.
+    function announce(r) {
+        try { document.dispatchEvent(new CustomEvent('atv-seerr-status', { detail: { mediaType: r.mediaType, id: r.id, status: statusOf(r), inLibrary: inLibrary(r) } })); } catch (e) { /* ohne CustomEvent: Stand erst beim nächsten Abruf */ }
+    }
     function sendRequest(r, seasons, c, quality) {
         var body = { mediaType: r.mediaType, mediaId: r.id };
         // Qualitätsprofil nur mitschicken, wenn bewusst ein anderes als der Standard gewählt wurde
@@ -208,6 +227,7 @@
         return call('/api/v1/request', { method: 'POST', body: body }).then(function (res) {
             r.mediaInfo = r.mediaInfo || {}; r.mediaInfo.status = (res && res.media && res.media.status) || 2;
             if (c) setStatus(c, r);
+            announce(r);
             toast(T.ok);
             return res;
         }).catch(function (e) {
@@ -349,7 +369,7 @@
         function loadDetails() {
             return call('/api/v1/' + (isTv ? 'tv' : 'movie') + '/' + r.id + '?language=' + CFG.language).then(function (d) {
                 if (!wrap.isConnected) return;
-                if (d.mediaInfo) r.mediaInfo = d.mediaInfo;
+                if (d.mediaInfo) { var was = statusOf(r); r.mediaInfo = d.mediaInfo; if (statusOf(r) !== was) announce(r); }
                 var g = (d.genres || []).slice(0, 2).map(function (x) { return x.name; });
                 metaText.textContent = [isTv ? T.series : T.movie].concat(g).join(' · ');
                 if (d.overview && !r.overview) { desc.textContent = d.overview; if (!desc.isConnected) lock.insertBefore(desc, facts); }
@@ -467,7 +487,26 @@
             return { id: col.id, name: col.name || '', parts: parts };
         }).catch(function (e) { console.warn('[atv-seerr] collection', e); return null; });
     }
-    window.__atvSeerrApi = { collection: collection, card: function (r) { injectCss(); return card(r); } };
+    /* ------------------------------------------------------------ Entdecken */
+    // Für die Reihen „Entdecken“ des Themes: was TMDb zu einem Titel empfiehlt, samt Stand in Seerr. Ein Abruf je Titel.
+    // null = Seerr nicht eingerichtet oder nicht erreichbar (nichts merken, später neu versuchen); [] = keine Empfehlungen.
+    function recommendations(mediaType, tmdbId) {
+        if (!apiReady() || (mediaType !== 'movie' && mediaType !== 'tv') || !/^\d+$/.test(String(tmdbId))) return Promise.resolve(null);
+        return available().then(function (ok) {
+            if (!ok) return null;
+            return callRetry('/api/v1/' + mediaType + '/' + tmdbId + '/recommendations?page=1&language=' + CFG.language, {}, 1).then(function (res) {
+                return ((res && res.results) || []).filter(function (r) { return r && r.id && (r.mediaType === 'movie' || r.mediaType === 'tv'); });
+            }, function (e) {
+                if (e && e.status === 404) return [];                           // TMDb kennt den Titel nicht (mehr)
+                throw e;
+            });
+        }).catch(function (e) { console.warn('[atv-seerr] recommendations', e); return null; });
+    }
+    window.__atvSeerrApi = {
+        collection: collection, recommendations: recommendations,
+        card: function (r) { injectCss(); return card(r); },
+        title: title, year: year, status: statusOf, inLibrary: inLibrary
+    };
 
     /* ------------------------------------------------------------ Router */
     // Personenseite (Schauspiel/Regie): Regal mit Titeln dieser Person, die NICHT in der Mediathek sind – zum Anfragen.

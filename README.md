@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/img/banner.svg" alt="Cinema Glass – Kino-Oberfläche für Jellyfin" width="100%"></p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/Version-1.6.5-7a5cff?style=flat-square">
+  <img alt="Version" src="https://img.shields.io/badge/Version-1.7.0-7a5cff?style=flat-square">
   <img alt="Jellyfin" src="https://img.shields.io/badge/Jellyfin-12.4-22c1ff?style=flat-square">
   <img alt="Art" src="https://img.shields.io/badge/Plugin-mit_Einstellungsseite-ff5c8a?style=flat-square">
   <img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-MIT-9aa4b2?style=flat-square">
@@ -46,6 +46,7 @@ Ein Teil der Funktionen ist kein Aussehen, sondern behebt Stellen, an denen Jell
 | **Mehrere Fassungen ([Merge Versions](https://github.com/danieladov/jellyfin-plugin-mergeversions))** | Die Auswahl steckt in einem unscheinbaren Aufklappfeld. | Auswahl wie bei den Staffeln, mit Laufzeit je Fassung. |
 | **Fehlende Titel ([Seerr](https://github.com/seerr-team/seerr))** | Eigene Webseite, eigene Anmeldung. | Regal „Nicht in deiner Mediathek“ in der Suche und auf Personenseiten, Anfrage mit Staffeln und Qualitätsprofil an Ort und Stelle. |
 | **Filmreihen** | Welche Teile es gibt und welche schon gesehen sind, zeigt nur die Seite der Sammlung. | Regal „Filmreihe“ auf der Filmseite: alle Teile der Sammlung in Erscheinungsreihenfolge, gesehene mit Haken; mit Seerr stehen auch die fehlenden Teile da und lassen sich anfragen. |
+| **Empfehlungen** | „Ähnliche Titel“ schlägt nur vor, was schon in der Bibliothek liegt. | „Entdecken“ (mit Seerr): Reihen „Für dich“ und „Weil du … gesehen hast“ unten auf der Startseite und „Könnte dir auch gefallen“ auf der Film- und Serienseite – nur Titel, die fehlen, mit Anfrage an Ort und Stelle und „Kein Interesse“ je Konto. |
 | **„···“ bei Folgen** | Öffnet eine eigene Seite, von der man wieder zurück muss. | Kleines Menü an Ort und Stelle, „Details“ als Infofenster. |
 | **Zurück in der iOS-App** | Keine Wischgeste – nur der Zurück-Knopf. | Vom Rand wischen, die vorherige Seite liegt sichtbar darunter. |
 | **Seitenaufbau** | Seiten erscheinen halb fertig, Regale und Bilder springen nach. | Die Seite erscheint erst, wenn sie fertig aufgebaut ist. |

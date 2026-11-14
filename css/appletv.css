@@ -2786,3 +2786,33 @@ html.atv-js .atv-badge--file .atv-ql--file img { height: max(17px, calc(24 * var
 /* Herz: gefüllt und rot, sobald der Titel gefällt */
 html.atv-js .atv-circle.is-on svg path[d^="M12 21.35"], html.atv-js .atv-circle--fav.is-on svg { fill: #ff375f; color: #ff375f; }
 html.atv-js .atv-circle svg path[d^="M12 21.35"] { fill: #ff375f; }
+
+/* ---------- Entdecken: Empfehlungen für fehlende Titel, Startseite unten und Detailseite (JS) ---------- */
+/* Die Karten sind die des Seerr-Regals (.atv-seerr__card); hier stehen nur Regalmaße und der Knopf „Kein Interesse“. */
+html.atv-js .atv-disc-home:empty { display: none; }
+/* Startseite: Rand und Abstand wie Jellyfins Reihen darüber, damit die Reihen nahtlos anschließen */
+html.atv-js .atv-disc-home .atv-disc { --atv-gutter: var(--tv-gutter); margin: 0 0 calc(var(--tv-shelf-gap) - var(--tv-focus-pad)); }
+html.atv-js .atv-disc-home .atv-disc:last-child { margin-bottom: 40px; }
+html.atv-js .atv-disc .atv-shelf__head { min-height: 0; }
+html.atv-js .atv-disc .atv-shelf__title { display: block; min-width: 0; font-size: var(--tv-shelf-title); font-weight: 700; letter-spacing: .012em; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html.atv-js .atv-disc .atv-shelf__scroller { gap: var(--tv-gap); scroll-snap-type: none; }
+html.atv-js .atv-disc__card { transition: opacity .2s linear, transform .2s var(--tv-ease); }
+html.atv-js .atv-disc__card.is-gone { opacity: 0; transform: scale(.94); pointer-events: none; }
+/* „Kein Interesse“: kleiner Glas-Kreis oben rechts (oben links sitzt die Statusmarke). Mit Maus erst beim Überfahren
+   oder mit Tastaturfokus sichtbar; auf Touch-Geräten und am Handy gibt es kein Überfahren, dort steht er dezent immer da. */
+html.atv-js .atv-shelf button.atv-disc__no {
+  position: absolute; top: 8px; right: 8px; z-index: 2; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; background: rgba(0, 0, 0, .5);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6); backdrop-filter: blur(14px) saturate(1.6); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+  opacity: 0; transition: opacity .2s linear, background .2s linear, color .2s linear;
+}
+html.atv-js .atv-shelf button.atv-disc__no svg { width: 14px; height: 14px; fill: currentColor; }
+html.atv-js .atv-disc__card:hover button.atv-disc__no, html.atv-js .atv-disc__card:focus-visible button.atv-disc__no, html.atv-js .atv-shelf button.atv-disc__no:focus-visible { opacity: 1; }
+html.atv-js .atv-shelf button.atv-disc__no:hover, html.atv-js .atv-shelf button.atv-disc__no:focus-visible { background: rgba(255, 255, 255, .92); color: #000; }
+@media (hover: none), (max-width: 800px) {
+  html.atv-js .atv-shelf button.atv-disc__no { opacity: .8; width: 26px; height: 26px; top: 6px; right: 6px; }
+}
+@media (max-width: 800px) {
+  /* lange Überschriften („Weil du … gesehen hast“) brechen am Handy um, statt abgeschnitten zu werden */
+  html.atv-js .atv-disc .atv-shelf__title { font-size: 19px; font-weight: 800; letter-spacing: -.01em; white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+}

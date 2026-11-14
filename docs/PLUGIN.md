@@ -42,6 +42,7 @@ Das Paket ist gegen Jellyfin 12.4 gebaut. Für andere Serverversionen selbst bau
 | Download-Knöpfe / Fortschritt | keine Download-Knöpfe bzw. keine Anzeige |
 | JellyDesk unterstützen | in der Mac-App [JellyDesk](https://github.com/derpfiff/JellyDesk) keine Download-Knöpfe, Vollbild über WebKit statt über das Fenster der App, Wiedergabe im Web-Player statt im Player der App |
 | Seerr | kein Regal „Nicht in deiner Mediathek“, keine Anfragen |
+| Entdecken (braucht Seerr) | keine Empfehlungsreihen für fehlende Titel auf der Startseite und auf der Film- und Serienseite |
 | Bewertungen | keine Bewertungs-Plaketten |
 | Update-Hinweis | kein Abruf bei GitHub (mit Plugin unnötig, Updates kommen über den Katalog) |
 
