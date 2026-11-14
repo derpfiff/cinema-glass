@@ -16,7 +16,7 @@ public class CinemaGlassController : ControllerBase
 {
     // Was angemeldete Nutzer bei Seerr abrufen dürfen. Alles andere wird abgelehnt.
     private static readonly Regex SeerrGet = new(
-        @"^(api/v1/(status|search|tv/[^?]+|movie/[^?]+|person/[^?]+|service/(radarr|sonarr)(/\d+)?)|imageproxy/tmdb/[^?]+)$",
+        @"^(api/v1/(status|search|tv/[^?]+|movie/[^?]+|collection/\d+|person/[^?]+|service/(radarr|sonarr)(/\d+)?)|imageproxy/tmdb/[^?]+)$",
         RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     private static readonly Regex SeerrPost = new(@"^api/v1/request$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -57,9 +57,11 @@ public class CinemaGlassController : ControllerBase
             {
                 hero = c.Hero,
                 detailPage = c.DetailPage,
+                collectionShelf = c.CollectionShelf,
                 homeCardPlay = c.HomeCardPlay,
                 episodeMenu = c.EpisodeMenu,
                 versionPicker = c.VersionPicker,
+                qualityBadges = c.QualityBadges,
                 trailerModal = c.TrailerModal,
                 introTransition = c.IntroTransition,
                 swipeBack = c.SwipeBack,

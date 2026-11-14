@@ -2680,3 +2680,62 @@ html.atv-osd-live .atv-osd-title { bottom: calc(100% + 8px); right: 0; }
 @media (orientation: landscape) and (max-height: 500px) {
   html.atv-osd-live .osdControls > .buttons > div:first-child { top: 36%; }
 }
+
+/* ---------- Regal „Filmreihe“ auf der Filmseite (JS) ---------- */
+/* Karten im Maß der Poster der Mediathek; fehlende Teile sind Karten des Seerr-Regals (.atv-seerr__card) und hier nur gedimmt. */
+html.atv-js .atv-series .atv-shelf__title { font-size: var(--tv-shelf-title); font-weight: 700; letter-spacing: .012em; line-height: 1.2; }
+html.atv-js .atv-series .atv-shelf__scroller { gap: var(--tv-gap); scroll-snap-type: none; }
+html.atv-js .atv-series .atv-shelf__count { white-space: nowrap; }
+html.atv-js .atv-part { flex: 0 0 auto; width: var(--tv-poster-w); cursor: pointer; outline: 0; -webkit-tap-highlight-color: transparent; }
+html.atv-js .atv-part__poster {
+  position: relative; aspect-ratio: 2 / 3; border-radius: calc(var(--tv-poster-w) * .077); overflow: hidden; background: #1c1c1e;
+  display: flex; align-items: center; justify-content: center; text-align: center; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, .7);
+  transition: transform .35s var(--tv-ease), box-shadow .35s var(--tv-ease);
+}
+html.atv-js .atv-part__poster > span:not(.atv-part__seen) { padding: 10px; }
+html.atv-js .atv-part__poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+html.atv-js .atv-part__name { margin: 10px 2px 0; font-size: clamp(12px, .9vw, 15px); font-weight: 600; line-height: 1.25; color: rgba(255, 255, 255, .92); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html.atv-js .atv-part__sub { margin: 1px 2px 0; font-size: clamp(11px, .78vw, 13px); line-height: 1.3; color: rgba(255, 255, 255, .55); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html.atv-js .atv-part:focus-visible .atv-part__poster { outline: 3px solid #fff; outline-offset: 3px; }
+@media (hover: hover) {
+  html.atv-js .atv-part:not(.is-current):hover .atv-part__poster { transform: scale(1.05); box-shadow: 0 18px 36px rgba(0, 0, 0, .5); }
+}
+/* gesehen: Haken auf dunklem Glas, wie auf den Karten der Mediathek */
+html.atv-js .atv-part__seen {
+  position: absolute; top: 8px; right: 8px; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: #fff; background: rgba(0, 0, 0, .5); -webkit-backdrop-filter: blur(14px) saturate(1.6); backdrop-filter: blur(14px) saturate(1.6); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+}
+html.atv-js .atv-part__seen svg { width: 16px; height: 16px; fill: currentColor; }
+/* der offene Film: weißer Rahmen, kein Zeiger (er führt nirgends hin) */
+html.atv-js .atv-part.is-current { cursor: default; }
+html.atv-js .atv-part.is-current .atv-part__poster { box-shadow: 0 0 0 3px #fff; }
+html.atv-js .atv-part.is-current .atv-part__name, html.atv-js .atv-part.is-current .atv-part__sub { color: #fff; }
+/* fehlende Teile: Bild gedimmt, die Statusmarke von Seerr („Angefragt“ …) bleibt klar */
+html.atv-js .atv-part--missing .atv-seerr__poster img { opacity: .38; filter: saturate(.55); transition: opacity .25s linear, filter .25s linear; }
+html.atv-js .atv-part--missing .atv-seerr__name { color: rgba(255, 255, 255, .6); }
+html.atv-js .atv-part--missing:hover .atv-seerr__poster img, html.atv-js .atv-part--missing:focus-visible .atv-seerr__poster img { opacity: .8; filter: none; }
+@media (max-width: 800px) {
+  /* Titel wie die übrigen Regaltitel am Handy; der Zähler rutscht bei langen Namen in die nächste Zeile, statt selbst umzubrechen */
+  html.atv-js .atv-series .atv-shelf__head { flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin-bottom: 4px; }
+  html.atv-js .atv-series .atv-shelf__title { font-size: 19px; font-weight: 800; letter-spacing: -.01em; }
+  html.atv-js .atv-series .atv-shelf__count { margin-left: 0; }
+/* Qualitäts-Abzeichen auf Karten (4K, HDR, DV): oben rechts, denn oben links sitzen Zähler und Gesehen-Marke, unten
+   Titel und Fortschritt. Kein Zeigerziel, damit Klicks weiter die Karte treffen. */
+.atv-qb { position: absolute; top: 4.6cqw; right: 4.6cqw; z-index: 3; display: flex; gap: 3px; pointer-events: none; }
+.atv-qb > span {
+  display: inline-flex; align-items: center; height: 17px; padding: 0 6px; border-radius: 999px;
+  background: rgba(0, 0, 0, .5); -webkit-backdrop-filter: blur(14px) saturate(1.6); backdrop-filter: blur(14px) saturate(1.6);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+  font-size: 10px; font-weight: 700; line-height: 1; letter-spacing: .3px; color: rgba(255, 255, 255, .94); white-space: nowrap;
+}
+.atv-ep > .atv-qb { top: 9px; right: 9px; }
+/* Sehr kleine Karten (Listen am Handy): nur die wichtigste Marke (HDR/DV vor 4K), etwas kleiner. Auf kleinen
+   Querformat-Karten steht der Titel oben im Bild, die Marke rückt deshalb nach unten rechts neben die Jahreszeile. */
+@container (max-width: 150px) {
+  .card.backdropCard .atv-qb, .card.overflowBackdropCard .atv-qb, .card.overflowSmallBackdropCard .atv-qb { top: auto; bottom: 5cqw; right: 5cqw; }
+  .card.backdropCard .atv-qb > span, .card.overflowBackdropCard .atv-qb > span, .card.overflowSmallBackdropCard .atv-qb > span { height: 14px; padding: 0 5px; font-size: 8.5px; }
+  .card.backdropCard .atv-qb__res:not(:only-child), .card.overflowBackdropCard .atv-qb__res:not(:only-child), .card.overflowSmallBackdropCard .atv-qb__res:not(:only-child) { display: none; }
+}
+@container (max-width: 110px) {
+  .atv-qb__res:not(:only-child) { display: none; }
+}

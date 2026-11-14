@@ -448,6 +448,27 @@
         run();
     }
 
+    /* ------------------------------------------------------------ Filmreihe */
+    // Für das Regal „Filmreihe“ auf der Filmseite des Themes: die Teile einer Reihe, wie Seerr sie von TMDb kennt, samt Stand
+    // der Anfrage. Kennt der Film die Nummer seiner Reihe nicht, verrät sie Seerr über den Film. Ohne Reihe oder ohne
+    // eingerichtetes Seerr: null. Die Karte ist dieselbe wie in der Suche und öffnet dieselbe Ansicht mit „Anfragen“.
+    function collection(tmdbId, collectionId) {
+        var num = /^\d+$/;                                                   // die Nummern landen im Pfad
+        if (!apiReady() || !(num.test(collectionId) || num.test(tmdbId))) return Promise.resolve(null);
+        return available().then(function (ok) {
+            if (!ok) return null;
+            var id = num.test(collectionId) ? Promise.resolve(collectionId)
+                : callRetry('/api/v1/movie/' + tmdbId + '?language=' + CFG.language, {}, 1).then(function (d) { return d && d.collection && d.collection.id; });
+            return id.then(function (cid) { return cid ? callRetry('/api/v1/collection/' + cid + '?language=' + CFG.language, {}, 1) : null; });
+        }).then(function (col) {
+            if (!col || !col.parts) return null;
+            var parts = col.parts.filter(function (r) { return r && r.id; });
+            parts.forEach(function (r) { r.mediaType = 'movie'; });
+            return { id: col.id, name: col.name || '', parts: parts };
+        }).catch(function (e) { console.warn('[atv-seerr] collection', e); return null; });
+    }
+    window.__atvSeerrApi = { collection: collection, card: function (r) { injectCss(); return card(r); } };
+
     /* ------------------------------------------------------------ Router */
     // Personenseite (Schauspiel/Regie): Regal mit Titeln dieser Person, die NICHT in der Mediathek sind – zum Anfragen.
     function mountPerson(page) {

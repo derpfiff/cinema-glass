@@ -12,9 +12,11 @@ public class PluginConfiguration : BasePluginConfiguration
     // Funktionen der Oberfläche
     public bool Hero { get; set; } = true;
     public bool DetailPage { get; set; } = true;
+    public bool CollectionShelf { get; set; } = true;  // Regal „Filmreihe“ auf der Filmseite (braucht die eigene Detailseite)
     public bool HomeCardPlay { get; set; } = true;
     public bool EpisodeMenu { get; set; } = true;
     public bool VersionPicker { get; set; } = true;
+    public bool QualityBadges { get; set; } = true;    // Abzeichen 4K, HDR, Dolby Vision, Atmos (Detailseite und Karten)
     public bool TrailerModal { get; set; } = true;
     public bool IntroTransition { get; set; } = true;
     public bool SwipeBack { get; set; } = true;

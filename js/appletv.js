@@ -19,7 +19,7 @@
 
     var CSS_INLINE = '/* ==========================================================================\n   appletv-js.css – Stile für die per JavaScript erzeugten Elemente des\n   Apple-TV-App-Klons (tvOS 26) in Jellyfin Web 12.4. Gilt nur, wenn appletv.js\n   läuft (html.atv-js). Alle Maße sind aus den Spezifikationen (spec/home,\n   spec/detail) bei 1920×1080 gemessen; --atv-u = 1 px @1920 (skaliert mit vw).\n   Klassenpräfix: atv-   |   Verstecken nativer Elemente: .atv-hide\n   ========================================================================== */\nhtml.atv-js {\n    --atv-u: calc(100vw / 1920);\n    --atv-bg: #000000;\n    --atv-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Helvetica Neue", system-ui, sans-serif;\n    --atv-glass: rgba(20, 20, 22, .42);\n    --atv-glass-blur: blur(24px) saturate(160%);\n    --atv-glass-line: inset 0 0 0 1px rgba(255, 255, 255, .12), inset 0 1px 0 rgba(255, 255, 255, .20);\n    --atv-ease: cubic-bezier(.2, .8, .2, 1);\n}\nhtml.atv-js .atv-hide { display: none !important; }\nhtml.atv-js .atv-hero, html.atv-js .atv-detail, html.atv-js .atv-shelf,\nhtml.atv-js .atv-who, html.atv-js .atv-tabbar, html.atv-js .atv-menu, html.atv-js .atv-about {\n    font-family: var(--atv-font);\n    color: #fff;\n    -webkit-font-smoothing: antialiased;\n}\nhtml.atv-js .atv-hero *, html.atv-js .atv-detail *, html.atv-js .atv-shelf *,\nhtml.atv-js .atv-who *, html.atv-js .atv-tabbar *, html.atv-js .atv-menu *, html.atv-js .atv-about *, html.atv-js .atv-person, html.atv-js .atv-person *, html.atv-js .atv-search, html.atv-js .atv-search * { box-sizing: border-box; }\nhtml.atv-js .atv-hero button, html.atv-js .atv-detail button, html.atv-js .atv-shelf button,\nhtml.atv-js .atv-who button, html.atv-js .atv-tabbar a, html.atv-js .atv-menu button {\n    font: inherit; border: 0; padding: 0; margin: 0; cursor: pointer;\n    -webkit-tap-highlight-color: transparent; text-decoration: none;\n}\nhtml.atv-js button.atv-hero__nav, html.atv-js button.atv-season, html.atv-js button.atv-who__user,\nhtml.atv-js button.atv-who__close, html.atv-js button.atv-menu__item, html.atv-js button.atv-ep__more { background: transparent; color: #fff; }\nhtml.atv-js .atv-hero svg, html.atv-js .atv-detail svg, html.atv-js .atv-shelf svg,\nhtml.atv-js .atv-who svg, html.atv-js .atv-tabbar svg, html.atv-js .atv-menu svg { fill: currentColor; display: block; }\n\n/* ---------- gemeinsame Bausteine: Pille, Kreis, Glas ---------- */\nhtml.atv-js .atv-pill {\n    position: relative; overflow: hidden;\n    display: inline-flex; align-items: center; justify-content: center; gap: calc(12 * var(--atv-u));\n    height: max(44px, calc(66 * var(--atv-u))); min-width: max(140px, calc(218 * var(--atv-u)));\n    padding: 0 max(22px, calc(40 * var(--atv-u)));\n    border-radius: 999px; background: #fff; color: #000;\n    font-size: max(16px, calc(29 * var(--atv-u))); font-weight: 600; letter-spacing: .4px; white-space: nowrap;\n    transition: transform .25s var(--atv-ease), background .25s, color .25s;\n}\nhtml.atv-js .atv-pill svg { width: max(16px, calc(26 * var(--atv-u))); height: max(16px, calc(26 * var(--atv-u))); }\nhtml.atv-js .atv-pill:hover, html.atv-js .atv-pill:focus-visible { transform: scale(1.04); }\nhtml.atv-js .atv-pill:active { transform: scale(.98); }\nhtml.atv-js .atv-pill--glass { background: var(--atv-glass); color: #fff; -webkit-backdrop-filter: var(--atv-glass-blur); backdrop-filter: var(--atv-glass-blur); box-shadow: var(--atv-glass-line); }\nhtml.atv-js .atv-pill--glass:hover, html.atv-js .atv-pill--glass:focus-visible { background: #fff; color: #000; }\nhtml.atv-js .atv-pill__bar { position: absolute; left: 0; right: 0; bottom: 0; height: max(3px, calc(4 * var(--atv-u))); background: rgba(0, 0, 0, .15); }\nhtml.atv-js .atv-pill__bar i { display: block; height: 100%; background: rgba(0, 0, 0, .6); }\nhtml.atv-js .atv-circle {\n    display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;\n    width: max(44px, calc(66 * var(--atv-u))); height: max(44px, calc(66 * var(--atv-u))); border-radius: 50%;\n    background: var(--atv-glass); color: #fff;\n    -webkit-backdrop-filter: var(--atv-glass-blur); backdrop-filter: var(--atv-glass-blur); box-shadow: var(--atv-glass-line);\n    transition: transform .25s var(--atv-ease), background .25s, color .25s;\n}\nhtml.atv-js .atv-circle svg { width: 46%; height: 46%; }\nhtml.atv-js .atv-circle:hover, html.atv-js .atv-circle:focus-visible { background: #fff; color: #000; transform: scale(1.13); }\nhtml.atv-js .atv-circle.is-on { background: rgba(255, 255, 255, .92); color: #000; }\nhtml.atv-js .atv-circle:focus-visible, html.atv-js .atv-pill:focus-visible { outline: 3px solid rgba(255, 255, 255, .9); outline-offset: 3px; }\nhtml.atv-js .atv-coin {\n    display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;\n    width: max(22px, calc(36 * var(--atv-u))); height: max(22px, calc(36 * var(--atv-u))); border-radius: 50%;\n    background: rgba(0, 0, 0, .55); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25);\n}\nhtml.atv-js .atv-coin svg { width: 55%; height: 55%; }\nhtml.atv-js .atv-badge {\n    display: inline-flex; align-items: center; height: max(16px, calc(22 * var(--atv-u))); padding: 0 max(4px, calc(6 * var(--atv-u)));\n    border: 1px solid rgba(255, 255, 255, .64); border-radius: max(3px, calc(4 * var(--atv-u)));\n    font-size: max(10px, calc(15 * var(--atv-u))); font-weight: 600; line-height: 1; letter-spacing: .3px; color: rgba(255, 255, 255, .9); white-space: nowrap;\n}\nhtml.atv-js .atv-badge--rt { border-color: transparent; padding-left: 0; }\nhtml.atv-js .atv-badge svg { width: 1em; height: 1em; margin-right: .3em; }\nhtml.atv-js .atv-more {\n    position: absolute !important; right: 0; bottom: .08em;\n    display: inline-flex !important; align-items: center; justify-content: center;\n    height: auto !important; padding: .28em .9em !important; border: 0; border-radius: 999px !important;\n    background: rgba(120, 120, 128, .42) !important; color: #fff !important;\n    -webkit-backdrop-filter: blur(20px) saturate(1.6); backdrop-filter: blur(20px) saturate(1.6);\n    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14) !important;\n    font-size: clamp(11px, .68vw, 14px) !important; font-weight: 600 !important; letter-spacing: .6px; line-height: 1.25 !important;\n    text-transform: uppercase; cursor: pointer; text-shadow: none; transition: background .2s;\n}\nhtml.atv-js .atv-more:hover, html.atv-js .atv-more:focus-visible { background: rgba(120, 120, 128, .62) !important; outline: 0; }\nhtml.atv-js .atv-clamp { position: relative; width: fit-content; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; transition: max-height .3s var(--atv-ease); }\n/* aufgeklappt: kein Clamp, Höhe wird per max-height animiert (JS), bei sehr langem Text eigener Scrollbereich */\nhtml.atv-js .atv-clamp.is-open, html.atv-js .atv-clamp.is-closing { display: block !important; -webkit-line-clamp: unset !important; overflow: hidden; }\nhtml.atv-js .atv-clamp.is-open { overflow-y: auto; scrollbar-width: thin; padding-right: 0; text-shadow: 0 1px 3px rgba(0, 0, 0, .55); }\nhtml.atv-js .atv-clamp.is-open .atv-more, html.atv-js .atv-clamp.is-closing .atv-more { position: static; display: inline-flex; vertical-align: middle; margin-left: 10px; text-shadow: none; }\nhtml.atv-js .atv-clamp--2 { -webkit-line-clamp: 2; }\nhtml.atv-js .atv-clamp--3 { -webkit-line-clamp: 3; }\nhtml.atv-js .atv-sep { opacity: .7; margin: 0 .35em; }\n\n/* ==========================================================================\n   1. Hero-Karussell (Startseite)\n   ========================================================================== */\nhtml.atv-js .homePage .homeSectionsContainer { position: relative; z-index: 1; }\nhtml.atv-js .atv-hero {\n    position: relative; z-index: 0; isolation: isolate; overflow: hidden;\n    width: 100%; height: 100vh; min-height: 560px;\n    /* relative top statt negativem margin-top: Jellyfins Seiten-Margin würde sonst kollabieren;\n       Breite 100 % (nicht 100vw: mit Bildlaufleiste gäbe das horizontales Scrollen) */\n    top: calc(-1 * var(--atv-pad, 0px));\n    margin: 0 0 calc(var(--atv-hero-overlap, -19vh) - var(--atv-pad, 0px));\n    background: var(--atv-bg); color: #fff;\n}\nhtml.atv-js .atv-hero__slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .5s var(--atv-ease); }\nhtml.atv-js .atv-hero__slide.is-active { opacity: 1; pointer-events: auto; }\nhtml.atv-js .atv-hero__art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; background: #000; cursor: pointer; }\nhtml.atv-js .atv-hero__shade {\n    position: absolute; inset: 0; pointer-events: none;\n    background: linear-gradient(to top, #000000 0%, #000000 14%, rgba(0, 0, 0, .88) 24%, rgba(0, 0, 0, .45) 38%, rgba(0, 0, 0, 0) 58%),\n                linear-gradient(to right, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .15) 30%, rgba(0, 0, 0, 0) 45%);\n}\nhtml.atv-js .atv-hero__lockup {\n    position: absolute; left: calc(80 * var(--atv-u)); bottom: calc(318 * var(--atv-u)); width: calc(620 * var(--atv-u)); max-width: 78vw;\n    display: flex; flex-direction: column; align-items: flex-start; gap: calc(17 * var(--atv-u));\n    opacity: 0; transform: translateY(6px); transition: opacity .2s ease-in, transform .2s ease-in;\n    text-shadow: 0 1px 2px rgba(0, 0, 0, .35);\n}\nhtml.atv-js .atv-hero__slide.is-active .atv-hero__lockup { opacity: 1; transform: none; transition: opacity .3s var(--atv-ease) .1s, transform .3s var(--atv-ease) .1s; }\nhtml.atv-js .atv-hero__logo { display: block; max-width: calc(527 * var(--atv-u)); max-height: calc(139 * var(--atv-u)); width: auto; height: auto; object-fit: contain; object-position: left bottom; filter: drop-shadow(0 2px 10px rgba(0, 0, 0, .45)); }\nhtml.atv-js .atv-hero__title { margin: 0; font-size: max(28px, calc(57 * var(--atv-u))); font-weight: 700; letter-spacing: -.5px; line-height: 1.05; max-width: 100%; }\nhtml.atv-js .atv-hero__meta { display: flex; align-items: center; gap: calc(10 * var(--atv-u)); font-size: max(13px, calc(25 * var(--atv-u))); font-weight: 500; letter-spacing: .15px; color: #fff; white-space: nowrap; }\nhtml.atv-js .atv-hero__meta .atv-badge { margin-left: calc(4 * var(--atv-u)); }\nhtml.atv-js .atv-hero__desc { margin: 0; max-width: calc(545 * var(--atv-u)); padding-right: max(52px, calc(64 * var(--atv-u))); font-size: max(13px, calc(25 * var(--atv-u))); line-height: max(18px, calc(32 * var(--atv-u))); font-weight: 400; letter-spacing: .15px; color: rgba(255, 255, 255, .85); }\nhtml.atv-js .atv-hero__actions { display: flex; align-items: center; gap: calc(24 * var(--atv-u)); margin-top: calc(57 * var(--atv-u)); }\nhtml.atv-js .atv-hero__dots {\n    position: absolute; z-index: 3; left: 50%; bottom: calc(201 * var(--atv-u)); transform: translateX(-50%);\n    display: flex; align-items: center; gap: calc(11 * var(--atv-u)); height: max(24px, calc(42 * var(--atv-u))); padding: 0 calc(47 * var(--atv-u));\n    border-radius: 999px; background: rgba(0, 0, 0, .30); -webkit-backdrop-filter: saturate(1.8) blur(10px); backdrop-filter: saturate(1.8) blur(10px);\n}\nhtml.atv-js button.atv-hero__dot { width: max(6px, calc(10 * var(--atv-u))); height: max(6px, calc(10 * var(--atv-u))); border-radius: 999px; background: rgba(255, 255, 255, .45); transition: width .3s ease-out, background .3s ease-out; }\nhtml.atv-js button.atv-hero__dot.is-active { width: max(18px, calc(30 * var(--atv-u))); background: #fff; }\nhtml.atv-js .atv-hero__dot:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }\nhtml.atv-js .atv-hero__nav { position: absolute; z-index: 3; top: 30%; height: 40%; width: 7%; opacity: 0; color: #fff; transition: opacity .25s linear; display: flex; align-items: center; justify-content: center; }\nhtml.atv-js .atv-hero__nav--prev { left: 0; } html.atv-js .atv-hero__nav--next { right: 0; }\nhtml.atv-js .atv-hero:hover .atv-hero__nav, html.atv-js .atv-hero__nav:focus-visible { opacity: .85; }\nhtml.atv-js .atv-hero__nav svg { width: calc(44 * var(--atv-u)); height: calc(44 * var(--atv-u)); filter: drop-shadow(0 1px 4px rgba(0, 0, 0, .6)); }\nhtml.atv-js .atv-hero__hint { display: none; }\n\n/* ==========================================================================\n   2. Detailseite\n   ========================================================================== */\nhtml.atv-js .atv-detail {\n    position: relative; isolation: isolate; overflow: hidden;\n    width: 100%; top: calc(-1 * var(--atv-pad, 0px)); margin: 0 0 calc(-1 * var(--atv-pad, 0px)); height: min(56.25vw, 100vh); min-height: 560px;\n    background: var(--atv-bg); color: #fff;\n}\nhtml.atv-js .atv-detail--noart { height: min(40vw, 62vh); min-height: 420px; background: radial-gradient(80% 70% at 30% 20%, #2c2c2e 0%, var(--atv-bg) 70%); }\nhtml.atv-js .atv-detail--noart .atv-detail__art { display: none; }\nhtml.atv-js .atv-detail__art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; background: #000; }\nhtml.atv-js .atv-detail__shade {\n    position: absolute; inset: 0; pointer-events: none;\n    background: linear-gradient(to top, #000000 0%, rgba(0, 0, 0, .85) 12%, rgba(0, 0, 0, .45) 28%, rgba(0, 0, 0, 0) 46%),\n                linear-gradient(to right, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, 0) 40%);\n}\nhtml.atv-js .atv-detail__lockup {\n    position: absolute; left: calc(80 * var(--atv-u)); bottom: calc(110 * var(--atv-u)); width: calc(640 * var(--atv-u)); max-width: 70vw;\n    display: flex; flex-direction: column; align-items: flex-start; gap: calc(14 * var(--atv-u));\n    text-shadow: 0 1px 2px rgba(0, 0, 0, .35);\n}\nhtml.atv-js .atv-detail__award { display: inline-flex; align-items: center; height: max(18px, calc(26 * var(--atv-u))); padding: 0 calc(10 * var(--atv-u)); border: 1px solid rgba(255, 255, 255, .64); border-radius: 999px; font-size: max(10px, calc(14 * var(--atv-u))); font-weight: 600; color: rgba(255, 255, 255, .9); }\nhtml.atv-js .atv-detail__logo { display: block; max-width: calc(420 * var(--atv-u)); max-height: calc(150 * var(--atv-u)); width: auto; height: auto; object-fit: contain; object-position: left bottom; filter: drop-shadow(0 2px 10px rgba(0, 0, 0, .45)); }\nhtml.atv-js .atv-detail__title { margin: 0; font-size: max(26px, calc(64 * var(--atv-u))); font-weight: 700; letter-spacing: -.5px; line-height: 1.05; }\nhtml.atv-js .atv-detail__sub { margin: calc(-6 * var(--atv-u)) 0 0; font-size: max(13px, calc(22 * var(--atv-u))); font-weight: 400; color: rgba(255, 255, 255, .85); }\nhtml.atv-js .atv-detail__meta { display: flex; align-items: center; flex-wrap: wrap; gap: calc(8 * var(--atv-u)); font-size: max(13px, calc(24 * var(--atv-u))); font-weight: 600; color: #fff; }\nhtml.atv-js .atv-detail__desc { margin: 0; max-width: calc(560 * var(--atv-u)); padding-right: max(52px, calc(64 * var(--atv-u))); font-size: max(13px, calc(22 * var(--atv-u))); line-height: max(18px, calc(28 * var(--atv-u))); font-weight: 400; color: rgba(255, 255, 255, .85); }\nhtml.atv-js .atv-detail__facts { display: flex; align-items: center; flex-wrap: wrap; gap: calc(8 * var(--atv-u)); font-size: max(12px, calc(20 * var(--atv-u))); color: rgba(255, 255, 255, .64); }\nhtml.atv-js .atv-detail__facts .atv-badge { opacity: .85; }\nhtml.atv-js .atv-detail__actions { display: flex; align-items: center; gap: calc(16 * var(--atv-u)); margin-top: calc(10 * var(--atv-u)); flex-wrap: nowrap; width: max-content; max-width: 90vw; }\nhtml.atv-js .atv-detail__note { margin: calc(-4 * var(--atv-u)) 0 0; font-size: max(11px, calc(16 * var(--atv-u))); color: rgba(255, 255, 255, .64); }\nhtml.atv-js .atv-detail__credits {\n    position: absolute; right: calc(80 * var(--atv-u)); bottom: calc(110 * var(--atv-u)); max-width: calc(420 * var(--atv-u)); text-align: right;\n    font-size: max(11px, calc(18 * var(--atv-u))); line-height: max(16px, calc(24 * var(--atv-u))); text-shadow: 0 1px 2px rgba(0, 0, 0, .35);\n}\nhtml.atv-js .atv-detail__credits p { margin: 0 0 calc(10 * var(--atv-u)); }\nhtml.atv-js .atv-detail__credits p:last-child { margin-bottom: 0; }\nhtml.atv-js .atv-detail__credits .atv-label { color: rgba(255, 255, 255, .64); margin-right: .35em; }\nhtml.atv-js .atv-detail__credits a { color: rgba(255, 255, 255, .55); text-decoration: none; transition: color .15s; }\nhtml.atv-js .atv-detail__credits a:hover { color: rgba(255, 255, 255, .92); }\n/* native Elemente, die der Umbau ersetzt: SOFORT verborgen, sobald html.atv-js steht (kein Flackern);\n   .atv-native (Fallback nach 2,5 s oder fremder Item-Typ) zeigt die native Seite wieder */\nhtml.atv-js .itemDetailPage:not(.atv-native) #itemBackdrop,\nhtml.atv-js .itemDetailPage:not(.atv-native) .detailLogo,\nhtml.atv-js .itemDetailPage:not(.atv-native) .detailRibbon,\nhtml.atv-js .itemDetailPage:not(.atv-native) .detailImageContainer,\nhtml.atv-js .itemDetailPage:not(.atv-native) .detailSectionContent,\nhtml.atv-js .itemDetailPage:not(.atv-native) .itemDetailsGroup,\nhtml.atv-js .itemDetailPage:not(.atv-native) .trackSelections { display: none !important; }\nhtml.atv-js .itemDetailPage:not(.atv-native):not(.atv-detail-on):not(.atv-person-on) .detailPageWrapperContainer { opacity: 0; }\nhtml.atv-js .itemDetailPage.atv-detail-on .detailPageWrapperContainer, html.atv-js .itemDetailPage.atv-person-on .detailPageWrapperContainer { opacity: 1; transition: opacity .25s ease-out; }\nhtml.atv-js .atv-detail, html.atv-js .atv-person { animation: atv-fade .3s ease-out; }\nhtml.atv-js .homePage:not(.atv-native):not(.atv-hero-on) .homeSectionsContainer { opacity: 0; }\nhtml.atv-js .homePage.atv-hero-on .homeSectionsContainer { opacity: 1; transition: opacity .3s ease-out; }\n/* Spezifität bewusst hoch: das Branding-CSS blendet .detailPagePrimaryContainer bei :has(.atv-person) aus,\n   darin liegen aber Jellyfins Regale „Filme/Serien“ der Personenseite */\nhtml.atv-js.atv-js .itemDetailPage.atv-detail-on.atv-detail-on .detailPagePrimaryContainer, html.atv-js.atv-js .itemDetailPage.atv-person-on.atv-person-on:has(.atv-person) .detailPagePrimaryContainer { display: block !important; opacity: 1 !important; min-height: 0 !important; height: auto !important; padding-top: 0 !important; padding-bottom: 0 !important; margin-top: 0 !important; animation: none !important; }\nhtml.atv-js.atv-js .itemDetailPage.atv-person-on .detailPagePrimaryContent { padding-top: 0 !important; }\nhtml.atv-js .itemDetailPage.atv-detail-on .detailPagePrimaryContent, html.atv-js .itemDetailPage.atv-person-on .detailPagePrimaryContent,\nhtml.atv-js .itemDetailPage.atv-detail-on .detailSection, html.atv-js .itemDetailPage.atv-person-on .detailSection { display: block !important; opacity: 1 !important; padding-left: 0 !important; margin-left: 0 !important; width: auto !important; }\nhtml.atv-js .itemDetailPage.atv-detail-on .detailPageWrapperContainer, html.atv-js .itemDetailPage.atv-person-on .detailPageWrapperContainer { min-height: 0 !important; padding-top: 0 !important; margin-top: 0 !important; }\n/* Personenkarten: nie ein Play-Overlay (Klick = nur Personenseite) */\nhtml.atv-js .personCard .cardOverlayFab-primary, html.atv-js .personCard [data-action="play"], html.atv-js .personCard [data-action="resume"] { display: none !important; }\n\n/* ---------- Personenseite ---------- */\nhtml.atv-js .atv-person { display: flex; align-items: flex-start; gap: calc(48 * var(--atv-u)); padding: calc(60 * var(--atv-u)) calc(80 * var(--atv-u)) calc(24 * var(--atv-u)); color: #fff; }\nhtml.atv-js .atv-person__photo { flex: 0 0 auto; width: max(140px, calc(260 * var(--atv-u))); height: max(140px, calc(260 * var(--atv-u))); border-radius: 50%; overflow: hidden; background: #2b2b2b; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 20px 50px rgba(0, 0, 0, .45); display: flex; align-items: center; justify-content: center; font-size: max(48px, calc(96 * var(--atv-u))); font-weight: 600; color: rgba(255, 255, 255, .55); }\nhtml.atv-js .atv-person__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; display: block; }\nhtml.atv-js .atv-person__body { flex: 1 1 auto; min-width: 0; padding-top: calc(16 * var(--atv-u)); }\nhtml.atv-js .atv-person__name { margin: 0 0 calc(10 * var(--atv-u)); font-size: max(28px, calc(56 * var(--atv-u))); font-weight: 700; letter-spacing: -.5px; line-height: 1.05; }\nhtml.atv-js .atv-person__facts { margin: 0 0 calc(18 * var(--atv-u)); font-size: max(13px, calc(20 * var(--atv-u))); color: rgba(255, 255, 255, .64); }\nhtml.atv-js .atv-person__bio { margin: 0; max-width: calc(900 * var(--atv-u)); padding-right: max(52px, calc(64 * var(--atv-u))); font-size: max(14px, calc(22 * var(--atv-u))); line-height: max(19px, calc(30 * var(--atv-u))); color: rgba(255, 255, 255, .85); -webkit-line-clamp: 4; }\nhtml.atv-js .itemDetailPage.atv-person-on #listChildrenCollapsible > .sectionTitle.hide { display: none; }\nhtml.atv-js .itemDetailPage.atv-person-on #listChildrenCollapsible { margin-top: 0 !important; }\nhtml.atv-js .itemDetailPage.atv-person-on #childrenContent .sectionTitle { padding-left: 0 !important; }\n@media (max-width: 799px) {\n    html.atv-js .atv-person { flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 72px 16px 8px; }\n    html.atv-js .atv-person__photo { width: 160px; height: 160px; }\n    html.atv-js .atv-person__body { padding-top: 0; }\n    html.atv-js .atv-person__name { font-size: 28px; }\n    html.atv-js .atv-person__bio { text-align: left; padding-right: 60px; max-width: none; width: 100%; }\n    html.atv-js .atv-person__body { width: 100%; }\n}\n\n/* ---------- Suche: Struktur (Optik gehört ins Branding-CSS) ---------- */\nhtml.atv-js #searchPage .searchSuggestions { display: none !important; }\nhtml.atv-js .atv-search { color: #fff; padding: 0 calc(80 * var(--atv-u)) calc(40 * var(--atv-u)); }\nhtml.atv-js .atv-search[hidden] { display: none; }\nhtml.atv-js .atv-search__title { margin: calc(24 * var(--atv-u)) 0 calc(16 * var(--atv-u)); font-size: max(17px, calc(31 * var(--atv-u))); font-weight: 700; letter-spacing: .4px; }\nhtml.atv-js .atv-search__pills { display: flex; flex-wrap: wrap; gap: calc(12 * var(--atv-u)); margin-bottom: calc(24 * var(--atv-u)); }\nhtml.atv-js .atv-search__pill { display: inline-flex; align-items: center; gap: 8px; height: max(36px, calc(44 * var(--atv-u))); padding: 0 max(14px, calc(20 * var(--atv-u))); border-radius: 999px; background: var(--atv-glass); color: #fff; font-size: max(14px, calc(18 * var(--atv-u))); font-weight: 500; -webkit-backdrop-filter: var(--atv-glass-blur); backdrop-filter: var(--atv-glass-blur); box-shadow: var(--atv-glass-line); white-space: nowrap; }\nhtml.atv-js .atv-search__pill svg { width: 1em; height: 1em; opacity: .7; }\nhtml.atv-js .atv-search__pill:hover, html.atv-js .atv-search__pill:focus-visible { background: #fff; color: #000; }\nhtml.atv-js .atv-search__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(max(120px, calc(200 * var(--atv-u))), 1fr)); gap: calc(24 * var(--atv-u)) calc(20 * var(--atv-u)); }\nhtml.atv-js .atv-search__card { display: block; position: relative; aspect-ratio: 2 / 3; border-radius: max(10px, calc(14 * var(--atv-u))); overflow: hidden; background: #2b2b2b; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16); transition: transform .25s var(--atv-ease), box-shadow .25s var(--atv-ease); color: #fff; text-decoration: none; }\nhtml.atv-js .atv-search__card img { width: 100%; height: 100%; object-fit: cover; display: block; }\nhtml.atv-js .atv-search__card:hover, html.atv-js .atv-search__card:focus-visible { transform: scale(1.06); box-shadow: 0 20px 40px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .25); z-index: 1; }\nhtml.atv-js .atv-search__card span { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 10px 10px; background: linear-gradient(to top, rgba(0, 0, 0, .75), rgba(0, 0, 0, 0)); font-size: 13px; font-weight: 600; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\nhtml.atv-js .atv-search-count { margin-left: .5em; font-weight: 400; color: rgba(255, 255, 255, .5); font-size: .8em; }\nhtml.atv-js .atv-search__empty { padding: calc(48 * var(--atv-u)) 0; text-align: center; color: rgba(255, 255, 255, .64); font-size: max(15px, calc(22 * var(--atv-u))); }\nhtml.atv-js .atv-search__empty[hidden] { display: none; }\n@media (max-width: 799px) {\n    html.atv-js .atv-search { padding: 0 16px 24px; }\n    html.atv-js .atv-search__grid { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 14px 10px; }\n}\nhtml.atv-js.atv-page-detail .backdropContainer, html.atv-js.atv-page-home .backdropContainer { display: none !important; }\nhtml.atv-js.atv-page-detail .backgroundContainer, html.atv-js.atv-page-home .backgroundContainer { background: var(--atv-bg) !important; }\nhtml.atv-js .itemDetailPage.atv-detail-on .detailPageWrapperContainer { background: transparent; }\nhtml.atv-js .itemDetailPage.atv-detail-on.atv-detail-episodes .nextUpSection,\nhtml.atv-js .itemDetailPage.atv-detail-on.atv-detail-episodes #listChildrenCollapsible,\nhtml.atv-js .itemDetailPage.atv-detail-on.atv-detail-episodes #childrenCollapsible { display: none !important; }\n\n@keyframes atv-fade { from { opacity: 0; } to { opacity: 1; } }\n@keyframes atv-pop { from { opacity: 0; transform: scale(.98); } to { opacity: 1; transform: none; } }\n\n/* ==========================================================================\n   3. Regal (Episoden) + Glas-Menü (Staffel)\n   ========================================================================== */\nhtml.atv-js .atv-shelf { position: relative; margin: calc(48 * var(--atv-u)) 0 calc(40 * var(--atv-u)); }\nhtml.atv-js .atv-shelf__head { position: relative; display: flex; align-items: center; gap: calc(12 * var(--atv-u)); padding: 0 var(--atv-gutter, calc(80 * var(--atv-u))); margin-bottom: calc(40 * var(--atv-u)); }\nhtml.atv-js .atv-shelf__title, html.atv-js .atv-season {\n    display: inline-flex; align-items: center; gap: calc(6 * var(--atv-u)); margin: 0;\n    font-size: max(17px, calc(31 * var(--atv-u))); font-weight: 700; letter-spacing: .4px; color: #fff; line-height: 1.2;\n}\nhtml.atv-js .atv-season svg { width: .8em; height: .8em; margin-top: .1em; color: #0a84ff; transition: transform .2s; }\nhtml.atv-js .atv-season[aria-expanded="true"] svg { transform: rotate(180deg); }\nhtml.atv-js .atv-shelf__count { font-size: max(12px, calc(20 * var(--atv-u))); color: rgba(255, 255, 255, .64); font-weight: 400; margin-left: calc(6 * var(--atv-u)); }\nhtml.atv-js .atv-shelf__scroller {\n    display: flex; gap: calc(20 * var(--atv-u)); overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;\n    padding: 12px var(--atv-gutter, calc(80 * var(--atv-u))) 16px; scroll-padding-left: var(--atv-gutter, calc(80 * var(--atv-u))); scrollbar-width: none; -webkit-overflow-scrolling: touch;\n}\nhtml.atv-js .atv-shelf__scroller::-webkit-scrollbar { display: none; }\nhtml.atv-js .atv-ep {\n    position: relative; flex: 0 0 auto; scroll-snap-align: start; overflow: hidden; cursor: pointer;\n    width: max(230px, calc(304 * var(--atv-u))); aspect-ratio: 304 / 234; border-radius: max(12px, calc(14 * var(--atv-u)));\n    background: #2b2b2b; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);\n    transition: transform .25s var(--atv-ease), box-shadow .25s var(--atv-ease);\n}\nhtml.atv-js .atv-ep:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }\nhtml.atv-js .atv-ep__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }\nhtml.atv-js .atv-ep__grad { position: absolute; left: 0; right: 0; bottom: 0; height: 68%; background: linear-gradient(to top, rgba(0, 0, 0, .78) 0%, rgba(0, 0, 0, .55) 35%, rgba(0, 0, 0, .25) 65%, rgba(0, 0, 0, 0) 100%); pointer-events: none; }\nhtml.atv-js .atv-ep__scrim { position: absolute; inset: 0; background: rgba(51, 51, 51, .3); opacity: 0; transition: opacity .15s linear; pointer-events: none; }\nhtml.atv-js .atv-ep:hover .atv-ep__scrim, html.atv-js .atv-ep:focus-within .atv-ep__scrim { opacity: 1; }\nhtml.atv-js .atv-ep__body { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 max(12px, calc(14 * var(--atv-u))) max(12px, calc(14 * var(--atv-u))); display: flex; flex-direction: column; gap: max(2px, calc(3 * var(--atv-u))); }\nhtml.atv-js .atv-ep__tag { font-size: max(10px, calc(11 * var(--atv-u))); font-weight: 500; letter-spacing: .6px; text-transform: uppercase; color: rgba(255, 255, 255, .7); line-height: 1.3; }\nhtml.atv-js .atv-ep__title { font-size: max(14px, calc(16 * var(--atv-u))); font-weight: 600; color: #fff; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: max(2px, calc(2 * var(--atv-u))); }\nhtml.atv-js .atv-ep__desc { font-size: max(12px, calc(13.5 * var(--atv-u))); font-weight: 500; line-height: 1.25; color: rgba(255, 255, 255, .7); }\nhtml.atv-js .atv-ep__foot { display: flex; align-items: center; gap: 8px; margin-top: max(4px, calc(6 * var(--atv-u))); font-size: max(11px, calc(12.5 * var(--atv-u))); font-weight: 600; color: rgba(255, 255, 255, .7); }\nhtml.atv-js .atv-ep__foot svg { width: 1em; height: 1em; }\nhtml.atv-js .atv-ep__bar { width: max(70px, calc(100 * var(--atv-u))); height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .3); overflow: hidden; }\nhtml.atv-js .atv-ep__bar i { display: block; height: 100%; background: rgba(255, 255, 255, .9); }\nhtml.atv-js button.atv-ep__more {\n    position: absolute; right: 10px; bottom: 10px; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;\n    background: rgba(40, 40, 40, .5); color: #fff; -webkit-backdrop-filter: saturate(1.8) blur(20px); backdrop-filter: saturate(1.8) blur(20px);\n    opacity: 0; transition: opacity .15s linear, background .15s;\n}\nhtml.atv-js .atv-ep__more svg { width: 16px; height: 16px; }\nhtml.atv-js .atv-ep:hover .atv-ep__more, html.atv-js .atv-ep:focus-within .atv-ep__more, html.atv-js .atv-ep__more:focus-visible { opacity: 1; }\nhtml.atv-js .atv-ep__more:hover { background: rgba(255, 255, 255, .25); }\n/* Folgenkarten: sichtbares Play-Symbol (kein Hover nötig, auch auf dem Handy) */\nhtml.atv-js .atv-ep__play { position: absolute; left: 12px; top: 12px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; pointer-events: none;\n    background: rgba(40, 40, 42, .55); -webkit-backdrop-filter: blur(20px) saturate(1.8); backdrop-filter: blur(20px) saturate(1.8);\n    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18), 0 6px 18px rgba(0, 0, 0, .35); transition: transform .25s var(--atv-ease, ease), background .2s, color .2s; }\nhtml.atv-js .atv-ep__play svg { width: 20px; height: 20px; fill: currentColor; margin-left: 2px; }\nhtml.atv-js .atv-ep:hover .atv-ep__play, html.atv-js .atv-ep:focus-within .atv-ep__play { transform: scale(1.1); background: rgba(255, 255, 255, .92); color: #000; }\n\nhtml.atv-js .atv-shelf__empty { padding: 0 var(--atv-gutter, calc(80 * var(--atv-u))); color: rgba(255, 255, 255, .5); font-size: 15px; }\nhtml.atv-js .atv-menu {\n    position: absolute; z-index: 60; top: 100%; left: var(--atv-gutter, calc(80 * var(--atv-u))); margin-top: 8px; min-width: 200px; padding: 6px;\n    border-radius: 12px; background: rgba(40, 40, 40, .7); -webkit-backdrop-filter: blur(60px) saturate(2.2); backdrop-filter: blur(60px) saturate(2.2);\n    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2), 0 8px 40px rgba(0, 0, 0, .55); animation: atv-pop .12s ease-out;\n}\nhtml.atv-js .atv-menu__item { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 12px; border-radius: 8px; font-size: 15px; color: rgba(255, 255, 255, .92); text-align: left; white-space: nowrap; }\nhtml.atv-js .atv-menu__item:hover, html.atv-js .atv-menu__item:focus-visible { background: rgba(255, 255, 255, .1); }\nhtml.atv-js .atv-menu__item svg { width: 14px; height: 14px; visibility: hidden; }\nhtml.atv-js .atv-menu__item.is-selected svg { visibility: visible; }\n\n/* ---------- Infoblock (About) ---------- */\nhtml.atv-js .atv-about { margin: calc(24 * var(--atv-u)) var(--atv-gutter, calc(80 * var(--atv-u))) calc(48 * var(--atv-u)); display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: calc(1600 * var(--atv-u)); }\nhtml.atv-js .atv-about__col h3 { margin: 0 0 10px; font-size: max(13px, calc(17 * var(--atv-u))); font-weight: 700; color: rgba(255, 255, 255, .92); }\nhtml.atv-js .atv-about__col dl { margin: 0; font-size: max(12px, calc(14 * var(--atv-u))); line-height: 1.4; }\nhtml.atv-js .atv-about__col dt { color: rgba(255, 255, 255, .92); margin-top: 10px; }\nhtml.atv-js .atv-about__col dt:first-child { margin-top: 0; }\nhtml.atv-js .atv-about__col dd { margin: 0; color: rgba(255, 255, 255, .64); }\n\n/* ==========================================================================\n   4. Profilauswahl („Wer schaut?“) auf der Anmeldeseite\n   ========================================================================== */\nhtml.atv-js #loginPage.atv-who-on { position: relative; min-height: 100vh; }\nhtml.atv-js .atv-who {\n    position: fixed; inset: 0; z-index: 1; overflow: hidden; color: #fff;\n    background: radial-gradient(55% 45% at 18% 12%, #f3c9b4 0%, rgba(243, 201, 180, 0) 65%),\n                radial-gradient(45% 40% at 82% 22%, #cfe5f4 0%, rgba(207, 229, 244, 0) 65%),\n                radial-gradient(60% 50% at 55% 55%, #8fb7d6 0%, rgba(143, 183, 214, 0) 70%),\n                radial-gradient(70% 55% at 45% 100%, #4f7fa6 0%, rgba(79, 127, 166, 0) 70%), #7aa6cc;\n}\nhtml.atv-js .atv-who::before { content: ""; position: absolute; inset: -10%; background: inherit; filter: blur(60px) brightness(1.08) saturate(1.15); }\nhtml.atv-js .atv-who__title { position: absolute; left: 0; right: 0; top: 27%; margin: 0; text-align: center; font-size: max(24px, calc(42 * var(--atv-u))); font-weight: 700; letter-spacing: -.3px; text-shadow: 0 2px 16px rgba(0, 0, 0, .25); }\nhtml.atv-js .atv-who__row { position: absolute; left: 0; right: 0; top: 48%; transform: translateY(-50%); display: flex; justify-content: center; align-items: flex-start; flex-wrap: wrap; gap: calc(25 * var(--atv-u)); padding: 0 24px; }\nhtml.atv-js .atv-who__user { display: flex; flex-direction: column; align-items: center; width: max(96px, calc(170 * var(--atv-u))); }\nhtml.atv-js .atv-who__avatar {\n    width: max(96px, calc(170 * var(--atv-u))); height: max(96px, calc(170 * var(--atv-u))); border-radius: 50%; overflow: hidden; position: relative;\n    display: flex; align-items: center; justify-content: center; font-size: max(40px, calc(72 * var(--atv-u))); font-weight: 600; color: rgba(28, 28, 30, .8);\n    transition: transform .25s var(--atv-ease), box-shadow .25s var(--atv-ease);\n}\nhtml.atv-js .atv-who__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }\nhtml.atv-js .atv-who__avatar--add { background: rgba(255, 255, 255, .25); color: #2b4a66; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2); }\nhtml.atv-js .atv-who__avatar--add svg { width: 32%; height: 32%; }\nhtml.atv-js .atv-who__name { margin-top: max(14px, calc(26 * var(--atv-u))); font-size: max(14px, calc(22 * var(--atv-u))); color: rgba(255, 255, 255, .7); text-shadow: 0 1px 8px rgba(0, 0, 0, .25); transition: color .2s; text-align: center; }\nhtml.atv-js .atv-who__user:hover .atv-who__avatar, html.atv-js .atv-who__user:focus-visible .atv-who__avatar { transform: scale(1.15); box-shadow: 0 24px 60px rgba(0, 0, 0, .35); }\nhtml.atv-js .atv-who__user:hover .atv-who__name, html.atv-js .atv-who__user:focus-visible .atv-who__name { color: rgba(255, 255, 255, .92); }\nhtml.atv-js .atv-who__user:focus-visible { outline: none; }\n/* natives Formular als Glas-Karte, nur wenn geöffnet */\nhtml.atv-js #loginPage.atv-who-on > .padded-left.padded-right.padded-bottom-page { display: none; }\nhtml.atv-js #loginPage.atv-who-on.atv-who--form > .padded-left.padded-right.padded-bottom-page {\n    display: block; position: fixed; z-index: 2; left: 50%; top: 50%; transform: translate(-50%, -50%);\n    width: min(440px, 92vw); max-height: 90vh; overflow: auto; margin: 0; padding: 28px 24px 20px !important;\n    border-radius: 36px; background: rgba(30, 30, 34, .55); color: #fff;\n    -webkit-backdrop-filter: blur(40px) saturate(1.8); backdrop-filter: blur(40px) saturate(1.8);\n    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), 0 24px 80px rgba(0, 0, 0, .45); animation: atv-pop .2s var(--atv-ease);\n}\nhtml.atv-js #loginPage.atv-who-on.atv-who--form .manualLoginForm { width: 100%; }\nhtml.atv-js #loginPage.atv-who-on.atv-who--form .padded-bottom-page { padding-bottom: 12px !important; }\nhtml.atv-js #loginPage.atv-who-on.atv-who--form .readOnlyContent { width: 100%; }\nhtml.atv-js #loginPage.atv-who-on .visualLoginForm, html.atv-js #loginPage.atv-who-on .btnManual { display: none !important; }\nhtml.atv-js #loginPage.atv-who-on .atv-who__scrim { display: none; }\nhtml.atv-js #loginPage.atv-who-on.atv-who--form .atv-who__scrim { display: block; position: fixed; inset: 0; z-index: 1; background: rgba(0, 0, 0, .35); }\nhtml.atv-js .atv-who__close { position: absolute; top: 16px; left: 16px; z-index: 3; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; }\nhtml.atv-js .atv-who__close:hover { background: rgba(255, 255, 255, .12); }\nhtml.atv-js .atv-who__close svg { width: 22px; height: 22px; }\nhtml.atv-js #loginPage.atv-who-on .backdropImage { filter: blur(80px) brightness(1.2); }\n\n/* ==========================================================================\n   5. Glas-Tableiste (nur Mobil < 800 px)\n   ========================================================================== */\nhtml.atv-js .atv-tabbar { display: none; }\n@media (max-width: 799px) {\n    html.atv-js.atv-tabbar-on .atv-tabbar {\n        position: fixed; z-index: 1000; left: 50%; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);\n        display: flex; align-items: center; gap: 8px;\n    }\n    html.atv-js .atv-tabbar__caps, html.atv-js .atv-tabbar__search {\n        display: flex; align-items: center; height: 50px; border-radius: 999px;\n        background: rgba(30, 30, 34, .6); -webkit-backdrop-filter: blur(30px) saturate(1.8); backdrop-filter: blur(30px) saturate(1.8);\n        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12), inset 0 1px 0 rgba(255, 255, 255, .18), 0 8px 30px rgba(0, 0, 0, .35);\n    }\n    html.atv-js .atv-tabbar__caps { padding: 0 6px; }\n    html.atv-js .atv-tabbar__search { width: 50px; justify-content: center; }\n    html.atv-js .atv-tabbar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 68px; height: 50px; border-radius: 999px; color: rgba(255, 255, 255, .7); font-size: 10px; font-weight: 500; }\n    html.atv-js .atv-tabbar__search a { width: 50px; }\n    html.atv-js .atv-tabbar a svg { width: 24px; height: 24px; }\n    html.atv-js .atv-tabbar a.is-active { color: #0a84ff; }\n    html.atv-js.atv-tabbar-on .mainAnimatedPage { padding-bottom: 80px !important; }\n}\n\n/* ==========================================================================\n   6. Mobil (< 800 px): Hochkant-Hero, Detailseite zentriert, Regal 230 px\n   ========================================================================== */\n@media (max-width: 799px) {\n    html.atv-js .atv-hero { height: min(176vw, 88vh); min-height: 520px; --atv-hero-overlap: -10vh; }\n    html.atv-js .atv-hero__art { object-position: 50% 15%; }\n    html.atv-js .atv-hero__shade { background: linear-gradient(to top, #000000 0%, #000000 20%, rgba(0, 0, 0, .9) 34%, rgba(0, 0, 0, .55) 46%, rgba(0, 0, 0, 0) 64%); }\n    html.atv-js .atv-hero__lockup { left: 16px; right: 16px; width: auto; max-width: none; bottom: calc(10vh + 72px); align-items: center; text-align: center; gap: 10px; }\n    html.atv-js .atv-hero__logo { max-width: min(300px, 77vw); max-height: 90px; object-position: center bottom; }\n    html.atv-js .atv-hero__title { font-size: 30px; text-align: center; }\n    html.atv-js .atv-hero__meta { font-size: 17px; gap: 8px; }\n    html.atv-js .atv-hero__meta .atv-badge { font-size: 11px; height: 18px; }\n    html.atv-js .atv-hero__desc { font-size: 17px; line-height: 22px; max-width: 100%; padding: 0 36px; }\n    html.atv-js .atv-hero__desc.atv-clamp--2 { -webkit-line-clamp: 3; }\n    html.atv-js .atv-hero__actions { margin-top: 8px; gap: 12px; }\n    html.atv-js .atv-hero .atv-pill { height: 44px; min-width: min(264px, 72vw); font-size: 17px; padding: 0 20px; }\n    html.atv-js .atv-hero .atv-circle { width: 44px; height: 44px; }\n    html.atv-js .atv-hero .atv-circle--info, html.atv-js .atv-hero .atv-circle--next { display: none; }\n    html.atv-js .atv-hero__dots { bottom: calc(10vh + 32px); height: auto; padding: 0; gap: 12px; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }\n    html.atv-js button.atv-hero__dot { width: 8px; height: 8px; }\n    html.atv-js button.atv-hero__dot.is-active { width: 12px; height: 12px; }\n    html.atv-js .atv-hero__nav { display: none; }\n\n    html.atv-js .atv-detail { height: auto; min-height: 0; }\n    html.atv-js .atv-detail__art { position: relative; display: block; height: 70vh; min-height: 420px; object-position: 50% 30%; }\n    html.atv-js .atv-detail__shade { background: linear-gradient(to top, #000000 0%, rgba(0, 0, 0, 1) 28%, rgba(0, 0, 0, .6) 44%, rgba(0, 0, 0, 0) 60%); }\n    html.atv-js .atv-detail__lockup { position: relative; left: 0; bottom: 0; width: auto; max-width: none; margin: calc(-30vh) 16px 0; align-items: center; text-align: center; gap: 10px; }\n    html.atv-js .atv-detail__logo { max-width: min(300px, 77vw); max-height: 90px; object-position: center bottom; }\n    html.atv-js .atv-detail__title { font-size: 30px; text-align: center; }\n    html.atv-js .atv-detail__meta { font-size: 15px; justify-content: center; }\n    html.atv-js .atv-detail__desc { font-size: 15px; line-height: 20px; text-align: left; align-self: stretch; max-width: none; }\n    html.atv-js .atv-detail__facts { font-size: 13px; justify-content: center; }\n    html.atv-js .atv-detail__logo, html.atv-js .atv-detail__title { order: 0; }\n    html.atv-js .atv-detail__sub { order: 1; }\n    html.atv-js .atv-detail__meta { order: 2; }\n    html.atv-js .atv-detail__actions { order: 3; justify-content: center; flex-wrap: wrap; width: auto; max-width: 100%; gap: 12px; margin: 4px 0 2px; }\n    html.atv-js .atv-detail__note { order: 4; }\n    html.atv-js .atv-detail__desc { order: 5; }\n    html.atv-js .atv-detail__facts { order: 6; }\n    html.atv-js .atv-detail .atv-pill { height: 44px; min-width: 181px; font-size: 17px; padding: 0 22px; }\n    html.atv-js .atv-detail .atv-circle { width: 44px; height: 44px; }\n    html.atv-js .atv-detail__note { margin: -2px 0 2px; font-size: 13px; }\n    html.atv-js .atv-detail__credits { position: relative; right: auto; bottom: auto; margin: 14px 16px 0; max-width: none; text-align: left; font-size: 13px; line-height: 18px; }\n    html.atv-js .atv-detail__lockup + .atv-detail__credits { margin-bottom: 8px; }\n\n    html.atv-js .atv-shelf__head { padding: 0 25px; margin-bottom: 14px; }\n    html.atv-js .atv-shelf__scroller { gap: 10px; padding: 6px 25px 12px; scroll-padding-left: 25px; }\n    html.atv-js .atv-ep { width: 230px; }\n    html.atv-js .atv-menu { left: 25px; }\n    html.atv-js .atv-about { margin: 16px 25px 32px; }\n    html.atv-js .atv-who__title { top: 24%; }\n    html.atv-js .atv-who__row { gap: 18px; }\n}\n@media (prefers-reduced-motion: reduce) {\n    html.atv-js .atv-hero__slide, html.atv-js .atv-hero__lockup, html.atv-js .atv-pill, html.atv-js .atv-circle, html.atv-js .atv-ep,\n    html.atv-js .atv-who__avatar, html.atv-js .atv-clamp, html.atv-js .atv-menu { transition: none !important; animation: none !important; }\n}\n\n/* Sprach-Badges (Ton / Untertitel) neben den Qualitäts-Badges */\nhtml.atv-js .atv-badge--lang { white-space: nowrap; letter-spacing: .3px; cursor: default; }\nhtml.atv-js .atv-badge__pre { opacity: .6; margin-right: .45em; font-size: .85em; letter-spacing: .6px; }\n\n/* ===== build/css/dashboard.css (eingebettet) ===== */\n/* ==========================================================================\n   12 Dashboard/Admin (Jellyfin 12.x lädt das Branding-CSS NICHT auf\n   /dashboard-Seiten; diese Datei wird deshalb zusätzlich über appletv-js.css\n   ausgeliefert – siehe build/css/dashboard.css). Nur Farben/Radien, kein Layout.\n   ========================================================================== */\n.MuiDrawer-paper, .MuiDrawer-docked .MuiPaper-root { background: #1b1c22 !important; border-right: 1px solid rgba(255, 255, 255, .06) !important; color: #fff !important; }\n.MuiDrawer-paper .MuiListItemButton-root { border-radius: 10px; margin: 1px 10px; padding: 8px 14px; }\n.MuiDrawer-paper .MuiListItemButton-root:hover { background: rgba(255, 255, 255, .08) !important; }\n.MuiDrawer-paper .MuiListItemButton-root.Mui-selected, .MuiDrawer-paper .MuiListItemButton-root.active, .MuiDrawer-paper a.MuiListItemButton-root[aria-current="page"] { background: rgba(255, 255, 255, .14) !important; }\n.MuiDrawer-paper .MuiListItemIcon-root { color: rgba(255, 255, 255, .8) !important; }\n.MuiDrawer-paper .MuiListSubheader-root { background: transparent !important; color: rgba(255, 255, 255, .55) !important; }\n.MuiDrawer-paper .MuiListItem-root img, .MuiDrawer-paper .MuiAvatar-root img { border-radius: 8px; }\nhtml:has(.dashboard-appBar), html:has(.dashboard-appBar) body { background: #000000 !important; }\n.dashboard-appBar { background: transparent !important; }\n.dashboard-appBar .MuiIconButton-root { color: #fff; }\n#dashboardPage, .type-interior, .content-primary { background: transparent !important; color: #fff; }\n.MuiPaper-root:not(.MuiAppBar-root):not(.MuiDrawer-paper):not(.MuiMenu-paper):not(.MuiPopover-paper):not(.MuiDialog-paper) { background: #1b1c22 !important; background-image: none !important; color: #fff !important; border-radius: 18px !important; box-shadow: none !important; }\n.MuiDialog-paper { background: #1f2026 !important; border-radius: 24px !important; color: #fff !important; }\n.MuiCard-root, .paperList, .MuiDataGrid-root, .MuiTableContainer-root { background: #1b1c22 !important; border-radius: 18px !important; border: 1px solid rgba(255, 255, 255, .06) !important; overflow: hidden; color: #fff; }\n.MuiTableCell-root { border-color: rgba(255, 255, 255, .08) !important; color: #fff !important; }\n.MuiTableHead-root .MuiTableCell-root { color: rgba(255, 255, 255, .64) !important; }\n.MuiDataGrid-root { --DataGrid-rowBorderColor: rgba(255, 255, 255, .08); }\n.MuiDataGrid-columnHeaders, .MuiDataGrid-columnHeader, .MuiDataGrid-footerContainer { background: #1b1c22 !important; border-color: rgba(255, 255, 255, .08) !important; }\n.MuiTableRow-root:hover, .MuiDataGrid-row:hover { background: rgba(255, 255, 255, .05) !important; }\n/* Jellyfin-Cyan (#00a4dc) → Weiß/Grau; Rot bleibt */\n.MuiButton-contained, .MuiButton-containedPrimary, .MuiLoadingButton-root.MuiButton-contained { border-radius: 999px !important; background: rgba(255, 255, 255, .92) !important; color: #000 !important; box-shadow: none !important; text-transform: none !important; font-weight: 600; }\n.MuiButton-contained.MuiButton-containedError, .MuiButton-contained.MuiButton-colorError { background: #ff453a !important; color: #fff !important; }\n.MuiButton-outlined, .MuiButton-outlinedPrimary { border-radius: 999px !important; color: #fff !important; border-color: rgba(255, 255, 255, .3) !important; text-transform: none !important; }\n.MuiButton-text, .MuiButton-textPrimary { border-radius: 999px !important; color: #fff !important; text-transform: none !important; }\n.MuiFab-primary { background: rgba(255, 255, 255, .92) !important; color: #000 !important; }\n.MuiChip-filled, .MuiChip-filledPrimary, .MuiChip-colorPrimary { background: rgba(255, 255, 255, .14) !important; color: #fff !important; border-radius: 999px; }\n.MuiLink-root, a.MuiLink-root { color: #fff !important; text-decoration-color: rgba(255, 255, 255, .4); }\n.MuiCheckbox-colorPrimary, .MuiCheckbox-root svg, .MuiRadio-root svg { color: rgba(255, 255, 255, .75) !important; }\n.MuiCheckbox-root.Mui-checked svg, .MuiRadio-root.Mui-checked svg { color: #0a84ff !important; }\n.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track { background-color: #34c759 !important; opacity: 1 !important; }\n.MuiSwitch-track { background-color: rgba(255, 255, 255, .25) !important; }\n.MuiAvatar-root.MuiAvatar-colorDefault, .MuiListItemAvatar-root .MuiAvatar-root { background: rgba(255, 255, 255, .12) !important; color: #fff !important; }\n.MuiIconButton-colorPrimary, .MuiSvgIcon-colorPrimary, .MuiTypography-colorPrimary, .MuiTab-root.Mui-selected { color: #fff !important; }\n.MuiTabs-indicator { background-color: #fff !important; }\n.MuiLinearProgress-root { background-color: rgba(255, 255, 255, .15) !important; border-radius: 999px; }\n.MuiLinearProgress-bar { background-color: rgba(255, 255, 255, .75) !important; border-radius: 999px; }\n.MuiLinearProgress-colorSuccess .MuiLinearProgress-bar, .MuiLinearProgress-barColorSuccess { background-color: #34c759 !important; }\n.MuiLinearProgress-colorError .MuiLinearProgress-bar, .MuiLinearProgress-barColorError { background-color: #ff453a !important; }\n.MuiFormControl-root .MuiInputBase-root, .MuiOutlinedInput-root, .MuiFilledInput-root { background: rgba(255, 255, 255, .1) !important; border-radius: 12px !important; color: #fff !important; }\n.MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, .14) !important; }\n.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, .6) !important; }\n.MuiInputLabel-root, .MuiFormLabel-root.Mui-focused { color: rgba(255, 255, 255, .64) !important; }\n.MuiAlert-standardInfo { background: rgba(10, 132, 255, .15) !important; color: #fff !important; border-radius: 14px; }\n.MuiPaginationItem-root.Mui-selected { background: #fff !important; color: #000 !important; }\n.MuiMenu-paper, .MuiPopover-paper { background: rgba(30, 30, 34, .95) !important; background-image: none !important; color: #fff !important; border-radius: 14px !important; }\n.MuiMenuItem-root:hover { background: rgba(255, 255, 255, .1) !important; }\n.MuiTooltip-tooltip { background: rgba(40, 40, 40, .95) !important; border-radius: 8px; }\n/* Gerätekarten / Aktivitätsicons mit Inline-Cyan */\n[style*="rgb(0, 164, 220)"], [style*="#00a4dc"], [style*="#00A4DC"] { background-color: #2c2d33 !important; }\n.activityItem .MuiAvatar-root, .MuiListItemAvatar-root .MuiAvatar-colorDefault { background: rgba(255, 255, 255, .12) !important; }\n/* Alte Jellyfin-Seiten im Dashboard (Benutzer, Bibliotheken, geplante Aufgaben, Plugins) */\n.dashboardDocument, .type-interior { background: transparent !important; }\n.card.squareCard.scalableCard .cardBox.visualCardBox, .visualCardBox { background: #1b1c22 !important; border-radius: 14px !important; box-shadow: none !important; overflow: hidden; }\n.visualCardBox .cardImage.defaultCardBackground, .defaultCardBackground { background: #30323a !important; }\n.visualCardBox .cardFooter { background: transparent !important; }\n.visualCardBox .cardText { color: #fff; }\n.visualCardBox .cardText-secondary { color: rgba(255, 255, 255, .64); }\n.fab.submit, .emby-button.fab { background: rgba(255, 255, 255, .92) !important; color: #000 !important; border-radius: 50% !important; }\n.raised.button-submit, .button-submit, .emby-button.raised.button-submit { background: #0a84ff !important; color: #fff !important; border-radius: 999px !important; }\n.raised, .emby-button.raised { border-radius: 999px !important; background: rgba(255, 255, 255, .14) !important; color: #fff !important; text-transform: none !important; }\n.raised.button-delete, .button-delete { background: rgba(255, 69, 58, .85) !important; color: #fff !important; }\n.emby-input, .emby-select, .emby-textarea { background: rgba(255, 255, 255, .1) !important; border-radius: 12px !important; border: 0 !important; color: #fff !important; }\n.emby-checkbox:checked + span + .checkboxOutline { background: #0a84ff !important; border-radius: 7px; }\n.checkboxOutline { background: rgba(255, 255, 255, .16) !important; border-radius: 7px !important; border: 0 !important; }\n.inputLabelFocused, .selectLabelFocused { color: #fff !important; }\n.listItem:hover { background: rgba(255, 255, 255, .06) !important; }\n.taskProgressOuter, .taskProgressInner { border-radius: 999px; }\n.taskProgressInner { background: rgba(255, 255, 255, .75) !important; }\n.paperList .listItem-border { border-color: rgba(255, 255, 255, .06) !important; }\n.sectionTitle a, .sectionTitleTextButton { color: #fff !important; }\n.MuiAppBar-root.MuiPaper-root { background: transparent !important; box-shadow: none !important; }\n';
 
-    var VERSION = '1.5.2';
+    var VERSION = '1.6.0';
     var CFG = {
         updateCheck: true,     // Admins sehen einen Hinweis, wenn es im Repository eine neuere Version gibt (1 Abruf pro Tag bei GitHub)
         repo: 'derpfiff/cinema-glass',
@@ -566,23 +566,53 @@
     /* =====================================================================
        2. Detailseite
        ===================================================================== */
-    function mediaBadges(item) {
-        var out = [], streams = [];
-        (item.MediaSources || []).forEach(function (ms) { (ms.MediaStreams || []).forEach(function (s) { streams.push(s); }); });
-        if (!streams.length && item.MediaStreams) streams = item.MediaStreams;
+    // Streams der gewählten Fassung (ohne Angabe: der ersten). Fassungen werden nicht vermischt, sonst stünde „4K“ an einer HD-Fassung.
+    function srcStreams(item, srcId) {
+        var srcs = item.MediaSources || [], ms = (srcId && srcs.filter(function (m) { return m.Id === srcId; })[0]) || srcs[0];
+        return (ms && ms.MediaStreams) || item.MediaStreams || [];
+    }
+    // Bildgüte und Raumklang aus den Streams. Jellyfin 12 meldet VideoRangeType (HDR10, HDR10Plus, HLG, DOVI, DOVIWith…);
+    // VideoRange und VideoDoviTitle dienen nur als Rückfall, wenn der Typ fehlt. „DOVIInvalid“ ist kein abspielbares Dolby Vision.
+    function qualityOf(streams) {
+        var q = { uhd: false, range: null, rangeName: '', atmos: false };
+        var v = (streams || []).filter(function (s) { return s.Type === 'Video'; })[0];
+        if (v) {
+            q.uhd = (v.Width || 0) >= 3800 || (v.Height || 0) >= 2000;
+            var vr = String(v.VideoRangeType || '').toUpperCase(); if (vr === 'UNKNOWN') vr = '';
+            if (vr.indexOf('DOVI') === 0 ? vr !== 'DOVIINVALID' : (!vr && !!v.VideoDoviTitle)) { q.range = 'DV'; q.rangeName = 'Dolby Vision'; }
+            else if (vr === 'HDR10PLUS') { q.range = 'HDR'; q.rangeName = 'HDR10+'; }
+            else if (vr === 'HLG') { q.range = 'HDR'; q.rangeName = 'HLG'; }
+            else if (vr === 'HDR10') { q.range = 'HDR'; q.rangeName = 'HDR10'; }
+            else if (String(v.VideoRange || '').toUpperCase() === 'HDR') { q.range = 'HDR'; q.rangeName = 'HDR'; }
+        }
+        q.atmos = (streams || []).some(function (s) { return s.Type === 'Audio' && /atmos/i.test((s.Profile || '') + ' ' + (s.DisplayTitle || '') + ' ' + (s.Title || '')); });
+        return q;
+    }
+    function mediaBadges(item, srcId) {
+        var out = [], streams = srcStreams(item, srcId);
         var video = streams.filter(function (s) { return s.Type === 'Video'; })[0];
         var audio = streams.filter(function (s) { return s.Type === 'Audio'; });
         var subs = streams.filter(function (s) { return s.Type === 'Subtitle'; });
+        var q = qualityOf(streams), showQ = on('qualityBadges');
         if (video) {
-            if ((video.Width || 0) >= 3800) out.push('4K'); else if ((video.Height || 0) >= 1080 || (video.Width || 0) >= 1900) out.push('HD');
-            var vr = (video.VideoRangeType || video.VideoRange || '').toUpperCase();
-            if (vr.indexOf('DOVI') >= 0) out.push('Dolby Vision'); else if (vr.indexOf('HDR') >= 0 || vr.indexOf('HLG') >= 0) out.push('HDR');
+            if (q.uhd) { if (showQ) out.push({ text: '4K' }); }
+            else if ((video.Height || 0) >= 1080 || (video.Width || 0) >= 1900) out.push({ text: 'HD' });
+            if (showQ && q.range) out.push({ text: q.range === 'DV' ? 'Dolby Vision' : 'HDR', title: q.range === 'DV' || q.rangeName === 'HDR' ? '' : q.rangeName });
         }
-        var atmos = audio.some(function (s) { return /atmos/i.test((s.Profile || '') + ' ' + (s.DisplayTitle || '') + ' ' + (s.Title || '')); });
-        if (atmos) out.push('Dolby Atmos');
-        else { var ch = Math.max.apply(null, audio.map(function (s) { return s.Channels || 0; }).concat([0])); if (ch >= 8) out.push('7.1'); else if (ch >= 6) out.push('5.1'); }
-        if (subs.some(function (s) { return /sdh|hearing/i.test((s.DisplayTitle || '') + ' ' + (s.Title || '')); })) out.push('SDH');
+        if (showQ && q.atmos) out.push({ text: 'Dolby Atmos' });
+        else { var ch = Math.max.apply(null, audio.map(function (s) { return s.Channels || 0; }).concat([0])); if (ch >= 8) out.push({ text: '7.1' }); else if (ch >= 6) out.push({ text: '5.1' }); }
+        if (subs.some(function (s) { return /sdh|hearing/i.test((s.DisplayTitle || '') + ' ' + (s.Title || '')); })) out.push({ text: 'SDH' });
         return out;
+    }
+    // Alle Abzeichen, die an der Fassung hängen (Bild, Ton, Sprachen), als fertige Elemente
+    function srcBadges(item, srcId) {
+        var els = [];
+        mediaBadges(item, srcId).forEach(function (b) { var sp = el('span', 'atv-badge', b.text); if (b.title) sp.title = b.title; els.push(sp); });
+        langBadges(item, srcId).forEach(function (b) {
+            var sp = el('span', 'atv-badge atv-badge--lang'); sp.title = b.title;
+            sp.appendChild(el('span', 'atv-badge__pre', b.prefix)); sp.appendChild(document.createTextNode(b.text)); els.push(sp);
+        });
+        return els;
     }
     // Sprach-Badges: Tonspuren und Untertitel als Kürzel (DE EN JA …), ausgeschrieben im Tooltip
     var LANG2 = { deu: 'de', ger: 'de', eng: 'en', fra: 'fr', fre: 'fr', spa: 'es', ita: 'it', jpn: 'ja', kor: 'ko', zho: 'zh', chi: 'zh', rus: 'ru', por: 'pt',
@@ -595,10 +625,8 @@
         try { var dn = new Intl.DisplayNames([lang() === 'en' ? 'en' : 'de'], { type: 'language' }).of(two); if (dn) name = dn; } catch (e) { /* alter Browser */ }
         return { k: two.toUpperCase(), name: name };
     }
-    function langBadges(item) {
-        var streams = [];
-        (item.MediaSources || []).slice(0, 1).forEach(function (ms) { (ms.MediaStreams || []).forEach(function (s) { streams.push(s); }); });
-        if (!streams.length && item.MediaStreams) streams = item.MediaStreams;
+    function langBadges(item, srcId) {
+        var streams = srcStreams(item, srcId);
         function uniq(list) {
             var seen = {}, out = [];
             list.forEach(function (s) { var l = langInfo(s.Language); if (l && !seen[l.k]) { seen[l.k] = 1; out.push(l); } });
@@ -714,11 +742,16 @@
         if (fparts.length) facts.appendChild(el('span', null, fparts.join(' · ')));
         if (item.CommunityRating) { var st = el('span', 'atv-badge atv-badge--star'); st.appendChild(svg(ICON.star)); st.appendChild(document.createTextNode(item.CommunityRating.toFixed(1).replace('.', lang() === 'en' ? '.' : ','))); facts.appendChild(st); }
         if (item.CriticRating) { var cr = el('span', 'atv-badge atv-badge--rt'); cr.appendChild(svg(ICON.tomato)); cr.appendChild(document.createTextNode(Math.round(item.CriticRating) + ' %')); facts.appendChild(cr); }
-        mediaBadges(item).forEach(function (b) { facts.appendChild(el('span', 'atv-badge', b)); });
-        langBadges(item).forEach(function (b) {
-            var sp = el('span', 'atv-badge atv-badge--lang'); sp.title = b.title;
-            sp.appendChild(el('span', 'atv-badge__pre', b.prefix)); sp.appendChild(document.createTextNode(b.text)); facts.appendChild(sp);
-        });
+        // Abzeichen der Fassung; bei einem Wechsel der Fassung an derselben Stelle ersetzt (dahinter können Bewertungen stehen)
+        var srcEls = [], srcShown;
+        var showSrc = function (srcId) {
+            if (srcEls.length && srcShown === srcId) return;
+            var after = srcEls.length ? srcEls[srcEls.length - 1].nextSibling : null;
+            srcEls.forEach(function (x) { x.remove(); });
+            srcEls = srcBadges(item, srcId); srcShown = srcId;
+            srcEls.forEach(function (x) { facts.insertBefore(x, after && after.parentNode === facts ? after : null); });
+        };
+        showSrc(null);
         if (facts.childNodes.length) lock.appendChild(facts);
 
         var act = el('div', 'atv-detail__actions');
@@ -813,7 +846,7 @@
             var vlabel = el('span', null, vname(srcs[0], 0)), vsub = el('small', null, srcs[0].RunTimeTicks ? fmtRuntime(srcs[0].RunTimeTicks, 'short') : '');
             vbtn.appendChild(vlabel); vbtn.appendChild(svg(ICON.updown)); vbtn.appendChild(vsub);
             var setCur = function (id) {
-                srcs.forEach(function (m, i) { if (m.Id === id) { curId = id; vlabel.textContent = vname(m, i); vsub.textContent = m.RunTimeTicks ? fmtRuntime(m.RunTimeTicks, 'short') : ''; } });
+                srcs.forEach(function (m, i) { if (m.Id === id) { curId = id; showSrc(id); vlabel.textContent = vname(m, i); vsub.textContent = m.RunTimeTicks ? fmtRuntime(m.RunTimeTicks, 'short') : ''; } });
             };
             vbtn.addEventListener('pointerdown', function () { vbtn.__had = !!document.querySelector('.atv-menu--versions'); }, true);
             vbtn.addEventListener('click', function (e) {
@@ -943,6 +976,7 @@
                 if (gutter) shelf.style.setProperty('--atv-gutter', gutter);
                 secondary.insertBefore(shelf, secondary.firstChild);
             }
+            mountSeriesShelf(page, token, item, secondary, gutter);   // hängt sich selbst ein, sobald die Reihe bekannt ist
             var about = buildAbout(item);
             if (about) { if (gutter) about.style.setProperty('--atv-gutter', gutter); secondary.appendChild(about); }
         }).catch(function (e) { page.__atvDetailDone = true; page.classList.add('atv-native'); console.warn('[atv] Detailseite konnte nicht geladen werden', e); });
@@ -1451,6 +1485,162 @@
         return shelf;
     }
 
+    /* =====================================================================
+       3b. Regal „Filmreihe“ auf der Filmseite
+       Teile aus der Mediathek stammen aus Jellyfins Sammlungen (BoxSets), also ohne weiteres Plugin: Die vom Server
+       gebildete Sammlung trägt die TMDb-Nummer der Reihe, die der Film selbst als „TmdbCollection“ führt. Einen Abruf
+       „Sammlungen dieses Films“ kennt Jellyfin nicht; von Hand angelegte Sammlungen werden deshalb einmal durchgesehen.
+       Ist Seerr eingerichtet, kommen von dort die Teile dazu, die in der Mediathek fehlen.
+       ===================================================================== */
+    var SER_TXT = {
+        de: { series: 'Filmreihe', current: 'Dieser Film', missing: 'Fehlt', have: '%1 von %2 vorhanden' },
+        en: { series: 'Collection', current: 'This movie', missing: 'Missing', have: '%1 of %2 in library' }
+    };
+    function st(k, a, b) { return ((SER_TXT[lang()] || SER_TXT.de)[k] || '').replace('%1', a).replace('%2', b); }
+    var series = { at: 0, sets: null, hand: null, handMax: 30 };
+    function seriesSets() {
+        if (series.sets && Date.now() - series.at < CFG.cacheMs) return series.sets;
+        series.at = Date.now(); series.hand = null;
+        series.sets = api().getItems(userId(), { IncludeItemTypes: 'BoxSet', Recursive: true, Fields: 'ProviderIds', EnableUserData: false, EnableImages: false })
+            .then(function (res) { return (res && res.Items) || []; })
+            .catch(function () { series.sets = null; return []; });
+        return series.sets;
+    }
+    // Von Hand angelegte Sammlungen tragen keine TMDb-Nummer: einmal je Cache-Dauer ihre Teile holen und darin nachsehen.
+    // Begrenzt, damit ein Server mit sehr vielen Sammlungen nicht bei jedem Film Dutzende Abrufe auslöst.
+    function seriesHandSet(sets, movieId) {
+        if (!series.hand) {
+            var hand = sets.filter(function (s) { return !(s.ProviderIds && s.ProviderIds.Tmdb); }).slice(0, series.handMax);
+            series.hand = Promise.all(hand.map(function (s) {
+                return api().getItems(userId(), { ParentId: s.Id, IncludeItemTypes: 'Movie', EnableUserData: false, EnableImages: false })
+                    .then(function (res) { return { set: s, ids: ((res && res.Items) || []).map(function (i) { return i.Id; }) }; })
+                    .catch(function () { return { set: s, ids: [] }; });
+            }));
+        }
+        return series.hand.then(function (rows) {
+            for (var i = 0; i < rows.length; i++) if (rows[i].ids.length > 1 && rows[i].ids.indexOf(movieId) >= 0) return rows[i].set;
+            return null;
+        });
+    }
+    function seriesDate(d, year) { return d ? String(d).slice(0, 10) : (year ? year + '-12-31' : '9999'); }   // ohne Datum ans Ende (angekündigte Teile)
+    // TMDb nennt Reihen „… Filmreihe“ bzw. „… Collection“; einheitlich „Name – Filmreihe“. Eigene Sammlungen behalten ihren Namen.
+    function seriesTitle(name, hand) {
+        if (hand) return name || st('series');
+        var base = String(name || '').replace(/\s*[-–—:]?\s*\(?(Filmreihe|Reihe|Sammlung|Collection)\)?\s*$/i, '');
+        return base ? base + ' – ' + st('series') : st('series');
+    }
+    function partCard(it, current) {
+        var c = el('div', 'atv-part' + (current ? ' is-current' : '')); c.tabIndex = 0;
+        var year = it.ProductionYear || '', ud = it.UserData || {};
+        c.setAttribute('aria-label', (it.Name || '') + (year ? ' (' + year + ')' : '') + (ud.Played ? ', ' + t('watched') : ''));
+        var box = el('div', 'atv-part__poster'); c.appendChild(box);
+        var src = primaryUrl(it, 400);
+        if (src) { var im = el('img'); im.alt = ''; im.loading = 'lazy'; im.src = src; box.appendChild(im); }
+        else box.appendChild(el('span', null, it.Name || ''));
+        if (ud.Played) { var seen = el('span', 'atv-part__seen'); seen.appendChild(svg(ICON.check)); box.appendChild(seen); }
+        c.appendChild(el('div', 'atv-part__name', it.Name || ''));
+        c.appendChild(el('div', 'atv-part__sub', [year, current ? st('current') : ''].filter(Boolean).join(' · ')));
+        if (current) { c.setAttribute('aria-current', 'true'); return c; }      // der offene Film führt nirgends hin
+        c.setAttribute('role', 'link');
+        c.addEventListener('click', function () { showDetails(it.Id); });
+        c.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showDetails(it.Id); } });
+        return c;
+    }
+    function mountSeriesShelf(page, token, item, secondary, gutter) {
+        if (item.Type !== 'Movie' || !on('collectionShelf')) return;
+        var pid = item.ProviderIds || {}, colId = pid.TmdbCollection || null, tmdb = pid.Tmdb || null;
+        var seerr = window.__atvSeerrApi || null;                                // gibt es nur mit eingerichtetem Seerr
+        var state = { name: '', hand: false, lib: [], col: null, extra: [] }, shelf = null, title, count, scroller, syncArrows;
+        function alive() { return page.__atvToken === token && page.isConnected; }
+        function entries() {
+            var out = [], byTmdb = {}, used = {};
+            state.lib.concat(state.extra, [item]).forEach(function (it) { var k = it.ProviderIds && it.ProviderIds.Tmdb; if (k && !byTmdb[k]) byTmdb[k] = it; });
+            if (state.col) {
+                state.col.parts.forEach(function (r) {
+                    var it = byTmdb[r.id] || null;
+                    if (it) used[it.Id] = 1;
+                    out.push({ date: seriesDate(r.releaseDate), it: it, part: r });
+                });
+            }
+            // Sammlung des Servers: ohne Seerr alles; mit Seerr nur, was dessen Reihe nicht kennt. Eine eigene Sammlung
+            // weicht dann der Reihe von TMDb, sonst stünden zwei verschiedene Zusammenstellungen in einem Regal.
+            if (!state.col || !state.hand) state.lib.forEach(function (it) { if (!used[it.Id]) { used[it.Id] = 1; out.push({ date: seriesDate(it.PremiereDate, it.ProductionYear), it: it }); } });
+            return out.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+        }
+        function build() {
+            shelf = el('section', 'atv-shelf atv-series');
+            if (gutter) shelf.style.setProperty('--atv-gutter', gutter);
+            var head = el('div', 'atv-shelf__head');
+            title = el('h2', 'atv-shelf__title'); head.appendChild(title);
+            count = el('span', 'atv-shelf__count'); head.appendChild(count);
+            shelf.appendChild(head);
+            var wrap = el('div', 'atv-shelf__wrap'); shelf.appendChild(wrap);
+            scroller = el('div', 'atv-shelf__scroller'); wrap.appendChild(scroller);
+            var arrows = el('div', 'atv-shelf__arrows');
+            var bPrev = el('button', 'atv-shelf__arrow'); bPrev.type = 'button'; bPrev.setAttribute('aria-label', t('prev')); bPrev.appendChild(svg(ICON.prev));
+            var bNext = el('button', 'atv-shelf__arrow'); bNext.type = 'button'; bNext.setAttribute('aria-label', t('next')); bNext.appendChild(svg(ICON.next));
+            arrows.appendChild(bPrev); arrows.appendChild(bNext); wrap.appendChild(arrows);
+            syncArrows = function () {
+                var max = scroller.scrollWidth - scroller.clientWidth;
+                bPrev.disabled = scroller.scrollLeft <= 2; bNext.disabled = scroller.scrollLeft >= max - 2;
+                arrows.classList.toggle('atv-hide', max <= 4);
+            };
+            function turn(dir) { scroller.scrollBy({ left: dir * Math.max(240, scroller.clientWidth * .8), behavior: 'smooth' }); }
+            bPrev.addEventListener('click', function (e) { e.stopPropagation(); turn(-1); });
+            bNext.addEventListener('click', function (e) { e.stopPropagation(); turn(1); });
+            scroller.addEventListener('scroll', function () { clearTimeout(syncArrows.t); syncArrows.t = setTimeout(syncArrows, 80); }, { passive: true });
+            window.addEventListener('resize', function () { if (shelf && shelf.isConnected) syncArrows(); });
+            // direkt unter dem Kopf der Seite, wo bei Serien das Folgenregal steht
+            secondary.insertBefore(shelf, secondary.firstChild);
+        }
+        function draw() {
+            if (!alive()) return;
+            var list = entries();
+            // ein einzelner Teil ist keine Reihe (auch nicht der offene Film allein)
+            if (list.length < 2) { if (shelf) { shelf.remove(); shelf = null; } return; }
+            if (!shelf) build();
+            var have = list.filter(function (x) { return x.it; }).length, cur = null;
+            title.textContent = state.col && (state.hand || !state.name) ? seriesTitle(state.col.name, false) : seriesTitle(state.name, state.hand);
+            count.textContent = have < list.length ? st('have', have, list.length) : t('items', list.length);
+            scroller.replaceChildren();
+            list.forEach(function (x) {
+                var c;
+                if (x.it) { c = partCard(x.it, x.it.Id === item.Id); if (x.it.Id === item.Id) cur = c; }
+                else {
+                    // dieselbe Karte und Anfrage-Ansicht wie im Regal „Nicht in deiner Mediathek“, nur gedimmt
+                    c = seerr.card(x.part); c.classList.add('atv-part', 'atv-part--missing');
+                    var sub = c.querySelector('.atv-seerr__sub');
+                    if (sub) sub.textContent = [x.date.slice(0, 4) === '9999' ? '' : x.date.slice(0, 4), st('missing')].filter(Boolean).join(' · ');
+                }
+                scroller.appendChild(c);
+            });
+            requestAnimationFrame(function () {
+                // lange Reihen: so weit blättern, dass der offene Film zu sehen ist
+                if (cur && cur.offsetLeft + cur.offsetWidth > scroller.scrollLeft + scroller.clientWidth) scroller.scrollLeft = Math.max(0, cur.offsetLeft - (parseFloat(getComputedStyle(scroller).paddingLeft) || 0));
+                syncArrows();
+            });
+        }
+        seriesSets().then(function (sets) {
+            var hit = colId ? sets.filter(function (s) { return s.ProviderIds && String(s.ProviderIds.Tmdb) === String(colId); })[0] : null;
+            if (hit) return { set: hit, hand: false };
+            return seriesHandSet(sets, item.Id).then(function (s) { return s ? { set: s, hand: true } : null; });
+        }).then(function (found) {
+            if (!found || !alive()) return;
+            return api().getItems(userId(), { ParentId: found.set.Id, IncludeItemTypes: 'Movie', Fields: 'ProviderIds', EnableImageTypes: 'Primary' }).then(function (res) {
+                state.lib = (res && res.Items) || []; state.name = found.set.Name || ''; state.hand = found.hand;
+                draw();
+            });
+        }).catch(function (e) { console.warn('[atv] Filmreihe: Sammlung nicht geladen', e); });
+        if (!seerr || (!colId && !tmdb)) return;
+        seerr.collection(tmdb, colId).then(function (col) {
+            if (!col || !col.parts.length || !alive()) return;
+            // Teile, die Seerr in der Mediathek kennt, die aber in keiner Sammlung stecken (z. B. Sammlungen nicht eingeschaltet)
+            var ids = col.parts.map(function (r) { var mi = r.mediaInfo; return mi && (mi.jellyfinMediaId || mi.jellyfinMediaId4k); }).filter(function (x) { return x && x !== item.Id; });
+            var more = ids.length ? api().getItems(userId(), { Ids: ids.join(','), IncludeItemTypes: 'Movie', Fields: 'ProviderIds', EnableImageTypes: 'Primary' }).then(function (res) { return (res && res.Items) || []; }).catch(function () { return []; }) : Promise.resolve([]);
+            return more.then(function (items) { state.extra = items; state.col = col; draw(); });
+        }).catch(function (e) { console.warn('[atv] Filmreihe: Seerr', e); });
+    }
+
     var EP_TXT = {
         de: { fromStart: 'Von Anfang an', markSeen: 'Als gesehen markieren', markUnseen: 'Als ungesehen markieren', addList: 'Zur Merkliste', removeList: 'Von der Merkliste entfernen', details: 'Details', seasonUp: 'STAFFEL', aired: 'Erstausstrahlung' },
         en: { fromStart: 'From the beginning', markSeen: 'Mark as watched', markUnseen: 'Mark as unwatched', addList: 'Add to watchlist', removeList: 'Remove from watchlist', details: 'Details', seasonUp: 'SEASON', aired: 'First aired' }
@@ -1526,8 +1716,7 @@
             if (parts.length) facts.appendChild(el('span', null, parts.join(' · ')));
             if (it.CommunityRating) { var st = el('span', 'atv-badge atv-badge--star'); st.appendChild(svg(ICON.star)); st.appendChild(document.createTextNode(it.CommunityRating.toFixed(1).replace('.', lang() === 'en' ? '.' : ','))); facts.appendChild(st); }
             if (full) {
-                mediaBadges(full).forEach(function (b) { facts.appendChild(el('span', 'atv-badge', b)); });
-                langBadges(full).forEach(function (b) { var sp = el('span', 'atv-badge atv-badge--lang'); sp.title = b.title; sp.appendChild(el('span', 'atv-badge__pre', b.prefix)); sp.appendChild(document.createTextNode(b.text)); facts.appendChild(sp); });
+                srcBadges(full).forEach(function (b) { facts.appendChild(b); });
             }
             if (facts.childNodes.length) body.appendChild(facts);
             var act = el('div', 'atv-sheet__actions');
@@ -1591,6 +1780,7 @@
         var go = function () { playItem(ep, ud.PlaybackPositionTicks || 0); };
         card.addEventListener('click', go);
         card.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+        if (qb.io) qbWatch(card, ep.Id);
         return card;
     }
 
@@ -2186,6 +2376,108 @@
             var key = (sc.__atvId = sc.__atvId || ('s' + Math.random().toString(36).slice(2))) + sid;
             if (seen[key]) card.style.display = 'none'; else { seen[key] = 1; card.style.display = ''; }
         });
+    }
+    /* =====================================================================
+       Qualitäts-Abzeichen auf Karten (4K, HDR, Dolby Vision)
+       Karten tragen keine Stream-Angaben. Titel, deren Karte in Sichtweite kommt, werden gesammelt abgefragt
+       (ein Abruf für viele Titel) und das Ergebnis je Titel gemerkt. Serien und Staffeln haben keine eine Datei
+       und bleiben ohne Marke. Atmos steht nur auf der Detailseite: drei Marken wären auf einer Handy-Karte zu viel.
+       ===================================================================== */
+    var qb = { cache: {}, size: 0, queue: [], waiting: {}, timer: null, scanT: null, busy: false, io: null, mo: null };
+    var QB_TYPES = { Movie: 1, Episode: 1, Video: 1, MusicVideo: 1 }, QB_BATCH = 40;
+    function qbCached(id) { var c = qb.cache[id]; return c && Date.now() - c.t < CFG.cacheMs ? c : null; }
+    function qbHost(card) { return card.classList.contains('atv-ep') ? card : card.querySelector('.cardScalable'); }
+    function qbRender(card, id) {
+        if (card.__atvQb !== id) return;
+        var host = qbHost(card), c = qb.cache[id], marks = c ? c.marks : [];
+        card.__atvQbState = 'done';
+        if (!host) return;
+        var old = host.querySelector('.atv-qb'); if (old) old.remove();
+        if (!marks.length) return;
+        var box = el('span', 'atv-qb'); box.setAttribute('role', 'img');
+        box.setAttribute('aria-label', marks.map(function (m) { return m.name; }).join(', '));
+        marks.forEach(function (m) { box.appendChild(el('span', m.cls || null, m.text)); });
+        host.appendChild(box);
+    }
+    function qbWatch(card, id) {
+        if (!id) return;
+        if (card.__atvQb === id) {
+            // Jellyfin hat das Innere der Karte neu gebaut: Marke aus dem Gemerkten wieder einsetzen
+            if (card.__atvQbState === 'done' && qb.cache[id] && qb.cache[id].marks.length && !card.querySelector('.atv-qb')) qbRender(card, id);
+            return;
+        }
+        card.__atvQb = id; card.__atvQbState = 'wait';
+        var old = card.querySelector('.atv-qb'); if (old) old.remove();
+        if (qbCached(id)) qbRender(card, id); else qb.io.observe(card);
+    }
+    function qbSeen(entries) {
+        entries.forEach(function (e) {
+            if (!e.isIntersecting) return;
+            var card = e.target, id = card.__atvQb;
+            qb.io.unobserve(card);
+            if (!id || card.__atvQbState !== 'wait') return;
+            if (qbCached(id)) { qbRender(card, id); return; }
+            if (!qb.waiting[id]) { qb.waiting[id] = []; qb.queue.push(id); }
+            qb.waiting[id].push(card);
+        });
+        if (qb.queue.length && !qb.timer) qb.timer = setTimeout(qbFlush, 150);
+    }
+    function qbFlush() {
+        qb.timer = null;
+        if (qb.busy || !qb.queue.length) return;
+        if (!apiReady()) { qb.timer = setTimeout(qbFlush, 1000); return; }
+        var ids = qb.queue.splice(0, QB_BATCH); qb.busy = true;
+        var done = function (found) {
+            if (qb.size > 3000) { qb.cache = {}; qb.size = 0; }
+            ids.forEach(function (id) {
+                var cards = qb.waiting[id] || []; delete qb.waiting[id];
+                // Ohne Antwort nichts merken: die Karten melden sich beim nächsten Durchlauf neu an
+                if (!found) { cards.forEach(function (c) { if (c.__atvQb === id) c.__atvQb = null; }); return; }
+                if (!qb.cache[id]) qb.size++;
+                qb.cache[id] = { t: Date.now(), marks: found[id] || [] };
+                cards.forEach(function (c) { if (c.isConnected) qbRender(c, id); else if (c.__atvQb === id) c.__atvQb = null; });
+            });
+            qb.busy = false;
+            if (qb.queue.length && !qb.timer) qb.timer = setTimeout(qbFlush, 150);
+        };
+        api().getItems(userId(), { Ids: ids.join(','), Fields: 'MediaStreams', EnableImages: false, EnableUserData: false, EnableTotalRecordCount: false }).then(function (res) {
+            var found = {};
+            ((res && res.Items) || []).forEach(function (it) {
+                var q = qualityOf(srcStreams(it)), marks = [];
+                if (q.uhd) marks.push({ text: '4K', name: '4K', cls: 'atv-qb__res' });
+                if (q.range) marks.push({ text: q.range, name: q.rangeName });
+                found[it.Id] = marks;
+            });
+            done(found);
+        }).catch(function () { done(null); });
+    }
+    function qbScan() {
+        qb.scanT = null;
+        var cards = document.querySelectorAll('.card[data-id]');
+        for (var i = 0; i < cards.length; i++) {
+            var c = cards[i];
+            if (!QB_TYPES[c.getAttribute('data-type')]) continue;
+            if (!c.__atvQb && c.closest('.detailImageContainer')) continue;     // das Plakat der Detailseite ist keine Regalkarte
+            qbWatch(c, c.getAttribute('data-id'));
+        }
+    }
+    function qbStart() {
+        if (qb.io || !on('qualityBadges') || !window.IntersectionObserver) return;
+        qb.io = new IntersectionObserver(qbSeen, { rootMargin: '300px 400px' });
+        // Eigener, gedrosselter Durchlauf über neue Karten (Nachladen beim Scrollen, Seitenwechsel). Die eigenen Marken
+        // lösen keinen Durchlauf aus; und ein Durchlauf ohne neue Karten ändert nichts, es kann also keine Schleife entstehen.
+        qb.mo = new MutationObserver(function (muts) {
+            if (qb.scanT) return;
+            for (var i = 0; i < muts.length; i++) {
+                if (muts[i].type === 'attributes') { qb.scanT = setTimeout(qbScan, 300); return; }
+                var added = muts[i].addedNodes;
+                for (var k = 0; k < added.length; k++) {
+                    if (added[k].nodeType === 1 && !added[k].classList.contains('atv-qb')) { qb.scanT = setTimeout(qbScan, 300); return; }
+                }
+            }
+        });
+        qb.mo.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-id'] });
+        qb.scanT = setTimeout(qbScan, 300);
     }
     /* =====================================================================
        Router: Seite erkennen, Module anstoßen, Aufräumen
@@ -3206,6 +3498,7 @@
         ensureRootClass();
         mo.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
         new MutationObserver(ensureRootClass).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+        qbStart();
         schedule();
     }
     start();
