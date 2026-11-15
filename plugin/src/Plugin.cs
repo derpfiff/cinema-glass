@@ -33,6 +33,7 @@ public class Plugin : BasePlugin<PluginConfiguration>, IHasWebPages
 
     public IEnumerable<PluginPageInfo> GetPages()
     {
-        yield return new PluginPageInfo { Name = "CinemaGlass", EmbeddedResourcePath = "CinemaGlass.configPage.html" };
+        // Eigener Eintrag in der Seitenleiste des Dashboards (nicht erst über „Plugins“)
+        yield return new PluginPageInfo { Name = "CinemaGlass", DisplayName = "Cinema Glass", EmbeddedResourcePath = "CinemaGlass.configPage.html", EnableInMainMenu = true, MenuIcon = "auto_awesome" };
     }
 }
