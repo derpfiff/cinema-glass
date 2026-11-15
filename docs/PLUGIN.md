@@ -201,6 +201,21 @@ Laden die Download-Dienste nachts nicht, lässt sich das in den Einstellungen un
 angeben (von/bis in der Zeit des Servers, dazu ein Kennzeichen im Namen von Qualitätsprofilen, die erst nach der
 nächsten Ruhezeit laden). Statt „Wird gesucht“ steht dann „Startet heute gegen 07:30“ bzw. „Startet morgen gegen …“.
 
+**Qualitätsprofil nach Originalsprache.** Unter „Qualitätsprofil nach Originalsprache“ lassen sich Regeln eintragen, eine
+je Zeile: `Sprache=Textstück im Profilnamen`, `*` für alle übrigen Sprachen, z. B.
+
+```
+de=[German]
+en=[German]
+*=[OG + EN]
+```
+
+Dann wählt das Plugin bei jeder Anfrage über das Theme das erste Profil, dessen Name das Textstück enthält (Radarr für
+Filme, Sonarr für Serien), und das Theme fragt nicht mehr nach dem Profil. In der Ruhezeit nimmt es außerdem die Variante
+mit dem Kennzeichen (z. B. „… (morgen)“), sofern es eine gibt. Ein ausdrücklich mitgeschicktes Profil bleibt, nur nachts
+gilt auch dafür die spätere Variante. Meldet Seerr eine Anfrage in der Ruhezeit als fehlgeschlagen, weil die Dienste
+schlafen, zeigt der Stand „Startet … gegen …“ statt „Fehlgeschlagen“.
+
 Die Liste der Anfragen holt das Plugin höchstens alle zehn Sekunden bei Seerr, gleich wie viele Konten wie oft
 nachfragen; die Antwort nennt mit `poll`, nach wie vielen Sekunden sich Nachfragen lohnt (10 beim Laden, 30 bei Suche,
 Warteschlange und Einordnen, 300 bei Wartendem, 0 sonst).

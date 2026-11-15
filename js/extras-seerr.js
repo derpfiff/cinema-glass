@@ -256,6 +256,9 @@
     var services = {};
     function service(kind) {
         if (services[kind]) return services[kind];
+        // Wählt das Plugin das Profil selbst (nach Originalsprache, nachts die spätere Variante), gibt es nichts zu fragen.
+        var g = window.__cinemaGlass;
+        if (g && g.features && g.features.autoProfile) return (services[kind] = Promise.resolve(null));
         services[kind] = call('/api/v1/service/' + kind).then(function (list) {
             var sv = (list || []).filter(function (x) { return x.isDefault && !x.is4k; })[0] || (list || []).filter(function (x) { return !x.is4k; })[0];
             return sv ? call('/api/v1/service/' + kind + '/' + sv.id) : null;

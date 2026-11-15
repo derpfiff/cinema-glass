@@ -910,6 +910,21 @@ internal sealed class RequestTracker
                 e.Phase = RequestPhase.Approval;
                 return e;
             case 4:
+                // Seerr meldet „fehlgeschlagen“, wenn Radarr/Sonarr in der Ruhezeit schlafen. Wurde in dieser Ruhezeit
+                // angefragt oder mit einem Profil, das ohnehin erst danach lädt, holt der Weckdienst das am Morgen nach.
+                if (quiet is { } fq)
+                {
+                    var askedLocal = TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(requested, DateTimeKind.Utc), TimeZoneInfo.Local);
+                    var deferred = fq.Marker.Length > 0 && _profileNames.TryGetValue(current.Id, out var fp) && fp.Contains(fq.Marker, StringComparison.OrdinalIgnoreCase);
+                    var end = deferred ? fq.NextEnd(askedLocal) : fq.EndIfWithin(askedLocal);
+                    if (end is { } startAt && nowLocal < startAt.AddMinutes(30))
+                    {
+                        e.Phase = RequestPhase.Scheduled;
+                        e.StartsAt = startAt;
+                        return e;
+                    }
+                }
+
                 e.Phase = RequestPhase.Failed;
                 return now - current.Updated < TimeSpan.FromDays(NewDays) ? e : null;
         }

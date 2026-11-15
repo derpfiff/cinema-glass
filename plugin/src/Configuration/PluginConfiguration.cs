@@ -40,6 +40,11 @@ public class PluginConfiguration : BasePluginConfiguration
     public string DownloadsQuietTo { get; set; } = string.Empty;
     public string DownloadsDeferMarker { get; set; } = string.Empty;   // Textstück im Namen von Qualitätsprofilen, die erst nach der Ruhezeit laden
 
+    // Qualitätsprofil nach Originalsprache (freiwillig, leer = aus): Zeilen „Sprache=Textstück im Profilnamen“, z. B.
+    // „de=[German]“, „en=[German]“, „*=[OG + EN]“. Ist es gesetzt, fragt das Theme nicht mehr nach dem Profil; in der Ruhezeit
+    // nimmt das Plugin außerdem die Variante mit DownloadsDeferMarker, damit nachts nichts die Platten weckt.
+    public string AutoProfileRules { get; set; } = string.Empty;
+
     // Bewertungen über MDBList
     public bool Ratings { get; set; } = false;
     public string MdbListApiKey { get; set; } = string.Empty;
