@@ -288,7 +288,6 @@
     // unten wird bestätigt. tvP: Seerrs Auskunft zur Serie, svcP: Profile (beides Promises); send(seasons, quality)
     // stellt die Anfrage. Ergebnis: Antwort der Anfrage, null bei „Abbrechen“.
     // Bester YouTube-Trailer aus Seerrs „relatedVideos“: offizieller Trailer vor Teaser, sonst irgendein Video.
-    var rated = {};   // Bewertungen aus dieser Sitzung, damit Herz und Daumen beim erneuten Öffnen stimmen
     function pickTrailer(list) {
         var v = (list || []).filter(function (x) { return x && x.site === 'YouTube' && x.key; });
         var rank = function (x) { return (x.type === 'Trailer' ? 0 : x.type === 'Teaser' ? 1 : 2); };
@@ -438,11 +437,6 @@
             return b;
         }
         function requested() { fillActions(); fillQuality(); loadDetails(); }
-        function rate(action) {
-            if (action === 'clear') delete rated[key]; else rated[key] = action;
-            D.rate(item, action, 'detail');
-            fillActions();
-        }
         // Trailer (YouTube über Seerr/TMDb), auch für Titel, die fehlen: gleiches Fenster wie auf der Detailseite
         var trailerKey = null;
         function addTrailer(d) {
@@ -477,7 +471,7 @@
             // Laut „Entdecken“ schon angekommen: Seerr gleicht seinen eigenen Stand erst in Abständen ab
             var here = D && D.itemIdOf ? D.itemIdOf(key) : null;
             if (here) { r.mediaInfo = r.mediaInfo || {}; r.mediaInfo.status = 5; r.mediaInfo.jellyfinMediaId = here; }
-            var s = statusOf(r), def = STATUS[s], mi = r.mediaInfo || {}, there = (s === 5 || s === 4) && !!mi.jellyfinMediaId, pending = s === 2 || s === 3, b, seen, hide;
+            var s = statusOf(r), def = STATUS[s], mi = r.mediaInfo || {}, there = (s === 5 || s === 4) && !!mi.jellyfinMediaId, pending = s === 2 || s === 3, b;
             if (there) {
                 b = pill(ICON.play, T.open, false);
                 b.addEventListener('click', function () { var id = mi.jellyfinMediaId; close(true); location.hash = '#/details?id=' + id; });
@@ -490,24 +484,20 @@
             }
             if (pending) act.appendChild(statusEl(def, true));
             else if (def && !there) act.appendChild(statusEl(def, false));
-            // Rückmelden (nur solange der Titel fehlt): runde Knöpfe mit Beschriftung beim Darüberfahren, kein Kreuz
-            if (D && !def) {
-                // Gezielt bewerten, auch was man woanders gesehen hat: Herz = gefällt mir (füllt sich), Daumen = nicht meins.
-                // Die Ansicht bleibt offen, damit man danach noch anfragen oder den Trailer sehen kann.
-                var mood = rated[key] || null;
-                var heart = D.tip(el('button', 'atv-circle'), D.text(mood === 'like' ? 'unlike' : 'likeIt')); heart.type = 'button';
-                heart.setAttribute('aria-pressed', mood === 'like' ? 'true' : 'false');
-                heart.appendChild(svg(mood === 'like' ? D.icons.heartOn : D.icons.heart));
-                heart.addEventListener('click', function () { rate(mood === 'like' ? 'clear' : 'like'); });
-                act.appendChild(heart);
-                var down = D.tip(el('button', 'atv-circle' + (mood === 'dislike' ? ' is-on' : '')), D.text('disliked')); down.type = 'button';
-                down.setAttribute('aria-pressed', mood === 'dislike' ? 'true' : 'false');
-                down.appendChild(svg(D.icons.down));
-                down.addEventListener('click', function () { rate(mood === 'dislike' ? 'clear' : 'dislike'); });
-                act.appendChild(down);
-                hide = D.tip(el('button', 'atv-circle'), D.text('hide')); hide.type = 'button'; hide.appendChild(svg(D.icons.eyeOff));
-                hide.addEventListener('click', function () { close(); D.feedback(item, 'hide', 'detail'); });
-                act.appendChild(hide);
+            // Bewerten (nur solange der Titel fehlt): Drei-Punkte-Menü mit Gefällt mir, Nicht meins und Nicht mehr anzeigen.
+            // Die Ansicht bleibt dabei offen, damit man danach noch anfragen oder den Trailer sehen kann.
+            if (D && !def && D.menu && D.rateEntries) {
+                var more = D.tip(el('button', 'atv-circle'), D.text('more')); more.type = 'button'; more.setAttribute('aria-haspopup', 'menu');
+                more.appendChild(svg(D.icons.more));
+                more.addEventListener('pointerdown', function () { more.__had = !!document.querySelector('.atv-menu--float'); }, true);
+                more.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    if (more.__had) { more.__had = false; var m = document.querySelector('.atv-menu--float'); if (m) m.remove(); return; }
+                    D.menu(more, null, D.rateEntries(item, 'detail').concat([
+                        { icon: D.icons.eyeOff, label: D.text('hide'), run: function () { close(); D.feedback(item, 'hide', 'detail'); } }
+                    ]), e.detail === 0);
+                });
+                act.appendChild(more);
             }
             note.textContent = def ? '' : T.title; note.hidden = !!def;
             addTrailer(null);
