@@ -3541,3 +3541,9 @@ html.atv-list-on .atv-menu--float { z-index: 1490; }
   .atv-trailer.is-rot .atv-trailer__stage { width: min(100%, calc((100vw - 16px) * 16 / 9)); max-height: 100vw; }
   .atv-trailer.is-rot .atv-trailer__close { left: max(16px, env(safe-area-inset-top, 0px)); top: 12px; }
 }
+
+/* Reihe „Von deinen Freunden“: Namen mit Sternen bleiben ganz, die Zeile darf zweizeilig werden */
+html.atv-js .atv-dc .atv-dc__sub.atv-dc__sub--friends { height: auto; max-height: 2.7em; white-space: normal; }
+html.atv-js .atv-dc .atv-dc__sub.atv-dc__sub--friends .atv-dc__l1 { white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+html.atv-js .atv-dc .atv-dc__fr { white-space: nowrap; }
+html.atv-js .atv-dc .atv-dc__sub--friends .atv-sep { margin: 0; }
