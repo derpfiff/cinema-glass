@@ -3485,3 +3485,22 @@ html.atv-pg-discover .atv-hd-taste { display: flex; align-items: center; justify
 html.atv-pg-discover .atv-hd-taste:hover { background: #fff; color: #000; }
 html.atv-pg-discover .atv-hd-taste:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 .atv-hd-taste svg { width: 20px; height: 20px; fill: currentColor; }
+
+/* Hitlisten & Studios: Kachelreihe auf „Entdecken“, Abschnitte in der Kategorien-Auswahl, Listenansicht */
+.atv-dl__row { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding: 0 var(--tv-gutter, 16px) 8px; }
+.atv-dl__row::-webkit-scrollbar { display: none; }
+.atv-dl__row .atv-cat__tile { flex: 0 0 auto; width: clamp(200px, 18vw, 300px); }
+.atv-cat__tile span small { display: block; margin-top: 2px; font-size: 12px; font-weight: 500; color: rgba(255, 255, 255, .75); }
+.atv-cat__sub { margin: 24px 0 10px; font-size: 18px; font-weight: 700; color: rgba(255, 255, 255, .9); }
+.atv-list .atv-cat__head { background: linear-gradient(to bottom, rgba(10, 10, 12, .9), rgba(10, 10, 12, 0)); }
+.atv-list__ht { min-width: 0; }
+.atv-list__sub { display: block; margin-top: 2px; font-size: 14px; color: rgba(255, 255, 255, .65); }
+.atv-list__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 18px 14px; }
+html .atv-list .atv-list__grid .atv-seerr__card { width: auto; min-width: 0; position: relative; }
+.atv-list__num { position: absolute; z-index: 2; right: 8px; top: 8px; min-width: 26px; height: 26px; padding: 0 7px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #000; background: rgba(255, 255, 255, .9); }
+.atv-list__msg { color: rgba(255, 255, 255, .7); }
+.atv-list__more { height: 40px; }
+html.atv-list-on .atv-xd { z-index: 1470; }
+html.atv-list-on .atv-sheet { z-index: 1480; }
+html.atv-list-on .atv-menu--float { z-index: 1490; }
+@media (max-width: 600px) { .atv-list__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; } .atv-list__num { min-width: 20px; height: 20px; font-size: 11px; right: 5px; top: 5px; } .atv-dl__row .atv-cat__tile { width: 62vw; } }

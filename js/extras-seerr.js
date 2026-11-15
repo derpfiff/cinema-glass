@@ -28,13 +28,13 @@
         partial: 'Teilweise', available: 'Verfügbar', movie: 'Film', series: 'Serie', seasons: 'Staffeln anfragen',
         all: 'Alle Staffeln', cancel: 'Abbrechen', send: 'Anfragen', ok: 'Anfrage gesendet', fail: 'Anfrage fehlgeschlagen',
         offline: 'Seerr nicht erreichbar', noconn: 'Keine Verbindung zu Seerr', retry: 'Erneut versuchen', season: 'Staffel', episodes: 'Folgen', more: 'Mehr', close: 'Schließen', quality: 'Qualität', standard: 'Standard',
-        trailer: 'Trailer', open: 'Öffnen', moreSeasons: 'Weitere Staffeln anfragen', reqAll: 'Alle Staffeln anfragen', reqOne: '1 Staffel anfragen', reqN: '%1 Staffeln anfragen', noSeasons: 'Zu dieser Serie sind noch keine Staffeln bekannt.'
+        trailer: 'Trailer', open: 'Öffnen', moreSeasons: 'Weitere Staffeln anfragen', reqAll: 'Alle Staffeln anfragen', coll: 'Filmreihe', collAll: 'Alle fehlenden anfragen', collAllN: 'Alle %1 fehlenden anfragen', collDone: '%1 Filme angefragt', collHere: 'Komplett', reqOne: '1 Staffel anfragen', reqN: '%1 Staffeln anfragen', noSeasons: 'Zu dieser Serie sind noch keine Staffeln bekannt.'
     } : {
         title: 'Not in your library', request: 'Request', requested: 'Requested', processing: 'Processing',
         partial: 'Partial', available: 'Available', movie: 'Movie', series: 'Series', seasons: 'Request seasons',
         all: 'All seasons', cancel: 'Cancel', send: 'Request', ok: 'Request sent', fail: 'Request failed',
         offline: 'Seerr unreachable', noconn: 'No connection to Seerr', retry: 'Retry', season: 'Season', episodes: 'episodes', more: 'More', close: 'Close', quality: 'Quality', standard: 'Default',
-        trailer: 'Trailer', open: 'Open', moreSeasons: 'Request more seasons', reqAll: 'Request all seasons', reqOne: 'Request 1 season', reqN: 'Request %1 seasons', noSeasons: 'No seasons are known for this show yet.'
+        trailer: 'Trailer', open: 'Open', moreSeasons: 'Request more seasons', reqAll: 'Request all seasons', coll: 'Collection', collAll: 'Request all missing', collAllN: 'Request all %1 missing', collDone: '%1 movies requested', collHere: 'Complete', reqOne: 'Request 1 season', reqN: 'Request %1 seasons', noSeasons: 'No seasons are known for this show yet.'
     };
 
     // Optik: dieselben Bausteine wie das Theme (Regal, Poster, Detailseite .atv-detail, Pille, Glas-Kreis).
@@ -85,6 +85,11 @@
         '.atv-xd__season.is-on em{opacity:.55}',
         '.atv-xd__cast{display:flex;gap:var(--tv-gap,16px);overflow-x:auto;scrollbar-width:none;margin:0 calc(-1 * var(--tv-gutter,16px));padding:0 var(--tv-gutter,16px) 8px}',
         '.atv-xd__cast::-webkit-scrollbar{display:none}',
+        '.atv-xd__colhead{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 var(--tv-title-to-cards,14px)}',
+        '.atv-xd__colhead .atv-xd__h{margin:0}',
+        'html .atv-xd .atv-xd__colhead .atv-pill{height:40px;min-height:0;padding:0 18px;font-size:15px;gap:8px}',
+        'html .atv-xd .atv-xd__colhead .atv-pill svg{width:18px;height:18px;fill:currentColor}',
+        '.atv-xd__parts .atv-seerr__card.is-current .atv-seerr__poster{box-shadow:0 0 0 3px #fff}',
         '.atv-xd__person{flex:0 0 auto;width:clamp(94px,7.4vw,142px);text-align:center}',
         '.atv-xd__person span{display:block;aspect-ratio:1;border-radius:50%;overflow:hidden;background:#1c1c1e}',
         '.atv-xd__person img{width:100%;height:100%;object-fit:cover;display:block}',
@@ -525,6 +530,55 @@
             });
             below.appendChild(sec);
         }
+        // Filmreihe: alle Teile nach Erscheinen, der geöffnete hervorgehoben; „Alle fehlenden anfragen“ fragt nacheinander an
+        // (Qualitätsprofil und Nachtzeit regelt das Plugin wie bei einer einzelnen Anfrage).
+        var collShown = null;
+        function fillCollection(d) {
+            if (isTv || !d || !d.collection || !d.collection.id || collShown === d.collection.id) return;
+            collShown = d.collection.id;
+            collection(r.id, String(d.collection.id)).then(function (col) {
+                if (!col || col.parts.length < 2 || !wrap.isConnected) return;
+                var parts = col.parts.slice().sort(function (a, b) { return (a.releaseDate || '9999') < (b.releaseDate || '9999') ? -1 : (a.releaseDate || '9999') > (b.releaseDate || '9999') ? 1 : 0; });
+                var old = below.querySelector('.atv-xd__sec--coll'); if (old) old.remove();
+                var sec = el('section', 'atv-xd__sec atv-xd__sec--coll'), head = el('div', 'atv-xd__colhead');
+                head.appendChild(el('h2', 'atv-xd__h', col.name || T.coll)); sec.appendChild(head);
+                var row = el('div', 'atv-xd__cast atv-xd__parts'); sec.appendChild(row);
+                function missing() { return parts.filter(function (p) { return statusOf(p) < 2 && !inLibrary(p); }); }
+                function draw() {
+                    row.textContent = '';
+                    parts.forEach(function (p) { var cc = card(p); if (p.id === r.id) cc.classList.add('is-current'); row.appendChild(cc); });
+                    var old2 = head.querySelector('.atv-pill'); if (old2) old2.remove();
+                    var miss = missing();
+                    if (miss.length) {
+                        var all = el('button', 'atv-pill atv-pill--glass'); all.type = 'button';
+                        all.appendChild(svg(ICON.plus)); all.appendChild(el('span', null, miss.length === 1 ? T.request : T.collAllN.replace('%1', miss.length)));
+                        all.addEventListener('click', function () { requestAll(all); });
+                        head.appendChild(all);
+                    }
+                }
+                function requestAll(btn) {
+                    var miss = missing(), done = 0;
+                    btn.disabled = true;
+                    miss.reduce(function (chain, p) {
+                        return chain.then(function () {
+                            return call('/api/v1/request', { method: 'POST', body: { mediaType: 'movie', mediaId: p.id } }).then(function (res) {
+                                p.mediaInfo = p.mediaInfo || {}; p.mediaInfo.status = (res && res.media && res.media.status) || 2; done++;
+                                if (p.id === r.id) { r.mediaInfo = r.mediaInfo || {}; r.mediaInfo.status = p.mediaInfo.status; }
+                                announce(p);
+                            }).catch(function (e) { console.warn('[atv-seerr] collection request', p.id, e); });
+                        });
+                    }, Promise.resolve()).then(function () {
+                        toast(done ? T.collDone.replace('%1', done) : T.fail);
+                        if (!wrap.isConnected) return;
+                        draw();
+                        if (miss.some(function (p) { return p.id === r.id; })) requested();
+                    });
+                }
+                draw();
+                var cast = below.querySelector('.atv-xd__sec--cast');
+                below.insertBefore(sec, cast || null);
+            });
+        }
         function loadDetails() {
             detailsP = call('/api/v1/' + (isTv ? 'tv' : 'movie') + '/' + r.id + '?language=' + CFG.language);
             detailsP.then(function (d) {
@@ -542,7 +596,7 @@
                 var dirs = isTv ? (d.createdBy || []).map(function (p) { return p.name; }) : crew.filter(function (p) { return p.job === 'Director'; }).map(function (p) { return p.name; });
                 function ln(label, names) { if (!names.length) return; var p = el('p'); p.appendChild(el('span', 'atv-label', label)); p.appendChild(document.createTextNode(names.join(', '))); credits.appendChild(p); }
                 ln(DE ? 'Mit' : 'Starring', cast); ln(isTv ? (DE ? 'Erfinder' : 'Creator') : (DE ? 'Regie' : 'Director'), dirs.slice(0, 2));
-                fillQuality(); fillCast(d);
+                fillQuality(); fillCast(d); fillCollection(d);
                 fillActions(); setStatus(c, r);
             }).catch(function (e) { console.warn('[atv-seerr] details', e); detailsP = null; if (wrap.isConnected) fillActions(); });
             return detailsP;
