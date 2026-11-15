@@ -120,6 +120,7 @@ public class CinemaGlassController : ControllerBase
                 seerr = c.Seerr && c.SeerrUrl.Length > 0 && c.SeerrApiKey.Length > 0,
                 discover = c.Discover,
                 letterboxd = c.Letterboxd && c.Discover,
+                ratePrompt = c.RatePrompt,
                 autoProfile = c.AutoProfileRules.Trim().Length > 0,
                 ratings = c.Ratings && c.MdbListApiKey.Length > 0
             }

@@ -33,6 +33,8 @@ public class PluginConfiguration : BasePluginConfiguration
     public string SeerrApiKey { get; set; } = string.Empty;
     public string SeerrUserId { get; set; } = string.Empty;   // optional: Anfragen laufen als dieser Seerr-Nutzer
     public bool Discover { get; set; } = true;         // „Entdecken“: Empfehlungen für fehlende Titel (nur mit eingerichtetem Seerr)
+    public bool RatePrompt { get; set; } = false;      // Nach dem Schauen eines Films nach Sternen fragen (Jellyfins Bewertung des Kontos, zählt fürs Profil)
+
     public bool Letterboxd { get; set; } = false;      // Letterboxd: eigene Bewertungen als Geschmack, Reihe „Von deinen Freunden“ (nur öffentliche Seiten)
 
     // Ruhezeit der Download-Dienste (freiwillig, alles leer = aus): In dieser Zeit zeigt der Stand angefragter Titel
