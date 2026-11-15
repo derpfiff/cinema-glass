@@ -45,6 +45,10 @@ internal sealed record Tuning
 
     public float FormatPenalty { get; init; } = Scorer.FormatPenalty;
 
+    public float VotesShare { get; init; } = Scorer.VotesShare;
+
+    public float VotesFactor { get; init; } = Scorer.VotesFactor;
+
     /// <summary>Tägliche kleine Verschiebung; im Messlauf aus, damit er wiederholbar ist.</summary>
     public bool Jitter { get; init; } = true;
 
@@ -70,6 +74,8 @@ internal sealed record Tuning
         ["tvOffset"] = (t, v) => t with { TvRatingOffset = v },
         ["foreign"] = (t, v) => t with { ForeignFactor = v },
         ["format"] = (t, v) => t with { FormatPenalty = v },
+        ["votesShare"] = (t, v) => t with { VotesShare = v },
+        ["votesFactor"] = (t, v) => t with { VotesFactor = v },
     };
 
     public static IEnumerable<string> Names => Setters.Keys;
@@ -271,6 +277,8 @@ internal sealed class Evaluator
                         seconds = Math.Round(foldWatch.Elapsed.TotalSeconds, 1),
                         seerrRequests = built.Info.SeerrRequests,
                         cacheHits = built.Info.CacheHits,
+                        sources = built.Pool.SourceCounts.OrderBy(x => x.Key, StringComparer.Ordinal).ToDictionary(x => x.Key, x => x.Value),
+                        languages = snap.Profile.Langs.OrderByDescending(x => x.Value).Take(6).ToDictionary(x => x.Key, x => Math.Round(x.Value, 1)),
                     });
                 }
 
@@ -355,10 +363,11 @@ internal sealed class Evaluator
         return new List<(string, Tuning)>
         {
             ("wie eingestellt", b),
-            ("α höchstens 0,5", b with { AlphaCap = 0.5f }),
+            ("Werte bis 1.8.4 (α 0,7, ohne Stimmen, Serienabzug 0,4)", b with { AlphaCap = 0.7f, VotesShare = 0f, TvRatingOffset = 0.4f }),
+            ("α höchstens 0,4", b with { AlphaCap = 0.4f }),
             ("α höchstens 0,6", b with { AlphaCap = 0.6f }),
+            ("α höchstens 0,7", b with { AlphaCap = 0.7f }),
             ("α höchstens 0,8", b with { AlphaCap = 0.8f }),
-            ("α höchstens 0,9", b with { AlphaCap = 0.9f }),
             ("α wächst schneller (Hälfte bei 6)", b with { HalfConfidence = 6f }),
             ("α wächst langsamer (Hälfte bei 24)", b with { HalfConfidence = 24f }),
             ("Geschmack unabhängig von Qualität", b with { TasteFloor = 1f }),
@@ -370,9 +379,16 @@ internal sealed class Evaluator
             ("Herz zählt 5", b with { Favorite = 5f, Like = 5f }),
             ("Serienabzug 0", b with { TvRatingOffset = 0f }),
             ("Serienabzug 0,25", b with { TvRatingOffset = 0.25f }),
-            ("Serienabzug 0,6", b with { TvRatingOffset = 0.6f }),
+            ("Serienabzug 0,4", b with { TvRatingOffset = 0.4f }),
+            ("Serienabzug 0,8", b with { TvRatingOffset = 0.8f }),
             ("kein Formatabzug", b with { FormatPenalty = 0f }),
             ("kein Sprachabzug", b with { ForeignFactor = 1f }),
+            ("ohne Stimmen in der Qualität", b with { VotesShare = 0f }),
+            ("Stimmen in der Qualität 50 %", b with { VotesShare = 0.5f }),
+            ("Stimmen in der Qualität 75 %", b with { VotesShare = 0.75f }),
+            ("Plugin × Stimmen (halb)", b with { VotesFactor = 0.5f }),
+            ("Plugin × Stimmen", b with { VotesFactor = 1f }),
+            ("Plugin × Stimmen, ohne Stimmen in der Qualität", b with { VotesFactor = 1f, VotesShare = 0f }),
         };
     }
 
@@ -504,6 +520,8 @@ internal sealed class Evaluator
         Add("tvOffset", t.TvRatingOffset, d.TvRatingOffset);
         Add("foreign", t.ForeignFactor, d.ForeignFactor);
         Add("format", t.FormatPenalty, d.FormatPenalty);
+        Add("votesShare", t.VotesShare, d.VotesShare);
+        Add("votesFactor", t.VotesFactor, d.VotesFactor);
         return parts.Count == 0 ? "üblich" : string.Join(',', parts);
     }
 

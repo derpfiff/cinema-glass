@@ -28,13 +28,13 @@ internal sealed class BuildResult
 /// </summary>
 internal sealed class Builder
 {
-    private const int RecommendationSignals = 15;
-    private const int SimilarSignals = 5;
+    private const int RecommendationSignals = 70;
+    private const int SimilarSignals = 20;
     private const int MovieGenres = 6;
     private const int TvGenres = 4;
-    private const int PeopleLists = 6;
+    private const int PeopleLists = 14;
     private const int KeywordLists = 6;
-    private const int CollectionLists = 10;
+    private const int CollectionLists = 30;
     private const int DetailCandidates = 60;
     private const int DetailLibrary = 24;
     private const int SignalDetails = 150;
@@ -318,27 +318,46 @@ internal sealed class Builder
         // kommen deshalb in jedem Fall dazu, sonst gäbe es für Serien kaum persönliche Kandidaten.
         // Angefragtes ist ein schwächerer Hinweis als Gesehenes (man kennt den Titel noch nicht) und kommt oft gehäuft:
         // höchstens vier solcher Titel dürfen Empfehlungen anstoßen, sonst verdrängen frische Anfragen alles Gesehene.
+        // Die Saat: die stärkere Hälfte nach Gewicht, die andere über die Zeit gestreut, damit auch früher Geschautes
+        // (ältere Vorlieben, andere Genres) Empfehlungen anstößt und nicht nur die letzten Wochen.
         var seeds = new List<Signal>(RecommendationSignals + 4);
         var requestedSeeds = 0;
+        bool Allowed(Signal s) => s.Kind != SignalKind.Requested || ++requestedSeeds <= 4;
         foreach (var s in positive)
         {
-            if (seeds.Count >= RecommendationSignals)
+            if (seeds.Count >= RecommendationSignals / 2)
             {
                 break;
             }
 
-            if (s.Kind == SignalKind.Requested && ++requestedSeeds > 4)
+            if (Allowed(s))
             {
-                continue;
+                seeds.Add(s);
             }
+        }
 
-            seeds.Add(s);
+        var rest = positive.Where(s => !seeds.Contains(s) && s.Kind != SignalKind.Requested).OrderByDescending(s => s.When ?? DateTime.MinValue).ToList();
+        var room = RecommendationSignals - seeds.Count;
+        for (var i = 0; i < room && rest.Count > 0; i++)
+        {
+            var pick = rest[Math.Min(rest.Count - 1, (int)((i + 0.5f) * rest.Count / room))];
+            if (!seeds.Contains(pick))
+            {
+                seeds.Add(pick);
+            }
         }
 
         seeds.AddRange(positive.Where(s => s.Key.Tv && s.Kind != SignalKind.Requested && !seeds.Contains(s)).Take(Math.Max(0, 4 - seeds.Count(s => s.Key.Tv))));
         foreach (var s in seeds)
         {
             jobs.Add(() => RecommendAsync(pool, s, "recommendations", 1f, Src.Recommendation, lang, ct));
+        }
+
+        // Bei den stärkeren Saat-Titeln auch die zweite Seite der Empfehlungen: Dort stehen die leiseren Filme (Arthouse,
+        // Festival), die zum Titel passen, aber weniger Stimmen haben.
+        foreach (var s in seeds.Take(SimilarSignals))
+        {
+            jobs.Add(() => RecommendAsync(pool, s, "recommendations", 0.7f, Src.Recommendation, lang, ct, 2));
         }
 
         foreach (var s in seeds.Take(SimilarSignals))
@@ -382,8 +401,12 @@ internal sealed class Builder
             jobs.Add(() => FlagAsync(pool, "discover/movies?genre=" + Num(g) + "&sortBy=vote_average.desc&voteCountGte=400&voteCountLte=3000&page=1", Days2, false, false, Src.Gem, "gems", lang, ct));
         }
 
-        // Regie und Darsteller, die in mindestens zwei starken positiven Signalen vorkommen.
-        foreach (var person in profile.People.Where(p => p.Value.StrongHits >= 2).OrderByDescending(p => p.Value.Weight).Take(PeopleLists))
+        // Personen: zuerst Regie (sie sagt mehr über den Geschmack als eine Rolle, und das Ensemble einer Filmreihe stünde
+        // sonst gleich mehrfach in der Liste), dann Darsteller aus mindestens zwei starken Signalen.
+        var directing = profile.People.Where(p => p.Value.Directs && p.Value.StrongHits >= 1).OrderByDescending(p => p.Value.Weight).Take(PeopleLists * 4 / 7).ToList();
+        var people = directing.Concat(profile.People.Where(p => !p.Value.Directs && p.Value.StrongHits >= 2).OrderByDescending(p => p.Value.Weight))
+            .Take(PeopleLists);
+        foreach (var person in people)
         {
             var id = _catalog.PersonId(person.Key);
             if (id > 0)
@@ -406,11 +429,61 @@ internal sealed class Builder
         jobs.Add(() => FlagAsync(pool, "discover/movies/upcoming?page=2", HalfDay, true, false, Src.Upcoming, "upcoming", lang, ct));
         jobs.Add(() => FlagAsync(pool, "discover/tv/upcoming?page=1", HalfDay, true, true, Src.Upcoming, "upcoming", lang, ct));
 
-        // Zeitlose Bestenliste: sehr viele Stimmen, sehr hohe Bewertung.
-        for (var page = 1; page <= 3; page++)
+        // Zeitlose Bestenliste: sehr viele Stimmen, sehr hohe Bewertung; dazu eine zweite Stufe mit weniger Stimmen, in der
+        // ältere und leisere Klassiker stehen.
+        for (var page = 1; page <= 5; page++)
         {
             var p = page;
             jobs.Add(() => FlagAsync(pool, "discover/movies?sortBy=vote_average.desc&voteCountGte=8000&page=" + Num(p), Week, false, false, Src.Classic, "classics", lang, ct));
+        }
+
+        for (var page = 1; page <= 5; page++)
+        {
+            var p = page;
+            jobs.Add(() => FlagAsync(pool, "discover/movies?sortBy=vote_average.desc&voteCountGte=2000&voteCountLte=8000&page=" + Num(p), Week, false, false, Src.Classic, "classics", lang, ct));
+        }
+
+        // Originalsprachen, die das Konto schaut (außer Englisch): die bekanntesten und die am besten bewerteten Titel.
+        // Ohne das kämen deutsche, französische oder koreanische Filme fast nur über Empfehlungen zu einzelnen Titeln.
+        var langTotal = profile.Langs.Values.Sum();
+        // Schon ein kleiner Anteil zählt: Bei einem Konto, das vor allem Englisches schaut, sind 4 % deutsche Titel eine
+        // deutliche Vorliebe, die in den übrigen Listen fast nicht vorkommt.
+        var languages = profile.Langs.Where(l => l.Key != "en" && l.Key.Length is 2 or 3 && l.Value >= 1.5f && l.Value >= 0.0075f * langTotal)
+            .OrderByDescending(l => l.Value).Take(4).Select(l => l.Key).ToList();
+        foreach (var language in languages)
+        {
+            var code = Uri.EscapeDataString(language);
+            for (var page = 1; page <= (language == languages[0] ? 5 : 3); page++)
+            {
+                var p = page;
+                jobs.Add(() => FlagAsync(pool, "discover/movies?language=" + code + "&sortBy=vote_count.desc&page=" + Num(p), Week, false, false, Src.Language, "language", lang, ct));
+            }
+
+            for (var page = 1; page <= 2; page++)
+            {
+                var p = page;
+                jobs.Add(() => FlagAsync(pool, "discover/movies?language=" + code + "&sortBy=vote_average.desc&voteCountGte=150&page=" + Num(p), Week, false, false, Src.Language, "language", lang, ct));
+                jobs.Add(() => FlagAsync(pool, "discover/tv?language=" + code + "&sortBy=vote_count.desc&page=" + Num(p), Week, false, true, Src.Language, "language", lang, ct));
+            }
+        }
+
+        // Jahrzehnte, die das Konto schaut: Bekanntes mit ordentlicher Bewertung, nicht nur die Spitze.
+        foreach (var decade in profile.Decades.Where(d => d.Value >= 0.2f).OrderByDescending(d => d.Value).Take(4).Select(d => d.Key))
+        {
+            var range = "primaryReleaseDateGte=" + Num(decade) + "-01-01&primaryReleaseDateLte=" + Num(decade + 9) + "-12-31";
+            for (var page = 1; page <= 5; page++)
+            {
+                var p = page;
+                jobs.Add(() => FlagAsync(pool, "discover/movies?" + range + "&voteAverageGte=6.8&sortBy=vote_count.desc&page=" + Num(p), Week, false, false, Src.Decade, "decade", lang, ct));
+            }
+
+            // Dazu die am besten bewerteten des Jahrzehnts mit mittlerer Bekanntheit: Dort stehen die Filme, die man
+            // kennt, wenn man sich für die Zeit interessiert, die aber keine Kassenschlager waren.
+            for (var page = 1; page <= 3; page++)
+            {
+                var p = page;
+                jobs.Add(() => FlagAsync(pool, "discover/movies?" + range + "&voteCountGte=1000&sortBy=vote_average.desc&page=" + Num(p), Week, false, false, Src.Decade, "decade", lang, ct));
+            }
         }
 
         for (var page = 1; page <= 2; page++)
@@ -496,9 +569,9 @@ internal sealed class Builder
 
     // ---- Einzelne Quellen --------------------------------------------------------------------------------------
 
-    private async Task RecommendAsync(Pool pool, Signal signal, string kind, float factor, Src flag, string lang, CancellationToken ct)
+    private async Task RecommendAsync(Pool pool, Signal signal, string kind, float factor, Src flag, string lang, CancellationToken ct, int page = 1)
     {
-        var list = await ListAsync(lang, signal.Key.Type + "/" + Num(signal.Key.Id) + "/" + kind + "?page=1", Days3, Shape.Results, true, signal.Key.Tv, ct).ConfigureAwait(false);
+        var list = await ListAsync(lang, signal.Key.Type + "/" + Num(signal.Key.Id) + "/" + kind + "?page=" + Num(page), Days3, Shape.Results, true, signal.Key.Tv, ct).ConfigureAwait(false);
         if (list is null)
         {
             return;
@@ -521,7 +594,7 @@ internal sealed class Builder
                 }
             }
 
-            if (flag == Src.Recommendation)
+            if (flag == Src.Recommendation && page == 1)
             {
                 pool.Recs[signal.Key] = list.Keys;
             }

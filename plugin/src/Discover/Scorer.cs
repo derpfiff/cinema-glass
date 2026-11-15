@@ -14,23 +14,40 @@ internal static class Scorer
     public const float DecadeShare = 0.10f;
 
     /// <summary>
-    /// Anteil des Geschmackswerts, der unabhängig von der Qualität zählt; der Rest wächst mit ihr. Abgestimmt an einem
-    /// Konto mit 25 starken Signalen: Mit 0,45 (und α höchstens 0,70) steht unter den ersten 60 kein mittelmäßiger Titel
-    /// mehr, ohne dass bloß hoch Bewertetes ohne Bezug zum Konto nach vorn rückt.
+    /// Anteil des Geschmackswerts, der unabhängig von der Qualität zählt; der Rest wächst mit ihr. So steht Ähnliches,
+    /// aber Mittelmäßiges nicht vor klar Besserem, das auch passt (im Messlauf waren 0,2 bis 0,7 gleichauf).
     /// </summary>
     public const float TasteFloor = 0.45f;
 
     /// <summary>
     /// Abzug für Serien: TMDb bewertet sie durchweg höher als Filme, und gerade viel gestimmte Jugendserien stünden sonst
-    /// allein ihrer Bewertung wegen vor Filmen, die zum Konto passen.
+    /// allein ihrer Bewertung wegen vor Filmen, die zum Konto passen. Im Messlauf (zurückgehaltene Signale) stand mit 0,6
+    /// statt 0,4 die Mehrzahl der Titel etwas weiter vorn.
     /// </summary>
-    public const float TvRatingOffset = 0.4f;
+    public const float TvRatingOffset = 0.6f;
 
     /// <summary>
     /// Bei dieser Summe an Empfehlungs-Beiträgen ist der Bestandteil „empfohlen von“ zu rund zwei Dritteln gesättigt:
     /// ein Favorit allein reicht dafür nicht, ein Favorit und zwei gesehene Titel schon.
     /// </summary>
     public const float SupportScale = 3f;
+
+    /// <summary>
+    /// Anteil der Bekanntheit (Zahl der Stimmen) an der Qualität; der Rest ist die geglättete Bewertung. Was man später
+    /// schaut, ist meist auch bekannt: Im Messlauf (zurückgehaltene Signale) lag der Median-Rang mit einem Viertel bei 147
+    /// statt 176 ohne. Die Hälfte traf im Rahmen der Messunsicherheit gleich gut, machte die ersten Plätze aber zur
+    /// Bestsellerliste; gewollt sind persönliche Entdeckungen.
+    /// </summary>
+    public const float VotesShare = 0.25f;
+
+    /// <summary>Wie stark die Bekanntheit die ganze Punktzahl mitbestimmt (0 = gar nicht, 1 = Punktzahl mal Bekanntheit).</summary>
+    public const float VotesFactor = 0f;
+
+    /// <summary>
+    /// Bekanntheit auf 0–1 nach der Zahl der Stimmen, logarithmisch: 100 Stimmen → 0, 1000 → 0,33, 10 000 → 0,67,
+    /// 100 000 → 1. Was viele bewertet haben, haben auch viele gesehen – ein Vorwissen dafür, dass man einen Titel schaut.
+    /// </summary>
+    public static float Known(int votes) => Math.Clamp((MathF.Log10(1f + Math.Max(0, votes)) - 2f) / 3f, 0f, 1f);
 
     /// <summary>Faktor für Originalsprachen, die das Konto nie schaut (außer Englisch und der Sprache der Oberfläche).</summary>
     public const float ForeignFactor = 0.72f;
@@ -48,7 +65,7 @@ internal static class Scorer
     private static readonly int[] FormatGenres = { 16, 10751, 10762, 99, 10764, 10767, 10763, 10766, 10770 };
 
     /// <summary>Höchstens so viele Kandidaten je Konto bleiben im Bestand.</summary>
-    public const int PoolLimit = 1500;
+    public const int PoolLimit = 3500;
 
     public static int Today(DateTime now) => (now.Year * 10000) + (now.Month * 100) + now.Day;
 
@@ -426,6 +443,10 @@ internal static class Scorer
         else
         {
             s.Quality = Quality(title.Rating, title.Votes, title.Key.Tv, tune.TvRatingOffset);
+            if (tune.VotesShare > 0f)
+            {
+                s.Quality = ((1f - tune.VotesShare) * s.Quality) + (tune.VotesShare * Known(title.Votes));
+            }
         }
 
         // Sprachen, die das Konto nie schaut, deutlich abwerten; jedes positive Signal in der Sprache hebt das wieder auf.
@@ -465,6 +486,10 @@ internal static class Scorer
         // Besserem stehen, das auch passt. Ein Titel mit Qualität 0 brächte nur 45 % seines Geschmackswerts ein.
         s.Score = ((p.Alpha * s.Taste * (tune.TasteFloor + ((1f - tune.TasteFloor) * s.Quality))) + ((1f - p.Alpha) * s.Quality))
             * s.LangFactor * s.FormatFactor * s.ShownFactor * s.Jitter;
+        if (tune.VotesFactor > 0f && !s.Upcoming)
+        {
+            s.Score *= (1f - tune.VotesFactor) + (tune.VotesFactor * Known(title.Votes));
+        }
 
         // „Mal was anderes“: gut, in vertrauter Sprache, aber abseits der Vorlieben und von niemandem empfohlen.
         if (!s.Upcoming && s.Lib is null && p.TopGenres.Count > 0 && cos is > -0.15f and < 0.2f && s.Support <= 0f && people <= 0f && s.LangFactor >= 1f && s.FormatFactor >= 1f && s.Quality >= 0.62f)

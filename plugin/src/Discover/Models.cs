@@ -188,6 +188,12 @@ internal enum Src
     Collection = 512,
     Gem = 1024,
     Deep = 2048,
+
+    /// <summary>Bekanntes in einer Originalsprache, die das Konto schaut (außer Englisch).</summary>
+    Language = 4096,
+
+    /// <summary>Gut Bewertetes aus einem Jahrzehnt, das das Konto schaut.</summary>
+    Decade = 8192,
 }
 
 /// <summary>Ein Kandidat im Bestand eines Kontos: nur, was die Quellen über ihn sagen. Die Punktzahl steht woanders.</summary>

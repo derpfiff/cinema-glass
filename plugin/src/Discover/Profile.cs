@@ -46,8 +46,11 @@ internal sealed class Profile
     /// <summary>Bei so viel starkem Gewicht zählen Geschmack und Qualität gleich viel.</summary>
     public const float HalfConfidence = 12f;
 
-    /// <summary>Mehr als so viel bestimmt der Geschmack die Rangfolge nie, wie viele Signale es auch gibt.</summary>
-    public const float AlphaCap = 0.70f;
+    /// <summary>
+    /// Mehr als so viel bestimmt der Geschmack die Rangfolge nie, wie viele Signale es auch gibt. Seit die Qualität auch
+    /// die Bekanntheit enthält, trifft die Hälfte im Messlauf besser als 0,7.
+    /// </summary>
+    public const float AlphaCap = 0.5f;
 
     // Stichworte, die fast überall stehen und nichts über den Geschmack sagen (Romanvorlage, Fortsetzung, Abspannszene …).
     private static readonly HashSet<int> DullKeywords = new() { 818, 9663, 179431, 179430, 187056, 9717, 9672, 209714, 155477, 11800, 6054 };

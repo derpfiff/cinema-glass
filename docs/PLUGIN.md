@@ -137,7 +137,7 @@ Geschmack“ stummschaltet, zählt nicht mehr mit.
 ### Wie ein Titel bewertet wird
 
 **Punktzahl = α · Geschmack · (0,45 + 0,55 · Qualität) + (1 − α) · Qualität.** α wächst mit dem, was über das Konto
-bekannt ist: α = n / (n + 12), höchstens 0,70; n ist die Summe der starken positiven Gewichte (gesehen, Herz, „Gefällt
+bekannt ist: α = n / (n + 12), höchstens 0,5; n ist die Summe der starken positiven Gewichte (gesehen, Herz, „Gefällt
 mir“, angefragt) plus die Hälfte der Gewichte von „Nicht meins“. Ein neues Konto ohne Signale bekommt also Vorschläge
 allein nach Qualität; mit jedem Signal bestimmt der Geschmack mehr, aber nie allein. Der Geschmacksanteil hängt selbst
 von der Qualität ab, damit ein mittelmäßiger, aber ähnlicher Titel nicht vor einem klar besseren steht, der auch passt.
@@ -148,8 +148,12 @@ alle Welten zusammen höchstens wie vier (α höchstens 0,40 allein durch Welten
 
 - **Geschmack** (0–1): Nähe der Genres zum Profil (34 %); wie viele und wie starke Signale den Titel empfohlen haben,
   nach den Empfehlungslisten von TMDb (36 %); Treffer bei Regie, Darstellern und Stichworten (20 %); Jahrzehnt (10 %).
-- **Qualität** (0–1): die Bewertung bei TMDb, geglättet – wenige Stimmen ziehen zur Mitte. Serien werden dabei um 0,4
-  Punkte niedriger angesetzt, weil TMDb sie durchweg höher bewertet als Filme.
+- **Qualität** (0–1): zu drei Vierteln die Bewertung bei TMDb, geglättet – wenige Stimmen ziehen zur Mitte; Serien
+  werden dabei um 0,6 Punkte niedriger angesetzt, weil TMDb sie durchweg höher bewertet als Filme. Zu einem Viertel die
+  Bekanntheit nach der Zahl der Stimmen (logarithmisch: 100 Stimmen 0, 100 000 Stimmen 1) – was viele bewertet haben,
+  haben auch viele gesehen. Die Werte (α höchstens 0,5, ein Viertel Bekanntheit, Serienabzug 0,6) sind mit dem
+  Messlauf (`discover/eval`) an einem echten Konto abgestimmt; mehr Bekanntheit traf kaum besser, machte die
+  Empfehlungen aber zur Bestsellerliste.
 - **Sprache:** Titel in einer Originalsprache, in der das Konto nie etwas schaut, werden um gut ein Viertel abgewertet;
   ausgenommen sind Englisch, die Sprache der Oberfläche und Filme einer Regie, der das Konto folgt.
 - **Formate:** Animation, Dokumentation, Reality und Ähnliches werden um bis zu ein Fünftel abgewertet, solange nichts
@@ -170,10 +174,14 @@ Konto ohne Signale sagt sie deshalb nur etwas über die Qualität.
 
 ### Woher die Kandidaten kommen
 
-Alles über Seerr: Empfehlungen und Ähnliches zu den stärksten Signalen; je Lieblings-Genre die bestbewerteten und die
-neuen, beliebten Titel; Werke von Regisseuren und Darstellern, die in mindestens zwei starken Signalen vorkommen;
-Titel zu wiederkehrenden Stichworten; gerade Angesagtes und Kommendes; eine zeitlose Bestenliste; fehlende Teile
-angefangener Filmreihen; die Liste der Anfragen. Je Konto bleiben höchstens rund 1500 Kandidaten. Für die besten holt das
+Alles über Seerr: Empfehlungen zu bis zu 70 Signalen (die stärkere Hälfte nach Gewicht, der Rest über die Zeit
+gestreut, damit auch früher Geschautes zählt; bei den 20 stärksten auch die zweite Seite und „Ähnliches“); je
+Lieblings-Genre die bestbewerteten und die neuen, beliebten Titel; Werke von Regisseuren (zuerst) und Darstellern aus
+mindestens zwei starken Signalen; Titel zu wiederkehrenden Stichworten; die bekanntesten und die am besten bewerteten
+Titel in den Originalsprachen, die das Konto außer Englisch schaut (schon ab einem kleinen Anteil); je Jahrzehnt, das
+das Konto schaut, Bekanntes mit ordentlicher Bewertung und die am besten bewerteten mit mittlerer Bekanntheit; gerade
+Angesagtes und Kommendes; eine zeitlose Bestenliste in zwei Stufen; alle Teile der Filmreihen, aus denen das Konto
+etwas gesehen hat (bis zu 30 Reihen); die Liste der Anfragen. Je Konto bleiben höchstens rund 3500 Kandidaten. Für die besten holt das
 Plugin die Details (Stichworte, Regie, Besetzung), je Berechnung für bis zu 60 weitere. Es sind nie mehr als vier
 Abrufe gleichzeitig unterwegs; Listen werden für alle Konten gemeinsam einige Stunden bis Tage zwischengespeichert.
 Fällt Seerr aus, pausiert das Plugin die Abrufe und liefert solange den letzten Stand.
