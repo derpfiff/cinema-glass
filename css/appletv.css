@@ -2257,8 +2257,47 @@ html.atv-js .atv-sheet .atv-circle.is-on { background: rgba(255, 255, 255, .92);
 
 /* Trailer-Fenster (Knopf „Trailer“ auf der Detailseite): eingebetteter YouTube-Player */
 .atv-trailer { position: fixed; inset: 0; z-index: 1500; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, .94); animation: atv-sheet-bg .2s ease-out; }
-.atv-trailer__stage { width: min(100vw, calc((100vh - 120px) * 16 / 9)); aspect-ratio: 16 / 9; max-height: 100vh; background: #000; }
+.atv-trailer__stage { position: relative; overflow: hidden; width: min(100vw, calc((100vh - 120px) * 16 / 9)); aspect-ratio: 16 / 9; max-height: 100vh; background: #000; }
+.atv-trailer:fullscreen .atv-trailer__stage, .atv-trailer:-webkit-full-screen .atv-trailer__stage { width: min(100vw, calc(100vh * 16 / 9)); }
 .atv-trailer__stage iframe { display: block; width: 100%; height: 100%; border: 0; background: #000; }
+/* YouTube legt Titel und Leisten oben und unten über das Bild: Player höher als der Ausschnitt, das Video sitzt mittig */
+.atv-trailer__crop { position: absolute; left: 0; right: 0; top: -25%; height: 150%; pointer-events: none; }
+.atv-trailer__crop > * { display: block; width: 100%; height: 100%; border: 0; }
+.atv-trailer__hit { position: absolute; inset: 0; z-index: 1; cursor: pointer; background: rgba(0, 0, 0, 0); transition: background .25s ease; }
+.atv-trailer.is-paused .atv-trailer__hit, .atv-trailer.is-wait .atv-trailer__hit { background: rgba(0, 0, 0, .45); }
+.atv-trailer.is-wait .atv-trailer__hit { background: #000; }
+.atv-trailer:not(.is-ui) { cursor: none; }
+.atv-trailer:not(.is-ui) .atv-trailer__hit { cursor: none; }
+.atv-trailer__big { position: absolute; z-index: 2; left: 50%; top: 50%; width: 76px; height: 76px; margin: -38px 0 0 -38px; padding: 0; border: 0; border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer;
+  color: #fff; background: rgba(40, 40, 42, .55); -webkit-backdrop-filter: blur(24px) saturate(1.6); backdrop-filter: blur(24px) saturate(1.6); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18), 0 10px 30px rgba(0, 0, 0, .35); }
+.atv-trailer__big svg { width: 34px; height: 34px; margin-left: 4px; fill: currentColor; }
+.atv-trailer.is-paused .atv-trailer__big { display: flex; }
+.atv-trailer__bar { position: absolute; z-index: 3; left: 16px; right: 16px; bottom: 16px; display: flex; align-items: center; gap: 10px; padding: 6px 12px 6px 6px; border-radius: 999px;
+  color: #fff; background: rgba(30, 30, 32, .55); -webkit-backdrop-filter: blur(24px) saturate(1.6); backdrop-filter: blur(24px) saturate(1.6); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), 0 10px 30px rgba(0, 0, 0, .3);
+  transition: opacity .3s ease, transform .3s ease; }
+.atv-trailer:not(.is-ui) .atv-trailer__bar, .atv-trailer.is-wait .atv-trailer__bar { opacity: 0; transform: translateY(8px); pointer-events: none; }
+.atv-trailer__close { transition: opacity .3s ease; }
+.atv-trailer:not(.is-ui) .atv-trailer__close { opacity: 0; pointer-events: none; }
+.atv-trailer__btn { flex: none; width: 38px; height: 38px; padding: 0; border: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; background: transparent; }
+.atv-trailer__btn:hover, .atv-trailer__btn:focus-visible { background: rgba(255, 255, 255, .14); outline: none; }
+.atv-trailer__btn svg { width: 22px; height: 22px; fill: currentColor; }
+.atv-trailer__time { flex: none; min-width: 36px; font: 500 13px/1 var(--atv-font, system-ui); font-variant-numeric: tabular-nums; color: rgba(255, 255, 255, .85); text-align: center; }
+.atv-trailer__seek { --p: 0%; flex: 1; min-width: 0; height: 22px; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; }
+.atv-trailer__seek::-webkit-slider-runnable-track { height: 5px; border-radius: 3px; background: linear-gradient(to right, #fff var(--p), rgba(255, 255, 255, .25) var(--p)); }
+.atv-trailer__seek::-moz-range-track { height: 5px; border-radius: 3px; background: linear-gradient(to right, #fff var(--p), rgba(255, 255, 255, .25) var(--p)); }
+.atv-trailer__seek::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; margin-top: -4.5px; border: 0; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, .4); }
+.atv-trailer__seek::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: #fff; }
+.atv-trailer__seek:focus-visible { outline: none; }
+.atv-trailer__seek:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 4px rgba(255, 255, 255, .35); }
+.atv-trailer__fail { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 24px; text-align: center; color: rgba(255, 255, 255, .85); font-size: 16px; }
+.atv-trailer__yt { padding: 10px 20px; border-radius: 999px; color: #fff; text-decoration: none; background: rgba(255, 255, 255, .14); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16); }
+@media (max-width: 600px) {
+  .atv-trailer__bar { left: 8px; right: 8px; bottom: 8px; gap: 4px; padding: 2px 8px 2px 2px; }
+  .atv-trailer__btn { width: 34px; height: 34px; }
+  .atv-trailer__btn svg { width: 20px; height: 20px; }
+  .atv-trailer__time { min-width: 30px; font-size: 11px; }
+  .atv-trailer__big { width: 60px; height: 60px; margin: -30px 0 0 -30px; }
+}
 .atv-trailer__close { position: absolute; z-index: 2; left: max(16px, env(safe-area-inset-left, 0px)); top: max(16px, env(safe-area-inset-top, 0px)); width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;
   color: #fff; background: rgba(40, 40, 42, .7); -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16); }
 .atv-trailer__close svg { width: 22px; height: 22px; fill: currentColor; }
@@ -3058,6 +3097,8 @@ html.atv-js .atv-circle.atv-tip:hover, html.atv-js .atv-circle.atv-tip:focus-vis
 .atv-dsc .atv-dsc__chip { flex: none; display: inline-block; height: 40px; padding: 0 16px; border-radius: 999px; background: rgba(255, 255, 255, .09); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .11); font-size: 14.5px; font-weight: 600; letter-spacing: -.005em; color: rgba(255, 255, 255, .86); white-space: nowrap; transition: background .2s ease, color .2s ease; }
 .atv-dsc .atv-dsc__chip:hover { background: rgba(255, 255, 255, .18); color: #fff; }
 .atv-dsc .atv-dsc__chip.is-on { background: #fff; color: #000; box-shadow: none; }
+.atv-dsc .atv-dsc__cat { display: none; align-items: center; gap: 2px; padding: 0 10px 0 16px; }
+.atv-dsc .atv-dsc__cat svg { width: 20px; height: 20px; fill: currentColor; }
 .atv-dsc__chip--ph { width: 104px; box-shadow: none !important; }
 .atv-dsc__chip--ph:first-child { width: 250px; }
 .atv-dsc .atv-dsc__mine { flex: none; display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 13px; border-radius: 999px; background: rgba(255, 255, 255, .1); -webkit-backdrop-filter: blur(24px) saturate(1.6); backdrop-filter: blur(24px) saturate(1.6); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); font-size: 14.5px; font-weight: 600; color: rgba(255, 255, 255, .9); white-space: nowrap; transition: background .2s ease, color .2s ease; }
@@ -3368,6 +3409,14 @@ html.atv-js .atv-dp .atv-dp__refine svg { width: 18px; height: 18px; }
   .atv-dsc .atv-dsc__chip { padding: 0 14px; font-size: 14px; }
   .atv-dsc .atv-dsc__mine { width: 40px; padding: 0; justify-content: center; margin: 0 16px 0 8px; }
   .atv-dsc .atv-dsc__mine span { display: none; }
+  /* Handy: Netflix-artig – Filme / Serien / Kategorien statt der langen Genre-Reihe */
+  .atv-dsc .atv-dsc__segbtn[data-type="all"], .atv-dsc__chips { display: none; }
+  .atv-dsc .atv-dsc__cat { display: inline-flex; padding: 0 6px 0 13px; }
+  .atv-dsc__catlabel { max-width: 104px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .atv-dsc .atv-dsc__segbtn { padding: 0 11px; }
+  .atv-dsc__filterwrap { --mr: 10px; }
+  .atv-dsc__filters { padding-right: 4px; }
+  .atv-dsc .atv-dsc__mine { margin: 0 14px 0 6px; }
   .atv-dsc .atv-dsc__mine--refine { margin-right: 0; background: #fff; color: #000; }
   .atv-rf__pic, .atv-rf__card--ph { height: min(42vh, 420px); }
   .atv-rf__tools { margin-top: 10px; }
@@ -3405,3 +3454,22 @@ html.atv-js .atv-dp .atv-dp__refine svg { width: 18px; height: 18px; }
   .atv-dh__dot.is-active i { transform: scaleX(1); }
 }
 
+
+
+/* Kategorien-Auswahl (Handy, Seite „Entdecken“): Kacheln mit Bild, wie eine Studio-Auswahl */
+.atv-cat { position: fixed; inset: 0; z-index: 1460; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 16px calc(24px + env(safe-area-inset-bottom, 0px)); color: #fff;
+  background: rgba(10, 10, 12, .82); -webkit-backdrop-filter: blur(30px) saturate(1.4); backdrop-filter: blur(30px) saturate(1.4); animation: atv-sheet-bg .2s ease-out; transition: opacity .2s ease; }
+.atv-cat.is-out { opacity: 0; }
+.atv-cat__head { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; padding: calc(env(safe-area-inset-top, 0px) + 18px) 0 14px; }
+.atv-cat__title { margin: 0; font-size: 28px; font-weight: 700; letter-spacing: -.01em; }
+.atv-cat__close { width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; background: rgba(255, 255, 255, .14); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16); }
+.atv-cat__close svg { width: 22px; height: 22px; fill: currentColor; }
+.atv-cat__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.atv-cat__tile { position: relative; overflow: hidden; aspect-ratio: 16 / 9; padding: 0; border: 0; border-radius: 14px; cursor: pointer; color: #fff; text-align: left;
+  background: linear-gradient(135deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .05)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); }
+.atv-cat__tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .25s ease; }
+.atv-cat__tile img.is-in { opacity: 1; }
+.atv-cat__tile::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0, 0, 0, .78), rgba(0, 0, 0, .15) 70%); }
+.atv-cat__tile span { position: absolute; z-index: 1; left: 12px; right: 12px; bottom: 10px; font-size: 16px; font-weight: 700; letter-spacing: -.005em; text-shadow: 0 1px 6px rgba(0, 0, 0, .5); }
+.atv-cat__tile.is-on { box-shadow: inset 0 0 0 3px #fff; }
+.atv-cat__tile:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
