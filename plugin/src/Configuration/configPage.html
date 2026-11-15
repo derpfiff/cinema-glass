@@ -2,62 +2,188 @@
 <html>
 <head><meta charset="utf-8"><title>Cinema Glass</title></head>
 <body>
-<div id="CinemaGlassConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-checkbox">
+<div id="CinemaGlassConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-button">
+  <style>
+    #CinemaGlassConfigPage .cgx { --g-bg: rgba(32, 32, 36, .78); --g-line: rgba(255, 255, 255, .12); --g-dim: rgba(255, 255, 255, .6); --g-faint: rgba(255, 255, 255, .42);
+      max-width: 880px; margin: 0 auto; padding: 8px 0 120px; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    #CinemaGlassConfigPage .cgx * { box-sizing: border-box; }
+    /* Kopf */
+    #CinemaGlassConfigPage .cgx-hero { position: relative; overflow: hidden; padding: 30px 28px 26px; border-radius: 28px; background: radial-gradient(120% 140% at 0% 0%, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 55%), linear-gradient(135deg, #26262c, #111114); box-shadow: inset 0 0 0 1px var(--g-line), 0 30px 80px rgba(0, 0, 0, .35); }
+    #CinemaGlassConfigPage .cgx-hero h1 { margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -.02em; }
+    #CinemaGlassConfigPage .cgx-hero p { margin: 6px 0 0; max-width: 560px; font-size: 15px; line-height: 1.45; color: var(--g-dim); }
+    #CinemaGlassConfigPage .cgx-ver { display: inline-block; margin-left: 10px; padding: 3px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; vertical-align: middle; color: rgba(255, 255, 255, .8); background: rgba(255, 255, 255, .1); }
+    #CinemaGlassConfigPage .cgx-status { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    #CinemaGlassConfigPage .cgx-chip { display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 12px; border-radius: 999px; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, .85); background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1px var(--g-line); }
+    #CinemaGlassConfigPage .cgx-chip i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, .3); }
+    #CinemaGlassConfigPage .cgx-chip.is-ok i { background: #fff; box-shadow: 0 0 10px rgba(255, 255, 255, .8); }
+    /* Sprungleiste */
+    #CinemaGlassConfigPage .cgx-nav { position: sticky; top: 0; z-index: 5; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 18px -4px 6px; padding: 10px 4px; background: rgba(0, 0, 0, .82); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); border-radius: 0 0 18px 18px; }
+    #CinemaGlassConfigPage .cgx-nav::-webkit-scrollbar { display: none; }
+    #CinemaGlassConfigPage .cgx-nav a { flex: none; height: 34px; padding: 0 14px; display: inline-flex; align-items: center; border-radius: 999px; font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, .78); text-decoration: none; background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1px var(--g-line); }
+    #CinemaGlassConfigPage .cgx-nav a:hover, #CinemaGlassConfigPage .cgx-nav a.is-on { color: #000; background: #fff; box-shadow: none; }
+    /* Bereiche */
+    #CinemaGlassConfigPage .cgx-sec { scroll-margin-top: 70px; margin-top: 26px; }
+    #CinemaGlassConfigPage .cgx-sec > h2 { display: flex; align-items: center; gap: 10px; margin: 0 0 4px 6px; font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+    #CinemaGlassConfigPage .cgx-sec > h2 svg { width: 22px; height: 22px; fill: currentColor; opacity: .85; }
+    #CinemaGlassConfigPage .cgx-sec > p { margin: 0 0 12px 6px; font-size: 14px; line-height: 1.45; color: var(--g-dim); }
+    #CinemaGlassConfigPage .cgx-card { border-radius: 22px; background: var(--g-bg); -webkit-backdrop-filter: blur(30px) saturate(1.6); backdrop-filter: blur(30px) saturate(1.6); box-shadow: inset 0 0 0 1px var(--g-line); overflow: hidden; }
+    #CinemaGlassConfigPage .cgx-row { display: flex; align-items: center; gap: 16px; padding: 16px 18px; transition: opacity .2s ease; }
+    #CinemaGlassConfigPage .cgx-row + .cgx-row { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07); }
+    #CinemaGlassConfigPage .cgx-row.is-off { opacity: .38; pointer-events: none; }
+    #CinemaGlassConfigPage .cgx-txt { flex: 1; min-width: 0; }
+    #CinemaGlassConfigPage .cgx-txt b { display: block; font-size: 16px; font-weight: 600; }
+    #CinemaGlassConfigPage .cgx-txt small { display: block; margin-top: 3px; font-size: 13.5px; line-height: 1.4; color: var(--g-dim); }
+    #CinemaGlassConfigPage .cgx-txt small code { font-size: 12.5px; padding: 1px 5px; border-radius: 5px; background: rgba(255, 255, 255, .1); }
+    /* Schalter */
+    #CinemaGlassConfigPage .cgx-sw { position: relative; flex: none; width: 51px; height: 31px; cursor: pointer; }
+    #CinemaGlassConfigPage .cgx-sw input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+    #CinemaGlassConfigPage .cgx-sw span { position: absolute; inset: 0; border-radius: 999px; background: rgba(255, 255, 255, .16); transition: background .2s ease; }
+    #CinemaGlassConfigPage .cgx-sw span::after { content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; box-shadow: 0 3px 8px rgba(0, 0, 0, .35); transition: transform .22s cubic-bezier(.2, .8, .2, 1); }
+    #CinemaGlassConfigPage .cgx-sw input:checked + span { background: rgba(255, 255, 255, .92); }
+    #CinemaGlassConfigPage .cgx-sw input:checked + span::after { transform: translateX(20px); background: #111; }
+    #CinemaGlassConfigPage .cgx-sw input:focus-visible + span { box-shadow: 0 0 0 3px rgba(255, 255, 255, .35); }
+    /* Eingaben */
+    #CinemaGlassConfigPage .cgx-field { display: block; padding: 14px 18px; }
+    #CinemaGlassConfigPage .cgx-field + .cgx-field, #CinemaGlassConfigPage .cgx-row + .cgx-field, #CinemaGlassConfigPage .cgx-field + .cgx-row { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07); }
+    #CinemaGlassConfigPage .cgx-field > span:not(.cgx-secret) { display: block; margin-bottom: 7px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--g-faint); }
+    #CinemaGlassConfigPage .cgx-field input, #CinemaGlassConfigPage .cgx-field textarea { width: 100%; height: 44px; padding: 0 14px; border: 0; border-radius: 12px; font: inherit; font-size: 15px; color: #fff; background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1px var(--g-line); outline: none; }
+    #CinemaGlassConfigPage .cgx-field textarea { height: auto; min-height: 92px; padding: 11px 14px; line-height: 1.45; resize: vertical; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 14px; }
+    #CinemaGlassConfigPage .cgx-field input:focus, #CinemaGlassConfigPage .cgx-field textarea:focus { box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .45); }
+    #CinemaGlassConfigPage .cgx-field small { display: block; margin-top: 7px; font-size: 13px; line-height: 1.4; color: var(--g-dim); }
+    #CinemaGlassConfigPage .cgx-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    #CinemaGlassConfigPage .cgx-secret { position: relative; display: block; }
+    #CinemaGlassConfigPage .cgx-secret input { padding-right: 64px; }
+    #CinemaGlassConfigPage .cgx-eye { position: absolute; right: 6px; top: 6px; height: 32px; padding: 0 10px; border: 0; border-radius: 8px; font: inherit; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, .7); background: rgba(255, 255, 255, .08); cursor: pointer; }
+    #CinemaGlassConfigPage .cgx-test { display: flex; align-items: center; gap: 12px; padding: 4px 18px 16px; }
+    #CinemaGlassConfigPage .cgx-btn { height: 38px; padding: 0 16px; border: 0; border-radius: 999px; font: inherit; font-size: 14px; font-weight: 600; color: #fff; background: rgba(255, 255, 255, .12); box-shadow: inset 0 0 0 1px var(--g-line); cursor: pointer; }
+    #CinemaGlassConfigPage .cgx-btn:hover { background: rgba(255, 255, 255, .2); }
+    #CinemaGlassConfigPage .cgx-msg { font-size: 13.5px; color: var(--g-dim); }
+    #CinemaGlassConfigPage .cgx-msg.is-ok { color: #fff; }
+    /* Speichern */
+    #CinemaGlassConfigPage .cgx-save { position: sticky; bottom: 16px; z-index: 6; display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 30px; padding: 12px 12px 12px 22px; border-radius: 999px; background: rgba(28, 28, 32, .86); -webkit-backdrop-filter: blur(30px) saturate(1.6); backdrop-filter: blur(30px) saturate(1.6); box-shadow: inset 0 0 0 1px var(--g-line), 0 20px 50px rgba(0, 0, 0, .5); }
+    #CinemaGlassConfigPage .cgx-save span { font-size: 14px; color: var(--g-dim); }
+    #CinemaGlassConfigPage .cgx-save.is-dirty span { color: #fff; }
+    #CinemaGlassConfigPage .cgx-save button { height: 44px; padding: 0 26px; border: 0; border-radius: 999px; font: inherit; font-size: 16px; font-weight: 700; color: #000; background: #fff; cursor: pointer; }
+    #CinemaGlassConfigPage .cgx-save button:disabled { opacity: .45; cursor: default; }
+    @media (max-width: 600px) {
+      #CinemaGlassConfigPage .cgx { padding-top: 0; }
+      #CinemaGlassConfigPage .cgx-hero { padding: 24px 20px 20px; border-radius: 24px; }
+      #CinemaGlassConfigPage .cgx-hero h1 { font-size: 28px; }
+      #CinemaGlassConfigPage .cgx-row { padding: 14px 16px; }
+      #CinemaGlassConfigPage .cgx-field { padding: 12px 16px; }
+      #CinemaGlassConfigPage .cgx-two { grid-template-columns: 1fr; }
+      #CinemaGlassConfigPage .cgx-save { padding-left: 18px; }
+      #CinemaGlassConfigPage .cgx-save .cgx-long { display: none; }
+    }
+  </style>
   <div data-role="content">
     <div class="content-primary">
-      <form id="CinemaGlassForm">
-        <div class="sectionTitleContainer flex align-items-center"><h2 class="sectionTitle">Cinema Glass</h2></div>
-        <p>Nach dem Speichern die Seite im Browser neu laden; Apps einmal ganz schließen und wieder öffnen.</p>
+      <form id="CinemaGlassForm" class="cgx" autocomplete="off">
+        <header class="cgx-hero">
+          <h1>Cinema Glass<span class="cgx-ver" id="cgxVer"></span></h1>
+          <p>Die Glas-Oberfläche für Jellyfin – mit Entdecken, Anfragen über Seerr und Bewerten nach dem Schauen. Alles lässt sich hier einzeln ein- und ausschalten.</p>
+          <div class="cgx-status">
+            <span class="cgx-chip" id="cgxStTheme"><i></i>Oberfläche</span>
+            <span class="cgx-chip" id="cgxStSeerr"><i></i>Seerr</span>
+            <span class="cgx-chip" id="cgxStDisc"><i></i>Entdecken</span>
+            <span class="cgx-chip" id="cgxStMdb"><i></i>MDBList</span>
+          </div>
+        </header>
 
-        <h3>Grundlagen</h3>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="EnableTheme"><span>Aussehen (Farben, Glas, Karten, Player)</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="EnableClient"><span>Funktionen (alles Folgende)</span></label>
+        <nav class="cgx-nav" aria-label="Bereiche">
+          <a href="#cgx-look">Aussehen</a><a href="#cgx-ui">Oberfläche</a><a href="#cgx-seerr">Seerr &amp; Entdecken</a><a href="#cgx-rate">Bewerten &amp; Letterboxd</a><a href="#cgx-auto">Anfragen-Automatik</a><a href="#cgx-dl">Downloads &amp; Apps</a><a href="#cgx-ratings">Bewertungen</a><a href="#cgx-misc">Sonstiges</a>
+        </nav>
 
-        <h3>Oberfläche</h3>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="Hero"><span>Hero-Banner auf der Startseite</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="DetailPage"><span>Eigene Film- und Serienseite (Folgenregal, Infos, Besetzung)</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="CollectionShelf"><span>Regal „Filmreihe“ auf der Filmseite (Teile aus Sammlungen; fehlende Teile mit Seerr)</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="HomeCardPlay"><span>Karten auf der Startseite spielen direkt ab</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="EpisodeMenu"><span>Eigenes „···“-Menü und Infofenster bei Folgen</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="VersionPicker"><span>Versionsauswahl als Schaltflächen</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="QualityBadges"><span>Qualitäts-Abzeichen: 4K, HDR, Dolby Vision und Atmos auf der Film-/Folgenseite</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="TrailerModal"><span>Trailer im eigenen Fenster (eingebettetes YouTube)</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="IntroTransition"><span>Sauberer Übergang vom Vorspann zum Film</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="PageGate"><span>Seiten erst zeigen, wenn sie fertig aufgebaut sind</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="ShelfWheel"><span>Regale folgen dem Trackpad direkt (Safari, Chrome, JellyDesk)</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="SwipeBack"><span>Zurückwischen in der Handy-App</span></label>
+        <section class="cgx-sec" id="cgx-look">
+          <h2><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3-4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>Aussehen</h2>
+          <p>Die beiden Hauptschalter. Ohne „Funktionen“ bleibt nur der Look, alles Weitere ruht.</p>
+          <div class="cgx-card">
+            <label class="cgx-row"><div class="cgx-txt"><b>Glas-Look</b><small>Farben, Glas, Karten und Player im Stil von Apple TV.</small></div><span class="cgx-sw"><input type="checkbox" data-k="EnableTheme"><span></span></span></label>
+            <label class="cgx-row"><div class="cgx-txt"><b>Funktionen</b><small>Eigene Startseite, Filmseiten, Entdecken und alles in den Bereichen darunter.</small></div><span class="cgx-sw"><input type="checkbox" data-k="EnableClient"><span></span></span></label>
+          </div>
+        </section>
 
-        <h3>Downloads (nur Handy/App)</h3>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="Downloads"><span>Download-Knöpfe bei Filmen, Folgen und Staffeln</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="DownloadProgress"><span>Fortschrittsanzeige beim Umwandeln</span></label>
+        <section class="cgx-sec" id="cgx-ui">
+          <h2><svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>Oberfläche</h2>
+          <p>Wie Startseite, Film- und Serienseiten aussehen und sich anfühlen.</p>
+          <div class="cgx-card">
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Hero-Banner</b><small>Großes wechselndes Bild oben auf der Startseite.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Hero"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Eigene Film- und Serienseite</b><small>Folgenregal, Infos, Besetzung im Glas-Stil.</small></div><span class="cgx-sw"><input type="checkbox" data-k="DetailPage"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Filmreihe</b><small>Regal mit allen Teilen einer Reihe; fehlende Teile mit Seerr anfragbar.</small></div><span class="cgx-sw"><input type="checkbox" data-k="CollectionShelf"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Karten spielen direkt ab</b><small>Ein Tipp auf eine Karte der Startseite startet die Wiedergabe.</small></div><span class="cgx-sw"><input type="checkbox" data-k="HomeCardPlay"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Menü und Infofenster bei Folgen</b><small>Eigenes „···“-Menü statt Jellyfins Liste.</small></div><span class="cgx-sw"><input type="checkbox" data-k="EpisodeMenu"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Fassungen als Knöpfe</b><small>Kinofassung, Extended &amp; Co. direkt auf der Filmseite wählen.</small></div><span class="cgx-sw"><input type="checkbox" data-k="VersionPicker"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Qualitäts-Abzeichen</b><small>4K, HDR, Dolby Vision und Atmos auf Film- und Folgenseite.</small></div><span class="cgx-sw"><input type="checkbox" data-k="QualityBadges"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Trailer im eigenen Fenster</b><small>Mit Glas-Bedienung statt YouTube-Oberfläche, am Handy quer.</small></div><span class="cgx-sw"><input type="checkbox" data-k="TrailerModal"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Sauberer Übergang nach dem Vorspann</b><small>Kein stehenbleibendes Bild zwischen Intro und Film.</small></div><span class="cgx-sw"><input type="checkbox" data-k="IntroTransition"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Seiten erst fertig zeigen</b><small>Kein Aufbauen und Springen beim Öffnen einer Seite.</small></div><span class="cgx-sw"><input type="checkbox" data-k="PageGate"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Regale folgen dem Trackpad</b><small>Seitwärts wischen in Safari, Chrome und JellyDesk.</small></div><span class="cgx-sw"><input type="checkbox" data-k="ShelfWheel"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Zurückwischen am Handy</b><small>Vom linken Rand wischen geht eine Seite zurück.</small></div><span class="cgx-sw"><input type="checkbox" data-k="SwipeBack"><span></span></span></label>
+          </div>
+        </section>
 
-        <h3>JellyDesk (Mac-App)</h3>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="NativeApp"><span>JellyDesk unterstützen: Download-Knöpfe am Mac, Vollbild über das Fenster der App, Wiedergabe im Player der App</span></label>
+        <section class="cgx-sec" id="cgx-seerr">
+          <h2><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>Seerr &amp; Entdecken</h2>
+          <p>Mit Seerr zeigt Cinema Glass auch Titel, die fehlen, lässt sie anfragen und baut daraus „Entdecken“ – persönliche Empfehlungen je Konto.</p>
+          <div class="cgx-card">
+            <label class="cgx-field"><span>Seerr-Adresse</span><input type="text" data-k="SeerrUrl" placeholder="http://seerr:5055"><small>Vom Jellyfin-Server aus erreichbar.</small></label>
+            <label class="cgx-field"><span>API-Schlüssel</span><span class="cgx-secret"><input type="password" data-k="SeerrApiKey" placeholder="Aus Seerr › Einstellungen › Allgemein"><button type="button" class="cgx-eye">Zeigen</button></span></label>
+            <label class="cgx-field"><span>Seerr-Nutzernummer für Anfragen</span><input type="text" data-k="SeerrUserId" placeholder="leer = Hauptkonto" inputmode="numeric"></label>
+            <div class="cgx-test"><button type="button" class="cgx-btn" id="cgxTest">Verbindung prüfen</button><span class="cgx-msg" id="cgxTestMsg">Prüft die gespeicherten Angaben.</span></div>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Fehlende Titel anfragen</b><small>In der Suche und auf Personenseiten, mit Trailer und Filmreihe.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Seerr"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient Seerr"><div class="cgx-txt"><b>Entdecken</b><small>Seite „Entdecken“, Reihen „Für dich“ auf der Startseite und „Könnte dir auch gefallen“ auf Filmseiten.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Discover"><span></span></span></label>
+          </div>
+        </section>
 
-        <h3>Anfragen über Seerr</h3>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="Seerr"><span>Fehlende Titel in der Suche zeigen und anfragen lassen</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="Discover"><span>Entdecken: Empfehlungen für fehlende Titel – Reihen „Für dich“ und „Weil du … gesehen hast“ unten auf der Startseite, „Könnte dir auch gefallen“ auf der Film- und Serienseite</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="RatePrompt"><span>Nach dem Schauen bewerten: Nach einem Film (auch offline in einer App geschaut, sobald sie sich meldet) fragt Cinema Glass einmal nach ½–5 Sternen und Herz. Gespeichert in Jellyfins Bewertung des Kontos; zählt fürs Profil von „Entdecken“. Jedes Konto kann es in „Dein Geschmack“ abschalten.</span></label>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="Letterboxd"><span>Letterboxd: Jedes Konto kann in „Dein Geschmack“ seinen Letterboxd-Namen eintragen – eigene Bewertungen fließen in den Geschmack ein, dazu die Reihe „Von deinen Freunden“ in Entdecken (nur öffentliche Seiten, höchstens alle 6 Stunden je Person)</span></label>
-        <div class="inputContainer"><input is="emby-input" type="text" data-k="SeerrUrl" label="Seerr-Adresse (vom Jellyfin-Server aus erreichbar, z. B. http://seerr:5055)"></div>
-        <div class="inputContainer"><input is="emby-input" type="password" data-k="SeerrApiKey" label="Seerr-API-Schlüssel" autocomplete="off"></div>
-        <div class="inputContainer"><input is="emby-input" type="text" data-k="SeerrUserId" label="Seerr-Nutzernummer für Anfragen (leer = Hauptkonto)"></div>
+        <section class="cgx-sec" id="cgx-rate">
+          <h2><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Bewerten &amp; Letterboxd</h2>
+          <p>Sterne nach dem Schauen und was Freunde auf Letterboxd mögen. Jedes Konto kann beides in „Dein Geschmack“ für sich abschalten.</p>
+          <div class="cgx-card">
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Nach dem Schauen bewerten</b><small>Fragt einmal nach ½–5 Sternen, Herz und Kommentar – auch für offline geschaute Filme, sobald die App sie meldet. Mit Jellyscribe wird der Eintrag auf Letterboxd übernommen.</small></div><span class="cgx-sw"><input type="checkbox" data-k="RatePrompt"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient Seerr Discover"><div class="cgx-txt"><b>Letterboxd-Freunde</b><small>Eigene Letterboxd-Bewertungen fließen in den Geschmack ein, dazu die Reihe „Von deinen Freunden“. Liest nur öffentliche Seiten, höchstens alle 6 Stunden je Person.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Letterboxd"><span></span></span></label>
+          </div>
+        </section>
 
-        <h3>Ruhezeit der Download-Dienste</h3>
-        <p>Für den Stand angefragter Titel („Unterwegs zu dir“): Ruhen die Download-Dienste zu bestimmten Zeiten, steht dort währenddessen „Startet heute/morgen gegen …“ statt „Wird gesucht“. Alles leer = aus.</p>
-        <div class="inputContainer"><input is="emby-input" type="text" data-k="DownloadsQuietFrom" label="Ruhezeit von (HH:mm in der Zeitzone des Servers, z. B. 23:00)"></div>
-        <div class="inputContainer"><input is="emby-input" type="text" data-k="DownloadsQuietTo" label="Ruhezeit bis (HH:mm, z. B. 07:30)"></div>
-        <div class="inputContainer"><input is="emby-input" type="text" data-k="DownloadsDeferMarker" label="Kennzeichen im Namen von Qualitätsprofilen, die erst nach der nächsten Ruhezeit laden (z. B. (morgen)); braucht beide Uhrzeiten"></div>
-        <div class="inputContainer"><textarea is="emby-textarea" data-k="AutoProfileRules" rows="3" label="Qualitätsprofil nach Originalsprache, eine Regel je Zeile: Sprache=Textstück im Profilnamen (z. B. de=[German], en=[German], *=[OG + EN]). Gesetzt: kein Profil-Fenster mehr, in der Ruhezeit automatisch die Variante mit dem Kennzeichen"></textarea></div>
+        <section class="cgx-sec" id="cgx-auto">
+          <h2><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>Anfragen-Automatik</h2>
+          <p>Für Server mit festen Ruhezeiten der Download-Dienste und Qualitätsprofilen nach Sprache. Alles leer = aus.</p>
+          <div class="cgx-card">
+            <div class="cgx-field cgx-two">
+              <label><span style="display:block;margin-bottom:7px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.42)">Ruhezeit von</span><input type="text" data-k="DownloadsQuietFrom" placeholder="23:00"></label>
+              <label><span style="display:block;margin-bottom:7px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.42)">Ruhezeit bis</span><input type="text" data-k="DownloadsQuietTo" placeholder="07:30"></label>
+            </div>
+            <label class="cgx-field"><span>Kennzeichen für „später laden“</span><input type="text" data-k="DownloadsDeferMarker" placeholder="(morgen)"><small>Qualitätsprofile mit diesem Zusatz im Namen laden erst nach der Ruhezeit. Braucht beide Uhrzeiten.</small></label>
+            <label class="cgx-field"><span>Qualitätsprofil nach Originalsprache</span><textarea data-k="AutoProfileRules" rows="3" placeholder="de=[German]&#10;en=[German]&#10;*=[OG + EN]"></textarea><small>Eine Regel je Zeile: <code>Sprache=Textstück im Profilnamen</code>, <code>*</code> für alle übrigen. Gesetzt: kein Profil-Fenster beim Anfragen, in der Ruhezeit automatisch die Variante mit Kennzeichen.</small></label>
+          </div>
+        </section>
 
-        <h3>Bewertungen</h3>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="Ratings"><span>Bewertungen (IMDb, Rotten Tomatoes …) über MDBList</span></label>
-        <div class="inputContainer"><input is="emby-input" type="password" data-k="MdbListApiKey" label="MDBList-API-Schlüssel" autocomplete="off"></div>
+        <section class="cgx-sec" id="cgx-dl">
+          <h2><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>Downloads &amp; Apps</h2>
+          <p>Filme und Folgen zum Mitnehmen – am Handy und in JellyDesk am Mac.</p>
+          <div class="cgx-card">
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Download-Knöpfe</b><small>Bei Filmen, Folgen, Staffeln und ganzen Serien (Handy und Apps).</small></div><span class="cgx-sw"><input type="checkbox" data-k="Downloads"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient Downloads"><div class="cgx-txt"><b>Fortschritt beim Umwandeln</b><small>Zeigt, wie weit eine Datei für den Download vorbereitet ist.</small></div><span class="cgx-sw"><input type="checkbox" data-k="DownloadProgress"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>JellyDesk</b><small>Download-Knöpfe am Mac, Vollbild über das App-Fenster, Wiedergabe im Player der App.</small></div><span class="cgx-sw"><input type="checkbox" data-k="NativeApp"><span></span></span></label>
+          </div>
+        </section>
 
-        <h3>Sonstiges</h3>
-        <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="UpdateCheck"><span>Admins auf neue Versionen hinweisen (ein Abruf pro Tag bei GitHub)</span></label>
+        <section class="cgx-sec" id="cgx-ratings">
+          <h2><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>Bewertungen</h2>
+          <p>IMDb, Rotten Tomatoes und Co. auf Film- und Serienseiten, über MDBList.</p>
+          <div class="cgx-card">
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Bewertungen anzeigen</b><small>Braucht einen kostenlosen MDBList-Schlüssel.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Ratings"><span></span></span></label>
+            <label class="cgx-field"><span>MDBList-API-Schlüssel</span><span class="cgx-secret"><input type="password" data-k="MdbListApiKey" placeholder="mdblist.com › Einstellungen › API"><button type="button" class="cgx-eye">Zeigen</button></span></label>
+          </div>
+        </section>
 
-        <div style="margin-top:2em"><button is="emby-button" type="submit" class="raised button-submit block"><span>Speichern</span></button></div>
+        <section class="cgx-sec" id="cgx-misc">
+          <h2><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.07.63-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>Sonstiges</h2>
+          <div class="cgx-card">
+            <label class="cgx-row"><div class="cgx-txt"><b>Auf neue Versionen hinweisen</b><small>Admins sehen einen Hinweis, wenn es ein Update gibt (ein Abruf pro Tag bei GitHub).</small></div><span class="cgx-sw"><input type="checkbox" data-k="UpdateCheck"><span></span></span></label>
+          </div>
+        </section>
+
+        <div class="cgx-save" id="cgxSave"><span id="cgxSaveMsg">Alles gespeichert. Nach Änderungen die Seite neu laden, Apps einmal schließen.</span><button type="submit" id="cgxSaveBtn" disabled>Speichern</button></div>
       </form>
     </div>
   </div>
@@ -65,7 +191,46 @@
     (function () {
       var pluginId = '6f2c1c0e-4c0b-4d57-9a55-3a1f0c7f9b21';
       var page = document.querySelector('#CinemaGlassConfigPage');
+      var form = page.querySelector('#CinemaGlassForm'), saved = '';
       function fields() { return page.querySelectorAll('[data-k]'); }
+      function val(el) { return el.type === 'checkbox' ? el.checked : el.value.trim(); }
+      function state() { var o = {}; fields().forEach(function (el) { o[el.getAttribute('data-k')] = val(el); }); return JSON.stringify(o); }
+      function on(k) { var el = page.querySelector('[data-k="' + k + '"]'); return !!el && el.checked; }
+      function txt(k) { var el = page.querySelector('[data-k="' + k + '"]'); return !!el && el.value.trim().length > 0; }
+      // Abhängigkeiten ausgrauen, Status oben und „ungespeichert“ nachführen
+      function sync() {
+        page.querySelectorAll('[data-needs]').forEach(function (row) {
+          var ok = row.getAttribute('data-needs').split(' ').every(on);
+          row.classList.toggle('is-off', !ok);
+        });
+        page.querySelector('#cgxStTheme').classList.toggle('is-ok', on('EnableTheme'));
+        page.querySelector('#cgxStSeerr').classList.toggle('is-ok', on('Seerr') && txt('SeerrUrl') && txt('SeerrApiKey'));
+        page.querySelector('#cgxStDisc').classList.toggle('is-ok', on('Discover') && on('Seerr'));
+        page.querySelector('#cgxStMdb').classList.toggle('is-ok', on('Ratings') && txt('MdbListApiKey'));
+        var dirty = state() !== saved;
+        page.querySelector('#cgxSave').classList.toggle('is-dirty', dirty);
+        page.querySelector('#cgxSaveBtn').disabled = !dirty;
+        page.querySelector('#cgxSaveMsg').innerHTML = dirty ? 'Ungespeicherte Änderungen' : 'Alles gespeichert<span class="cgx-long">. Nach Änderungen die Seite neu laden, Apps einmal schließen.</span>';
+      }
+      form.addEventListener('input', sync); form.addEventListener('change', sync);
+      page.querySelectorAll('.cgx-eye').forEach(function (b) {
+        b.addEventListener('click', function () { var i = b.parentNode.querySelector('input'); var show = i.type === 'password'; i.type = show ? 'text' : 'password'; b.textContent = show ? 'Verbergen' : 'Zeigen'; });
+      });
+      // Sprungleiste: aktiven Bereich markieren
+      var links = page.querySelectorAll('.cgx-nav a');
+      links.forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); var t = page.querySelector(a.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }); });
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle('is-on', a.getAttribute('href') === '#' + e.target.id); }); }); }, { rootMargin: '-30% 0px -60% 0px' });
+        page.querySelectorAll('.cgx-sec').forEach(function (s) { io.observe(s); });
+      }
+      // Seerr prüfen (über den Durchgang des Plugins, also mit den gespeicherten Angaben)
+      page.querySelector('#cgxTest').addEventListener('click', function () {
+        var m = page.querySelector('#cgxTestMsg'); m.className = 'cgx-msg'; m.textContent = 'Prüfe …';
+        fetch(ApiClient.getUrl('CinemaGlass/seerr/api/v1/status'), { headers: { 'Authorization': 'MediaBrowser Token="' + ApiClient.accessToken() + '"' } })
+          .then(function (r) { if (!r.ok) throw new Error(r.status === 404 || r.status === 503 ? 'Seerr ist nicht eingerichtet oder abgeschaltet.' : 'Antwort ' + r.status); return r.json(); })
+          .then(function (d) { m.className = 'cgx-msg is-ok'; m.textContent = 'Verbunden' + (d && d.version ? ' – Seerr ' + d.version : '') + (state() !== saved ? ' (gespeicherter Stand)' : ''); })
+          .catch(function (e) { m.textContent = 'Keine Verbindung: ' + (e && e.message ? e.message : 'unbekannt'); });
+      });
       page.addEventListener('pageshow', function () {
         Dashboard.showLoadingMsg();
         ApiClient.getPluginConfiguration(pluginId).then(function (cfg) {
@@ -73,17 +238,20 @@
             var v = cfg[el.getAttribute('data-k')];
             if (el.type === 'checkbox') el.checked = !!v; else el.value = v == null ? '' : v;
           });
+          saved = state(); sync();
           Dashboard.hideLoadingMsg();
         });
+        ApiClient.getJSON(ApiClient.getUrl('Plugins')).then(function (list) {
+          var p = (list || []).filter(function (x) { return (x.Id || '').replace(/-/g, '') === pluginId.replace(/-/g, ''); })[0];
+          if (p) page.querySelector('#cgxVer').textContent = String(p.Version).replace(/\.0$/, '');
+        }).catch(function () {});
       });
-      page.querySelector('#CinemaGlassForm').addEventListener('submit', function (e) {
+      form.addEventListener('submit', function (e) {
         e.preventDefault();
         Dashboard.showLoadingMsg();
         ApiClient.getPluginConfiguration(pluginId).then(function (cfg) {
-          fields().forEach(function (el) {
-            cfg[el.getAttribute('data-k')] = el.type === 'checkbox' ? el.checked : el.value.trim();
-          });
-          ApiClient.updatePluginConfiguration(pluginId, cfg).then(Dashboard.processPluginConfigurationUpdateResult);
+          fields().forEach(function (el) { cfg[el.getAttribute('data-k')] = val(el); });
+          ApiClient.updatePluginConfiguration(pluginId, cfg).then(function (r) { saved = state(); sync(); Dashboard.processPluginConfigurationUpdateResult(r); });
         });
         return false;
       });
