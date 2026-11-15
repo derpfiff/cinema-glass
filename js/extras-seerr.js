@@ -528,7 +528,7 @@
                 it.appendChild(el('b', null, p.name || '')); if (p.character) it.appendChild(el('small', null, p.character));
                 row.appendChild(it);
             });
-            below.appendChild(sec);
+            below.insertBefore(sec, below.querySelector('.atv-xd__similar'));
         }
         // Filmreihe: alle Teile nach Erscheinen, der geöffnete hervorgehoben; „Alle fehlenden anfragen“ fragt nacheinander an
         // (Qualitätsprofil und Nachtzeit regelt das Plugin wie bei einer einzelnen Anfrage).
@@ -579,6 +579,13 @@
                 below.insertBefore(sec, cast || null);
             });
         }
+        // „Könnte dir auch gefallen“ (mit „Entdecken“): einmal je Ansicht, ganz unten
+        var simShown = false;
+        function fillSimilar() {
+            if (simShown || !D || !D.similarShelf) return;
+            simShown = true;
+            D.similarShelf(key).then(function (shelf) { if (shelf && wrap.isConnected) { shelf.classList.add('atv-xd__similar'); below.appendChild(shelf); } });
+        }
         function loadDetails() {
             detailsP = call('/api/v1/' + (isTv ? 'tv' : 'movie') + '/' + r.id + '?language=' + CFG.language);
             detailsP.then(function (d) {
@@ -596,7 +603,7 @@
                 var dirs = isTv ? (d.createdBy || []).map(function (p) { return p.name; }) : crew.filter(function (p) { return p.job === 'Director'; }).map(function (p) { return p.name; });
                 function ln(label, names) { if (!names.length) return; var p = el('p'); p.appendChild(el('span', 'atv-label', label)); p.appendChild(document.createTextNode(names.join(', '))); credits.appendChild(p); }
                 ln(DE ? 'Mit' : 'Starring', cast); ln(isTv ? (DE ? 'Erfinder' : 'Creator') : (DE ? 'Regie' : 'Director'), dirs.slice(0, 2));
-                fillQuality(); fillCast(d); fillCollection(d);
+                fillQuality(); fillCast(d); fillCollection(d); fillSimilar();
                 fillActions(); setStatus(c, r);
             }).catch(function (e) { console.warn('[atv-seerr] details', e); detailsP = null; if (wrap.isConnected) fillActions(); });
             return detailsP;

@@ -3100,6 +3100,8 @@ html.atv-js .atv-circle.atv-tip:hover, html.atv-js .atv-circle.atv-tip:focus-vis
 .atv-dsc .atv-dsc__chip:hover { background: rgba(255, 255, 255, .18); color: #fff; }
 .atv-dsc .atv-dsc__chip.is-on { background: #fff; color: #000; box-shadow: none; }
 .atv-dsc .atv-dsc__cat { display: none; align-items: center; gap: 2px; padding: 0 10px 0 16px; }
+.atv-dsc .atv-dsc__have { display: inline-flex; align-items: center; gap: 7px; padding: 0 16px 0 13px; }
+.atv-dsc .atv-dsc__have svg { width: 18px; height: 18px; fill: currentColor; }
 .atv-dsc .atv-dsc__cat svg { width: 20px; height: 20px; fill: currentColor; }
 .atv-dsc__chip--ph { width: 104px; box-shadow: none !important; }
 .atv-dsc__chip--ph:first-child { width: 250px; }
@@ -3414,6 +3416,8 @@ html.atv-js .atv-dp .atv-dp__refine svg { width: 18px; height: 18px; }
   /* Handy: Netflix-artig – Filme / Serien / Kategorien statt der langen Genre-Reihe */
   .atv-dsc .atv-dsc__segbtn[data-type="all"], .atv-dsc__chips { display: none; }
   .atv-dsc .atv-dsc__cat { display: inline-flex; padding: 0 6px 0 13px; }
+  .atv-dsc .atv-dsc__have { width: 40px; padding: 0; justify-content: center; }
+  .atv-dsc .atv-dsc__have span { display: none; }
   .atv-dsc__catlabel { max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .atv-dsc .atv-dsc__segbtn { padding: 0 11px; }
   .atv-dsc__filterwrap { --mr: 10px; }
@@ -3504,3 +3508,11 @@ html.atv-list-on .atv-xd { z-index: 1470; }
 html.atv-list-on .atv-sheet { z-index: 1480; }
 html.atv-list-on .atv-menu--float { z-index: 1490; }
 @media (max-width: 600px) { .atv-list__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 10px; } .atv-list__num { min-width: 20px; height: 20px; font-size: 11px; right: 5px; top: 5px; } .atv-dl__row .atv-cat__tile { width: 62vw; } }
+
+/* Trailer am Handy hochkant: um 90° gedreht über den ganzen Bildschirm; quer gehalten gilt wieder die normale Lage */
+@media (orientation: portrait) {
+  .atv-trailer.is-rot { inset: auto; top: 0; left: 100vw; width: 100vh; height: 100vw; transform-origin: top left; transform: rotate(90deg); }
+  @supports (height: 100dvh) { .atv-trailer.is-rot { width: 100dvh; } }
+  .atv-trailer.is-rot .atv-trailer__stage { width: min(100%, calc((100vw - 16px) * 16 / 9)); max-height: 100vw; }
+  .atv-trailer.is-rot .atv-trailer__close { left: max(16px, env(safe-area-inset-top, 0px)); top: 12px; }
+}

@@ -125,7 +125,7 @@ public sealed partial class DiscoverService : IHostedService, IDisposable
 
     // ---- Abrufe des Themes -------------------------------------------------------------------------------------
 
-    internal PageDto GetPage(Guid user, string lang, string type, int genre)
+    internal PageDto GetPage(Guid user, string lang, string type, int genre, bool have = false)
     {
         if (!Enabled)
         {
@@ -161,6 +161,17 @@ public sealed partial class DiscoverService : IHostedService, IDisposable
         if (_requests.Known.At > DateTime.MinValue && !open.SetEquals(snap.OpenRequests))
         {
             snap = Rerank(session) ?? snap;
+        }
+
+        if (have)
+        {
+            var lib = Pages.LibraryPage(snap, type, genre);
+            if (_catalog.LanguageDiffers(lang))
+            {
+                FixLanguage(session, snap, lib);
+            }
+
+            return lib;
         }
 
         var page = Pages.Page(snap, type, genre, underway);

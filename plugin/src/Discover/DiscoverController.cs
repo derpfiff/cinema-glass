@@ -34,7 +34,7 @@ public partial class DiscoverController : ControllerBase
     /// <summary>Die Seite „Entdecken“.</summary>
     [HttpGet("")]
     [Authorize]
-    public ActionResult GetPage([FromQuery] string? type, [FromQuery] string? genre, [FromQuery] string? lang)
+    public ActionResult GetPage([FromQuery] string? type, [FromQuery] string? genre, [FromQuery] string? lang, [FromQuery] string? have)
     {
         if (!TryUser(out var user))
         {
@@ -45,7 +45,7 @@ public partial class DiscoverController : ControllerBase
         {
             var kind = type is "movie" or "tv" ? type : "all";
             int.TryParse(genre, NumberStyles.None, CultureInfo.InvariantCulture, out var genreId);
-            return Send(_discover.GetPage(user, Texts.Lang(lang), kind, genreId));
+            return Send(_discover.GetPage(user, Texts.Lang(lang), kind, genreId, have == "1"));
         }
         catch (Exception ex)
         {

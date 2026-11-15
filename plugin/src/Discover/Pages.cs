@@ -99,6 +99,93 @@ internal static class Pages
         return page;
     }
 
+    /// <summary>
+    /// „Nur aus meiner Mediathek“: was schon da ist und noch nicht angefangen wurde, nach Geschmack geordnet. Oben die
+    /// besten, darunter je Genre eine Reihe (ohne Genre-Wahl); Filme/Serien und Genre filtern wie sonst.
+    /// </summary>
+    public static PageDto LibraryPage(Snapshot snap, string type, int genre)
+    {
+        var de = snap.Lang != "en";
+        IEnumerable<Scored> pool = snap.Library;
+        if (type == "movie")
+        {
+            pool = pool.Where(s => !s.Key.Tv);
+        }
+        else if (type == "tv")
+        {
+            pool = pool.Where(s => s.Key.Tv);
+        }
+
+        if (genre > 0)
+        {
+            pool = pool.Where(s => s.Genres.Contains(genre));
+        }
+
+        var list = pool.ToList();
+        var page = new PageDto
+        {
+            Status = list.Count == 0 ? "empty" : "ready",
+            GeneratedAt = snap.BuiltAt.ToString("yyyy-MM-ddTHH:mm:ssZ", CultureInfo.InvariantCulture),
+            Confidence = Math.Round(snap.Profile.Alpha, 2),
+            Signals = snap.Profile.StrongCount,
+            NeedsTaste = false,
+            Chips = Chips(snap, type),
+        };
+        if (list.Count == 0)
+        {
+            page.Error = "none";
+            return page;
+        }
+
+        var used = new HashSet<MediaKey>();
+        var top = list.Take(24).ToList();
+        used.UnionWith(top.Select(s => s.Key));
+        page.Rows.Add(new RowDto
+        {
+            Id = "have",
+            Kind = "poster",
+            Title = de ? "Aus deiner Mediathek – passt zu dir" : "From your library – picked for you",
+            Items = top.Select(s => Item(s, snap, "library", genre)).ToList(),
+        });
+
+        if (genre == 0)
+        {
+            var genres = list.SelectMany(s => s.Genres.Take(2)).GroupBy(g => g).OrderByDescending(g => g.Count()).Select(g => g.Key).Take(8).ToList();
+            foreach (var g in genres)
+            {
+                var items = list.Where(s => s.Genres.Contains(g) && !used.Contains(s.Key)).Take(18).ToList();
+                if (items.Count < 4)
+                {
+                    continue;
+                }
+
+                used.UnionWith(items.Select(s => s.Key));
+                page.Rows.Add(new RowDto { Id = "have-" + g.ToString(CultureInfo.InvariantCulture), Kind = "poster", Title = GenreMap.Nice(g, snap.Lang, type == "tv"), Items = items.Select(s => Item(s, snap, "library", g)).ToList() });
+            }
+        }
+
+        var rest = list.Where(s => !used.Contains(s.Key)).Take(40).ToList();
+        if (rest.Count >= 4)
+        {
+            page.Rows.Add(new RowDto { Id = "have-more", Kind = "poster", Title = de ? "Außerdem in deiner Mediathek" : "Also in your library", Items = rest.Select(s => Item(s, snap, "library", genre)).ToList() });
+        }
+
+        foreach (var s in list)
+        {
+            if (page.Hero.Count >= 5)
+            {
+                break;
+            }
+
+            if (s.Title.Backdrop is not null && !string.IsNullOrEmpty(s.Title.Overview))
+            {
+                page.Hero.Add(Item(s, snap, "hero", genre, HeroOverview));
+            }
+        }
+
+        return page;
+    }
+
     /// <summary>Die Reihe „Für dich“ der Startseite: die Rangfolge mit etwas Abwechslung, weit hinten ein bewusst anderer Titel.</summary>
     public static HomeDto Home(Snapshot snap)
     {
