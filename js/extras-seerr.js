@@ -221,6 +221,7 @@
         var old = box.querySelector('.atv-dc__flag'); if (old) old.remove();
         c.classList.toggle('is-there', there); c.classList.toggle('is-req', open); c.classList.toggle('is-missing', !there && !open);
         if (open) {
+            if (D && D.watch) D.watch(c);                                    // Stand (gesucht → lädt x % → da) laufend nachführen
             flag = el('span', 'atv-dc__flag atv-dc__flag--req');
             flag.appendChild(D && D.mark ? D.mark(rq) : el('i'));
             flag.appendChild(el('b', null, (rq && rq.short) || STATUS[s][1]));
