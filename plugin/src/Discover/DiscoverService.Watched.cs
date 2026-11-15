@@ -11,9 +11,8 @@ using Microsoft.Extensions.Logging;
 namespace Jellyfin.Plugin.CinemaGlass.Discover;
 
 /// <summary>
-/// Welche Filme ein Konto wirklich zu Ende geschaut hat (Jellyfin meldet dafür eigens „Wiedergabe beendet“, auch wenn eine
-/// App eine Offline-Wiedergabe später nachmeldet). Manuelles Abhaken zählt nicht. Danach richtet sich „Nach dem Schauen
-/// bewerten“. Liegt als kleine Datei neben dem Zustand der Konten.
+/// Wann ein Konto einen Film gesehen hat – zu Ende geschaut oder abgehakt, auch wenn eine App eine Offline-Wiedergabe
+/// später nachmeldet. „Nach dem Schauen bewerten“ fragt nur kurz danach, nie nach Älterem. Kleine Datei neben dem Zustand.
 /// </summary>
 public sealed partial class DiscoverService
 {
@@ -26,7 +25,8 @@ public sealed partial class DiscoverService
 
     private void NoteWatched(UserDataSaveEventArgs e)
     {
-        if (e.SaveReason != UserDataSaveReason.PlaybackFinished || e.Item is not Movie || e.UserData is not { Played: true })
+        // zu Ende geschaut oder abgehakt – beides heißt „gesehen“; gefragt wird kurz danach
+        if (e.SaveReason is not (UserDataSaveReason.PlaybackFinished or UserDataSaveReason.TogglePlayed) || e.Item is not Movie || e.UserData is not { Played: true })
         {
             return;
         }

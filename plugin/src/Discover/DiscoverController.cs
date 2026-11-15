@@ -290,7 +290,7 @@ public partial class DiscoverController : ControllerBase
     }
 
     /// <summary>Für Administratoren: wie die Empfehlungen eines Kontos zustande kommen.</summary>
-    /// <summary>Zu Ende geschaute Filme des Kontos (für „Nach dem Schauen bewerten“; manuelles Abhaken zählt nicht).</summary>
+    /// <summary>Wann das Konto welche Filme gesehen hat (für „Nach dem Schauen bewerten“).</summary>
     [HttpGet("watched")]
     [Authorize]
     public ActionResult GetWatched()

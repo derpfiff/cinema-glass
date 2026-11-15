@@ -20,5 +20,7 @@ public class ServiceRegistrator : IPluginServiceRegistrator
         // Herunterfahren abbrechen; von sich aus rechnet er nie.
         serviceCollection.AddSingleton<DiscoverService>();
         serviceCollection.AddHostedService(provider => provider.GetRequiredService<DiscoverService>());
+        // Plakate neuer Titel nach Originalsprache (Schalter „PosterLanguage“)
+        serviceCollection.AddHostedService<PosterLanguage>();
     }
 }
