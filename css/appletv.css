@@ -3611,3 +3611,12 @@ html.atv-js .atv-rate .atv-pill:disabled { opacity: .45; }
   .atv-rate__line { justify-content: flex-start; }
   .atv-rate__labels { margin-left: 32px; }
 }
+
+/* Herz schlicht wie die Sterne (Umriss / weiß gefüllt), mit feinem Trennstrich; keine Zusammenfassungszeile */
+.atv-rate__line { margin-top: 16px; }
+.atv-rate__div { width: 1px; height: 28px; background: rgba(255, 255, 255, .18); }
+.atv-rate .atv-rate__heart, .atv-rate .atv-rate__heart.is-on { width: 44px; height: 44px; background: none; color: rgba(255, 255, 255, .45); }
+.atv-rate .atv-rate__heart.is-on { color: #fff; }
+.atv-rate .atv-rate__heart svg { width: 34px; height: 34px; }
+.atv-rate .atv-rate__heart:hover { color: rgba(255, 255, 255, .8); }
+.atv-rate .atv-rate__heart.is-on:hover { color: #fff; }
