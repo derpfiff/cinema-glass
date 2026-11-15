@@ -3568,10 +3568,10 @@ html.atv-js .atv-dc .atv-dc__sub--friends .atv-sep { margin: 0; }
 .atv-rate__base, .atv-rate__fill { display: flex; gap: 4px; white-space: nowrap; }
 .atv-rate__base svg { width: 38px; height: 38px; fill: rgba(255, 255, 255, .18); flex: none; }
 .atv-rate__fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; overflow: hidden; pointer-events: none; }
-.atv-rate__fill svg { width: 38px; height: 38px; fill: #00e054; flex: none; }
+.atv-rate__fill svg { width: 38px; height: 38px; fill: #fff; flex: none; }
 .atv-rate__heart { width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: rgba(255, 255, 255, .7); background: rgba(255, 255, 255, .1); }
 .atv-rate__heart svg { width: 24px; height: 24px; fill: currentColor; }
-.atv-rate__heart.is-on { color: #ff8000; background: rgba(255, 128, 0, .16); }
+.atv-rate__heart.is-on { color: #000; background: #fff; }
 .atv-rate__val { margin-top: 8px; font-size: 14px; color: rgba(255, 255, 255, .7); min-height: 1.3em; }
 .atv-rate__acts { display: flex; gap: 10px; margin-top: 18px; }
 html.atv-js .atv-rate .atv-pill { flex: 1; height: 44px; justify-content: center; font-size: 16px; }
@@ -3593,7 +3593,7 @@ html.atv-js .atv-rate .atv-pill:disabled { opacity: .45; }
 .atv-rate__year { font-weight: 400; color: rgba(255, 255, 255, .55); }
 .atv-rate__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-bottom: 12px; }
 .atv-rate__check { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: rgba(255, 255, 255, .85); cursor: pointer; }
-.atv-rate__check input { width: 18px; height: 18px; margin: 0; accent-color: #00e054; }
+.atv-rate__check input { width: 18px; height: 18px; margin: 0; accent-color: #fff; }
 .atv-rate__check[hidden] { display: none; }
 .atv-rate__date { height: 34px; padding: 0 10px; border: 0; border-radius: 9px; font: inherit; font-size: 14px; color: #fff; background: rgba(255, 255, 255, .1); color-scheme: dark; }
 .atv-rate__date:disabled { opacity: .4; }
@@ -3605,7 +3605,6 @@ html.atv-js .atv-rate .atv-pill:disabled { opacity: .45; }
 .atv-rate__clear:hover { color: #fff; }
 .atv-rate__line { gap: 10px; }
 .atv-rate__lb { margin-top: 14px; }
-html.atv-js .atv-rate .atv-rate__save { background: #00e054; color: #000; }
 @media (max-width: 600px) {
   .atv-rate__box { text-align: left; align-items: stretch; max-height: 92dvh; }
   .atv-rate__pic { display: none; }

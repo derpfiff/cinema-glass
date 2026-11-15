@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.9.7.0",
+        "changelog": "Siehe Repository.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.9.7.0.zip",
+        "checksum": "c2a85875bdc11ca72d0a7231c9b6091a",
+        "timestamp": "2026-11-15T13:10:31Z"
+      },
+      {
         "version": "1.9.6.0",
         "changelog": "Siehe Repository.",
         "targetAbi": "12.4.0.0",
