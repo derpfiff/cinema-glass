@@ -489,6 +489,18 @@
                 act.appendChild(b);
             }
             if (pending) act.appendChild(statusEl(def, true));
+            // Eigene, noch nicht angekommene Anfrage: über „···“ zurückziehen
+            var ownRq = pending && D && D.requestOf && D.withdraw && D.menu ? D.requestOf(key) : null;
+            if (ownRq && ownRq.phase !== 'available') {
+                var wm = D.tip(el('button', 'atv-circle'), D.text('more')); wm.type = 'button'; wm.setAttribute('aria-haspopup', 'menu'); wm.appendChild(svg(D.icons.more));
+                wm.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    D.menu(wm, null, [{ icon: ICON.close, label: D.text('withdraw'), run: function () {
+                        D.withdraw(item).then(function (ok) { if (!ok) return; r.mediaInfo = { status: 1 }; setStatus(c, r); if (wrap.isConnected) { fillActions(); fillQuality(); } });
+                    } }], e.detail === 0);
+                });
+                act.appendChild(wm);
+            }
             else if (def && !there) act.appendChild(statusEl(def, false));
             // Bewerten (nur solange der Titel fehlt): Drei-Punkte-Menü mit Gefällt mir, Nicht meins und Nicht mehr anzeigen.
             // Die Ansicht bleibt dabei offen, damit man danach noch anfragen oder den Trailer sehen kann.

@@ -289,6 +289,31 @@ public partial class DiscoverController : ControllerBase
     }
 
     /// <summary>Für Administratoren: wie die Empfehlungen eines Kontos zustande kommen.</summary>
+    /// <summary>Eigene Anfrage zurückziehen (Download abbrechen, aus Radarr/Sonarr und Seerr entfernen), solange keine Datei da ist.</summary>
+    [HttpPost("withdraw")]
+    [Authorize]
+    public async Task<ActionResult> PostWithdrawAsync([FromQuery] string? key, [FromQuery] string? lang, CancellationToken ct)
+    {
+        if (!TryUser(out var user))
+        {
+            return Unauthorized();
+        }
+
+        if (!MediaKey.TryParse(key, out var media))
+        {
+            return BadRequest();
+        }
+
+        try
+        {
+            return Send(await _discover.WithdrawAsync(user, media, Texts.Lang(lang) != "en", ct).ConfigureAwait(false));
+        }
+        catch (Exception ex)
+        {
+            return Send(new WithdrawDto { Status = "error" }, ex);
+        }
+    }
+
     [HttpGet("debug")]
     [Authorize(Policy = "RequiresElevation")]
     public ActionResult GetDebug([FromQuery] string? userId, [FromQuery] string? lang, [FromQuery] string? build, [FromQuery] string? top, [FromQuery] string? find, [FromQuery] string? requests, [FromQuery] string? at, [FromQuery] string? refresh)

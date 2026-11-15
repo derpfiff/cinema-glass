@@ -64,6 +64,7 @@ public sealed partial class DiscoverService : IHostedService, IDisposable
         _tracker = new RequestTracker(_requests, _catalog, _store, _library, _builder, ChangeStamp, _stop.Token);
         _evaluator = new Evaluator(_builder, _library, _store, _catalog, _stop.Token);
         InitLetterboxd(http);
+        InitWithdraw(http);
 
         // Nur merken, dass sich etwas geändert hat. Gerechnet wird erst, wenn das Konto das nächste Mal nachfragt.
         _userData.UserDataSaved += OnUserDataSaved;
