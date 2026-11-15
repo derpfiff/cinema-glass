@@ -993,7 +993,10 @@ internal sealed class RequestTracker
                 }
             }
 
-            if (q.EndIfWithin(nowLocal) is { } quietEnd)
+            // Nur was in dieser Ruhezeit angefragt wurde, startet an ihrem Ende. Was schon vorher gesucht und nicht
+            // gefunden wurde, sucht danach einfach weiter – „Startet morgen gegen …“ wäre da ein falsches Versprechen.
+            if (q.EndIfWithin(nowLocal) is { } quietEnd
+                && q.EndIfWithin(TimeZoneInfo.ConvertTimeFromUtc(DateTime.SpecifyKind(requested, DateTimeKind.Utc), TimeZoneInfo.Local)) == quietEnd)
             {
                 e.Phase = RequestPhase.Scheduled;
                 e.StartsAt = quietEnd;

@@ -3236,9 +3236,31 @@ html.atv-js .atv-tc .atv-tc__go:disabled { opacity: .32; cursor: default; transf
 /* ---------- Geschmack verfeinern: ein Titel nach dem anderen ---------- */
 .atv-rf .atv-tc__top { justify-content: space-between; }
 .atv-rf__count { font-size: 15px; font-weight: 600; color: rgba(255, 255, 255, .72); font-variant-numeric: tabular-nums; }
-.atv-rf__stage { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 4px 24px 0; overflow: hidden; }
+.atv-rf__stage { flex: 1 1 auto; min-height: 0; display: grid; place-items: center; padding: 4px 24px 0; overflow: hidden; }
+.atv-rf__stage > * { grid-area: 1 / 1; }
+.atv-rf__card.is-out { z-index: 2; transition: transform .3s var(--tv-ease), opacity .26s ease; }
+.atv-rf__card.is-out.is-asked { transform: translateY(-30vh) scale(.92); }
+.atv-rf__card.is-out.is-down { transform: translateY(18vh) scale(.94); }
+.atv-rf__card.is-back { animation: atv-rf-back .26s var(--tv-ease) both; }
+@keyframes atv-rf-back { from { opacity: 0; transform: translateX(-30vw) rotate(-6deg); } to { opacity: 1; transform: none; } }
+.atv-rf__stamp--asked { background: #fff; color: #000; }
+.atv-rf__card.is-asked .atv-rf__stamp--asked { opacity: 1; transform: translate(-50%, -50%); }
+.atv-rf__back { display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px 0 10px; border-radius: 999px; font-size: 15px; font-weight: 600; color: #fff; background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); transition: opacity .2s ease, background .2s ease; }
+.atv-rf__back svg { width: 20px; height: 20px; }
+.atv-rf__back:hover:not(:disabled) { background: rgba(255, 255, 255, .2); }
+.atv-rf__back:disabled { opacity: 0; pointer-events: none; }
+.atv-rf .atv-tc__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.atv-rf__tools { display: flex; justify-content: center; gap: 10px; margin-top: 14px; }
+.atv-rf__tool { display: inline-flex; align-items: center; gap: 7px; height: 38px; padding: 0 16px 0 12px; border-radius: 999px; font-size: 14px; font-weight: 600; color: #fff; background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); transition: background .18s ease, transform .12s ease; }
+.atv-rf__tool svg { width: 18px; height: 18px; }
+.atv-rf__tool:hover { background: rgba(255, 255, 255, .22); }
+.atv-rf__tool:active { transform: scale(.96); }
+.atv-rf__tool.is-busy { opacity: .6; }
+html.atv-rf-on .atv-xd { z-index: 1470; }
+html.atv-rf-on .atv-sheet { z-index: 1480; }
+html.atv-rf-on .atv-menu.atv-menu--float { z-index: 1490; }
 .atv-rf__card { display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 100%; touch-action: none; transition: transform .24s var(--tv-ease), opacity .22s ease; }
-.atv-rf__card.is-in { animation: atv-rf-in .28s var(--tv-ease) both; }
+.atv-rf__card.is-in { animation: atv-rf-in .2s var(--tv-ease) both; }
 @keyframes atv-rf-in { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
 .atv-rf__pic { position: relative; height: min(52vh, 560px); aspect-ratio: 2 / 3; border-radius: 18px; overflow: hidden; background: #1c1c1f; box-shadow: 0 30px 70px rgba(0, 0, 0, .6), inset 0 0 0 1px rgba(255, 255, 255, .08); }
 .atv-rf__pic img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .25s ease; }
@@ -3260,7 +3282,8 @@ html.atv-js .atv-tc .atv-tc__go:disabled { opacity: .32; cursor: default; transf
 .atv-rf__btn--like .atv-rf__ic { width: 72px; height: 72px; background: #fff; color: #000; }
 .atv-rf__btn--skip .atv-rf__ic { width: 52px; height: 52px; margin-top: 10px; }
 .atv-rf__btn--skip .atv-rf__ic svg { transform: rotate(-90deg); }
-.atv-rf__btn.is-hit .atv-rf__ic { transform: scale(1.14); }
+.atv-rf__btn.is-hit .atv-rf__ic { transform: scale(1.16); background: #fff; color: #000; transition-duration: .08s; }
+.atv-rf__btn:active .atv-rf__ic { transform: scale(.92); transition-duration: .05s; }
 @media (hover: hover) { .atv-rf__btn:hover .atv-rf__ic { transform: scale(1.08); background: #fff; color: #000; } }
 
 /* ---------- „Dein Geschmack“ ---------- */
@@ -3344,7 +3367,9 @@ html.atv-js .atv-dp .atv-dp__refine svg { width: 18px; height: 18px; }
   .atv-dsc .atv-dsc__mine { width: 40px; padding: 0; justify-content: center; margin: 0 16px 0 8px; }
   .atv-dsc .atv-dsc__mine span { display: none; }
   .atv-dsc .atv-dsc__mine--refine { margin-right: 0; background: #fff; color: #000; }
-  .atv-rf__pic, .atv-rf__card--ph { height: min(46vh, 440px); }
+  .atv-rf__pic, .atv-rf__card--ph { height: min(42vh, 420px); }
+  .atv-rf__tools { margin-top: 10px; }
+  .atv-rf__tool { height: 34px; font-size: 13px; }
   .atv-tc .atv-rf__btn { width: 96px; font-size: 13px; }
   .atv-dsc__note, .atv-dsc__foot { padding: 0 16px; }
   .atv-dsc__invite { flex-wrap: wrap; gap: 12px; padding: 14px; }
