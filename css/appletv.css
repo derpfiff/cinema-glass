@@ -1775,6 +1775,8 @@ html.atv-js body:has(.itemDetailPage:not(.hide):not(.atv-detail-on):not(.atv-per
   html.atv-page-detail .atv-mb__back, html.atv-pg-search .atv-mb__back, html.atv-pg-settings .atv-mb__back { display: flex; }
   html.atv-page-detail .atv-mb__right, html.atv-pg-settings .atv-mb__right { display: none; }
   html.atv-pg-search .atv-mb__search { display: none; }
+  .atv-mb__taste { display: none !important; }
+  html.atv-pg-discover .atv-mb__taste { display: flex !important; }
 
   /* Inhalt beginnt unter der einen Symbolzeile */
   .libraryPage:not(.itemDetailPage):not(.homePage) > .padded-bottom-page { padding-top: calc(var(--m-top) + 56px) !important; }
@@ -3412,7 +3414,7 @@ html.atv-js .atv-dp .atv-dp__refine svg { width: 18px; height: 18px; }
   /* Handy: Netflix-artig – Filme / Serien / Kategorien statt der langen Genre-Reihe */
   .atv-dsc .atv-dsc__segbtn[data-type="all"], .atv-dsc__chips { display: none; }
   .atv-dsc .atv-dsc__cat { display: inline-flex; padding: 0 6px 0 13px; }
-  .atv-dsc__catlabel { max-width: 104px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .atv-dsc__catlabel { max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .atv-dsc .atv-dsc__segbtn { padding: 0 11px; }
   .atv-dsc__filterwrap { --mr: 10px; }
   .atv-dsc__filters { padding-right: 4px; }
@@ -3473,3 +3475,13 @@ html.atv-js .atv-dp .atv-dp__refine svg { width: 18px; height: 18px; }
 .atv-cat__tile span { position: absolute; z-index: 1; left: 12px; right: 12px; bottom: 10px; font-size: 16px; font-weight: 700; letter-spacing: -.005em; text-shadow: 0 1px 6px rgba(0, 0, 0, .5); }
 .atv-cat__tile.is-on { box-shadow: inset 0 0 0 3px #fff; }
 .atv-cat__tile:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* Knopf „Dein Geschmack“ in der Kopfleiste am Rechner (nur auf „Entdecken“), links vom Profilbild */
+.atv-hd-taste { display: none; }
+.atv-hd-userbox { display: flex; align-items: center; }
+html.atv-mbar-on .atv-hd-taste { display: none !important; }
+html.atv-pg-discover .atv-hd-taste { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; margin-right: 10px; padding: 0; border: 0; border-radius: 50%; cursor: pointer; color: #fff;
+  background: rgba(40, 40, 42, .55); -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 8px 24px rgba(0, 0, 0, .3); transition: background .2s ease, color .2s ease; }
+html.atv-pg-discover .atv-hd-taste:hover { background: #fff; color: #000; }
+html.atv-pg-discover .atv-hd-taste:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.atv-hd-taste svg { width: 20px; height: 20px; fill: currentColor; }
