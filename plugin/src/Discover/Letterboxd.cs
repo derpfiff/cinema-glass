@@ -68,6 +68,16 @@ internal sealed class LbMember
     [JsonPropertyName("x")]
     public Dictionary<string, LbEntry> Entries { get; set; } = new(StringComparer.Ordinal);
 
+    /// <summary>
+    /// Alle Bewertungen und Herzen des Kontos über die offizielle Schnittstelle (über Jellyscribe, das angemeldet ist) –
+    /// auch, was ohne Tagebuch-Eintrag bewertet wurde. Ohne Datum; das Tagebuch geht bei gleichen Titeln vor.
+    /// </summary>
+    [JsonPropertyName("rt")]
+    public Dictionary<string, LbEntry>? Rated { get; set; }
+
+    [JsonPropertyName("rtAt")]
+    public long RatedAt { get; set; }
+
     /// <summary>Wem das Konto folgt (Name → Anzeigename); nur für verknüpfte Konten erhoben.</summary>
     [JsonPropertyName("fo")]
     public Dictionary<string, string>? Following { get; set; }
@@ -223,17 +233,61 @@ internal sealed partial class Letterboxd
         {
             if (Members().TryGetValue(link.User, out var m))
             {
-                foreach (var e in m.Entries)
+                foreach (var e in m.Rated ?? new Dictionary<string, LbEntry>())
                 {
                     if (MediaKey.TryParse(e.Key, out var key))
                     {
                         result[key] = e.Value;
                     }
                 }
+
+                foreach (var e in m.Entries)
+                {
+                    if (MediaKey.TryParse(e.Key, out var key))
+                    {
+                        // Tagebuch geht vor; fehlt dort die Bewertung, bleibt die aus der vollständigen Liste
+                        result[key] = result.TryGetValue(key, out var r) && e.Value.Rating <= 0f
+                            ? new LbEntry { Rating = r.Rating, Like = e.Value.Like || r.Like, Watched = e.Value.Watched }
+                            : e.Value;
+                    }
+                }
             }
         }
 
         return result;
+    }
+
+    /// <summary>Übernimmt die vollständige Liste der eigenen Bewertungen (von Jellyscribe). Ergebnis: ob sich etwas geändert hat.</summary>
+    public bool ImportRated(string user, IEnumerable<(MediaKey Key, float Rating, bool Like)> items)
+    {
+        var fresh = new Dictionary<string, LbEntry>(StringComparer.Ordinal);
+        foreach (var (key, rating, like) in items)
+        {
+            if (fresh.Count >= 6000)
+            {
+                break;
+            }
+
+            fresh[key.ToString()] = new LbEntry { Rating = rating is >= 0.5f and <= 5f ? rating : 0f, Like = like };
+        }
+
+        bool changed;
+        lock (_lock)
+        {
+            var members = Members();
+            if (!members.TryGetValue(user, out var m))
+            {
+                m = members[user] = new LbMember();
+            }
+
+            changed = m.Rated is null || m.Rated.Count != fresh.Count
+                || fresh.Any(f => !m.Rated.TryGetValue(f.Key, out var o) || o.Rating != f.Value.Rating || o.Like != f.Value.Like);
+            m.Rated = fresh;
+            m.RatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        }
+
+        Save();
+        return changed;
     }
 
     /// <summary>Die Freunde eines verknüpften Kontos: eingetragene zuerst, dann wem es folgt (Name → Anzeigename).</summary>
@@ -350,7 +404,7 @@ internal sealed partial class Letterboxd
             if (members.TryGetValue(link.User, out var me))
             {
                 dto.Name = me.Name;
-                dto.Ratings = me.Entries.Count;
+                dto.Ratings = me.Rated is { Count: > 0 } rt ? rt.Keys.Union(me.Entries.Keys).Count() : me.Entries.Count;
                 dto.UserError = me.Error;
                 dto.LastSync = me.Ok > 0 ? Iso(me.Ok) : null;
                 dto.Following = me.Following?.Count ?? 0;

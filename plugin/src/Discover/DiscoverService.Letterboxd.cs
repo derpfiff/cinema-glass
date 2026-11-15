@@ -103,6 +103,18 @@ public sealed partial class DiscoverService
     }
 
     /// <summary>Neue Einträge: sofort neu ordnen; Titel der Freunde brauchen Details, dafür im Hintergrund neu berechnen.</summary>
+    /// <summary>Alle eigenen Letterboxd-Bewertungen (von Jellyscribe über das Theme) ins Profil übernehmen.</summary>
+    internal LetterboxdDto ImportLetterboxdRated(Guid user, IEnumerable<(MediaKey Key, float Rating, bool Like)> items)
+    {
+        var link = _store.View(user).Letterboxd;
+        if (Letterboxd.On && link is not null && link.User.Length > 0 && _letterboxd.ImportRated(link.User, items))
+        {
+            LetterboxdChanged(user);
+        }
+
+        return _letterboxd.Status(user, link);
+    }
+
     private void LetterboxdChanged(Guid user)
     {
         foreach (var session in SessionsOf(user))
