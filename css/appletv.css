@@ -3620,3 +3620,8 @@ html.atv-js .atv-rate .atv-pill:disabled { opacity: .45; }
 .atv-rate .atv-rate__heart svg { width: 34px; height: 34px; }
 .atv-rate .atv-rate__heart:hover { color: rgba(255, 255, 255, .8); }
 .atv-rate .atv-rate__heart.is-on:hover { color: #fff; }
+
+/* Kopf mit kleinem Cover: am Rechner steht das große daneben, am Handy nur das kleine */
+.atv-rate__head { display: flex; align-items: center; gap: 14px; }
+.atv-rate__mini { display: none; flex: none; width: 64px; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 9px; box-shadow: 0 6px 18px rgba(0, 0, 0, .4); }
+@media (max-width: 600px) { .atv-rate__mini:not([hidden]) { display: block; } .atv-rate__q { font-size: 19px; } .atv-rate__head { margin-bottom: 14px; } }
