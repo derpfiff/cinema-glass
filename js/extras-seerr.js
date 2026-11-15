@@ -288,6 +288,7 @@
     // unten wird bestätigt. tvP: Seerrs Auskunft zur Serie, svcP: Profile (beides Promises); send(seasons, quality)
     // stellt die Anfrage. Ergebnis: Antwort der Anfrage, null bei „Abbrechen“.
     // Bester YouTube-Trailer aus Seerrs „relatedVideos“: offizieller Trailer vor Teaser, sonst irgendein Video.
+    var rated = {};   // Bewertungen aus dieser Sitzung, damit Herz und Daumen beim erneuten Öffnen stimmen
     function pickTrailer(list) {
         var v = (list || []).filter(function (x) { return x && x.site === 'YouTube' && x.key; });
         var rank = function (x) { return (x.type === 'Trailer' ? 0 : x.type === 'Teaser' ? 1 : 2); };
@@ -437,6 +438,11 @@
             return b;
         }
         function requested() { fillActions(); fillQuality(); loadDetails(); }
+        function rate(action) {
+            if (action === 'clear') delete rated[key]; else rated[key] = action;
+            D.rate(item, action, 'detail');
+            fillActions();
+        }
         // Trailer (YouTube über Seerr/TMDb), auch für Titel, die fehlen: gleiches Fenster wie auf der Detailseite
         var trailerKey = null;
         function addTrailer(d) {
@@ -486,10 +492,19 @@
             else if (def && !there) act.appendChild(statusEl(def, false));
             // Rückmelden (nur solange der Titel fehlt): runde Knöpfe mit Beschriftung beim Darüberfahren, kein Kreuz
             if (D && !def) {
-                seen = D.tip(el('button', 'atv-circle'), D.text('seen')); seen.type = 'button'; seen.setAttribute('aria-haspopup', 'menu'); seen.appendChild(svg(ICON.check));
-                seen.addEventListener('pointerdown', function () { seen.__had = !!document.querySelector('.atv-menu--dsc'); }, true);
-                seen.addEventListener('click', function (e) { e.stopPropagation(); if (seen.__had) { seen.__had = false; return; } D.seenMenu(seen, item, 'detail', e.detail === 0, function () { close(); }); });
-                act.appendChild(seen);
+                // Gezielt bewerten, auch was man woanders gesehen hat: Herz = gefällt mir (füllt sich), Daumen = nicht meins.
+                // Die Ansicht bleibt offen, damit man danach noch anfragen oder den Trailer sehen kann.
+                var mood = rated[key] || null;
+                var heart = D.tip(el('button', 'atv-circle'), D.text(mood === 'like' ? 'unlike' : 'likeIt')); heart.type = 'button';
+                heart.setAttribute('aria-pressed', mood === 'like' ? 'true' : 'false');
+                heart.appendChild(svg(mood === 'like' ? D.icons.heartOn : D.icons.heart));
+                heart.addEventListener('click', function () { rate(mood === 'like' ? 'clear' : 'like'); });
+                act.appendChild(heart);
+                var down = D.tip(el('button', 'atv-circle' + (mood === 'dislike' ? ' is-on' : '')), D.text('disliked')); down.type = 'button';
+                down.setAttribute('aria-pressed', mood === 'dislike' ? 'true' : 'false');
+                down.appendChild(svg(D.icons.down));
+                down.addEventListener('click', function () { rate(mood === 'dislike' ? 'clear' : 'dislike'); });
+                act.appendChild(down);
                 hide = D.tip(el('button', 'atv-circle'), D.text('hide')); hide.type = 'button'; hide.appendChild(svg(D.icons.eyeOff));
                 hide.addEventListener('click', function () { close(); D.feedback(item, 'hide', 'detail'); });
                 act.appendChild(hide);
