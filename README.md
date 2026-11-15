@@ -1,10 +1,11 @@
 <p align="center"><img src="docs/img/banner.svg" alt="Cinema Glass – Kino-Oberfläche für Jellyfin" width="100%"></p>
 
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/Version-1.10.8-7a5cff?style=flat-square">
+  <a href="https://github.com/derpfiff/cinema-glass/releases/latest"><img alt="Version" src="https://img.shields.io/badge/Version-1.10.9-7a5cff?style=flat-square"></a>
   <img alt="Jellyfin" src="https://img.shields.io/badge/Jellyfin-12.4-22c1ff?style=flat-square">
-  <img alt="Art" src="https://img.shields.io/badge/Plugin-mit_Einstellungsseite-ff5c8a?style=flat-square">
-  <img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-MIT-9aa4b2?style=flat-square">
+  <img alt=".NET" src="https://img.shields.io/badge/.NET-10-512bd4?style=flat-square">
+  <a href="https://github.com/derpfiff/jellyfin-plugins"><img alt="Katalog" src="https://img.shields.io/badge/Katalog-derpfiff%2Fjellyfin--plugins-ff5c8a?style=flat-square"></a>
+  <a href="LICENSE"><img alt="Lizenz" src="https://img.shields.io/badge/Lizenz-MIT-9aa4b2?style=flat-square"></a>
 </p>
 
 # Cinema Glass – Kino-Oberfläche für Jellyfin
@@ -21,7 +22,7 @@ Glasflächen, ruhige Typografie. Dazu Funktionen, die über ein Theme hinausgehe
 | **Serienseite mit Folgenregal** – Staffelwahl, Fortschritt, Besetzung<br>![Folgenregal](docs/img/desktop-folgen.jpg) | **Filmseite** – Logo, Bewertungen, Fassungen wie bei den Staffeln wählbar<br>![Filmseite mit Versionsauswahl](docs/img/desktop-film-fassungen.jpg) |
 | **Suche findet auch, was fehlt** – Regal „Nicht in deiner Mediathek“ über Seerr<br>![Suche mit Seerr](docs/img/desktop-suche-seerr.jpg) | **Anfragen ohne Umweg** – Staffeln und Qualitätsprofil direkt wählen<br>![Anfrage](docs/img/desktop-anfrage.jpg) |
 | **TV-Seite** – Live-Programm und Mediathek auf einer Seite (mit dem Plugin „Mediathek“)<br>![TV-Seite](docs/img/desktop-tv.jpg) | **Mediathek wie eine Bibliothek** – Reihen, Suche, Serien mit Staffeln; Karten spielen direkt ab<br>![Mediathek](docs/img/desktop-tv-mediathek.jpg) |
-| **Regale auf der Startseite** – Karten spielen direkt ab<br>![Regale](docs/img/desktop-regale.jpg) | **Alles schaltbar** – eine Einstellungsseite im Dashboard<br>![Einstellungen](docs/img/desktop-einstellungen.jpg) |
+| **Regale auf der Startseite** – Karten spielen direkt ab<br>![Regale](docs/img/desktop-regale.jpg) | **Alles schaltbar** – eigene Einstellungsseite, direkt in der Seitenleiste des Dashboards<br>![Einstellungen](docs/img/desktop-einstellungen.jpg) |
 
 <p align="center">
   <img src="docs/img/handy-start.jpg" alt="Startseite am Handy" width="19%">
@@ -32,6 +33,55 @@ Glasflächen, ruhige Typografie. Dazu Funktionen, die über ein Theme hinausgehe
 </p>
 
 Die Film- und Folgenseite zeigt, ob ein Titel in 4K, HDR, Dolby Vision oder mit Dolby Atmos vorliegt.
+
+## Entdecken: Empfehlungen, die dich kennen
+
+Mit [Seerr](https://github.com/seerr-team/seerr) bekommt jedes Konto eine eigene Seite „Entdecken“. Die Empfehlungen
+lernen aus dem, was du schaust, abbrichst, mit Herz markierst oder als „Nicht meins“ aussortierst, auch aus deinen
+Letterboxd-Bewertungen. Jede Empfehlung sagt, warum sie da ist („Weil dir … gefällt“, Übereinstimmung in Prozent).
+
+![Entdecken](docs/img/desktop-entdecken.jpg)
+
+| | |
+|---|---|
+| **Hitlisten, Studios und Sender** – mit echten Logos; eine Liste öffnet sich als Raster, Fehlendes ist mit „+“ markiert<br>![Hitlisten und Studios](docs/img/desktop-listen.jpg) | **Eine Liste** – Trends, Beliebtes, Demnächst im Kino, Studios, Sender<br>![Liste](docs/img/desktop-liste.jpg) |
+| **Dein Geschmack** – woraus die Empfehlungen entstehen; ein Tipp schaltet ein Merkmal stumm<br>![Dein Geschmack](docs/img/desktop-geschmack.jpg) | **Filmreihe** – alle Teile, fehlende auf einmal anfragen<br>![Filmreihe](docs/img/desktop-filmreihe.jpg) |
+
+Dazu gehören:
+- **Kategorien:** am Handy als Blatt.
+- **Filter „Nur Mediathek“:** zeigt nur, was schon da ist.
+- **Trailer:** im eigenen Fenster, auch am iPhone und quer.
+- **„Von deinen Freunden“:** was deine Letterboxd-Freunde gut fanden.
+- **Anfragen zurückziehen:** Solange noch keine Datei da ist, lässt sich eine eigene Anfrage zurückziehen. Laufende Downloads werden dabei abgebrochen.
+
+## Bewerten nach dem Schauen
+
+Hast du einen Film zu Ende geschaut oder als gesehen abgehakt, fragt Cinema Glass gleich danach nach deiner Bewertung, wie bei Letterboxd: Datum, halbe Sterne, Herz,
+Kommentar, „schon mal gesehen“. „Überspringen“ fragt nicht nochmal. Ältere Filme bewertest du jederzeit über das Menü
+„···“. Ist das Plugin [Jellyscribe (Fork)](https://github.com/derpfiff/jellyscribe-fork) installiert und dein Konto
+verknüpft, landet „Speichern“ zusätzlich in deinem Letterboxd-Tagebuch. Ohne dein „Speichern“ wird nichts eingetragen.
+
+| | |
+|---|---|
+| ![Bewerten am Rechner](docs/img/desktop-bewerten.jpg) | <img src="docs/img/handy-bewerten.jpg" alt="Bewerten am Handy" width="300"> |
+
+## Startseite
+
+Eigene Reihen ersetzen Jellyfins „Weiterschauen“ und „Kürzlich hinzugefügt“:
+- **Weiterschauen:** eine Karte je Serie, mit der nächsten Folge. Ältere Titel fallen heraus, einzelne lassen sich entfernen.
+- **Neu hinzugefügt:** Filme und Serien gemischt, sortiert nach Ankunft.
+
+![Weiterschauen](docs/img/desktop-weiterschauen.jpg)
+
+<p align="center">
+  <img src="docs/img/handy-entdecken.jpg" alt="Entdecken am Handy" width="24%">
+  <img src="docs/img/handy-kategorien.jpg" alt="Kategorien am Handy" width="24%">
+  <img src="docs/img/handy-geschmack.jpg" alt="Dein Geschmack am Handy" width="24%">
+  <img src="docs/img/handy-bewerten.jpg" alt="Bewerten am Handy" width="24%">
+</p>
+
+Auf Wunsch bekommen neue Titel ein Plakat in ihrer Originalsprache: deutsch bei deutschen, englisch bei englischen und
+sonst deutsch.
 
 ## Mehr als ein Theme: was es an Jellyfin und anderen Plugins glattzieht
 
@@ -68,7 +118,9 @@ Das Plugin selbst enthält keine fremden Grafiken oder Schriften. Die Systemschr
 ## Installation (empfohlen): Plugin
 
 1. Dashboard → Plugins → Kataloge → hinzufügen:
-   `https://raw.githubusercontent.com/derpfiff/cinema-glass/main/manifest.json`
+   `https://raw.githubusercontent.com/derpfiff/jellyfin-plugins/main/manifest.json`
+   Das ist der gemeinsame Katalog mit Mediathek und Jellyscribe (Fork). Nur Cinema Glass liefert
+   `https://raw.githubusercontent.com/derpfiff/cinema-glass/main/manifest.json`.
 2. **Cinema Glass** installieren, Jellyfin neu starten.
 3. Dashboard → Plugins → Cinema Glass: Funktionen wählen, bei Bedarf Seerr und MDBList eintragen.
 
@@ -88,6 +140,7 @@ jeweilige Funktion unsichtbar – es gibt keine Fehlermeldung und nichts geht ka
 | **[Mediathek](https://github.com/derpfiff/jellyfin-mediathek)** (eigenes Repository des Plugins) | Live-TV und Mediathek der öffentlich-rechtlichen Sender; Cinema Glass macht daraus die TV-Seite (Sender je Konto aus- und einblendbar, „Weiterschauen“ mit gemerkter Stelle, auf dem Handy über den Chip „TV“ der Startseite, Herunterladen in JellyDesk und in der Jellyfin-App) und zeigt Treffer in der Suche als „Aus der Mediathek“ | kein Eintrag „TV“ (bzw. nur Jellyfins eigenes Live-TV) |
 | **[Seerr](https://github.com/seerr-team/seerr)** (Jellyseerr/Overseerr, eigener Dienst) | fehlende Titel in der Suche finden und anfragen | kein Regal „Nicht in deiner Mediathek“ |
 | **[MDBList](https://mdblist.com)** (kostenloser API-Schlüssel) | Bewertungen von IMDb, Rotten Tomatoes usw. | keine Bewertungs-Plaketten |
+| **[Jellyscribe (Fork)](https://github.com/derpfiff/jellyscribe-fork)** (gemeinsamer Katalog) | „Speichern“ im Bewerten-Dialog trägt ins Letterboxd-Tagebuch ein | Bewertungen bleiben in Jellyfin und im Geschmacksprofil |
 
 Der **[JavaScript Injector](https://github.com/n00bcodr/Jellyfin-JavaScript-Injector)** wird mit dem Plugin nicht mehr gebraucht. Einrichtung der einzelnen Plugins: [docs/SETUP.md](docs/SETUP.md).
 
@@ -113,3 +166,14 @@ Plugins, Bildquellen (Fanart), Vorspann und Trailer: siehe [docs/SETUP.md](docs/
 ## Entfernen
 
 Plugin: deinstallieren und Jellyfin neu starten. Handinstallation: das eigene CSS im Branding leeren und die Skripte im JavaScript Injector deaktivieren oder löschen. Danach den Browser neu laden.
+
+## Verwandte Projekte
+
+| Projekt | Was es tut |
+|---|---|
+| [jellyfin-plugins](https://github.com/derpfiff/jellyfin-plugins) | ein Katalog für alle drei Plugins |
+| [Mediathek](https://github.com/derpfiff/jellyfin-mediathek) | ARD-Mediathek und Live-TV der öffentlich-rechtlichen Sender |
+| [Jellyscribe (Fork)](https://github.com/derpfiff/jellyscribe-fork) | Letterboxd-Tagebuch aus dem Bewerten-Dialog |
+| [JellyDesk](https://github.com/derpfiff/JellyDesk) | Mac-App mit Downloads und Offline-Wiedergabe |
+
+Dieses Projekt ist kein offizielles Angebot von Jellyfin oder Apple.

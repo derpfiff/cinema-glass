@@ -1800,26 +1800,35 @@ html.atv-js body:has(.itemDetailPage:not(.hide):not(.atv-detail-on):not(.atv-per
   /* Hero: dezenter Verlauf oben, damit die Glas-Kreise auf jedem Bild lesbar bleiben */
   html.atv-js .atv-hero::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 130px; z-index: 3; pointer-events: none; background: linear-gradient(to bottom, rgba(0, 0, 0, .5), transparent); }
 
-  /* Kategorie-Chips (Movies · Shows · Sammlungen) unter dem Hero */
-  .atv-chips { display: flex; gap: 10px; padding: 4px 16px 18px; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
-  .atv-chips::-webkit-scrollbar { display: none; }
-  .atv-chip {
-    flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 18px 0 14px; border-radius: 999px; text-decoration: none;
-    color: #fff; font-size: 15px; font-weight: 600; letter-spacing: -.01em; white-space: nowrap;
-    background: linear-gradient(180deg, rgba(120, 120, 128, .38), rgba(120, 120, 128, .24));
-    -webkit-backdrop-filter: blur(24px) saturate(1.6); backdrop-filter: blur(24px) saturate(1.6);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), inset 0 1px 0 rgba(255, 255, 255, .2), 0 8px 22px rgba(0, 0, 0, .28);
-    transition: transform .2s var(--tv-ease), background .2s;
+  /* Kategorie-Leiste unter dem Hero: dieselbe schwebende Glas-Kapsel wie die Kopfzeile am Rechner (Reiter als Text,
+     keine Einzel-Pillen). Passt sie nicht in die Breite, scrollt sie in sich. */
+  .atv-chips {
+    position: relative; display: flex; align-items: center; gap: 2px;
+    width: max-content; max-width: calc(100% - 32px); margin: -16px auto 22px; padding: 3px; border-radius: 999px; z-index: 4;
+    overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+    /* Auf dunklem Grund trägt das Glas vor allem durch Licht: heller oben, Lichtkante, weicher Schatten nach unten */
+    background: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, .06) 55%, rgba(255, 255, 255, .08));
+    -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, .5), 0 0 0 .5px rgba(255, 255, 255, .06),
+      inset 0 0 0 1px rgba(255, 255, 255, .13), inset 0 1px 0 rgba(255, 255, 255, .32), inset 0 -1px 0 rgba(255, 255, 255, .05);
   }
-  .atv-chip:active { transform: scale(.96); background: rgba(120, 120, 128, .5); }
-  .atv-chip svg { width: 19px; height: 19px; fill: currentColor; opacity: .92; }
+  .atv-chips::-webkit-scrollbar { display: none; }
+  .atv-chips--top { margin-top: 8px; }   /* ohne Banner: kein Hineinragen */
+  .atv-chip {
+    flex: 0 0 auto; display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 999px; text-decoration: none;
+    color: rgba(255, 255, 255, .86); font-size: 15px; font-weight: 600; letter-spacing: 0; line-height: 1; white-space: nowrap;
+    background: transparent; -webkit-tap-highlight-color: transparent;
+    transition: background .25s var(--tv-ease), color .25s var(--tv-ease), transform .2s var(--tv-ease);
+  }
+  .atv-chip svg { display: none; }
+  /* Druck = kurz die hellere Pille des gewählten Reiters */
+  .atv-chip:active { background: rgba(255, 255, 255, .22); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12), inset 0 1px 0 rgba(255, 255, 255, .2); transform: scale(.97); }
 }
 
-/* Kleine iPhones: Chips etwas kompakter, damit alle drei ohne Anschnitt in die Breite passen */
+/* Kleine iPhones: Reiter etwas enger, damit alle in die Kapsel passen */
 @media (max-width: 390px) {
-  .atv-chips { gap: 7px; padding-left: 12px; padding-right: 12px; }
-  .atv-chip { height: 40px; padding: 0 13px 0 10px; gap: 6px; font-size: 13.5px; }
-  .atv-chip svg { width: 17px; height: 17px; }
+  .atv-chips { max-width: calc(100% - 24px); }
+  .atv-chip { height: 36px; padding: 0 11px; font-size: 14px; }
 }
 
 /* ===== src-css/18-polish.css ===== */
