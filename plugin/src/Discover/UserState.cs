@@ -78,6 +78,10 @@ internal sealed class UserState
     /// <summary>Angekommene Anfragen: hält fest, seit wann ein Titel da ist, damit „neu“ nicht bei jedem Abruf neu beginnt.</summary>
     [JsonPropertyName("arrived")]
     public Dictionary<string, ArrivedEntry> Arrived { get; set; } = new(StringComparer.Ordinal);
+
+    /// <summary>Verknüpftes Letterboxd-Konto samt eigener Freundesliste (nur mit dem Schalter <c>Letterboxd</c>).</summary>
+    [JsonPropertyName("lb")]
+    public LetterboxdLink? Letterboxd { get; set; }
 }
 
 /// <summary>Eine unveränderliche Kopie des Zustands für eine Berechnung.</summary>
@@ -102,6 +106,12 @@ internal sealed class StateView
     public Dictionary<MediaKey, ArrivedEntry> Arrived { get; init; } = new();
 
     public Dictionary<MediaKey, long> Skipped { get; init; } = new();
+
+    /// <summary>Das verknüpfte Letterboxd-Konto (Kopie), <c>null</c> = keines.</summary>
+    public LetterboxdLink? Letterboxd { get; init; }
+
+    /// <summary>Eigene Letterboxd-Einträge des Kontos; leer, wenn der Schalter aus ist.</summary>
+    public IReadOnlyDictionary<MediaKey, LbEntry> LetterboxdOwn { get; init; } = new Dictionary<MediaKey, LbEntry>();
 }
 
 /// <summary>
@@ -131,6 +141,9 @@ internal sealed class StateStore
 
     public StateStore(Func<string> folder) => _folder = folder;
 
+    /// <summary>Liefert zu einem verknüpften Letterboxd-Konto dessen eigene Einträge (siehe <see cref="Letterboxd"/>).</summary>
+    public Func<LetterboxdLink?, IReadOnlyDictionary<MediaKey, LbEntry>>? LetterboxdOwn { get; set; }
+
     public StateView View(Guid user)
     {
         var holder = Get(user);
@@ -143,6 +156,8 @@ internal sealed class StateStore
                 TasteDone = s.TasteDone,
                 Muted = new HashSet<string>(s.Muted, StringComparer.Ordinal),
                 Worlds = s.Worlds.ToArray(),
+                Letterboxd = s.Letterboxd?.Copy(),
+                LetterboxdOwn = LetterboxdOwn?.Invoke(s.Letterboxd) ?? new Dictionary<MediaKey, LbEntry>(),
             };
             foreach (var f in s.Feedback)
             {

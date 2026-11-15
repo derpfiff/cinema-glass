@@ -63,6 +63,7 @@ public sealed partial class DiscoverService : IHostedService, IDisposable
         _builder = new Builder(_seerr, _catalog, _library, _store, _requests);
         _tracker = new RequestTracker(_requests, _catalog, _store, _library, _builder, ChangeStamp, _stop.Token);
         _evaluator = new Evaluator(_builder, _library, _store, _catalog, _stop.Token);
+        InitLetterboxd(http);
 
         // Nur merken, dass sich etwas geändert hat. Gerechnet wird erst, wenn das Konto das nächste Mal nachfragt.
         _userData.UserDataSaved += OnUserDataSaved;
@@ -179,6 +180,8 @@ public sealed partial class DiscoverService : IHostedService, IDisposable
         {
             return page;
         }
+
+        AddFriendsRow(user, snap, page, type, genre);
 
         if (genre > 0 && !snap.Pool.Genres.Contains(genre))
         {

@@ -131,7 +131,7 @@ internal static class Scorer
         var byKey = new Dictionary<MediaKey, Scored>(input.Pool.Items.Count + 64);
         foreach (var c in input.Pool.Items.Values)
         {
-            if (lib.Items.ContainsKey(c.Key) || state.Feedback.ContainsKey(c.Key) || open.Contains(c.Key))
+            if (lib.Items.ContainsKey(c.Key) || state.Feedback.ContainsKey(c.Key) || open.Contains(c.Key) || state.LetterboxdOwn.ContainsKey(c.Key))
             {
                 continue;
             }
@@ -167,7 +167,7 @@ internal static class Scorer
         var library = new List<Scored>();
         foreach (var e in lib.Items.Values)
         {
-            if (!e.Visible || !e.Untouched || state.Feedback.ContainsKey(e.Key))
+            if (!e.Visible || !e.Untouched || state.Feedback.ContainsKey(e.Key) || state.LetterboxdOwn.ContainsKey(e.Key))
             {
                 continue;
             }
@@ -271,8 +271,9 @@ internal static class Scorer
     {
         var votes = t.Key.Tv ? TvVotes : MovieVotes;
         var rating = t.Key.Tv ? TvRating : MovieRating;
-        if (c is not null && c.Collection > 0)
+        if (c is not null && (c.Collection > 0 || (c.Sources & Src.Friends) != 0))
         {
+            // Fehlende Teile einer Reihe und was Freunde auf Letterboxd gut fanden, dürfen auch kleiner sein.
             votes = 40;
             rating = 5.0f;
         }

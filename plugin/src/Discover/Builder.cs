@@ -51,6 +51,9 @@ internal sealed class Builder
     private readonly RequestSource _requests;
     private long _cacheHits;
 
+    /// <summary>Titel, die Freunde des Kontos auf Letterboxd gut fanden (leer ohne Verknüpfung oder Schalter).</summary>
+    public Func<Guid, IReadOnlyCollection<MediaKey>>? FriendKeys { get; set; }
+
     public Builder(SeerrClient seerr, Catalog catalog, LibraryReader library, StateStore store, RequestSource requests)
     {
         _seerr = seerr;
@@ -156,6 +159,18 @@ internal sealed class Builder
             progress(0.22f + (0.5f * Interlocked.Increment(ref done) / jobs.Count));
         })).ConfigureAwait(false);
         Lap("lists");
+
+        if (replay is null && FriendKeys?.Invoke(user.Id) is { Count: > 0 } friends)
+        {
+            // Letterboxd: Was Freunde gut fanden, kommt in den Bestand; Namen und Bilder stammen aus den Details.
+            foreach (var key in friends)
+            {
+                pool.Get(key).Sources |= Src.Friends;
+            }
+
+            info.DetailsFetched += await DetailsAsync(friends.Where(k => !lib.Items.ContainsKey(k)).Take(300).Select(k => (k, true)).ToList(), lang, null, ct).ConfigureAwait(false);
+            Lap("friends");
+        }
 
         // Stufe 1: grob bewerten, den Bestand begrenzen, für die Besten die Details holen.
         var first = Scorer.Rank(new RankInput { User = user.Id, Lang = lang, Pool = pool, Lib = lib, Requests = requests, Theme = theme, State = state, Catalog = _catalog, BuiltAt = now, Info = info, Tuning = tuning });
@@ -736,7 +751,7 @@ internal sealed class Builder
         // Bewertete und angefragte Titel bleiben, damit sie nach „Rückmeldung löschen“ sofort wieder da sind.
         foreach (var key in pool.Items.Keys.ToList())
         {
-            if (!keep.Contains(key) && !state.Feedback.ContainsKey(key) && !first.OpenRequests.Contains(key) && pool.Items[key].Collection == 0)
+            if (!keep.Contains(key) && !state.Feedback.ContainsKey(key) && !first.OpenRequests.Contains(key) && pool.Items[key].Collection == 0 && (pool.Items[key].Sources & Src.Friends) == 0)
             {
                 pool.Items.Remove(key);
             }

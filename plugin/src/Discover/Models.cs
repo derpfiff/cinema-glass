@@ -194,6 +194,9 @@ internal enum Src
 
     /// <summary>Gut Bewertetes aus einem Jahrzehnt, das das Konto schaut.</summary>
     Decade = 8192,
+
+    /// <summary>Von Freunden auf Letterboxd gut bewertet oder gemocht.</summary>
+    Friends = 16384,
 }
 
 /// <summary>Ein Kandidat im Bestand eines Kontos: nur, was die Quellen über ihn sagen. Die Punktzahl steht woanders.</summary>

@@ -160,6 +160,21 @@ internal sealed class Profile
             map[e.Key] = s;
         }
 
+        // Eigene Letterboxd-Einträge: anderswo Gesehenes. Was die Bibliothek über das Schauen weiß, bleibt; ausdrückliche
+        // Rückmeldungen gehen auch hier vor (sie überschreiben weiter unten).
+        foreach (var lb in state.LetterboxdOwn)
+        {
+            if (state.Feedback.ContainsKey(lb.Key) || (map.TryGetValue(lb.Key, out var known) && known.Kind != SignalKind.Unseen))
+            {
+                continue;
+            }
+
+            lib.Items.TryGetValue(lb.Key, out var entry);
+            var visible = entry is { Visible: true } ? entry : null;
+            var (kind, weight) = Letterboxd.SignalOf(lb.Value, t);
+            map[lb.Key] = new Signal { Key = lb.Key, Name = visible?.Name ?? string.Empty, Kind = kind, Base = weight, When = lb.Value.When, Strong = true, Lib = visible };
+        }
+
         // Ausdrückliche Rückmeldungen gehen allem vor, was sich aus dem Schauen ergibt.
         foreach (var f in state.Feedback)
         {

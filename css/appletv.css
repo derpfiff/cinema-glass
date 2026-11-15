@@ -3372,6 +3372,31 @@ html.atv-js .atv-dp .atv-dp__refine svg { width: 18px; height: 18px; }
 .atv-dp .atv-dp__take { flex: none; height: 34px; padding: 0 14px; border-radius: 999px; background: rgba(255, 255, 255, .1); font-size: 13.5px; font-weight: 600; color: #fff; transition: background .2s ease, color .2s ease; }
 .atv-dp .atv-dp__take:hover { background: #fff; color: #000; }
 .atv-dp .atv-dp__take:disabled { opacity: .4; }
+/* Letterboxd in „Dein Geschmack“ (nur mit dem Schalter „Letterboxd“) */
+.atv-lb__intro { margin: 0 0 12px; max-width: 600px; font-size: 14px; line-height: 1.5; color: rgba(255, 255, 255, .6); }
+.atv-lb__row { display: flex; gap: 8px; align-items: center; max-width: 460px; }
+.atv-dp .atv-lb__input, .atv-dp .atv-lb__area { flex: 1 1 auto; min-width: 0; width: 100%; font: inherit; font-size: 15px; color: #fff; background: rgba(255, 255, 255, .07); border: 0; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); outline: none; transition: box-shadow .2s ease, background .2s ease; }
+.atv-dp .atv-lb__input { height: 38px; padding: 0 14px; border-radius: 999px; }
+.atv-dp .atv-lb__area { display: block; margin-top: 10px; padding: 10px 14px; border-radius: 14px; resize: vertical; line-height: 1.4; max-width: 460px; }
+.atv-dp .atv-lb__input:focus, .atv-dp .atv-lb__area:focus { background: rgba(255, 255, 255, .11); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .45); }
+.atv-dp .atv-lb__input::placeholder, .atv-dp .atv-lb__area::placeholder { color: rgba(255, 255, 255, .38); }
+.atv-dp .atv-lb__save { height: 38px; }
+.atv-lb__status { display: flex; flex-direction: column; gap: 4px; margin: 10px 0 0; min-height: 1.4em; font-size: 13.5px; line-height: 1.45; color: rgba(255, 255, 255, .62); }
+.atv-lb__err { color: #ff9f8a; }
+.atv-lb__friends { margin-top: 12px; }
+.atv-lb__friends[hidden] { display: none; }
+.atv-lb__friend { display: inline-flex; align-items: baseline; gap: 6px; height: 30px; padding: 0 12px; border-radius: 999px; background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); font-size: 13.5px; font-weight: 600; line-height: 30px; white-space: nowrap; }
+.atv-lb__friend small { font-size: 11.5px; font-weight: 500; color: rgba(255, 255, 255, .5); }
+.atv-lb__friend.is-wait { opacity: .6; }
+.atv-lb__friend.is-err small { color: #ff9f8a; }
+.atv-lb__more { margin-top: 14px; }
+.atv-lb__more summary { width: fit-content; cursor: pointer; font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, .78); -webkit-tap-highlight-color: transparent; }
+.atv-lb__more summary:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 4px; }
+.atv-lb__only { display: flex; align-items: center; gap: 9px; margin-top: 10px; font-size: 13.5px; color: rgba(255, 255, 255, .7); cursor: pointer; }
+.atv-lb__only input { width: 17px; height: 17px; margin: 0; accent-color: #fff; }
+html.atv-js .atv-dp .atv-lb__sync[hidden] { display: none; }
+html.atv-js .atv-dp .atv-lb__sync { margin-top: 16px; }
+html.atv-js .atv-dp .atv-lb__sync:disabled { opacity: .5; pointer-events: none; }
 
 /* ---------- Handy ---------- */
 @media (max-width: 800px) {
