@@ -681,6 +681,7 @@ public sealed partial class DiscoverService : IHostedService, IDisposable
 
     private void OnUserDataSaved(object? sender, UserDataSaveEventArgs e)
     {
+        NoteWatched(e);
         // Laufende Wiedergabe meldet sich alle paar Sekunden; für die Signale zählt erst das Ergebnis.
         if (e.SaveReason is UserDataSaveReason.PlaybackProgress or UserDataSaveReason.PlaybackStart)
         {

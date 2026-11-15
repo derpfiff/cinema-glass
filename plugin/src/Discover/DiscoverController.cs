@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Globalization;
 using System.Text;
 using System.Text.Json;
@@ -289,6 +290,19 @@ public partial class DiscoverController : ControllerBase
     }
 
     /// <summary>Für Administratoren: wie die Empfehlungen eines Kontos zustande kommen.</summary>
+    /// <summary>Zu Ende geschaute Filme des Kontos (für „Nach dem Schauen bewerten“; manuelles Abhaken zählt nicht).</summary>
+    [HttpGet("watched")]
+    [Authorize]
+    public ActionResult GetWatched()
+    {
+        if (!TryUser(out var user))
+        {
+            return Unauthorized();
+        }
+
+        return Send(new { items = _discover.Watched(user).Select(x => new { itemId = x.Key, at = x.Value }).ToList() });
+    }
+
     /// <summary>Eigene Anfrage zurückziehen (Download abbrechen, aus Radarr/Sonarr und Seerr entfernen), solange keine Datei da ist.</summary>
     [HttpPost("withdraw")]
     [Authorize]
