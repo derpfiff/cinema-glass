@@ -3639,3 +3639,14 @@ html.atv-js .atv-lba .atv-pill { height: 38px; padding: 0 16px; font-size: 14px;
 .atv-lba__form { display: flex; gap: 8px; flex-wrap: wrap; }
 .atv-lba__form .atv-lb__input { flex: 1 1 180px; min-width: 0; }
 .atv-lba__msg { margin: 8px 0 0; min-height: 1.2em; font-size: 13px; color: rgba(255, 255, 255, .7); }
+
+/* Startseite: eigene Reihen „Weiterschauen“ und „Neu hinzugefügt“ */
+.atv-hr[hidden] { display: none !important; }
+.atv-hc { cursor: pointer; }
+.atv-hc .atv-dc__art { position: relative; }
+.atv-hc__bar { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; height: 4px; background: rgba(255, 255, 255, .22); overflow: hidden; }
+.atv-hc__bar i { display: block; height: 100%; background: #fff; }
+.atv-hc__tag { position: absolute; z-index: 2; left: 10px; bottom: 9px; padding: 3px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; color: #000; background: rgba(255, 255, 255, .92); }
+.atv-hn { cursor: pointer; }
+.atv-hn .atv-dc__art { position: relative; }
+.atv-hn__badge { position: absolute; z-index: 2; left: 8px; top: 8px; padding: 3px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 700; color: #000; background: rgba(255, 255, 255, .92); }

@@ -33,6 +33,8 @@ public class PluginConfiguration : BasePluginConfiguration
     public string SeerrApiKey { get; set; } = string.Empty;
     public string SeerrUserId { get; set; } = string.Empty;   // optional: Anfragen laufen als dieser Seerr-Nutzer
     public bool Discover { get; set; } = true;         // „Entdecken“: Empfehlungen für fehlende Titel (nur mit eingerichtetem Seerr)
+    public bool HomeRows { get; set; } = true;          // Startseite: eigene Reihen „Weiterschauen“ (eine Karte je Serie, mit Verfall) und „Neu hinzugefügt“ statt Jellyfins
+
     public bool PosterLanguage { get; set; } = false;  // Plakate neuer Titel nach Originalsprache: de → deutsch, en → englisch, sonst deutsch (braucht Seerr)
 
     public bool RatePrompt { get; set; } = false;      // Nach dem Schauen eines Films nach Sternen fragen (Jellyfins Bewertung des Kontos, zählt fürs Profil)

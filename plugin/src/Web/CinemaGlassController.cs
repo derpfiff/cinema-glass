@@ -121,6 +121,7 @@ public class CinemaGlassController : ControllerBase
                 discover = c.Discover,
                 letterboxd = c.Letterboxd && c.Discover,
                 ratePrompt = c.RatePrompt,
+                homeRows = c.HomeRows && c.EnableClient,
                 autoProfile = c.AutoProfileRules.Trim().Length > 0,
                 ratings = c.Ratings && c.MdbListApiKey.Length > 0
             }
