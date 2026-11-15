@@ -1763,8 +1763,9 @@ html.atv-js body:has(.itemDetailPage:not(.hide):not(.atv-detail-on):not(.atv-per
   .atv-mb__btn {
     pointer-events: auto; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center;
     color: #fff; text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
-    background: rgba(40, 40, 42, .55); -webkit-backdrop-filter: blur(24px) saturate(1.8); backdrop-filter: blur(24px) saturate(1.8);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), inset 0 1px 0 rgba(255, 255, 255, .2), 0 8px 24px rgba(0, 0, 0, .3);
+    /* Liquid Glass: helles, klares Glas mit Lichtkante oben (wie Kopfzeile und Kreise am Rechner) */
+    background: rgba(255, 255, 255, .2); -webkit-backdrop-filter: blur(28px) saturate(1.85); backdrop-filter: blur(28px) saturate(1.85);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18), inset 0 1px 0 rgba(255, 255, 255, .42), inset 0 -1px 0 rgba(255, 255, 255, .06), 0 8px 24px rgba(0, 0, 0, .3);
     transition: transform .2s var(--tv-ease);
   }
   .atv-mb__btn:active { transform: scale(.92); }
@@ -1807,16 +1808,16 @@ html.atv-js body:has(.itemDetailPage:not(.hide):not(.atv-detail-on):not(.atv-per
     width: max-content; max-width: calc(100% - 32px); margin: -16px auto 22px; padding: 3px; border-radius: 999px; z-index: 4;
     overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
     /* Auf dunklem Grund trägt das Glas vor allem durch Licht: heller oben, Lichtkante, weicher Schatten nach unten */
-    background: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, .06) 55%, rgba(255, 255, 255, .08));
+    background: linear-gradient(180deg, rgba(255, 255, 255, .24), rgba(255, 255, 255, .13) 55%, rgba(255, 255, 255, .16));
     -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%);
     box-shadow: 0 12px 34px rgba(0, 0, 0, .5), 0 0 0 .5px rgba(255, 255, 255, .06),
-      inset 0 0 0 1px rgba(255, 255, 255, .13), inset 0 1px 0 rgba(255, 255, 255, .32), inset 0 -1px 0 rgba(255, 255, 255, .05);
+      inset 0 0 0 1px rgba(255, 255, 255, .2), inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(255, 255, 255, .08);
   }
   .atv-chips::-webkit-scrollbar { display: none; }
   .atv-chips--top { margin-top: 8px; }   /* ohne Banner: kein Hineinragen */
   .atv-chip {
     flex: 0 0 auto; display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 999px; text-decoration: none;
-    color: rgba(255, 255, 255, .86); font-size: 15px; font-weight: 600; letter-spacing: 0; line-height: 1; white-space: nowrap;
+    color: #fff; font-size: 15px; font-weight: 600; letter-spacing: 0; line-height: 1; white-space: nowrap;
     background: transparent; -webkit-tap-highlight-color: transparent;
     transition: background .25s var(--tv-ease), color .25s var(--tv-ease), transform .2s var(--tv-ease);
   }
