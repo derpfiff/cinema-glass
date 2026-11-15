@@ -2682,7 +2682,7 @@ html.atv-osd-live .atv-osd-title { bottom: calc(100% + 8px); right: 0; }
 }
 
 /* ---------- Regal „Filmreihe“ auf der Filmseite (JS) ---------- */
-/* Karten im Maß der Poster der Mediathek; fehlende Teile sind Karten des Seerr-Regals (.atv-seerr__card) und hier nur gedimmt. */
+/* Karten im Maß der Poster der Mediathek; fehlende Teile sind Karten des Seerr-Regals (.atv-seerr__card). */
 html.atv-js .atv-series .atv-shelf__title { font-size: var(--tv-shelf-title); font-weight: 700; letter-spacing: .012em; line-height: 1.2; }
 html.atv-js .atv-series .atv-shelf__scroller { gap: var(--tv-gap); scroll-snap-type: none; }
 html.atv-js .atv-series .atv-shelf__count { white-space: nowrap; }
@@ -2710,10 +2710,8 @@ html.atv-js .atv-part__seen svg { width: 16px; height: 16px; fill: currentColor;
 html.atv-js .atv-part.is-current { cursor: default; }
 html.atv-js .atv-part.is-current .atv-part__poster { box-shadow: 0 0 0 3px #fff; }
 html.atv-js .atv-part.is-current .atv-part__name, html.atv-js .atv-part.is-current .atv-part__sub { color: #fff; }
-/* fehlende Teile: Bild gedimmt, die Statusmarke von Seerr („Angefragt“ …) bleibt klar */
-html.atv-js .atv-part--missing .atv-seerr__poster img { opacity: .38; filter: saturate(.55); transition: opacity .25s linear, filter .25s linear; }
-html.atv-js .atv-part--missing .atv-seerr__name { color: rgba(255, 255, 255, .6); }
-html.atv-js .atv-part--missing:hover .atv-seerr__poster img, html.atv-js .atv-part--missing:focus-visible .atv-seerr__poster img { opacity: .8; filter: none; }
+/* fehlende Teile: die Karte des Seerr-Regals kennzeichnet sie selbst (gedämpftes Plakat, „+“ in der Ecke – siehe „Stand in der Ecke“ unten) */
+html.atv-js .atv-part--missing .atv-seerr__name { color: rgba(255, 255, 255, .72); }
 @media (max-width: 800px) {
   /* Titel wie die übrigen Regaltitel am Handy; der Zähler rutscht bei langen Namen in die nächste Zeile, statt selbst umzubrechen */
   html.atv-js .atv-series .atv-shelf__head { flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin-bottom: 4px; }
@@ -2784,32 +2782,598 @@ html.atv-js .atv-badge--file { border: 0 !important; padding: 0 !important; heig
 html.atv-js .atv-badge--file .atv-ql--file img { height: max(17px, calc(24 * var(--atv-u))); max-width: none; }
 /* Herz: Umriss, solange nichts markiert ist; ausgefüllt (in der Farbe des Knopfs), sobald der Titel gefällt. */
 
-/* ---------- Entdecken: Empfehlungen für fehlende Titel, Startseite unten und Detailseite (JS) ---------- */
-/* Die Karten sind die des Seerr-Regals (.atv-seerr__card); hier stehen nur Regalmaße und der Knopf „Kein Interesse“. */
-html.atv-js .atv-disc-home:empty { display: none; }
-/* Startseite: Rand und Abstand wie Jellyfins Reihen darüber, damit die Reihen nahtlos anschließen */
-html.atv-js .atv-disc-home .atv-disc { --atv-gutter: var(--tv-gutter); margin: 0 0 calc(var(--tv-shelf-gap) - var(--tv-focus-pad)); }
-html.atv-js .atv-disc-home .atv-disc:last-child { margin-bottom: 40px; }
-html.atv-js .atv-disc .atv-shelf__head { min-height: 0; }
-html.atv-js .atv-disc .atv-shelf__title { display: block; min-width: 0; font-size: var(--tv-shelf-title); font-weight: 700; letter-spacing: .012em; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-html.atv-js .atv-disc .atv-shelf__scroller { gap: var(--tv-gap); scroll-snap-type: none; }
-html.atv-js .atv-disc__card { transition: opacity .2s linear, transform .2s var(--tv-ease); }
-html.atv-js .atv-disc__card.is-gone { opacity: 0; transform: scale(.94); pointer-events: none; }
-/* „Kein Interesse“: kleiner Glas-Kreis oben rechts (oben links sitzt die Statusmarke). Mit Maus erst beim Überfahren
-   oder mit Tastaturfokus sichtbar; auf Touch-Geräten und am Handy gibt es kein Überfahren, dort steht er dezent immer da. */
-html.atv-js .atv-shelf button.atv-disc__no {
-  position: absolute; top: 8px; right: 8px; z-index: 2; width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; background: rgba(0, 0, 0, .5);
-  -webkit-backdrop-filter: blur(14px) saturate(1.6); backdrop-filter: blur(14px) saturate(1.6); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
-  opacity: 0; transition: opacity .2s linear, background .2s linear, color .2s linear;
+/* ==========================================================================
+   Entdecken: persönliche Empfehlungen (JS) – Seite #/discover, Reihen der Startseite, „Könnte dir auch gefallen“,
+   Geschmacks-Check, „Dein Geschmack“, Stand angefragter Titel, Staffel-Fenster der Anfrage.
+   Einzige Akzentfarbe: die Übereinstimmung (--dsc-match). Bewegung nur über transform/opacity (dazu der Farbfilter
+   der einen Karte unter dem Zeiger).
+   ========================================================================== */
+html.atv-js { --dsc-match: #6fe0a2; --dc-w: var(--tv-poster-w); --dc-r: calc(var(--tv-poster-w) * .077); }
+.atv-dsc, .atv-dsc-home, .atv-tc, .atv-dp { font-family: var(--tv-font); color: #fff; -webkit-font-smoothing: antialiased; }
+.atv-dsc *, .atv-dr *, .atv-tc *, .atv-dp *, .atv-ss *, .atv-rq * { box-sizing: border-box; }
+:where(.atv-dsc, .atv-dr, .atv-tc, .atv-dp, .atv-sheet--acts, .atv-sheet--seasons, .atv-sheet--taste) button { font: inherit; border: 0; margin: 0; padding: 0; background: none; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+:where(.atv-dsc, .atv-dr, .atv-tc, .atv-dp, .atv-sheet--acts, .atv-sheet--seasons, .atv-sheet--taste, .atv-rq, .atv-toast) svg { fill: currentColor; display: block; }
+.atv-match { color: var(--dsc-match); font-weight: 700; font-variant-numeric: tabular-nums; }
+.atv-dsc-star { display: inline-flex; align-items: center; gap: .28em; font-variant-numeric: tabular-nums; }
+.atv-dsc-star svg { width: .86em; height: .86em; opacity: .8; }
+.atv-dsc .atv-sep, .atv-dr .atv-sep, .atv-sheet .atv-sep { opacity: .55; margin: 0 .42em; }
+
+/* ---------- Stand in der Ecke: überall derselbe (Karten von „Entdecken“ und des Seerr-Regals) ----------
+   Das Zeichen oben links sagt, was Sache ist: „+“ auf dunklem Glas = fehlt · Zeichen mit Kurzmarke = angefragt ·
+   weißer Punkt mit ▶ = vorhanden. Das Plakat selbst ist bei Fehlendem nur eine Spur zurückgenommen (es soll einladen,
+   nicht abgeschaltet wirken) und bekommt unter dem Zeiger und mit Fokus seine volle Farbe. */
+html.atv-js .atv-dc:not(.is-there) .atv-dc__img, html.atv-js .atv-seerr__card:not(.is-there) .atv-seerr__poster img { filter: saturate(.86) brightness(.9); }
+html.atv-js .atv-dc .atv-dc__img, html.atv-js .atv-seerr__card .atv-seerr__poster img { transition: opacity .35s ease, filter .25s ease; }
+html.atv-js .atv-dc:focus-visible .atv-dc__img, html.atv-js .atv-dc.is-menu .atv-dc__img, html.atv-js .atv-seerr__card:focus-visible .atv-seerr__poster img { filter: none; }
+@media (hover: hover) {
+  html.atv-js .atv-dc:hover .atv-dc__img, html.atv-js .atv-seerr__card:hover .atv-seerr__poster img { filter: none; }
 }
-html.atv-js .atv-shelf button.atv-disc__no svg { width: 14px; height: 14px; fill: currentColor; }
-html.atv-js .atv-disc__card:hover button.atv-disc__no, html.atv-js .atv-disc__card:focus-visible button.atv-disc__no, html.atv-js .atv-shelf button.atv-disc__no:focus-visible { opacity: 1; }
-html.atv-js .atv-shelf button.atv-disc__no:hover, html.atv-js .atv-shelf button.atv-disc__no:focus-visible { background: rgba(255, 255, 255, .92); color: #000; }
-@media (hover: none), (max-width: 800px) {
-  html.atv-js .atv-shelf button.atv-disc__no { opacity: .8; width: 26px; height: 26px; top: 6px; right: 6px; }
+html.atv-js .atv-dc .atv-dc__flag, html.atv-js .atv-seerr__card .atv-dc__flag {
+  position: absolute; top: 8px; left: 8px; z-index: 2; display: inline-flex; align-items: center; justify-content: center; gap: 5px; box-sizing: border-box;
+  height: 26px; min-width: 26px; padding: 0; margin: 0; border: 0; border-radius: 999px; pointer-events: none;
+  color: #fff; background: rgba(10, 10, 12, .66); box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .34), 0 2px 8px rgba(0, 0, 0, .28);
+  font: 700 11.5px/1 var(--tv-font); letter-spacing: .01em; white-space: nowrap; font-variant-numeric: tabular-nums;
+  transition: background .2s ease, color .2s ease, transform .2s var(--tv-ease);
 }
+html.atv-js .atv-dc .atv-dc__flag svg, html.atv-js .atv-seerr__card .atv-dc__flag svg { width: 15px; height: 15px; fill: currentColor; display: block; flex: none; }
+html.atv-js .atv-dc .atv-dc__flag b, html.atv-js .atv-seerr__card .atv-dc__flag b { font-weight: 700; }
+html.atv-js .atv-dc__flag--req { padding: 0 9px 0 6px !important; }
+html.atv-js .atv-dc__flag--req > i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .8; margin: 0 1px 0 2px; }
+html.atv-js .atv-dc__flag--req.is-bad { color: #ffb4ab; }
+html.atv-js .atv-dc .atv-dc__flag--play, html.atv-js .atv-seerr__card .atv-dc__flag--play { background: #fff; color: #000; box-shadow: 0 2px 10px rgba(0, 0, 0, .35); }
+html.atv-js .atv-dc .atv-dc__flag--play svg { margin-left: 1px; }
+html.atv-js .atv-dc .atv-dc__flag--play:has(b) { padding: 0 9px 0 6px; }
+html.atv-js .atv-dc button.atv-dc__flag--play { pointer-events: auto; cursor: pointer; }
+html.atv-js .atv-dc button.atv-dc__flag--play::before { content: ""; position: absolute; inset: -8px; }   /* größere Trefferfläche */
+html.atv-js .atv-dc button.atv-dc__flag--play:hover, html.atv-js .atv-dc button.atv-dc__flag--play:focus-visible { transform: scale(1.12); }
+@media (hover: hover) {
+  html.atv-js .atv-dc:hover .atv-dc__flag--add, html.atv-js .atv-seerr__card:hover .atv-dc__flag--add { background: #fff; color: #000; }
+}
+html.atv-js .atv-dc:focus-visible .atv-dc__flag--add, html.atv-js .atv-seerr__card:focus-visible .atv-dc__flag--add { background: #fff; color: #000; }
+/* Ring (Anteil) und die stillen Zeichen der Phasen */
+.atv-ring { width: 14px; height: 14px; flex: none; transform: rotate(-90deg); }
+.atv-ring circle { fill: none; stroke: currentColor; stroke-width: 2.6; }
+.atv-ring .atv-ring__track { opacity: .28; }
+.atv-ring .atv-ring__arc { stroke-linecap: round; transition: stroke-dasharray .6s ease; }
+.atv-ring.is-idle .atv-ring__arc { display: none; }
+.atv-ring.is-busy { animation: atv-spin 1.5s linear infinite; }
+.atv-rq__ic { width: 14px; height: 14px; flex: none; opacity: .92; }
+/* Balken am unteren Rand des Plakats, wenn es einen messbaren Anteil gibt */
+html.atv-js .atv-dc.is-req .atv-dc__art:has(.atv-dc__bar)::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22%; background: linear-gradient(to top, rgba(0, 0, 0, .5), rgba(0, 0, 0, 0)); pointer-events: none; }
+html.atv-js .atv-dc__bar { position: absolute; left: 10px; right: 10px; bottom: 10px; z-index: 2; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, .28); overflow: hidden; }
+html.atv-js .atv-dc__bar i { display: block; height: 100%; border-radius: 3px; background: #fff; transform-origin: 0 50%; transition: transform .6s ease; }
+/* Statuszeile (großes Bild, Anfrage-Ansicht): Glas-Pille in der Größe der weißen Pille */
+.atv-rq {
+  display: inline-flex; align-items: center; gap: max(10px, calc(14 * var(--atv-u, .052vw))); box-sizing: border-box; max-width: 100%;
+  min-height: max(44px, calc(66 * var(--atv-u, .052vw))); padding: 6px max(20px, calc(30 * var(--atv-u, .052vw))) 6px max(13px, calc(18 * var(--atv-u, .052vw)));
+  border-radius: 999px; color: #fff; background: rgba(120, 120, 128, .34); -webkit-backdrop-filter: blur(24px) saturate(1.6); backdrop-filter: blur(24px) saturate(1.6);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), inset 0 1px 0 rgba(255, 255, 255, .16);
+  font: 600 max(15px, calc(24 * var(--atv-u, .052vw)))/1.25 var(--tv-font); letter-spacing: .01em; font-variant-numeric: tabular-nums; text-shadow: none;
+}
+.atv-rq .atv-ring, .atv-rq .atv-rq__ic { width: 1.5em; height: 1.5em; }
+.atv-rq .atv-rq__ic { width: 1.3em; height: 1.3em; }
+.atv-rq.is-bad { color: #ffb4ab; }
+
+/* ---------- Karte ---------- */
+html.atv-js .atv-dc {
+  position: relative; flex: 0 0 auto; display: block; width: var(--dc-w); text-align: left; cursor: pointer; outline: 0;
+  -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
+}
+html.atv-js .atv-dc .atv-dc__art {
+  position: relative; display: block; aspect-ratio: 2 / 3; border-radius: var(--dc-r); overflow: hidden; background: #1a1a1c;
+  transition: transform .28s var(--tv-ease), box-shadow .28s var(--tv-ease);
+}
+html.atv-js .atv-dc .atv-dc__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; }
+html.atv-js .atv-dc .atv-dc__img.is-in { opacity: 1; }
+html.atv-js .atv-dc .atv-dc__fallback { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12%; font-size: 13px; font-weight: 700; line-height: 1.2; color: rgba(255, 255, 255, .8); background: linear-gradient(150deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .04)); }
+html.atv-js .atv-dc:focus-visible .atv-dc__art { outline: 3px solid #fff; outline-offset: 3px; transform: scale(1.045); }
+html.atv-js .atv-dc.is-menu .atv-dc__art { transform: scale(1.045); box-shadow: 0 18px 38px rgba(0, 0, 0, .55); }
+@media (hover: hover) {
+  html.atv-js .atv-dc:hover .atv-dc__art { transform: scale(1.045); box-shadow: 0 18px 38px rgba(0, 0, 0, .55); }
+}
+html.atv-js .atv-dc .atv-dc__name { position: relative; margin: 10px 2px 0; font-size: clamp(12px, .9vw, 15px); font-weight: 600; line-height: 1.25; color: rgba(255, 255, 255, .92); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html.atv-js .atv-dc .atv-dc__sub { position: relative; margin: 2px 2px 0; height: 1.35em; font-size: clamp(11px, .78vw, 13px); line-height: 1.35; color: rgba(255, 255, 255, .56); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html.atv-js .atv-dc .atv-dc__l1, html.atv-js .atv-dc .atv-dc__l2 { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .2s ease .15s; }
+html.atv-js .atv-dc .atv-dc__l2 { position: absolute; left: 0; right: 0; top: 0; opacity: 0; color: rgba(255, 255, 255, .78); }
+html.atv-js .atv-dc:focus-visible .has-alt .atv-dc__l1 { opacity: 0; }
+html.atv-js .atv-dc:focus-visible .has-alt .atv-dc__l2 { opacity: 1; }
+@media (hover: hover) {
+  html.atv-js .atv-dc:hover .has-alt .atv-dc__l1 { opacity: 0; }
+  html.atv-js .atv-dc:hover .has-alt .atv-dc__l2 { opacity: 1; }
+}
+html.atv-js .atv-dc .atv-dc__sub--rq { color: rgba(255, 255, 255, .74); }
+/* „⋯“: ruhiger Glasknopf, mit Maus erst beim Darüberfahren (kurz verzögert), sonst mit Tastaturfokus */
+html.atv-js .atv-dc .atv-dc__more {
+  position: absolute; top: 8px; right: 8px; z-index: 3; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; background: rgba(16, 16, 18, .58);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6); backdrop-filter: blur(14px) saturate(1.6); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2);
+  opacity: 0; transform: scale(.88); transition: opacity .2s ease, transform .2s var(--tv-ease), background .2s ease, color .2s ease;
+}
+html.atv-js .atv-dc .atv-dc__more svg { width: 18px; height: 18px; fill: currentColor; }
+html.atv-js .atv-dc:focus-visible .atv-dc__more, html.atv-js .atv-dc .atv-dc__more:focus-visible, html.atv-js .atv-dc.is-menu .atv-dc__more { opacity: 1; transform: none; }
+html.atv-js .atv-dc .atv-dc__more:focus-visible, html.atv-js .atv-dc.is-menu .atv-dc__more { background: #fff; color: #000; }
+@media (hover: hover) {
+  html.atv-js .atv-dc:hover .atv-dc__more { opacity: 1; transform: none; transition-delay: .12s, .12s, 0s, 0s; }
+  html.atv-js .atv-dc .atv-dc__more:hover { background: #fff; color: #000; }
+}
+/* ohne Maus: sehr dezent am rechten Ende der Zeile unter dem Titel (das Menü öffnet auch langes Drücken). Nicht in der
+   Titelzeile: neben den Auslassungspunkten eines gekürzten Titels läse es sich doppelt. */
+@media (hover: none) {
+  html.atv-js .atv-dc .atv-dc__more { top: auto; bottom: -5px; right: -6px; width: 30px; height: 30px; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; opacity: .5; transform: none; }
+  html.atv-js .atv-dc .atv-dc__more svg { width: 19px; height: 19px; }
+  html.atv-js .atv-dc .atv-dc__sub { padding-right: 24px; }
+  html.atv-js .atv-dr--rq .atv-dc .atv-dc__more { bottom: auto; top: calc(var(--dc-w) * 1.5 + 22px); }
+}
+/* Querformat (vorhandene Titel): Bild, darin Logo oder Titel */
+html.atv-js .atv-dc--wide .atv-dc__art { aspect-ratio: 16 / 9; border-radius: clamp(10px, .95vw, 16px); }
+html.atv-js .atv-dc--wide .atv-dc__shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0, 0, 0, .78) 0%, rgba(0, 0, 0, .34) 36%, rgba(0, 0, 0, 0) 64%); pointer-events: none; }
+html.atv-js .atv-dc--wide .atv-dc__logo { position: absolute; left: 6.5%; bottom: 9%; max-width: 50%; max-height: 36%; object-fit: contain; object-position: left bottom; filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .55)); opacity: 0; transition: opacity .35s ease; }
+html.atv-js .atv-dc--wide .atv-dc__logo.is-in { opacity: 1; }
+html.atv-js .atv-dc--wide .atv-dc__wtitle { position: absolute; left: 6.5%; right: 6.5%; bottom: 9%; font-size: clamp(15px, 1.35vw, 23px); font-weight: 800; letter-spacing: -.018em; line-height: 1.1; text-shadow: 0 1px 10px rgba(0, 0, 0, .6); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+html.atv-js .atv-dc--wide .atv-dc__sub { margin-top: 10px; }
+/* verschwindet nach einer Rückmeldung */
+html.atv-js .atv-dc { transition: opacity .18s linear, transform .18s var(--tv-ease); }
+html.atv-js .atv-dc.is-gone { opacity: 0; transform: scale(.94); pointer-events: none; }
+/* Platzhalter in Endgröße */
+html.atv-js .atv-dc--ph { cursor: default; pointer-events: none; }
+html.atv-js .atv-dc--ph .atv-dc__art, .atv-dr__phtitle, .atv-dh__ph, .atv-dsc__chip--ph, .atv-ss__row--ph, .atv-tc .is-ph > span, .atv-dp .is-ph > span {
+  background: linear-gradient(100deg, rgba(255, 255, 255, .05) 30%, rgba(255, 255, 255, .1) 50%, rgba(255, 255, 255, .05) 70%) 0 0 / 220% 100%; animation: atv-dsc-shimmer 1.5s linear infinite;
+}
+html.atv-js .atv-dc--ph .atv-dc__name { width: 68%; height: .9em; margin-top: 12px; border-radius: 5px; background: rgba(255, 255, 255, .07); }
+html.atv-js .atv-dc--ph .atv-dc__sub { width: 40%; height: .8em; margin-top: 7px; border-radius: 5px; background: rgba(255, 255, 255, .05); }
+html.atv-js .atv-dc--ph.atv-dc--wide .atv-dc__sub { margin-top: 12px; }
+@keyframes atv-dsc-shimmer { from { background-position: 120% 0; } to { background-position: -100% 0; } }
+/* Einladung zum Geschmacks-Check als erste Kachel der Reihe „Für dich“ */
+html.atv-js .atv-dr button.atv-dc--invite { background: none; }
+html.atv-js .atv-dc--invite .atv-dc__art { display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; padding: 12%; background: linear-gradient(155deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .05)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); }
+html.atv-js .atv-dc--invite .atv-dc__inviteic { position: absolute; top: 12%; left: 12%; width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #fff; color: #000; }
+html.atv-js .atv-dc--invite .atv-dc__inviteic svg { width: 19px; height: 19px; }
+html.atv-js .atv-dc--invite strong { font-size: clamp(15px, 1.25vw, 21px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; color: #fff; }
+html.atv-js .atv-dc--invite .atv-dc__art > span:last-child { font-size: clamp(11px, .8vw, 13.5px); line-height: 1.3; color: rgba(255, 255, 255, .66); }
+
+/* ---------- Reihe ---------- */
+html.atv-js .atv-dr { --atv-gutter: var(--tv-gutter); margin: 0 0 calc(var(--tv-shelf-gap) - var(--tv-focus-pad)); }
+html.atv-js .atv-dr[hidden] { display: none; }
+html.atv-js .atv-dr .atv-shelf__head { min-height: 0; margin-bottom: 0; gap: 14px; align-items: baseline; padding: 0 var(--atv-gutter); }
+html.atv-js .atv-dr .atv-shelf__title { display: block; min-width: 0; font-size: var(--tv-shelf-title); font-weight: 700; letter-spacing: .012em; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+html.atv-js .atv-dr .atv-shelf__count { margin: 0; white-space: nowrap; }
+html.atv-js .atv-dr .atv-shelf__scroller { gap: var(--tv-gap); scroll-snap-type: none; padding: var(--tv-title-to-cards) var(--atv-gutter) var(--tv-focus-pad); scroll-padding: 0 var(--atv-gutter); overscroll-behavior-x: contain; }
+html.atv-js .atv-dr--wide { --dc-w: clamp(250px, 21.6vw, 410px); }
+html.atv-js .atv-dr--wide .atv-shelf__scroller { gap: clamp(10px, 1.4vw, 26px); }
+html.atv-js .atv-dr .atv-dr__all { margin-left: auto; flex: none; display: inline-flex; align-items: center; gap: 1px; font-size: clamp(13px, .95vw, 16px); font-weight: 600; color: rgba(255, 255, 255, .58); text-decoration: none; transition: color .2s ease; }
+html.atv-js .atv-dr .atv-dr__all svg { width: 1.3em; height: 1.3em; transition: transform .2s var(--tv-ease); }
+html.atv-js .atv-dr .atv-dr__all:hover, html.atv-js .atv-dr .atv-dr__all:focus-visible { color: #fff; }
+html.atv-js .atv-dr .atv-dr__all:hover svg { transform: translateX(2px); }
+/* Stand der Anfragen: Platz für zwei Zeilen („Staffel 2 · 2 von 10 Folgen da · nächste morgen“), damit nichts springt */
+html.atv-js .atv-dr--rq .atv-dc .atv-dc__sub { height: 2.7em; white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+html.atv-js .atv-dr--rq .atv-dc--ph .atv-dc__sub { height: .8em; margin-bottom: calc(1.9em - 7px); display: block; }
+.atv-dr__phtitle { display: block; width: clamp(140px, 16vw, 260px); height: calc(var(--tv-shelf-title) * 1.2); border-radius: 8px; }
+/* gestaffeltes Einblenden der ersten Reihen */
+html.atv-js .atv-dr--in { animation: atv-dsc-rise .32s var(--tv-ease) both; animation-delay: calc(var(--i, 0) * 55ms); }
+@keyframes atv-dsc-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+/* Die Auswahl ganz oben („top10“): dieselbe ruhige Reihe, nur mit etwas größeren Plakaten und mehr Luft */
+html.atv-js .atv-dr--top10 { --dc-w: calc(var(--tv-poster-w) * 1.16); }
+html.atv-js .atv-dr--top10 .atv-shelf__scroller { gap: calc(var(--tv-gap) * 1.15); }
+
+/* ---------- Seite ---------- */
+html.atv-pg-discover #fallbackPage > *:not(.atv-dsc), .atv-dsc-on > *:not(.atv-dsc) { display: none !important; }
+html.atv-pg-discover .backdropContainer { display: none !important; }
+html.atv-pg-discover .backgroundContainer { background: var(--tv-bg) !important; }
+.atv-dsc { position: relative; top: calc(-1 * var(--atv-pad, 0px)); margin-bottom: calc(-1 * var(--atv-pad, 0px)); min-height: 100vh; padding-bottom: 56px; background: var(--tv-bg); }
+.atv-dsc__heroslot, .atv-dsc__rows, .atv-dsc__note { transition: opacity .28s ease; }
+.atv-dsc.is-swap .atv-dsc__heroslot, .atv-dsc.is-swap .atv-dsc__rows, .atv-dsc.is-swap .atv-dsc__note { opacity: 0; transition: opacity .16s linear; }
+.atv-dsc.is-busy .atv-dsc__rows { opacity: .5; }
+.atv-dsc__rows { margin-top: clamp(22px, 2.5vw, 44px); }
+/* Großes Bild */
+.atv-dh { position: relative; isolation: isolate; overflow: hidden; height: clamp(520px, 80vh, 56.25vw); background: #000; outline: 0; }
+.atv-dh.is-empty { display: none; }
+.atv-dh__slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .7s ease, visibility 0s linear .7s; }
+.atv-dh__slide.is-active { opacity: 1; visibility: visible; z-index: 1; transition: opacity .7s ease; }
+.atv-dh__art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; opacity: 0; transition: opacity .5s ease; }
+.atv-dh__art.is-in { opacity: 1; }
+.atv-dh__slide.is-active .atv-dh__art { animation: atv-dh-zoom 14s ease-out both; }
+@keyframes atv-dh-zoom { from { transform: scale(1); } to { transform: scale(1.045); } }
+.atv-dh__shade {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, #000 0%, rgba(0, 0, 0, .95) 8%, rgba(0, 0, 0, .66) 24%, rgba(0, 0, 0, .2) 44%, rgba(0, 0, 0, 0) 60%),
+              linear-gradient(to right, rgba(0, 0, 0, .74) 0%, rgba(0, 0, 0, .46) 26%, rgba(0, 0, 0, 0) 58%),
+              linear-gradient(to bottom, rgba(0, 0, 0, .46) 0%, rgba(0, 0, 0, 0) 20%);
+}
+.atv-dh__lock {
+  position: absolute; left: var(--tv-gutter); bottom: clamp(88px, 8.4vw, 156px); width: min(47vw, 660px);
+  display: flex; flex-direction: column; align-items: flex-start; gap: clamp(9px, .85vw, 15px); text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+  opacity: 0; transform: translateY(10px); transition: opacity .2s ease, transform .2s ease;
+}
+.atv-dh__slide.is-active .atv-dh__lock, .atv-dh--skel .atv-dh__lock { opacity: 1; transform: none; transition: opacity .32s var(--tv-ease) .16s, transform .32s var(--tv-ease) .16s; }
+.atv-dh__title { margin: 0; padding-bottom: .06em; font-size: clamp(34px, 4.7vw, 86px); font-weight: 800; letter-spacing: -.03em; line-height: 1; text-wrap: balance; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.atv-dh__title.is-mid { font-size: clamp(30px, 3.8vw, 70px); }
+.atv-dh__title.is-long { font-size: clamp(26px, 3.05vw, 56px); letter-spacing: -.025em; line-height: 1.04; }
+.atv-dh__title.has-logo { display: block; overflow: visible; padding: 0; }
+.atv-dh__logo { display: block; max-width: min(34vw, 480px); max-height: clamp(70px, 9vw, 150px); width: auto; height: auto; object-fit: contain; object-position: left bottom; filter: drop-shadow(0 2px 10px rgba(0, 0, 0, .45)); }
+.atv-dh__meta { display: flex; flex-wrap: wrap; align-items: center; row-gap: 2px; font-size: clamp(14px, 1.16vw, 20px); font-weight: 600; color: rgba(255, 255, 255, .92); }
+.atv-dh__why { margin: 0; font-size: clamp(14px, 1.1vw, 19px); font-weight: 600; color: #fff; }
+.atv-dh__desc { margin: 0; max-width: 580px; font-size: clamp(14px, 1.06vw, 18px); line-height: 1.42; font-weight: 400; color: rgba(255, 255, 255, .78); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.atv-dh__act { display: flex; align-items: center; gap: clamp(10px, .85vw, 16px); margin-top: clamp(6px, .8vw, 14px); max-width: 100%; }
+html.atv-js .atv-dh .atv-pill:disabled { opacity: .6; transform: none; cursor: default; }
+/* Punkte: der aktive füllt sich in der Zeit bis zum Wechsel */
+.atv-dh__dots { position: absolute; z-index: 3; right: var(--tv-gutter); bottom: calc(clamp(88px, 8.4vw, 156px) + max(18px, calc(29 * var(--atv-u, .052vw)))); display: flex; align-items: center; gap: 8px; }
+.atv-dh__dots[hidden] { display: none; }
+.atv-dh__dot { position: relative; width: 8px; height: 8px; border-radius: 999px; background: rgba(255, 255, 255, .4); transition: width .3s var(--tv-ease), background .3s ease; }
+.atv-dh__dot[hidden] { display: none; }
+.atv-dh__dot::before { content: ""; position: absolute; inset: -9px -4px; }
+.atv-dh__dot:hover { background: rgba(255, 255, 255, .7); }
+.atv-dh__dot.is-active { width: 36px; background: rgba(255, 255, 255, .3); overflow: hidden; }
+.atv-dh__dot i { position: absolute; inset: 0; border-radius: inherit; background: #fff; transform: scaleX(0); transform-origin: 0 50%; }
+.atv-dh__dot.is-active i { animation: atv-dh-fill 9s linear forwards; }
+.atv-dh.is-paused .atv-dh__dot.is-active i { animation-play-state: paused; }
+.atv-dh__dot:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+@keyframes atv-dh-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.atv-dh__nav { position: absolute; z-index: 3; top: 26%; height: 36%; width: 6%; display: flex; align-items: center; justify-content: center; color: #fff; opacity: 0; transition: opacity .25s linear; }
+.atv-dh__nav--prev { left: 0; } .atv-dh__nav--next { right: 0; }
+.atv-dh:hover .atv-dh__nav { opacity: .8; }
+.atv-dh__nav svg { width: clamp(30px, 2.4vw, 46px); height: clamp(30px, 2.4vw, 46px); filter: drop-shadow(0 1px 4px rgba(0, 0, 0, .6)); }
+/* Ladezustand des großen Bilds */
+.atv-dh--skel { background: radial-gradient(90% 80% at 72% 18%, #1d1d22 0%, #050506 62%, #000 100%); }
+.atv-dh--skel::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 30%; background: linear-gradient(to top, #000, rgba(0, 0, 0, 0)); }
+.atv-dh--skel .atv-dh__lock { z-index: 1; }
+.atv-dh__ph { display: block; border-radius: 10px; }
+.atv-dh__ph--title { width: min(72%, 420px); height: clamp(40px, 4.6vw, 80px); }
+.atv-dh__ph--meta { width: min(54%, 300px); height: 18px; border-radius: 7px; }
+.atv-dh__ph--text { width: min(88%, 520px); height: 54px; }
+.atv-dh__ph--btn { width: 190px; height: max(44px, calc(66 * var(--atv-u, .052vw))); border-radius: 999px; margin-top: 8px; }
+.atv-dh__load { display: block; width: min(60%, 300px); height: 4px; margin-top: 10px; border-radius: 4px; background: rgba(255, 255, 255, .16); overflow: hidden; }
+.atv-dh__load i { display: block; height: 100%; border-radius: 4px; background: #fff; transform-origin: 0 50%; transform: scaleX(.04); transition: transform 1.4s ease; }
+/* Beschriftung der runden Knöpfe beim Darüberfahren und mit Fokus */
+.atv-tip { position: relative; }
+.atv-tip::after {
+  content: attr(data-tip); position: absolute; z-index: 6; left: 50%; bottom: calc(100% + 10px); transform: translate(-50%, 4px); padding: 7px 11px; border-radius: 10px; white-space: nowrap; pointer-events: none; opacity: 0;
+  font: 600 12.5px/1.2 var(--tv-font); letter-spacing: .01em; text-shadow: none; color: #fff; background: rgba(46, 46, 50, .86); -webkit-backdrop-filter: blur(20px) saturate(1.6); backdrop-filter: blur(20px) saturate(1.6);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .4), inset 0 0 0 1px rgba(255, 255, 255, .14); transition: opacity .16s ease, transform .16s ease;
+}
+.atv-tip:focus-visible::after { opacity: 1; transform: translate(-50%, 0); }
+@media (hover: hover) { .atv-tip:hover::after { opacity: 1; transform: translate(-50%, 0); transition-delay: .3s; } }
+html.atv-js .atv-circle.atv-tip:hover, html.atv-js .atv-circle.atv-tip:focus-visible { transform: none; }   /* die Beschriftung soll nicht mitwachsen */
+/* Auswahl */
+.atv-dsc__bar { position: relative; z-index: 2; display: flex; align-items: center; gap: 12px; min-height: 48px; margin-top: -50px; padding: 0 var(--tv-gutter); }
+.atv-dsc--nohero .atv-dsc__bar { margin-top: 0; padding-top: calc(var(--tv-header-h) + 12px + 40px); }
+.atv-dsc__bar:empty { display: none; }
+.atv-dsc__filterwrap { position: relative; flex: 1 1 auto; min-width: 0; --ml: 48px; --mr: 48px; }
+.atv-dsc__filterwrap.is-start { --ml: 0px; } .atv-dsc__filterwrap.is-end { --mr: 0px; }
+.atv-dsc__filters { display: flex; align-items: center; gap: 10px; padding: 4px 0; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 var(--ml), #000 calc(100% - var(--mr)), transparent 100%); mask-image: linear-gradient(to right, transparent 0, #000 var(--ml), #000 calc(100% - var(--mr)), transparent 100%); }
+.atv-dsc__filters::-webkit-scrollbar { display: none; }
+.atv-dsc .atv-dsc__farrow { position: absolute; top: 50%; width: 30px; height: 30px; margin-top: -15px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: rgba(40, 40, 44, .9); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 4px 14px rgba(0, 0, 0, .45); transition: opacity .2s ease, background .2s ease, color .2s ease; }
+.atv-dsc .atv-dsc__farrow svg { width: 20px; height: 20px; }
+.atv-dsc__farrow--prev { left: -4px; } .atv-dsc__farrow--next { right: -4px; }
+.atv-dsc__filterwrap.is-start .atv-dsc__farrow--prev, .atv-dsc__filterwrap.is-end .atv-dsc__farrow--next { opacity: 0; pointer-events: none; }
+.atv-dsc .atv-dsc__farrow:hover { background: #fff; color: #000; }
+@media (hover: none) { .atv-dsc .atv-dsc__farrow { display: none; } }
+.atv-dsc__seg { flex: none; display: inline-flex; padding: 3px; border-radius: 999px; background: rgba(255, 255, 255, .1); -webkit-backdrop-filter: blur(24px) saturate(1.6); backdrop-filter: blur(24px) saturate(1.6); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12), inset 0 1px 0 rgba(255, 255, 255, .14); }
+.atv-dsc .atv-dsc__segbtn { height: 34px; padding: 0 16px; border-radius: 999px; font-size: 14.5px; font-weight: 600; letter-spacing: -.005em; color: rgba(255, 255, 255, .84); white-space: nowrap; transition: background .2s ease, color .2s ease; }
+.atv-dsc .atv-dsc__segbtn:hover { color: #fff; }
+.atv-dsc .atv-dsc__segbtn.is-on { background: #fff; color: #000; }
+.atv-dsc__chips { flex: none; display: flex; gap: 8px; }
+.atv-dsc .atv-dsc__chip { flex: none; display: inline-block; height: 40px; padding: 0 16px; border-radius: 999px; background: rgba(255, 255, 255, .09); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .11); font-size: 14.5px; font-weight: 600; letter-spacing: -.005em; color: rgba(255, 255, 255, .86); white-space: nowrap; transition: background .2s ease, color .2s ease; }
+.atv-dsc .atv-dsc__chip:hover { background: rgba(255, 255, 255, .18); color: #fff; }
+.atv-dsc .atv-dsc__chip.is-on { background: #fff; color: #000; box-shadow: none; }
+.atv-dsc__chip--ph { width: 104px; box-shadow: none !important; }
+.atv-dsc__chip--ph:first-child { width: 250px; }
+.atv-dsc .atv-dsc__mine { flex: none; display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 13px; border-radius: 999px; background: rgba(255, 255, 255, .1); -webkit-backdrop-filter: blur(24px) saturate(1.6); backdrop-filter: blur(24px) saturate(1.6); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); font-size: 14.5px; font-weight: 600; color: rgba(255, 255, 255, .9); white-space: nowrap; transition: background .2s ease, color .2s ease; }
+.atv-dsc .atv-dsc__mine svg { width: 18px; height: 18px; }
+.atv-dsc .atv-dsc__mine:hover { background: #fff; color: #000; }
+.atv-dsc button:focus-visible, .atv-tc button:focus-visible, .atv-dp button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+/* Einladung zum Geschmacks-Check */
+.atv-dsc__note { padding: 0 var(--tv-gutter); }
+.atv-dsc__note:empty { display: none; }
+.atv-dsc__invite { display: flex; align-items: center; gap: 16px; margin-top: clamp(18px, 2vw, 30px); padding: 14px 16px 14px 18px; border-radius: 20px; background: linear-gradient(120deg, rgba(255, 255, 255, .11), rgba(255, 255, 255, .04)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+.atv-dsc__inviteic { flex: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, .14); }
+.atv-dsc__inviteic svg { width: 21px; height: 21px; }
+.atv-dsc__invitetext { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.atv-dsc__invitetext strong { font-size: clamp(15px, 1.1vw, 18px); font-weight: 700; letter-spacing: -.01em; }
+.atv-dsc__invitetext span { font-size: clamp(13px, .95vw, 15px); color: rgba(255, 255, 255, .64); }
+.atv-dsc .atv-dsc__invitego { flex: none; height: 40px; padding: 0 18px; border-radius: 999px; background: #fff; color: #000; font-size: 14.5px; font-weight: 700; white-space: nowrap; transition: transform .2s var(--tv-ease); }
+.atv-dsc .atv-dsc__invitego:hover { transform: scale(1.04); }
+/* Fuß: woraus die Empfehlungen entstehen */
+.atv-dsc__foot { display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: clamp(20px, 3vw, 48px); padding: 0 var(--tv-gutter); text-align: center; }
+.atv-dsc__foot:empty { display: none; }
+.atv-dsc__foot p { margin: 0; max-width: 520px; font-size: 14px; line-height: 1.45; color: rgba(255, 255, 255, .5); }
+.atv-dsc__footrow { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.atv-dsc .atv-dsc__footbtn { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px 0 13px; border-radius: 999px; background: rgba(255, 255, 255, .09); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .11); font-size: 14.5px; font-weight: 600; color: rgba(255, 255, 255, .88); transition: background .2s ease, color .2s ease; }
+.atv-dsc .atv-dsc__footbtn svg { width: 18px; height: 18px; }
+.atv-dsc .atv-dsc__footbtn:hover { background: #fff; color: #000; }
+/* Hinweis statt Inhalt (aus, Seerr nicht erreichbar, nichts gefunden, kein Netz) */
+.atv-dsc__msg { min-height: calc(100vh - 260px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 60px 24px 40px; text-align: center; animation: atv-dsc-rise .32s var(--tv-ease) both; }
+.atv-dsc__msgic { width: 56px; height: 56px; margin-bottom: 8px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); color: rgba(255, 255, 255, .86); }
+.atv-dsc__msgic svg { width: 26px; height: 26px; }
+.atv-dsc__msg h2 { margin: 0; font-size: clamp(24px, 2.2vw, 36px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; text-wrap: balance; }
+.atv-dsc__msg p { margin: 0; max-width: 460px; font-size: clamp(15px, 1.1vw, 18px); line-height: 1.45; color: rgba(255, 255, 255, .64); text-wrap: pretty; }
+.atv-dsc__msgacts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 14px; }
+html.atv-js .atv-dsc__msgacts .atv-pill { height: 46px; min-width: 0; padding: 0 24px; font-size: 16px; }
+/* Kopfleiste und Handy-Leiste */
+html.atv-pg-discover header .MuiToolbar-root > .MuiStack-root a.MuiButton-root.atv-nav-disc { color: #fff !important; }
 @media (max-width: 800px) {
-  /* lange Überschriften („Weil du … gesehen hast“) brechen am Handy um, statt abgeschnitten zu werden */
-  html.atv-js .atv-disc .atv-shelf__title { font-size: 19px; font-weight: 800; letter-spacing: -.01em; white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  html.atv-pg-discover .atv-mb__back { display: flex; }
+  /* ruhiger Verlauf oben: Was unter den festen Knöpfen der Handy-Leiste durchläuft, tritt zurück */
+  html.atv-pg-discover.atv-mbar-on body::before { content: ""; position: fixed; left: 0; right: 0; top: 0; z-index: 1300; height: calc(env(safe-area-inset-top, 0px) + 76px); pointer-events: none; background: linear-gradient(to bottom, rgba(0, 0, 0, .78), rgba(0, 0, 0, 0)); }
+}
+/* Startseite: die Reihen schließen nahtlos an Jellyfins Reihen an */
+html.atv-js .atv-dsc-home:empty { display: none; }
+/* Detailseite: Jellyfins Abschnitt hat schon seinen Rand */
+html.atv-js .atv-dr--detail .atv-shelf__title { font-size: var(--tv-shelf-title); }
+
+/* ---------- Hinweis mit Knopf („Rückgängig“, „Ansehen“) ---------- */
+.atv-toast:has(.atv-toast__act) { pointer-events: auto; display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 24px); padding: 6px 6px 6px 18px; box-sizing: border-box; }
+.atv-toast__msg { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.atv-toast__act { flex: none; height: 34px; padding: 0 14px; border: 0; border-radius: 999px; background: #fff; color: #000; font: 700 13.5px var(--tv-font); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.atv-toast:not(.is-on) .atv-toast__act { pointer-events: none; }
+
+/* ---------- Menü an der Karte, am Handy als Sheet ---------- */
+html.atv-js .atv-menu--dsc { min-width: 252px; }
+.atv-sheet--acts .atv-sheet__box { width: min(440px, 100%); }
+.atv-sheet__head { display: flex; align-items: center; gap: 14px; padding: 18px 56px 14px 18px; }
+.atv-sheet__thumb { flex: none; width: 54px; aspect-ratio: 2 / 3; border-radius: 8px; overflow: hidden; background: #2b2b2e; }
+.atv-sheet__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .3s ease; }
+.atv-sheet__thumb img.is-in { opacity: 1; }
+.atv-sheet__headtext { min-width: 0; }
+.atv-sheet__head .atv-sheet__title { margin: 0 0 3px; font-size: 19px; line-height: 1.2; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.atv-sheet__head .atv-sheet__series { display: flex; flex-wrap: wrap; align-items: center; font-size: 13.5px; }
+.atv-sheet__why { margin-top: 3px; font-size: 13.5px; color: rgba(255, 255, 255, .8); }
+.atv-sheet__acts { padding: 0 8px 10px; }
+.atv-sheet__acts .atv-sheet__act { display: flex; align-items: center; gap: 16px; width: 100%; min-height: 54px; padding: 0 14px; border-radius: 12px; font-size: 16.5px; font-weight: 500; color: #fff; text-align: left; }
+.atv-sheet__acts .atv-sheet__act + .atv-sheet__act { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07); }
+.atv-sheet__acts .atv-sheet__act svg { width: 22px; height: 22px; flex: none; opacity: .9; }
+.atv-sheet__acts .atv-sheet__act:active { background: rgba(255, 255, 255, .1); }
+@media (hover: hover) { .atv-sheet__acts .atv-sheet__act:hover { background: rgba(255, 255, 255, .08); } }
+
+/* ---------- Staffel-Fenster der Anfrage ---------- */
+.atv-sheet--seasons .atv-sheet__box { width: min(520px, 100%); display: flex; flex-direction: column; overflow: hidden; }
+.atv-sheet--seasons .atv-sheet__body { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; padding: 22px 20px 12px; }
+.atv-sheet--seasons .atv-sheet__body::-webkit-scrollbar { display: none; }
+.atv-sheet--seasons .atv-sheet__title { padding-right: 40px; }
+.atv-ss { display: flex; flex-direction: column; margin-top: 16px; border-radius: 16px; background: rgba(255, 255, 255, .055); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); overflow: hidden; }
+.atv-ss__row { position: relative; display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 8px 16px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.atv-ss__row + .atv-ss__row { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07); }
+.atv-ss__row input { position: absolute; opacity: 0; pointer-events: none; }
+.atv-ss__box { position: relative; flex: none; width: 24px; height: 24px; border-radius: 50%; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .38); transition: background .18s ease, box-shadow .18s ease; }
+.atv-ss__box::after { content: ""; position: absolute; left: 8px; top: 4.5px; width: 6px; height: 11px; border: solid #000; border-width: 0 2.5px 2.5px 0; transform: rotate(45deg) scale(.6); opacity: 0; transition: opacity .18s ease, transform .18s var(--tv-ease); }
+.atv-ss__row.is-on .atv-ss__box { background: #fff; box-shadow: none; }
+.atv-ss__row.is-on .atv-ss__box::after { opacity: 1; transform: rotate(45deg); }
+.atv-ss__row input:focus-visible + .atv-ss__box { outline: 2px solid #fff; outline-offset: 3px; }
+.atv-ss__text { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.atv-ss__text b { font-size: 16px; font-weight: 600; }
+.atv-ss__text small { font-size: 13px; color: rgba(255, 255, 255, .56); }
+.atv-ss__row em { margin-left: auto; flex: none; padding: 5px 10px; border-radius: 999px; background: rgba(255, 255, 255, .08); font-style: normal; font-size: 11.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: rgba(255, 255, 255, .6); }
+.atv-ss__row.is-done { cursor: default; }
+.atv-ss__row.is-done .atv-ss__box { box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .13); }
+.atv-ss__row.is-done .atv-ss__text b { color: rgba(255, 255, 255, .5); }
+/* „Alle Staffeln“ als Schalter */
+.atv-ss__row--all { min-height: 62px; background: rgba(255, 255, 255, .04); }
+.atv-ss__row--all .atv-ss__box { order: 2; margin-left: auto; width: 48px; height: 29px; border-radius: 999px; background: rgba(120, 120, 128, .42); box-shadow: none; }
+.atv-ss__row--all .atv-ss__box::after { left: 2.5px; top: 2.5px; width: 24px; height: 24px; border: 0; border-radius: 50%; background: #fff; transform: none; opacity: 1; box-shadow: 0 2px 6px rgba(0, 0, 0, .3); transition: transform .22s var(--tv-ease), background .22s ease; }
+.atv-ss__row--all.is-on .atv-ss__box { background: #fff; }
+.atv-ss__row--all.is-on .atv-ss__box::after { transform: translateX(19px); background: #111; }
+.atv-ss__row--ph { cursor: default; margin: 6px 12px; min-height: 44px; border-radius: 10px; box-shadow: none !important; }
+.atv-ss__msg { margin: 0; padding: 18px 16px; font-size: 15px; color: rgba(255, 255, 255, .64); }
+.atv-ss__quality { margin-top: 22px; }
+.atv-ss__quality[hidden] { display: none; }
+.atv-ss__h { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(255, 255, 255, .5); }
+.atv-ss__quality .atv-xd__seasons { gap: 8px; }
+.atv-ss__quality .atv-xd__season { height: 38px; padding: 0 15px; font-size: 14px; }
+.atv-ss__foot { flex: none; display: flex; gap: 10px; padding: 12px 20px calc(18px + env(safe-area-inset-bottom, 0px)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08); }
+html.atv-js .atv-ss__foot .atv-pill { flex: 1 1 0; min-width: 0; height: 48px; padding: 0 16px; font-size: 16px; border: 0; cursor: pointer; font-family: inherit; }
+html.atv-js .atv-ss__foot .atv-pill--glass { flex: 0 1 34%; background: rgba(120, 120, 128, .3); -webkit-backdrop-filter: none; backdrop-filter: none; }
+html.atv-js .atv-ss__foot .atv-pill:disabled { opacity: .4; cursor: default; transform: none; }
+html.atv-js .atv-ss__foot .atv-pill svg { width: 18px; height: 18px; }
+
+/* ---------- Anfrage-Ansicht: Übereinstimmung und Begründung, Knöpfe ---------- */
+.atv-xd__why { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; font-size: max(13px, calc(22 * var(--atv-u, .052vw))); font-weight: 600; color: #fff; }
+html.atv-js .atv-xd .atv-rq { order: 0; }
+html.atv-js .atv-xd .atv-detail__actions > .atv-pill { flex: none; }   /* lange Beschriftung („Weitere Staffeln anfragen“) nie gestaucht */
+
+/* ---------- Geschmacks-Check ---------- */
+.atv-tc { position: fixed; inset: 0; z-index: 1460; display: flex; flex-direction: column; outline: 0; background: #000 radial-gradient(110% 70% at 50% -12%, #23232a 0%, #0a0a0c 46%, #000 72%); animation: atv-tc-in .3s var(--tv-ease); }
+.atv-tc.is-out { opacity: 0; transition: opacity .2s linear; }
+@keyframes atv-tc-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.atv-tc__top { position: relative; flex: none; display: flex; align-items: center; gap: 12px; min-height: 64px; padding: max(12px, env(safe-area-inset-top, 0px)) max(16px, calc(var(--tv-gutter) - 8px)) 8px; }
+.atv-tc .atv-tc__back { flex: none; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .13); }
+.atv-tc .atv-tc__back[hidden], .atv-tc__steps[hidden], .atv-tc .atv-tc__skip[hidden] { display: none; }
+.atv-tc__back svg { width: 24px; height: 24px; }
+.atv-tc__steps { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); display: flex; gap: 6px; }
+.atv-tc__steps i { width: 30px; height: 4px; border-radius: 4px; background: rgba(255, 255, 255, .2); transition: background .25s ease; }
+.atv-tc__steps i.is-on { background: #fff; }
+.atv-tc__steps i.is-done { background: rgba(255, 255, 255, .62); }
+.atv-tc .atv-tc__later { margin-left: auto; height: 40px; padding: 0 17px; border-radius: 999px; background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); font-size: 14.5px; font-weight: 600; color: rgba(255, 255, 255, .9); transition: background .2s ease, color .2s ease; }
+.atv-tc .atv-tc__later:hover { background: #fff; color: #000; }
+.atv-tc__scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding: 0 var(--tv-gutter) 150px; }
+.atv-tc__scroll::-webkit-scrollbar { display: none; }
+.atv-tc__head { max-width: 760px; margin: clamp(6px, 2.4vh, 32px) auto clamp(20px, 3.4vh, 40px); text-align: center; }
+.atv-tc__title { margin: 0; font-size: clamp(28px, 3.5vw, 54px); font-weight: 800; letter-spacing: -.028em; line-height: 1.05; text-wrap: balance; }
+.atv-tc__hint { margin: 12px auto 0; max-width: 560px; font-size: clamp(15px, 1.15vw, 19px); line-height: 1.4; color: rgba(255, 255, 255, .64); text-wrap: pretty; }
+.atv-tc__msg { margin: 40px 0; text-align: center; font-size: 16px; color: rgba(255, 255, 255, .64); }
+/* Schritt 1: Welten */
+.atv-tc__worlds { display: grid; grid-template-columns: repeat(auto-fill, minmax(clamp(150px, 17vw, 244px), 1fr)); gap: clamp(12px, 1.4vw, 22px); max-width: 1340px; margin: 0 auto; }
+.atv-tc .atv-tc__world { position: relative; display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 20px 12px 16px; border-radius: 22px; background: rgba(255, 255, 255, .055); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .09); transition: transform .22s var(--tv-ease), background .22s ease, box-shadow .22s ease; }
+.atv-tc__fan { position: relative; display: block; width: 100%; aspect-ratio: 5 / 3.3; }
+.atv-tc__fan img { position: absolute; left: 50%; bottom: 0; width: 35%; aspect-ratio: 2 / 3; object-fit: cover; border-radius: 9px; background: #232326; box-shadow: 0 8px 22px rgba(0, 0, 0, .5); transform-origin: 50% 100%; filter: saturate(.78) brightness(.74); transition: transform .3s var(--tv-ease), filter .3s ease; }
+.atv-tc__fan img:nth-child(1) { transform: translateX(-122%) rotate(-7deg) translateY(3%); }
+.atv-tc__fan img:nth-child(2) { z-index: 1; width: 39%; transform: translateX(-50%); }
+.atv-tc__fan img:nth-child(3) { transform: translateX(22%) rotate(7deg) translateY(3%); }
+.atv-tc__worldname { font-size: clamp(15px, 1.2vw, 19px); font-weight: 700; letter-spacing: -.01em; }
+.atv-tc__tick { position: absolute; top: 12px; right: 12px; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #fff; color: #000; opacity: 0; transform: scale(.6); transition: opacity .2s ease, transform .2s var(--tv-ease); }
+.atv-tc__tick svg { width: 17px; height: 17px; }
+.atv-tc .atv-tc__world[aria-pressed="true"] { background: rgba(255, 255, 255, .14); box-shadow: inset 0 0 0 2px #fff; }
+.atv-tc .atv-tc__world[aria-pressed="true"] .atv-tc__fan img { filter: none; }
+.atv-tc .atv-tc__world[aria-pressed="true"] .atv-tc__fan img:nth-child(1) { transform: translateX(-132%) rotate(-10deg) translateY(2%); }
+.atv-tc .atv-tc__world[aria-pressed="true"] .atv-tc__fan img:nth-child(2) { transform: translateX(-50%) translateY(-5%); }
+.atv-tc .atv-tc__world[aria-pressed="true"] .atv-tc__fan img:nth-child(3) { transform: translateX(32%) rotate(10deg) translateY(2%); }
+.atv-tc .atv-tc__world[aria-pressed="true"] .atv-tc__tick { opacity: 1; transform: none; }
+@media (hover: hover) { .atv-tc .atv-tc__world:hover { background: rgba(255, 255, 255, .1); } .atv-tc .atv-tc__world[aria-pressed="true"]:hover { background: rgba(255, 255, 255, .17); } }
+.atv-tc__worlds.is-ph > span { display: block; aspect-ratio: 1 / .92; border-radius: 22px; }
+/* Schritt 2: Titel */
+.atv-tc__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(clamp(98px, 10.4vw, 164px), 1fr)); gap: clamp(10px, 1.2vw, 18px); max-width: 1500px; margin: 0 auto; }
+.atv-tc .atv-tc__item { position: relative; display: block; aspect-ratio: 2 / 3; border-radius: clamp(8px, .8vw, 12px); overflow: hidden; background: #1c1c1f; transition: transform .2s var(--tv-ease), box-shadow .2s ease; }
+.atv-tc__item img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .3s ease, filter .22s ease; }
+.atv-tc__item img.is-in { opacity: 1; }
+.atv-tc__name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.atv-tc__noimg { position: absolute; inset: 0; display: flex; align-items: flex-end; padding: 12%; font-size: 13px; font-weight: 700; line-height: 1.2; text-align: left; color: rgba(255, 255, 255, .82); }
+.atv-tc__mark { position: absolute; top: 7px; right: 7px; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(.6); transition: opacity .18s ease, transform .2s var(--tv-ease); }
+.atv-tc__mark svg { width: 16px; height: 16px; }
+.atv-tc .atv-tc__item.is-like { box-shadow: 0 0 0 3px #fff; }
+.atv-tc .atv-tc__item.is-like .atv-tc__mark { opacity: 1; transform: none; background: #fff; color: #000; }
+.atv-tc .atv-tc__item.is-no img { filter: grayscale(1) brightness(.36); }
+.atv-tc .atv-tc__item.is-no .atv-tc__mark { opacity: 1; transform: none; background: rgba(60, 60, 64, .9); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2); }
+@media (hover: hover) { .atv-tc .atv-tc__item:hover { transform: scale(1.035); } }
+.atv-tc__grid.is-ph > span { display: block; aspect-ratio: 2 / 3; border-radius: 10px; }
+/* fester Fuß */
+.atv-tc__foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; display: flex; align-items: center; gap: 12px; padding: 34px max(16px, var(--tv-gutter)) calc(18px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(to top, rgba(0, 0, 0, .97) 58%, rgba(0, 0, 0, 0)); pointer-events: none; }
+.atv-tc__foot > * { pointer-events: auto; }
+.atv-tc__count { margin-right: auto; font-size: 15px; font-weight: 600; color: rgba(255, 255, 255, .72); font-variant-numeric: tabular-nums; }
+.atv-tc .atv-tc__skip { height: 50px; padding: 0 20px; border-radius: 999px; font-size: 16px; font-weight: 600; color: rgba(255, 255, 255, .8); transition: color .2s ease, background .2s ease; }
+.atv-tc .atv-tc__skip:hover { color: #fff; background: rgba(255, 255, 255, .1); }
+html.atv-js .atv-tc .atv-tc__go { height: 50px; min-width: 190px; padding: 0 28px; font-size: 17px; border: 0; cursor: pointer; font-family: inherit; }
+html.atv-js .atv-tc .atv-tc__go:disabled { opacity: .32; cursor: default; transform: none; }
+
+/* ---------- Geschmack verfeinern: ein Titel nach dem anderen ---------- */
+.atv-rf .atv-tc__top { justify-content: space-between; }
+.atv-rf__count { font-size: 15px; font-weight: 600; color: rgba(255, 255, 255, .72); font-variant-numeric: tabular-nums; }
+.atv-rf__stage { flex: 1 1 auto; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 4px 24px 0; overflow: hidden; }
+.atv-rf__card { display: flex; flex-direction: column; align-items: center; text-align: center; max-width: 100%; touch-action: none; transition: transform .24s var(--tv-ease), opacity .22s ease; }
+.atv-rf__card.is-in { animation: atv-rf-in .28s var(--tv-ease) both; }
+@keyframes atv-rf-in { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+.atv-rf__pic { position: relative; height: min(52vh, 560px); aspect-ratio: 2 / 3; border-radius: 18px; overflow: hidden; background: #1c1c1f; box-shadow: 0 30px 70px rgba(0, 0, 0, .6), inset 0 0 0 1px rgba(255, 255, 255, .08); }
+.atv-rf__pic img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .25s ease; }
+.atv-rf__pic img.is-in { opacity: 1; }
+.atv-rf__title { margin: clamp(14px, 2.4vh, 26px) 0 0; max-width: 640px; font-size: clamp(22px, 2.3vw, 36px); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; text-wrap: balance; }
+.atv-rf__meta { margin: 8px 0 0; font-size: clamp(14px, 1.05vw, 17px); color: rgba(255, 255, 255, .62); }
+.atv-rf__stamp { position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%) scale(.9); padding: 9px 16px; border-radius: 999px; background: #fff; color: #000; font-size: 15px; font-weight: 800; white-space: nowrap; opacity: 0; transition: opacity .14s ease, transform .18s var(--tv-ease); }
+.atv-rf__card.is-like .atv-rf__stamp--like, .atv-rf__card.is-dislike .atv-rf__stamp--dislike, .atv-rf__card.is-skip .atv-rf__stamp--skip { opacity: 1; transform: translate(-50%, -50%); }
+.atv-rf__card.is-out { opacity: 0; pointer-events: none; }
+.atv-rf__card.is-out.is-like { transform: translateX(46vw) rotate(9deg); }
+.atv-rf__card.is-out.is-dislike { transform: translateX(-46vw) rotate(-9deg); }
+.atv-rf__card.is-out.is-skip { transform: translateY(-30vh); }
+.atv-rf__card--ph { height: min(52vh, 560px); aspect-ratio: 2 / 3; border-radius: 18px; background: rgba(255, 255, 255, .06); }
+.atv-rf__acts { flex: none; display: flex; justify-content: center; align-items: flex-start; gap: clamp(18px, 3vw, 44px); padding: clamp(14px, 2.6vh, 30px) 16px calc(clamp(18px, 3.4vh, 40px) + env(safe-area-inset-bottom, 0px)); }
+.atv-rf__acts[hidden] { display: none; }
+.atv-tc .atv-rf__btn { display: flex; flex-direction: column; align-items: center; gap: 9px; width: 108px; font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, .86); }
+.atv-rf__ic { width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); transition: transform .2s var(--tv-ease), background .2s ease, color .2s ease; }
+.atv-rf__ic svg { width: 26px; height: 26px; }
+.atv-rf__btn--like .atv-rf__ic { width: 72px; height: 72px; background: #fff; color: #000; }
+.atv-rf__btn--skip .atv-rf__ic { width: 52px; height: 52px; margin-top: 10px; }
+.atv-rf__btn--skip .atv-rf__ic svg { transform: rotate(-90deg); }
+.atv-rf__btn.is-hit .atv-rf__ic { transform: scale(1.14); }
+@media (hover: hover) { .atv-rf__btn:hover .atv-rf__ic { transform: scale(1.08); background: #fff; color: #000; } }
+
+/* ---------- „Dein Geschmack“ ---------- */
+.atv-sheet--taste .atv-sheet__box { width: min(740px, 100%); }
+.atv-dp.atv-sheet__body { padding: 26px 24px 28px; }
+.atv-dp .atv-sheet__title { margin: 0; font-size: 28px; padding-right: 44px; }
+.atv-dp__intro { margin: 10px 0 0; max-width: 600px; font-size: 14.5px; line-height: 1.5; color: rgba(255, 255, 255, .64); }
+.atv-dp__none { margin: 26px 0 6px; font-size: 15px; line-height: 1.45; color: rgba(255, 255, 255, .64); }
+.atv-dp__sec { margin-top: 24px; }
+.atv-dp__sec h3 { display: flex; align-items: baseline; gap: 8px; margin: 0 0 11px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(255, 255, 255, .5); }
+.atv-dp__n { font-weight: 600; letter-spacing: 0; color: rgba(255, 255, 255, .36); }
+.atv-dp__chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.atv-dp .atv-dp__chip { position: relative; display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 999px; overflow: hidden; background: rgba(255, 255, 255, .07); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); font-size: 14.5px; font-weight: 600; color: #fff; white-space: nowrap; transition: color .2s ease, background .2s ease; }
+/* Füllung von links = Gewicht des Merkmals */
+.atv-dp__chip::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: var(--w, 0%); background: rgba(255, 255, 255, .17); transition: opacity .2s ease; }
+.atv-dp__chip > * { position: relative; }
+.atv-dp__chip small { font-size: 12px; font-weight: 500; color: rgba(255, 255, 255, .56); }
+.atv-dp__chip .atv-dp__off { display: none; width: 15px; height: 15px; opacity: .8; }
+.atv-dp .atv-dp__chip.is-muted { color: rgba(255, 255, 255, .42); background: transparent; }
+.atv-dp__chip.is-muted::before { opacity: 0; }
+.atv-dp__chip.is-muted span { text-decoration: line-through; text-decoration-color: rgba(255, 255, 255, .3); }
+.atv-dp__chip.is-muted .atv-dp__off { display: block; }
+@media (hover: hover) { .atv-dp .atv-dp__chip:hover { background: rgba(255, 255, 255, .13); } }
+.atv-dp__chips.is-ph > span { width: 110px; box-shadow: none; }
+.atv-dp__chips.is-ph { margin-top: 24px; }
+html.atv-js .atv-dp .atv-dp__refine { display: flex; width: fit-content; height: 42px; min-width: 0; margin-top: 26px; padding: 0 18px 0 14px; font-size: 15px; background: rgba(120, 120, 128, .3); }
+html.atv-js .atv-dp .atv-dp__refine:hover { background: #fff; }
+html.atv-js .atv-dp .atv-dp__refine svg { width: 18px; height: 18px; }
+.atv-dp__list { display: flex; flex-direction: column; }
+.atv-dp__item { display: flex; align-items: center; gap: 13px; padding: 8px 0; transition: opacity .2s ease, transform .2s ease; }
+.atv-dp__item + .atv-dp__item { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07); }
+.atv-dp__item.is-gone { opacity: 0; transform: translateX(10px); }
+.atv-dp__thumb { flex: none; width: 40px; aspect-ratio: 2 / 3; border-radius: 6px; overflow: hidden; background: #2b2b2e; }
+.atv-dp__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0; transition: opacity .3s ease; }
+.atv-dp__thumb img.is-in { opacity: 1; }
+.atv-dp__itemtext { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.atv-dp__itemtext strong { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.atv-dp__itemtext span { font-size: 13px; color: rgba(255, 255, 255, .55); }
+.atv-dp .atv-dp__take { flex: none; height: 34px; padding: 0 14px; border-radius: 999px; background: rgba(255, 255, 255, .1); font-size: 13.5px; font-weight: 600; color: #fff; transition: background .2s ease, color .2s ease; }
+.atv-dp .atv-dp__take:hover { background: #fff; color: #000; }
+.atv-dp .atv-dp__take:disabled { opacity: .4; }
+
+/* ---------- Handy ---------- */
+@media (max-width: 800px) {
+  html.atv-js .atv-dr .atv-shelf__head { padding: 0 16px; gap: 10px; }
+  html.atv-js .atv-dr .atv-shelf__title { font-size: 19px; font-weight: 800; letter-spacing: -.01em; white-space: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  html.atv-js .atv-dr .atv-shelf__scroller { gap: 10px; padding: 12px 16px 14px; scroll-padding: 0 16px; }
+  html.atv-js .atv-dr { --dc-w: min(36vw, 160px); margin-bottom: 26px; }
+  html.atv-js .atv-dr--wide { --dc-w: min(64vw, 300px); }
+  html.atv-js .atv-dr--top10 { --dc-w: min(42vw, 184px); }
+  html.atv-js .atv-dr--top10 .atv-shelf__scroller { gap: 12px; }
+  html.atv-js .atv-dc .atv-dc__name { font-size: 13px; margin-top: 8px; }
+  html.atv-js .atv-dc .atv-dc__sub { font-size: 12px; }
+  html.atv-js .atv-dc .atv-dc__flag, html.atv-js .atv-seerr__card .atv-dc__flag { top: 6px; left: 6px; height: 24px; min-width: 24px; font-size: 11px; }
+  html.atv-js .atv-dc .atv-dc__flag svg, html.atv-js .atv-seerr__card .atv-dc__flag svg { width: 14px; height: 14px; }
+  .atv-dsc { padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
+  .atv-dh { height: min(150vw, 82vh); min-height: 480px; }
+  .atv-dh__art { object-position: 50% 16%; }
+  .atv-dh__shade { background: linear-gradient(to top, #000 0%, #000 10%, rgba(0, 0, 0, .88) 30%, rgba(0, 0, 0, .46) 50%, rgba(0, 0, 0, 0) 68%), linear-gradient(to bottom, rgba(0, 0, 0, .52) 0%, rgba(0, 0, 0, 0) 24%); }
+  .atv-dh__lock { left: 16px; right: 16px; width: auto; bottom: 34px; align-items: center; text-align: center; gap: 8px; }
+  .atv-dh__title { font-size: 31px; letter-spacing: -.025em; line-height: 1.04; }
+  .atv-dh__title.is-mid { font-size: 27px; }
+  .atv-dh__title.is-long { font-size: 23px; }
+  .atv-dh__logo { max-width: min(280px, 72vw); max-height: 86px; object-position: center bottom; margin: 0 auto; }
+  .atv-dh__meta { justify-content: center; font-size: 14px; }
+  .atv-dh__why { font-size: 14px; }
+  .atv-dh__desc { font-size: 14px; line-height: 1.38; -webkit-line-clamp: 2; color: rgba(255, 255, 255, .72); }
+  .atv-dh__act { width: 100%; gap: 10px; margin-top: 8px; justify-content: center; }
+  html.atv-js .atv-dh .atv-pill { flex: 1 1 0; min-width: 0; height: 46px; padding: 0 16px; font-size: 17px; }
+  html.atv-js .atv-dh .atv-circle { width: 46px; height: 46px; }
+  .atv-dh .atv-rq { flex: 1 1 0; min-width: 0; min-height: 46px; font-size: 15px; padding: 6px 16px 6px 12px; border-radius: 23px; }
+  .atv-dh__dots { right: auto; left: 50%; transform: translateX(-50%); bottom: 12px; }
+  .atv-dh__nav { display: none; }
+  .atv-dh__ph--btn { align-self: stretch; width: auto; }
+  .atv-dsc__bar { margin-top: 8px; padding: 0 0 0 16px; gap: 0; }
+  .atv-dsc--nohero .atv-dsc__bar { padding-top: calc(env(safe-area-inset-top, 0px) + 66px); }
+  .atv-dsc__filterwrap { --ml: 20px; --mr: 20px; }
+  .atv-dsc__filters { padding-right: 16px; gap: 8px; }
+  .atv-dsc .atv-dsc__segbtn { padding: 0 13px; font-size: 14px; }
+  .atv-dsc .atv-dsc__chip { padding: 0 14px; font-size: 14px; }
+  .atv-dsc .atv-dsc__mine { width: 40px; padding: 0; justify-content: center; margin: 0 16px 0 8px; }
+  .atv-dsc .atv-dsc__mine span { display: none; }
+  .atv-dsc .atv-dsc__mine--refine { margin-right: 0; background: #fff; color: #000; }
+  .atv-rf__pic, .atv-rf__card--ph { height: min(46vh, 440px); }
+  .atv-tc .atv-rf__btn { width: 96px; font-size: 13px; }
+  .atv-dsc__note, .atv-dsc__foot { padding: 0 16px; }
+  .atv-dsc__invite { flex-wrap: wrap; gap: 12px; padding: 14px; }
+  .atv-dsc__inviteic { display: none; }
+  .atv-dsc .atv-dsc__invitego { flex: 1 1 100%; height: 44px; }
+  .atv-dsc__rows { margin-top: 22px; }
+  .atv-dsc__msg { min-height: calc(100vh - 220px); padding: 30px 24px 30px; }
+  .atv-rq { white-space: normal; }
+  .atv-xd__why { justify-content: center; text-align: center; order: 2; font-size: 14px; }
+  html.atv-js .atv-xd .atv-rq { flex: 1 1 100%; justify-content: center; border-radius: 24px; font-size: 15.5px; }
+  .atv-toast:has(.atv-toast__act) { width: max-content; }
+  .atv-sheet--seasons .atv-sheet__box { padding-bottom: 0; max-height: 90vh; }
+  .atv-sheet--taste .atv-sheet__box { max-height: 92vh; }
+  .atv-dp.atv-sheet__body { padding: 22px 18px 26px; }
+  .atv-tc__top { min-height: 60px; padding-left: 16px; padding-right: 16px; }
+  .atv-tc__steps { bottom: 22px; }
+  .atv-tc__scroll { padding: 0 16px 170px; }
+  .atv-tc__head { margin: 6px auto 20px; }
+  .atv-tc__worlds { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .atv-tc .atv-tc__world { padding: 16px 8px 13px; gap: 11px; border-radius: 18px; }
+  .atv-tc__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px; }
+  .atv-tc__foot { flex-wrap: wrap; gap: 8px 10px; padding: 44px 16px calc(14px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(to top, rgba(0, 0, 0, .98) 78%, rgba(0, 0, 0, 0)); }
+  .atv-tc__count { flex: 1 1 100%; margin: 0; text-align: center; font-size: 14px; }
+  .atv-tc .atv-tc__skip { flex: 0 0 auto; padding: 0 14px; }
+  html.atv-js .atv-tc .atv-tc__go { flex: 1 1 0; min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.atv-js .atv-dc, html.atv-js .atv-dc .atv-dc__art, html.atv-js .atv-dc .atv-dc__img, html.atv-js .atv-dc .atv-dc__more, .atv-dh__slide, .atv-dh__lock, .atv-dh__art, .atv-tip::after,
+  .atv-dsc__heroslot, .atv-dsc__rows, .atv-tc__fan img, .atv-tc .atv-tc__item, .atv-tc .atv-tc__world, .atv-dc__bar i, .atv-ring .atv-ring__arc { transition: none !important; }
+  html.atv-js .atv-dr--in, .atv-dh__slide.is-active .atv-dh__art, .atv-dh__dot.is-active i, .atv-ring.is-busy, .atv-tc, .atv-dsc__msg, html.atv-js .atv-dc--ph .atv-dc__art, .atv-dr__phtitle, .atv-dh__ph, .atv-dsc__chip--ph, .atv-ss__row--ph, .atv-tc .is-ph > span, .atv-dp .is-ph > span { animation: none !important; }
+  .atv-dh__dot.is-active i { transform: scaleX(1); }
 }

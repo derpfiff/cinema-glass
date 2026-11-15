@@ -34,6 +34,12 @@ public class PluginConfiguration : BasePluginConfiguration
     public string SeerrUserId { get; set; } = string.Empty;   // optional: Anfragen laufen als dieser Seerr-Nutzer
     public bool Discover { get; set; } = true;         // „Entdecken“: Empfehlungen für fehlende Titel (nur mit eingerichtetem Seerr)
 
+    // Ruhezeit der Download-Dienste (freiwillig, alles leer = aus): In dieser Zeit zeigt der Stand angefragter Titel
+    // „Startet heute/morgen gegen …“ statt „Wird gesucht“. Uhrzeiten als HH:mm in der Zeitzone des Servers.
+    public string DownloadsQuietFrom { get; set; } = string.Empty;
+    public string DownloadsQuietTo { get; set; } = string.Empty;
+    public string DownloadsDeferMarker { get; set; } = string.Empty;   // Textstück im Namen von Qualitätsprofilen, die erst nach der Ruhezeit laden
+
     // Bewertungen über MDBList
     public bool Ratings { get; set; } = false;
     public string MdbListApiKey { get; set; } = string.Empty;

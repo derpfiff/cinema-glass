@@ -3,8 +3,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>Jellyfin.Plugin.CinemaGlass</RootNamespace>
     <AssemblyName>Jellyfin.Plugin.CinemaGlass</AssemblyName>
-    <AssemblyVersion>1.7.2.0</AssemblyVersion>
-    <FileVersion>1.7.2.0</FileVersion>
+    <AssemblyVersion>1.8.0.0</AssemblyVersion>
+    <FileVersion>1.8.0.0</FileVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
@@ -17,6 +17,8 @@
     <Reference Include="MediaBrowser.Common"><HintPath>../lib/MediaBrowser.Common.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="MediaBrowser.Controller"><HintPath>../lib/MediaBrowser.Controller.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="MediaBrowser.Model"><HintPath>../lib/MediaBrowser.Model.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Jellyfin.Data"><HintPath>../lib/Jellyfin.Data.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Jellyfin.Database.Implementations"><HintPath>../lib/Jellyfin.Database.Implementations.dll</HintPath><Private>false</Private></Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Configuration/configPage.html" LogicalName="CinemaGlass.configPage.html" />

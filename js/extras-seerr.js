@@ -27,12 +27,14 @@
         title: 'Nicht in deiner Mediathek', request: 'Anfragen', requested: 'Angefragt', processing: 'In Arbeit',
         partial: 'Teilweise', available: 'Verfügbar', movie: 'Film', series: 'Serie', seasons: 'Staffeln anfragen',
         all: 'Alle Staffeln', cancel: 'Abbrechen', send: 'Anfragen', ok: 'Anfrage gesendet', fail: 'Anfrage fehlgeschlagen',
-        offline: 'Seerr nicht erreichbar', noconn: 'Keine Verbindung zu Seerr', retry: 'Erneut versuchen', season: 'Staffel', episodes: 'Folgen', more: 'Mehr', close: 'Schließen', quality: 'Qualität', standard: 'Standard'
+        offline: 'Seerr nicht erreichbar', noconn: 'Keine Verbindung zu Seerr', retry: 'Erneut versuchen', season: 'Staffel', episodes: 'Folgen', more: 'Mehr', close: 'Schließen', quality: 'Qualität', standard: 'Standard',
+        open: 'Öffnen', moreSeasons: 'Weitere Staffeln anfragen', reqAll: 'Alle Staffeln anfragen', reqOne: '1 Staffel anfragen', reqN: '%1 Staffeln anfragen', noSeasons: 'Zu dieser Serie sind noch keine Staffeln bekannt.'
     } : {
         title: 'Not in your library', request: 'Request', requested: 'Requested', processing: 'Processing',
         partial: 'Partial', available: 'Available', movie: 'Movie', series: 'Series', seasons: 'Request seasons',
         all: 'All seasons', cancel: 'Cancel', send: 'Request', ok: 'Request sent', fail: 'Request failed',
-        offline: 'Seerr unreachable', noconn: 'No connection to Seerr', retry: 'Retry', season: 'Season', episodes: 'episodes', more: 'More', close: 'Close', quality: 'Quality', standard: 'Default'
+        offline: 'Seerr unreachable', noconn: 'No connection to Seerr', retry: 'Retry', season: 'Season', episodes: 'episodes', more: 'More', close: 'Close', quality: 'Quality', standard: 'Default',
+        open: 'Open', moreSeasons: 'Request more seasons', reqAll: 'Request all seasons', reqOne: 'Request 1 season', reqN: 'Request %1 seasons', noSeasons: 'No seasons are known for this show yet.'
     };
 
     // Optik: dieselben Bausteine wie das Theme (Regal, Poster, Detailseite .atv-detail, Pille, Glas-Kreis).
@@ -55,10 +57,6 @@
         '.atv-seerr__name{margin:10px 2px 0;font-size:clamp(12px,.9vw,15px);font-weight:600;line-height:1.25;color:rgba(255,255,255,.92);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
         '.atv-seerr__sub{margin:1px 2px 0;font-size:clamp(11px,.78vw,13px);line-height:1.3;color:rgba(255,255,255,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
         '.atv-seerr__card--noimg .atv-seerr__poster{display:flex;align-items:center;justify-content:center;padding:10px;text-align:center;font-size:13px;font-weight:600;color:rgba(255,255,255,.7)}',
-        '.atv-seerr__status{position:absolute;top:8px;left:8px;display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.2px;background:rgba(0,0,0,.5);color:#fff;-webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}',
-        '.atv-seerr__status i{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block}',
-        '.atv-seerr__status b{font-weight:600;color:#fff}',
-        '.atv-seerr__status--requested{color:#ffd60a}.atv-seerr__status--processing{color:#64d2ff}.atv-seerr__status--partial{color:#ff9f0a}.atv-seerr__status--available{color:#30d158}',
         /* Detailansicht (wie die Detailseite eines Titels aus der Mediathek) */
         '.atv-xd{position:fixed;inset:0;z-index:1200;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;background:var(--atv-bg,#000000);color:#fff;animation:atv-xd-in .28s ease-out;font-family:var(--tv-font,-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter",system-ui,sans-serif)}',
         '@keyframes atv-xd-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}',
@@ -178,7 +176,10 @@
         film: 'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm0 2v2h2V6zm0 4v2h2v-2zm0 4v2h2v-2zm16-8h-2v2h2zm0 4h-2v2h2zm0 4h-2v2h2zM8 6v12h8V6z',
         tv: 'M21 3H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5v2h8v-2h5a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 14H3V5h18z',
         star: 'M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z',
-        play: 'M8 5v14l11-7z'
+        play: 'M8 5v14l11-7z',
+        plus: 'M11 5h2v6h6v2h-6v6h-2v-6H5v-2h6z',
+        check: 'M9.5 16.2 5.3 12l-1.4 1.4 5.6 5.6 12-12-1.4-1.4z',
+        close: 'M18.3 5.71 12 12l6.3 6.29-1.41 1.42L10.59 13.4 4.3 19.71 2.88 18.3 9.17 12 2.88 5.71 4.3 4.29l6.29 6.3 6.3-6.3z'
     };
     function svg(path) {
         var ns = 'http://www.w3.org/2000/svg', s = document.createElementNS(ns, 'svg'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true');
@@ -194,11 +195,10 @@
     // Karte = reines Poster wie in der Mediathek, Titel/Jahr darunter. KEIN Anfragen-Knopf auf der Karte
     // (versehentliche Anfragen): angefragt wird nur in der Detailansicht.
     function card(r) {
-        var c = el('div', 'atv-seerr__card'); c.tabIndex = 0; c.setAttribute('role', 'button');
-        c.setAttribute('aria-label', title(r) + (year(r) ? ' (' + year(r) + ')' : ''));
+        var c = el('div', 'atv-seerr__card'); c.tabIndex = 0; c.setAttribute('role', 'button'); c.__atvR = r;
         var box = el('div', 'atv-seerr__poster'); c.appendChild(box);
         var im = el('img'); im.alt = ''; im.loading = 'lazy';
-        im.addEventListener('error', function () { im.remove(); c.classList.add('atv-seerr__card--noimg'); box.appendChild(document.createTextNode(title(r))); });
+        im.addEventListener('error', function () { im.remove(); c.classList.add('atv-seerr__card--noimg'); box.insertBefore(document.createTextNode(title(r)), box.firstChild); });
         box.appendChild(im); lazyImg(c, im, posterUrl(r.posterPath));
         c.appendChild(el('div', 'atv-seerr__name', title(r)));
         c.appendChild(el('div', 'atv-seerr__sub', [r.mediaType === 'tv' ? T.series : T.movie, year(r)].filter(Boolean).join(' · ')));
@@ -207,43 +207,184 @@
         c.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); openDetail(r, c); } });
         return c;
     }
+    // Stand in der Ecke oben links, überall im Theme derselbe: „+“ auf Glas = fehlt (das Plakat ist dazu eine Spur
+    // gedämpft), Zeichen mit Kurzmarke = angefragt, weißer Punkt mit ▶ = vorhanden. Aussehen: Stylesheet des Themes.
     function setStatus(c, r) {
-        var box = c.querySelector('.atv-seerr__poster') || c;
-        var old = box.querySelector('.atv-seerr__status'); if (old) old.remove();
-        var def = STATUS[statusOf(r)];
-        if (def) { var pill = el('span', 'atv-seerr__status atv-seerr__status--' + def[0]); pill.appendChild(el('i')); pill.appendChild(el('b', null, def[1])); box.appendChild(pill); }
+        if (!c || !c.classList || !c.classList.contains('atv-seerr__card')) return;   // andere Karten führt das Theme selbst nach
+        var box = c.querySelector('.atv-seerr__poster') || c, s = statusOf(r), D = window.__atvDiscover, flag;
+        var rq = D && D.requestOf ? D.requestOf(r.mediaType + ':' + r.id) : null, there = s >= 4, open = s === 2 || s === 3;
+        var old = box.querySelector('.atv-dc__flag'); if (old) old.remove();
+        c.classList.toggle('is-there', there); c.classList.toggle('is-req', open); c.classList.toggle('is-missing', !there && !open);
+        if (open) {
+            flag = el('span', 'atv-dc__flag atv-dc__flag--req');
+            flag.appendChild(D && D.mark ? D.mark(rq) : el('i'));
+            flag.appendChild(el('b', null, (rq && rq.short) || STATUS[s][1]));
+        } else if (there) { flag = el('span', 'atv-dc__flag atv-dc__flag--play'); flag.appendChild(svg(ICON.play)); }
+        else { flag = el('span', 'atv-dc__flag atv-dc__flag--add'); flag.appendChild(svg(ICON.plus)); }
+        box.appendChild(flag);
+        c.setAttribute('aria-label', title(r) + (year(r) ? ' (' + year(r) + ')' : '') + ', ' + (there ? T.available : open ? ((rq && rq.text) || STATUS[s][1]) : T.title));
     }
+    // Neuer Stand der Anfragen vom Server (Theme, „Entdecken“): Marken der sichtbaren Karten nachführen.
+    document.addEventListener('atv-dsc-requests', function () {
+        [].forEach.call(document.querySelectorAll('.atv-seerr__card'), function (c) { if (c.__atvR) setStatus(c, c.__atvR); });
+    });
 
     /* ------------------------------------------------------------ Anfrage */
     // Neuer Stand eines Titels (angefragt, inzwischen vorhanden): Regale, die Ergebnisse zwischenspeichern, hören mit.
     function announce(r) {
         try { document.dispatchEvent(new CustomEvent('atv-seerr-status', { detail: { mediaType: r.mediaType, id: r.id, status: statusOf(r), inLibrary: inLibrary(r) } })); } catch (e) { /* ohne CustomEvent: Stand erst beim nächsten Abruf */ }
     }
+    // seasons: Liste von Staffelnummern oder „all“ (nur Serien).
     function sendRequest(r, seasons, c, quality) {
         var body = { mediaType: r.mediaType, mediaId: r.id };
         // Qualitätsprofil nur mitschicken, wenn bewusst ein anderes als der Standard gewählt wurde
         if (quality && quality.profileId != null) { body.serverId = quality.serverId; body.profileId = quality.profileId; if (quality.rootFolder) body.rootFolder = quality.rootFolder; }
-        if (r.mediaType === 'tv') body.seasons = seasons && seasons.length ? seasons : 'all';
+        if (r.mediaType === 'tv') body.seasons = seasons && seasons !== 'all' && seasons.length ? seasons : 'all';
         return call('/api/v1/request', { method: 'POST', body: body }).then(function (res) {
             r.mediaInfo = r.mediaInfo || {}; r.mediaInfo.status = (res && res.media && res.media.status) || 2;
-            if (c) setStatus(c, r);
+            setStatus(c, r);
             announce(r);
             toast(T.ok);
-            return res;
+            return res || {};
         }).catch(function (e) {
             console.warn('[atv-seerr] request failed', e);
             toast(T.fail + (e.body && e.body.message ? ': ' + e.body.message : ''));
             throw e;
         });
     }
+    // Qualitätsprofile aus Radarr/Sonarr (über Seerr), je Dienst einmal geholt. null: keine Wahl (ein Profil, Dienst schläft).
+    var services = {};
+    function service(kind) {
+        if (services[kind]) return services[kind];
+        services[kind] = call('/api/v1/service/' + kind).then(function (list) {
+            var sv = (list || []).filter(function (x) { return x.isDefault && !x.is4k; })[0] || (list || []).filter(function (x) { return !x.is4k; })[0];
+            return sv ? call('/api/v1/service/' + kind + '/' + sv.id) : null;
+        }).then(function (d) {
+            return d && d.profiles && d.profiles.length > 1 ? { server: d.server, profiles: d.profiles } : null;
+        }).catch(function () { services[kind] = null; return null; });
+        return services[kind];
+    }
+    // Auswahl des Qualitätsprofils als Pillen; Standard = das in Seerr hinterlegte Profil. set(null) = Standard.
+    function qualityChips(box, svc, current, set, name) {
+        var def = svc.server.activeProfileId, cur = current && current.profileId != null ? current.profileId : def, chips = [];
+        box.textContent = '';
+        svc.profiles.forEach(function (pf) {
+            var lab = el('label', 'atv-xd__season' + (pf.id === cur ? ' is-on' : '')); var cb = el('input'); cb.type = 'radio'; cb.name = name; cb.checked = pf.id === cur;
+            lab.appendChild(cb); lab.appendChild(el('span', null, pf.name)); if (pf.id === def) lab.appendChild(el('em', null, T.standard));
+            cb.addEventListener('change', function () {
+                set(pf.id === def ? null : { serverId: svc.server.id, profileId: pf.id, rootFolder: svc.server.activeDirectory });
+                chips.forEach(function (c2) { c2.lab.classList.toggle('is-on', c2.cb.checked); });
+            });
+            chips.push({ lab: lab, cb: cb }); box.appendChild(lab);
+        });
+    }
+
+    /* ------------------------------------------------------------ Staffeln wählen */
+    // Fenster wie in Seerr: „Alle Staffeln“ ist vorgewählt, einzelne lassen sich ab- und anwählen; was schon da oder
+    // angefragt ist, steht gekennzeichnet und gesperrt in der Liste. Dazu, wenn Seerr mehrere kennt, das Qualitätsprofil;
+    // unten wird bestätigt. tvP: Seerrs Auskunft zur Serie, svcP: Profile (beides Promises); send(seasons, quality)
+    // stellt die Anfrage. Ergebnis: Antwort der Anfrage, null bei „Abbrechen“.
+    function seasonSheet(r, tvP, svcP, send) {
+        return new Promise(function (resolve) {
+            var old = document.querySelector('.atv-sheet'); if (old) old.remove();
+            var wrap = el('div', 'atv-sheet atv-sheet--seasons'); wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-modal', 'true'); wrap.setAttribute('aria-label', T.seasons + ': ' + title(r));
+            var box = el('div', 'atv-sheet__box'); wrap.appendChild(box);
+            var x = el('button', 'atv-sheet__close'); x.type = 'button'; x.setAttribute('aria-label', T.close); x.appendChild(svg(ICON.close)); box.appendChild(x);
+            var body = el('div', 'atv-sheet__body'); box.appendChild(body);
+            body.appendChild(el('div', 'atv-sheet__tag', T.seasons.toUpperCase()));
+            body.appendChild(el('h2', 'atv-sheet__title', title(r)));
+            var list = el('div', 'atv-ss'); body.appendChild(list);
+            var qsec = el('div', 'atv-ss__quality'); qsec.hidden = true; body.appendChild(qsec);
+            var foot = el('div', 'atv-ss__foot'), cancel = el('button', 'atv-pill atv-pill--glass'), go = el('button', 'atv-pill'), goText = el('span', null, T.request);
+            cancel.type = go.type = 'button'; cancel.appendChild(el('span', null, T.cancel)); go.appendChild(svg(ICON.plus)); go.appendChild(goText); go.disabled = true;
+            foot.appendChild(cancel); foot.appendChild(go); box.appendChild(foot);
+            for (var i = 0; i < 4; i++) list.appendChild(el('div', 'atv-ss__row atv-ss__row--ph'));
+            var prevOv = document.documentElement.style.overflow, shut = false, rows = [], all = null, quality = null, openedAt = Date.now();
+            function onKey(e) { if (e.key === 'Escape') { e.stopPropagation(); close(null); } }
+            function close(result) {
+                if (shut) return; shut = true;
+                document.removeEventListener('keydown', onKey, true); document.documentElement.style.overflow = prevOv;
+                wrap.classList.add('is-out'); setTimeout(function () { wrap.remove(); }, 180);
+                resolve(result);
+            }
+            function chosen() { return rows.filter(function (x2) { return x2.cb.checked && !x2.cb.disabled; }).map(function (x2) { return x2.n; }); }
+            function update() {
+                var free = rows.filter(function (x2) { return !x2.cb.disabled; }), sel = chosen();
+                rows.forEach(function (x2) { x2.row.classList.toggle('is-on', x2.cb.checked && !x2.cb.disabled); });
+                if (all) { all.cb.checked = free.length > 0 && sel.length === free.length; all.row.classList.toggle('is-on', all.cb.checked); }
+                go.disabled = !sel.length;
+                goText.textContent = !sel.length ? T.request : free.length > 1 && sel.length === free.length ? T.reqAll : sel.length === 1 ? T.reqOne : T.reqN.replace('%1', sel.length);
+            }
+            function row(text, sub, cls) {
+                var lab = el('label', 'atv-ss__row' + (cls ? ' ' + cls : '')), cb = el('input'); cb.type = 'checkbox';
+                var textBox = el('span', 'atv-ss__text'); textBox.appendChild(el('b', null, text)); if (sub) textBox.appendChild(el('small', null, sub));
+                lab.appendChild(cb); lab.appendChild(el('span', 'atv-ss__box')); lab.appendChild(textBox);
+                return { row: lab, cb: cb };
+            }
+            x.addEventListener('click', function () { close(null); });
+            cancel.addEventListener('click', function () { close(null); });
+            // erst einen Augenblick nach dem Öffnen: Der Klick, der das Fenster geöffnet hat, soll es nicht gleich wieder schließen
+            wrap.addEventListener('click', function (e) { if (e.target === wrap && Date.now() - openedAt > 350) close(null); });
+            document.addEventListener('keydown', onKey, true);
+            document.documentElement.style.overflow = 'hidden';
+            document.body.appendChild(wrap);
+            try { x.focus({ preventScroll: true }); } catch (e0) { /* Fokus optional */ }
+            go.addEventListener('click', function () {
+                var free = rows.filter(function (x2) { return !x2.cb.disabled; }), sel = chosen(), locked = rows.length - free.length;
+                go.disabled = true;
+                // „all“ nur, wenn wirklich alles gemeint ist: so nimmt Seerr auch Staffeln mit, die erst noch kommen
+                send(sel.length === free.length && !locked ? 'all' : sel, quality).then(function (res) { close(res || {}); }).catch(function () { go.disabled = false; });
+            });
+            Promise.resolve(tvP).then(function (tv) {
+                if (shut) return;
+                var seasons = ((tv && tv.seasons) || []).filter(function (s) { return s.seasonNumber > 0; }), state = {}, mi = (tv && tv.mediaInfo) || {};
+                (mi.seasons || []).forEach(function (ms) { if (ms.status >= 2) state[ms.seasonNumber] = ms.status; });
+                (mi.requests || []).forEach(function (rq) { if (rq.status !== 3) (rq.seasons || []).forEach(function (sr) { if (!state[sr.seasonNumber]) state[sr.seasonNumber] = 2; }); });
+                list.textContent = '';
+                if (!seasons.length) { list.appendChild(el('p', 'atv-ss__msg', T.noSeasons)); return; }
+                var eps = seasons.reduce(function (a, s) { return a + (s.episodeCount || 0); }, 0);
+                all = row(T.all, seasonCount(seasons.length) + (eps ? ' · ' + eps + ' ' + T.episodes : ''), 'atv-ss__row--all');
+                all.cb.addEventListener('change', function () { rows.forEach(function (x2) { if (!x2.cb.disabled) x2.cb.checked = all.cb.checked; }); update(); });
+                list.appendChild(all.row);
+                seasons.forEach(function (s) {
+                    var it = row(T.season + ' ' + s.seasonNumber, s.episodeCount ? s.episodeCount + ' ' + T.episodes : ''), st = state[s.seasonNumber];
+                    it.n = s.seasonNumber; it.cb.value = String(s.seasonNumber);
+                    if (st) { it.cb.disabled = true; it.row.classList.add('is-done'); it.row.appendChild(el('em', null, st === 5 ? T.available : st === 4 ? T.partial : T.requested)); }
+                    else it.cb.checked = true;                                // „Alle Staffeln“ ist vorgewählt
+                    it.cb.addEventListener('change', update);
+                    rows.push(it); list.appendChild(it.row);
+                });
+                if (!rows.some(function (x2) { return !x2.cb.disabled; })) { all.cb.disabled = true; all.row.classList.add('is-done'); }
+                update();
+            }).catch(function (e) { console.warn('[atv-seerr] seasons', e); if (!shut) { list.textContent = ''; list.appendChild(el('p', 'atv-ss__msg', T.offline)); } });
+            Promise.resolve(svcP).then(function (svc) {
+                if (shut || !svc) return;
+                var chips = el('div', 'atv-xd__seasons');
+                qsec.appendChild(el('h3', 'atv-ss__h', T.quality)); qsec.appendChild(chips); qsec.hidden = false;
+                qualityChips(chips, svc, quality, function (q) { quality = q; }, 'atv-ss-q');
+            });
+        });
+    }
+    function seasonCount(n) { return n + ' ' + (DE ? (n === 1 ? 'Staffel' : 'Staffeln') : (n === 1 ? 'season' : 'seasons')); }
+    // Anfragen ohne die Detailansicht (großes Bild von „Entdecken“): Film mit einem Tipp, Serie über das Staffel-Fenster.
+    function request(r) {
+        if (!apiReady()) return Promise.reject(new Error('api'));
+        injectCss();
+        if (r.mediaType !== 'tv') return sendRequest(r, null, null, null);
+        return seasonSheet(r, call('/api/v1/tv/' + r.id + '?language=' + CFG.language), service('sonarr'), function (seasons, quality) { return sendRequest(r, seasons, null, quality); });
+    }
 
     /* ------------------------------------------------------------ Detailansicht */
     // Vollbild im Stil der Detailseite: Hintergrundbild, Titel, Zeile „Film · Genre“, Beschreibung, Fakten,
     // statt „Abspielen“ die Pille „Anfragen“. Schließen: Zurück-Knopf, Esc, Browser-/Wisch-Zurück.
+    // extra.item: Titel in der Form von „Entdecken“ (Übereinstimmung, Begründung), wenn die Ansicht von dort kommt.
     var openXd = null;
-    function openDetail(r, c) {
+    function openDetail(r, c, extra) {
         if (openXd) openXd(true);
-        var isTv = r.mediaType === 'tv';
+        extra = extra || {};
+        var isTv = r.mediaType === 'tv', key = r.mediaType + ':' + r.id;
+        var D = window.__atvDiscover && window.__atvDiscover.on() ? window.__atvDiscover : null;   // Bausteine von „Entdecken“, falls eingeschaltet
+        var item = extra.item || { key: key, mediaType: r.mediaType, tmdbId: r.id, title: title(r), year: year(r), poster: r.posterPath || null, state: 'missing' };
         var wrap = el('div', 'atv-xd'); wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-modal', 'true'); wrap.setAttribute('aria-label', title(r));
         var back = el('button', 'atv-xd__back'); back.type = 'button'; back.setAttribute('aria-label', T.close); back.appendChild(svg(ICON.back)); wrap.appendChild(back);
         var hero = el('section', 'atv-detail'); wrap.appendChild(hero);
@@ -253,6 +394,13 @@
         lock.appendChild(el('h1', 'atv-detail__title', title(r)));
         var meta = el('div', 'atv-detail__meta'); var coin = el('span', 'atv-coin'); coin.appendChild(svg(isTv ? ICON.tv : ICON.film)); meta.appendChild(coin);
         var metaText = el('span', null, isTv ? T.series : T.movie); meta.appendChild(metaText); lock.appendChild(meta);
+        // von „Entdecken“: wie gut der Titel passt und warum er vorgeschlagen wird
+        if (D && extra.item) {
+            var why = el('p', 'atv-xd__why'), sc = D.score(extra.item, true);
+            if (sc) why.appendChild(sc);
+            if (extra.item.reason && extra.item.reasonKind !== 'request') why.appendChild(el('span', null, extra.item.reason));
+            if (why.childNodes.length) lock.appendChild(why);
+        }
         var desc = el('p', 'atv-detail__desc atv-xd__desc', r.overview || ''); desc.addEventListener('click', function () { desc.classList.toggle('is-open'); });
         if (r.overview) lock.appendChild(desc);
         var facts = el('div', 'atv-detail__facts'); lock.appendChild(facts);
@@ -262,96 +410,80 @@
         var below = el('div'); wrap.appendChild(below);
         if (r.backdropPath) loadImg(art, tmdbImg('w1280', r.backdropPath)); else if (r.posterPath) loadImg(art, tmdbImg('w780', r.posterPath)); else hero.classList.add('atv-detail--noart');
 
-        var chosen = [], seasonsReady = !isTv, quality = null, svc = null;
+        var quality = null, svc = null, detailsP = null, line = null;
         function fillFacts(d) {
             facts.textContent = '';
             var parts = [year(d || r)];
             if (d && d.runtime) parts.push(runtimeText(d.runtime));
-            if (d && isTv && d.numberOfSeasons) parts.push(d.numberOfSeasons + ' ' + (DE ? (d.numberOfSeasons === 1 ? 'Staffel' : 'Staffeln') : (d.numberOfSeasons === 1 ? 'season' : 'seasons')));
+            if (d && isTv && d.numberOfSeasons) parts.push(seasonCount(d.numberOfSeasons));
             parts = parts.filter(Boolean);
             if (parts.length) facts.appendChild(el('span', null, parts.join(' · ')));
             var va = (d && d.voteAverage) || r.voteAverage;
             if (va) { var st = el('span', 'atv-badge atv-badge--star'); st.appendChild(svg(ICON.star)); st.appendChild(document.createTextNode(va.toFixed(1).replace('.', DE ? ',' : '.'))); facts.appendChild(st); }
         }
+        function pill(icon, label, glass) {
+            var b = el('button', 'atv-pill' + (glass ? ' atv-pill--glass' : '')); b.type = 'button';
+            b.appendChild(svg(icon)); b.appendChild(el('span', null, label));
+            return b;
+        }
+        function requested() { fillActions(); fillQuality(); loadDetails(); }
+        // Serie: erst das Fenster mit den Staffeln, dort wird bestätigt. Film: ein Tipp.
+        function ask(b) {
+            if (isTv) {
+                seasonSheet(r, detailsP || loadDetails(), service('sonarr'), function (seasons, q) { return sendRequest(r, seasons, c, q); })
+                    .then(function (res) { if (res && wrap.isConnected) requested(); });
+                return;
+            }
+            b.disabled = true;
+            sendRequest(r, null, c, quality).then(requested).catch(function () { b.disabled = false; });
+        }
+        // Stand der Anfrage: mit „Entdecken“ die Zeile mit Zeichen, Prozent und Zeitangabe, die sich selbst erneuert; sonst
+        // (und für „Teilweise“/„Verfügbar“ ohne Titel in der Mediathek) die schlichte Marke.
+        function statusEl(def, live) {
+            if (D && live) { line = D.statusLine({ key: key, request: D.requestOf(key) }); D.watch(wrap); return line; }
+            var stp = el('button', 'atv-pill is-state'); stp.type = 'button'; stp.disabled = true; stp.style.color = COLOR[def[0]];
+            stp.appendChild(el('i')); stp.appendChild(el('span', null, def[1]));
+            return stp;
+        }
         function fillActions() {
-            act.textContent = '';
-            var s = statusOf(r), def = STATUS[s], canRequest = !def || s === 4;
-            var mi = r.mediaInfo || {};
-            if (s === 5 && mi.jellyfinMediaId) {
-                var pl = el('button', 'atv-pill'); pl.type = 'button'; pl.appendChild(svg(ICON.play)); pl.appendChild(el('span', null, DE ? 'Öffnen' : 'Open'));
-                pl.addEventListener('click', function () { var id = mi.jellyfinMediaId; close(true); location.hash = '#/details?id=' + id; });
-                act.appendChild(pl);
-            } else if (canRequest) {
-                var b = el('button', 'atv-pill'); b.type = 'button'; b.appendChild(svg(ICON.get)); b.appendChild(el('span', null, isTv ? T.seasons : T.request));
-                b.disabled = isTv && (!seasonsReady || !chosen.length);
-                b.addEventListener('click', function () {
-                    b.disabled = true;
-                    sendRequest(r, isTv ? chosen : null, c, quality).then(function () { fillActions(); fillQuality(); loadDetails(); }).catch(function () { b.disabled = false; });
-                });
+            act.textContent = ''; line = null;
+            // Laut „Entdecken“ schon angekommen: Seerr gleicht seinen eigenen Stand erst in Abständen ab
+            var here = D && D.itemIdOf ? D.itemIdOf(key) : null;
+            if (here) { r.mediaInfo = r.mediaInfo || {}; r.mediaInfo.status = 5; r.mediaInfo.jellyfinMediaId = here; }
+            var s = statusOf(r), def = STATUS[s], mi = r.mediaInfo || {}, there = (s === 5 || s === 4) && !!mi.jellyfinMediaId, pending = s === 2 || s === 3, b, seen, hide;
+            if (there) {
+                b = pill(ICON.play, T.open, false);
+                b.addEventListener('click', function () { var id = mi.jellyfinMediaId; close(true); location.hash = '#/details?id=' + id; });
                 act.appendChild(b);
             }
-            if (def && !(s === 5 && mi.jellyfinMediaId)) {
-                var stp = el('button', 'atv-pill is-state'); stp.type = 'button'; stp.disabled = true; stp.style.color = COLOR[def[0]];
-                stp.appendChild(el('i')); stp.appendChild(el('span', null, def[1])); act.appendChild(stp);
+            if (!pending && s !== 5) {
+                b = pill(ICON.plus, s === 4 ? T.moreSeasons : T.request, there);
+                (function (btn) { btn.addEventListener('click', function () { ask(btn); }); })(b);
+                act.appendChild(b);
+            }
+            if (pending) act.appendChild(statusEl(def, true));
+            else if (def && !there) act.appendChild(statusEl(def, false));
+            // Rückmelden (nur solange der Titel fehlt): runde Knöpfe mit Beschriftung beim Darüberfahren, kein Kreuz
+            if (D && !def) {
+                seen = D.tip(el('button', 'atv-circle'), D.text('seen')); seen.type = 'button'; seen.setAttribute('aria-haspopup', 'menu'); seen.appendChild(svg(ICON.check));
+                seen.addEventListener('pointerdown', function () { seen.__had = !!document.querySelector('.atv-menu--dsc'); }, true);
+                seen.addEventListener('click', function (e) { e.stopPropagation(); if (seen.__had) { seen.__had = false; return; } D.seenMenu(seen, item, 'detail', e.detail === 0, function () { close(); }); });
+                act.appendChild(seen);
+                hide = D.tip(el('button', 'atv-circle'), D.text('hide')); hide.type = 'button'; hide.appendChild(svg(D.icons.eyeOff));
+                hide.addEventListener('click', function () { close(); D.feedback(item, 'hide', 'detail'); });
+                act.appendChild(hide);
             }
             note.textContent = def ? '' : T.title; note.hidden = !!def;
         }
-        function fillSeasons(tv) {
-            var old = below.querySelector('.atv-xd__sec--seasons'); if (old) old.remove();
-            var s = statusOf(r); if (STATUS[s] && s !== 4) return;
-            var list = (tv.seasons || []).filter(function (x) { return x.seasonNumber > 0; }); if (!list.length) return;
-            var sec = el('section', 'atv-xd__sec atv-xd__sec--seasons'); sec.appendChild(el('h2', 'atv-xd__h', T.seasons));
-            var box = el('div', 'atv-xd__seasons'); sec.appendChild(box);
-            var done = {}; ((tv.mediaInfo && tv.mediaInfo.seasons) || []).forEach(function (ms) { if (ms.status >= 2) done[ms.seasonNumber] = 1; });
-            var cbs = [];
-            function chip(text, sub) { var lab = el('label', 'atv-xd__season'); var cb = el('input'); cb.type = 'checkbox'; lab.appendChild(cb); lab.appendChild(el('span', null, text)); if (sub) lab.appendChild(el('small', null, sub)); box.appendChild(lab); return { lab: lab, cb: cb }; }
-            var all = chip(T.all);
-            list.forEach(function (x) {
-                var it = chip(T.season + ' ' + x.seasonNumber, x.episodeCount ? x.episodeCount + ' ' + T.episodes : ''); it.cb.value = x.seasonNumber; it.n = x.seasonNumber;
-                if (done[x.seasonNumber]) { it.cb.disabled = true; it.lab.classList.add('is-done'); }
-                it.cb.addEventListener('change', update); cbs.push(it);
-            });
-            all.cb.addEventListener('change', function () { cbs.forEach(function (it) { if (!it.cb.disabled) it.cb.checked = all.cb.checked; }); update(); });
-            function update() {
-                chosen = cbs.filter(function (it) { return it.cb.checked && !it.cb.disabled; }).map(function (it) { return it.n; });
-                cbs.forEach(function (it) { it.lab.classList.toggle('is-on', it.cb.checked && !it.cb.disabled); });
-                var free = cbs.filter(function (it) { return !it.cb.disabled; });
-                all.cb.checked = free.length > 0 && chosen.length === free.length; all.lab.classList.toggle('is-on', all.cb.checked);
-                fillActions();
-            }
-            below.insertBefore(sec, below.firstChild);
-        }
-        // Qualitätsprofil wählen (Profile aus Radarr/Sonarr über Seerr). Erscheint nur, wenn Seerr die Profile liefert
-        // und noch angefragt werden kann. Standard = das in Seerr hinterlegte Profil.
+        // Qualitätsprofil wählen (nur Filme; bei Serien steht die Wahl im Staffel-Fenster). Erscheint nur, wenn Seerr
+        // mehrere Profile liefert und noch angefragt werden kann. Standard = das in Seerr hinterlegte Profil.
         function fillQuality() {
             var old = below.querySelector('.atv-xd__sec--quality'); if (old) old.remove();
-            var s = statusOf(r); if (!svc || (STATUS[s] && s !== 4)) return;
+            if (isTv || !svc || STATUS[statusOf(r)]) return;
             var sec = el('section', 'atv-xd__sec atv-xd__sec--quality'); sec.appendChild(el('h2', 'atv-xd__h', T.quality));
             var box = el('div', 'atv-xd__seasons'); sec.appendChild(box);
-            var def = svc.server.activeProfileId, cur = quality && quality.profileId != null ? quality.profileId : def, chips = [];
-            svc.profiles.forEach(function (pf) {
-                var lab = el('label', 'atv-xd__season' + (pf.id === cur ? ' is-on' : '')); var cb = el('input'); cb.type = 'radio'; cb.name = 'atv-xd-q'; cb.checked = pf.id === cur;
-                lab.appendChild(cb); lab.appendChild(el('span', null, pf.name)); if (pf.id === def) lab.appendChild(el('em', null, T.standard));
-                cb.addEventListener('change', function () {
-                    quality = pf.id === def ? null : { serverId: svc.server.id, profileId: pf.id, rootFolder: svc.server.activeDirectory };
-                    chips.forEach(function (c2) { c2.lab.classList.toggle('is-on', c2.cb.checked); });
-                });
-                chips.push({ lab: lab, cb: cb }); box.appendChild(lab);
-            });
-            var after = below.querySelector('.atv-xd__sec--seasons');
-            below.insertBefore(sec, after ? after.nextSibling : below.firstChild);
-        }
-        function loadQuality() {
-            var kind = isTv ? 'sonarr' : 'radarr';
-            call('/api/v1/service/' + kind).then(function (list) {
-                var sv = (list || []).filter(function (x) { return x.isDefault && !x.is4k; })[0] || (list || []).filter(function (x) { return !x.is4k; })[0];
-                if (!sv) return null;
-                return call('/api/v1/service/' + kind + '/' + sv.id);
-            }).then(function (d) {
-                if (!d || !wrap.isConnected || !d.profiles || d.profiles.length < 2) return;
-                svc = { server: d.server, profiles: d.profiles };
-                fillQuality();
-            }).catch(function () { /* keine Profile oder Dienst schläft: ohne Auswahl, Standardprofil */ });
+            qualityChips(box, svc, quality, function (q) { quality = q; }, 'atv-xd-q');
+            below.insertBefore(sec, below.firstChild);
         }
         function fillCast(d) {
             var old = below.querySelector('.atv-xd__sec--cast'); if (old) old.remove();
@@ -367,7 +499,8 @@
             below.appendChild(sec);
         }
         function loadDetails() {
-            return call('/api/v1/' + (isTv ? 'tv' : 'movie') + '/' + r.id + '?language=' + CFG.language).then(function (d) {
+            detailsP = call('/api/v1/' + (isTv ? 'tv' : 'movie') + '/' + r.id + '?language=' + CFG.language);
+            detailsP.then(function (d) {
                 if (!wrap.isConnected) return;
                 if (d.mediaInfo) { var was = statusOf(r); r.mediaInfo = d.mediaInfo; if (statusOf(r) !== was) announce(r); }
                 var g = (d.genres || []).slice(0, 2).map(function (x) { return x.name; });
@@ -379,22 +512,34 @@
                 var cast = ((d.credits && d.credits.cast) || []).slice(0, 3).map(function (p) { return p.name; });
                 var crew = (d.credits && d.credits.crew) || [];
                 var dirs = isTv ? (d.createdBy || []).map(function (p) { return p.name; }) : crew.filter(function (p) { return p.job === 'Director'; }).map(function (p) { return p.name; });
-                function line(label, names) { if (!names.length) return; var p = el('p'); p.appendChild(el('span', 'atv-label', label)); p.appendChild(document.createTextNode(names.join(', '))); credits.appendChild(p); }
-                line(DE ? 'Mit' : 'Starring', cast); line(isTv ? (DE ? 'Erfinder' : 'Creator') : (DE ? 'Regie' : 'Director'), dirs.slice(0, 2));
-                if (isTv) { seasonsReady = true; fillSeasons(d); }
+                function ln(label, names) { if (!names.length) return; var p = el('p'); p.appendChild(el('span', 'atv-label', label)); p.appendChild(document.createTextNode(names.join(', '))); credits.appendChild(p); }
+                ln(DE ? 'Mit' : 'Starring', cast); ln(isTv ? (DE ? 'Erfinder' : 'Creator') : (DE ? 'Regie' : 'Director'), dirs.slice(0, 2));
                 fillQuality(); fillCast(d);
-                fillActions(); if (c) setStatus(c, r);
-            }).catch(function (e) { console.warn('[atv-seerr] details', e); seasonsReady = true; fillActions(); });
+                fillActions(); setStatus(c, r);
+            }).catch(function (e) { console.warn('[atv-seerr] details', e); detailsP = null; if (wrap.isConnected) fillActions(); });
+            return detailsP;
         }
         fillFacts(null); fillActions();
 
         // Schließen über den Verlauf: Zurück-Knopf (auch der des Themes), Wischgeste und Browser-Zurück schließen die Ansicht
         var pushed = false, closed = false;
-        function onKey(ev) { if (ev.key === 'Escape') { ev.stopPropagation(); close(); } }
+        function onKey(ev) {
+            if (ev.key !== 'Escape' || document.querySelector('.atv-sheet')) return;
+            ev.stopPropagation();
+            var menu = document.querySelector('.atv-menu--float'); if (menu) { menu.remove(); return; }   // erst das offene Menü
+            close();
+        }
         function onPop() { close(true); }
+        // Neuer Stand vom Server: Zeile nachführen; ist der Titel angekommen, Seerr noch einmal fragen (dann steht „Öffnen“ da)
+        function onRq() {
+            var rq = D ? D.requestOf(key) : null;
+            if (rq && rq.phase === 'available' && statusOf(r) !== 5) { fillActions(); setStatus(c, r); if (statusOf(r) !== 5) loadDetails(); return; }
+            if (line && line.isConnected) D.statusFill(line, rq);
+        }
         function close(fromHistory) {
             if (closed) return; closed = true; openXd = null;
             document.removeEventListener('keydown', onKey, true); window.removeEventListener('popstate', onPop);
+            document.removeEventListener('atv-dsc-requests', onRq);
             document.documentElement.style.overflow = prevOverflow;
             wrap.remove();
             if (pushed && fromHistory !== true) { try { history.back(); } catch (e) { /* Verlauf nicht verfügbar */ } }
@@ -406,7 +551,9 @@
         var prevOverflow = document.documentElement.style.overflow; document.documentElement.style.overflow = 'hidden';
         document.body.appendChild(wrap);
         try { history.pushState({ atvXd: 1 }, ''); pushed = true; window.addEventListener('popstate', onPop); } catch (e) { /* ohne Verlauf: nur Knopf/Esc */ }
-        loadDetails(); loadQuality();
+        loadDetails();
+        if (!isTv) service('radarr').then(function (s) { if (!s || !wrap.isConnected) return; svc = s; fillQuality(); });
+        if (D) { document.addEventListener('atv-dsc-requests', onRq); if (statusOf(r) === 2 || statusOf(r) === 3) D.reload(); }
         try { back.focus({ preventScroll: true }); } catch (e3) { /* Fokus optional */ }
     }
 
@@ -495,24 +642,12 @@
             return { id: col.id, name: col.name || '', parts: parts };
         }).catch(function (e) { console.warn('[atv-seerr] collection', e); return null; });
     }
-    /* ------------------------------------------------------------ Entdecken */
-    // Für die Reihen „Entdecken“ des Themes: was TMDb zu einem Titel empfiehlt, samt Stand in Seerr. Ein Abruf je Titel.
-    // null = Seerr nicht eingerichtet oder nicht erreichbar (nichts merken, später neu versuchen); [] = keine Empfehlungen.
-    function recommendations(mediaType, tmdbId) {
-        if (!apiReady() || (mediaType !== 'movie' && mediaType !== 'tv') || !/^\d+$/.test(String(tmdbId))) return Promise.resolve(null);
-        return available().then(function (ok) {
-            if (!ok) return null;
-            return callRetry('/api/v1/' + mediaType + '/' + tmdbId + '/recommendations?page=1&language=' + CFG.language, {}, 1).then(function (res) {
-                return ((res && res.results) || []).filter(function (r) { return r && r.id && (r.mediaType === 'movie' || r.mediaType === 'tv'); });
-            }, function (e) {
-                if (e && e.status === 404) return [];                           // TMDb kennt den Titel nicht (mehr)
-                throw e;
-            });
-        }).catch(function (e) { console.warn('[atv-seerr] recommendations', e); return null; });
-    }
+    // Für das Theme (Filmreihe, „Entdecken“): Karte, Anfrage-Ansicht und Anfrage ohne Ansicht.
     window.__atvSeerrApi = {
-        collection: collection, recommendations: recommendations,
+        collection: collection,
         card: function (r) { injectCss(); return card(r); },
+        open: function (r, c, extra) { injectCss(); openDetail(r, c || null, extra); },
+        request: request,
         title: title, year: year, status: statusOf, inLibrary: inLibrary
     };
 

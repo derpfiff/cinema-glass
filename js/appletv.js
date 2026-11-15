@@ -19,7 +19,7 @@
 
     var CSS_INLINE = '/* ==========================================================================\n   appletv-js.css – Stile für die per JavaScript erzeugten Elemente des\n   Apple-TV-App-Klons (tvOS 26) in Jellyfin Web 12.4. Gilt nur, wenn appletv.js\n   läuft (html.atv-js). Alle Maße sind aus den Spezifikationen (spec/home,\n   spec/detail) bei 1920×1080 gemessen; --atv-u = 1 px @1920 (skaliert mit vw).\n   Klassenpräfix: atv-   |   Verstecken nativer Elemente: .atv-hide\n   ========================================================================== */\nhtml.atv-js {\n    --atv-u: calc(100vw / 1920);\n    --atv-bg: #000000;\n    --atv-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Inter", "Helvetica Neue", system-ui, sans-serif;\n    --atv-glass: rgba(20, 20, 22, .42);\n    --atv-glass-blur: blur(24px) saturate(160%);\n    --atv-glass-line: inset 0 0 0 1px rgba(255, 255, 255, .12), inset 0 1px 0 rgba(255, 255, 255, .20);\n    --atv-ease: cubic-bezier(.2, .8, .2, 1);\n}\nhtml.atv-js .atv-hide { display: none !important; }\nhtml.atv-js .atv-hero, html.atv-js .atv-detail, html.atv-js .atv-shelf,\nhtml.atv-js .atv-who, html.atv-js .atv-tabbar, html.atv-js .atv-menu, html.atv-js .atv-about {\n    font-family: var(--atv-font);\n    color: #fff;\n    -webkit-font-smoothing: antialiased;\n}\nhtml.atv-js .atv-hero *, html.atv-js .atv-detail *, html.atv-js .atv-shelf *,\nhtml.atv-js .atv-who *, html.atv-js .atv-tabbar *, html.atv-js .atv-menu *, html.atv-js .atv-about *, html.atv-js .atv-person, html.atv-js .atv-person *, html.atv-js .atv-search, html.atv-js .atv-search * { box-sizing: border-box; }\nhtml.atv-js .atv-hero button, html.atv-js .atv-detail button, html.atv-js .atv-shelf button,\nhtml.atv-js .atv-who button, html.atv-js .atv-tabbar a, html.atv-js .atv-menu button {\n    font: inherit; border: 0; padding: 0; margin: 0; cursor: pointer;\n    -webkit-tap-highlight-color: transparent; text-decoration: none;\n}\nhtml.atv-js button.atv-hero__nav, html.atv-js button.atv-season, html.atv-js button.atv-who__user,\nhtml.atv-js button.atv-who__close, html.atv-js button.atv-menu__item, html.atv-js button.atv-ep__more { background: transparent; color: #fff; }\nhtml.atv-js .atv-hero svg, html.atv-js .atv-detail svg, html.atv-js .atv-shelf svg,\nhtml.atv-js .atv-who svg, html.atv-js .atv-tabbar svg, html.atv-js .atv-menu svg { fill: currentColor; display: block; }\n\n/* ---------- gemeinsame Bausteine: Pille, Kreis, Glas ---------- */\nhtml.atv-js .atv-pill {\n    position: relative; overflow: hidden;\n    display: inline-flex; align-items: center; justify-content: center; gap: calc(12 * var(--atv-u));\n    height: max(44px, calc(66 * var(--atv-u))); min-width: max(140px, calc(218 * var(--atv-u)));\n    padding: 0 max(22px, calc(40 * var(--atv-u)));\n    border-radius: 999px; background: #fff; color: #000;\n    font-size: max(16px, calc(29 * var(--atv-u))); font-weight: 600; letter-spacing: .4px; white-space: nowrap;\n    transition: transform .25s var(--atv-ease), background .25s, color .25s;\n}\nhtml.atv-js .atv-pill svg { width: max(16px, calc(26 * var(--atv-u))); height: max(16px, calc(26 * var(--atv-u))); }\nhtml.atv-js .atv-pill:hover, html.atv-js .atv-pill:focus-visible { transform: scale(1.04); }\nhtml.atv-js .atv-pill:active { transform: scale(.98); }\nhtml.atv-js .atv-pill--glass { background: var(--atv-glass); color: #fff; -webkit-backdrop-filter: var(--atv-glass-blur); backdrop-filter: var(--atv-glass-blur); box-shadow: var(--atv-glass-line); }\nhtml.atv-js .atv-pill--glass:hover, html.atv-js .atv-pill--glass:focus-visible { background: #fff; color: #000; }\nhtml.atv-js .atv-pill__bar { position: absolute; left: 0; right: 0; bottom: 0; height: max(3px, calc(4 * var(--atv-u))); background: rgba(0, 0, 0, .15); }\nhtml.atv-js .atv-pill__bar i { display: block; height: 100%; background: rgba(0, 0, 0, .6); }\nhtml.atv-js .atv-circle {\n    display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;\n    width: max(44px, calc(66 * var(--atv-u))); height: max(44px, calc(66 * var(--atv-u))); border-radius: 50%;\n    background: var(--atv-glass); color: #fff;\n    -webkit-backdrop-filter: var(--atv-glass-blur); backdrop-filter: var(--atv-glass-blur); box-shadow: var(--atv-glass-line);\n    transition: transform .25s var(--atv-ease), background .25s, color .25s;\n}\nhtml.atv-js .atv-circle svg { width: 46%; height: 46%; }\nhtml.atv-js .atv-circle:hover, html.atv-js .atv-circle:focus-visible { background: #fff; color: #000; transform: scale(1.13); }\nhtml.atv-js .atv-circle.is-on { background: rgba(255, 255, 255, .92); color: #000; }\nhtml.atv-js .atv-circle:focus-visible, html.atv-js .atv-pill:focus-visible { outline: 3px solid rgba(255, 255, 255, .9); outline-offset: 3px; }\nhtml.atv-js .atv-coin {\n    display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto;\n    width: max(22px, calc(36 * var(--atv-u))); height: max(22px, calc(36 * var(--atv-u))); border-radius: 50%;\n    background: rgba(0, 0, 0, .55); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .25);\n}\nhtml.atv-js .atv-coin svg { width: 55%; height: 55%; }\nhtml.atv-js .atv-badge {\n    display: inline-flex; align-items: center; height: max(16px, calc(22 * var(--atv-u))); padding: 0 max(4px, calc(6 * var(--atv-u)));\n    border: 1px solid rgba(255, 255, 255, .64); border-radius: max(3px, calc(4 * var(--atv-u)));\n    font-size: max(10px, calc(15 * var(--atv-u))); font-weight: 600; line-height: 1; letter-spacing: .3px; color: rgba(255, 255, 255, .9); white-space: nowrap;\n}\nhtml.atv-js .atv-badge--rt { border-color: transparent; padding-left: 0; }\nhtml.atv-js .atv-badge svg { width: 1em; height: 1em; margin-right: .3em; }\nhtml.atv-js .atv-more {\n    position: absolute !important; right: 0; bottom: .08em;\n    display: inline-flex !important; align-items: center; justify-content: center;\n    height: auto !important; padding: .28em .9em !important; border: 0; border-radius: 999px !important;\n    background: rgba(120, 120, 128, .42) !important; color: #fff !important;\n    -webkit-backdrop-filter: blur(20px) saturate(1.6); backdrop-filter: blur(20px) saturate(1.6);\n    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14) !important;\n    font-size: clamp(11px, .68vw, 14px) !important; font-weight: 600 !important; letter-spacing: .6px; line-height: 1.25 !important;\n    text-transform: uppercase; cursor: pointer; text-shadow: none; transition: background .2s;\n}\nhtml.atv-js .atv-more:hover, html.atv-js .atv-more:focus-visible { background: rgba(120, 120, 128, .62) !important; outline: 0; }\nhtml.atv-js .atv-clamp { position: relative; width: fit-content; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; transition: max-height .3s var(--atv-ease); }\n/* aufgeklappt: kein Clamp, Höhe wird per max-height animiert (JS), bei sehr langem Text eigener Scrollbereich */\nhtml.atv-js .atv-clamp.is-open, html.atv-js .atv-clamp.is-closing { display: block !important; -webkit-line-clamp: unset !important; overflow: hidden; }\nhtml.atv-js .atv-clamp.is-open { overflow-y: auto; scrollbar-width: thin; padding-right: 0; text-shadow: 0 1px 3px rgba(0, 0, 0, .55); }\nhtml.atv-js .atv-clamp.is-open .atv-more, html.atv-js .atv-clamp.is-closing .atv-more { position: static; display: inline-flex; vertical-align: middle; margin-left: 10px; text-shadow: none; }\nhtml.atv-js .atv-clamp--2 { -webkit-line-clamp: 2; }\nhtml.atv-js .atv-clamp--3 { -webkit-line-clamp: 3; }\nhtml.atv-js .atv-sep { opacity: .7; margin: 0 .35em; }\n\n/* ==========================================================================\n   1. Hero-Karussell (Startseite)\n   ========================================================================== */\nhtml.atv-js .homePage .homeSectionsContainer { position: relative; z-index: 1; }\nhtml.atv-js .atv-hero {\n    position: relative; z-index: 0; isolation: isolate; overflow: hidden;\n    width: 100%; height: 100vh; min-height: 560px;\n    /* relative top statt negativem margin-top: Jellyfins Seiten-Margin würde sonst kollabieren;\n       Breite 100 % (nicht 100vw: mit Bildlaufleiste gäbe das horizontales Scrollen) */\n    top: calc(-1 * var(--atv-pad, 0px));\n    margin: 0 0 calc(var(--atv-hero-overlap, -19vh) - var(--atv-pad, 0px));\n    background: var(--atv-bg); color: #fff;\n}\nhtml.atv-js .atv-hero__slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity .5s var(--atv-ease); }\nhtml.atv-js .atv-hero__slide.is-active { opacity: 1; pointer-events: auto; }\nhtml.atv-js .atv-hero__art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; background: #000; cursor: pointer; }\nhtml.atv-js .atv-hero__shade {\n    position: absolute; inset: 0; pointer-events: none;\n    background: linear-gradient(to top, #000000 0%, #000000 14%, rgba(0, 0, 0, .88) 24%, rgba(0, 0, 0, .45) 38%, rgba(0, 0, 0, 0) 58%),\n                linear-gradient(to right, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .15) 30%, rgba(0, 0, 0, 0) 45%);\n}\nhtml.atv-js .atv-hero__lockup {\n    position: absolute; left: calc(80 * var(--atv-u)); bottom: calc(318 * var(--atv-u)); width: calc(620 * var(--atv-u)); max-width: 78vw;\n    display: flex; flex-direction: column; align-items: flex-start; gap: calc(17 * var(--atv-u));\n    opacity: 0; transform: translateY(6px); transition: opacity .2s ease-in, transform .2s ease-in;\n    text-shadow: 0 1px 2px rgba(0, 0, 0, .35);\n}\nhtml.atv-js .atv-hero__slide.is-active .atv-hero__lockup { opacity: 1; transform: none; transition: opacity .3s var(--atv-ease) .1s, transform .3s var(--atv-ease) .1s; }\nhtml.atv-js .atv-hero__logo { display: block; max-width: calc(527 * var(--atv-u)); max-height: calc(139 * var(--atv-u)); width: auto; height: auto; object-fit: contain; object-position: left bottom; filter: drop-shadow(0 2px 10px rgba(0, 0, 0, .45)); }\nhtml.atv-js .atv-hero__title { margin: 0; font-size: max(28px, calc(57 * var(--atv-u))); font-weight: 700; letter-spacing: -.5px; line-height: 1.05; max-width: 100%; }\nhtml.atv-js .atv-hero__meta { display: flex; align-items: center; gap: calc(10 * var(--atv-u)); font-size: max(13px, calc(25 * var(--atv-u))); font-weight: 500; letter-spacing: .15px; color: #fff; white-space: nowrap; }\nhtml.atv-js .atv-hero__meta .atv-badge { margin-left: calc(4 * var(--atv-u)); }\nhtml.atv-js .atv-hero__desc { margin: 0; max-width: calc(545 * var(--atv-u)); padding-right: max(52px, calc(64 * var(--atv-u))); font-size: max(13px, calc(25 * var(--atv-u))); line-height: max(18px, calc(32 * var(--atv-u))); font-weight: 400; letter-spacing: .15px; color: rgba(255, 255, 255, .85); }\nhtml.atv-js .atv-hero__actions { display: flex; align-items: center; gap: calc(24 * var(--atv-u)); margin-top: calc(57 * var(--atv-u)); }\nhtml.atv-js .atv-hero__dots {\n    position: absolute; z-index: 3; left: 50%; bottom: calc(201 * var(--atv-u)); transform: translateX(-50%);\n    display: flex; align-items: center; gap: calc(11 * var(--atv-u)); height: max(24px, calc(42 * var(--atv-u))); padding: 0 calc(47 * var(--atv-u));\n    border-radius: 999px; background: rgba(0, 0, 0, .30); -webkit-backdrop-filter: saturate(1.8) blur(10px); backdrop-filter: saturate(1.8) blur(10px);\n}\nhtml.atv-js button.atv-hero__dot { width: max(6px, calc(10 * var(--atv-u))); height: max(6px, calc(10 * var(--atv-u))); border-radius: 999px; background: rgba(255, 255, 255, .45); transition: width .3s ease-out, background .3s ease-out; }\nhtml.atv-js button.atv-hero__dot.is-active { width: max(18px, calc(30 * var(--atv-u))); background: #fff; }\nhtml.atv-js .atv-hero__dot:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }\nhtml.atv-js .atv-hero__nav { position: absolute; z-index: 3; top: 30%; height: 40%; width: 7%; opacity: 0; color: #fff; transition: opacity .25s linear; display: flex; align-items: center; justify-content: center; }\nhtml.atv-js .atv-hero__nav--prev { left: 0; } html.atv-js .atv-hero__nav--next { right: 0; }\nhtml.atv-js .atv-hero:hover .atv-hero__nav, html.atv-js .atv-hero__nav:focus-visible { opacity: .85; }\nhtml.atv-js .atv-hero__nav svg { width: calc(44 * var(--atv-u)); height: calc(44 * var(--atv-u)); filter: drop-shadow(0 1px 4px rgba(0, 0, 0, .6)); }\nhtml.atv-js .atv-hero__hint { display: none; }\n\n/* ==========================================================================\n   2. Detailseite\n   ========================================================================== */\nhtml.atv-js .atv-detail {\n    position: relative; isolation: isolate; overflow: hidden;\n    width: 100%; top: calc(-1 * var(--atv-pad, 0px)); margin: 0 0 calc(-1 * var(--atv-pad, 0px)); height: min(56.25vw, 100vh); min-height: 560px;\n    background: var(--atv-bg); color: #fff;\n}\nhtml.atv-js .atv-detail--noart { height: min(40vw, 62vh); min-height: 420px; background: radial-gradient(80% 70% at 30% 20%, #2c2c2e 0%, var(--atv-bg) 70%); }\nhtml.atv-js .atv-detail--noart .atv-detail__art { display: none; }\nhtml.atv-js .atv-detail__art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; background: #000; }\nhtml.atv-js .atv-detail__shade {\n    position: absolute; inset: 0; pointer-events: none;\n    background: linear-gradient(to top, #000000 0%, rgba(0, 0, 0, .85) 12%, rgba(0, 0, 0, .45) 28%, rgba(0, 0, 0, 0) 46%),\n                linear-gradient(to right, rgba(0, 0, 0, .45) 0%, rgba(0, 0, 0, 0) 40%);\n}\nhtml.atv-js .atv-detail__lockup {\n    position: absolute; left: calc(80 * var(--atv-u)); bottom: calc(110 * var(--atv-u)); width: calc(640 * var(--atv-u)); max-width: 70vw;\n    display: flex; flex-direction: column; align-items: flex-start; gap: calc(14 * var(--atv-u));\n    text-shadow: 0 1px 2px rgba(0, 0, 0, .35);\n}\nhtml.atv-js .atv-detail__award { display: inline-flex; align-items: center; height: max(18px, calc(26 * var(--atv-u))); padding: 0 calc(10 * var(--atv-u)); border: 1px solid rgba(255, 255, 255, .64); border-radius: 999px; font-size: max(10px, calc(14 * var(--atv-u))); font-weight: 600; color: rgba(255, 255, 255, .9); }\nhtml.atv-js .atv-detail__logo { display: block; max-width: calc(420 * var(--atv-u)); max-height: calc(150 * var(--atv-u)); width: auto; height: auto; object-fit: contain; object-position: left bottom; filter: drop-shadow(0 2px 10px rgba(0, 0, 0, .45)); }\nhtml.atv-js .atv-detail__title { margin: 0; font-size: max(26px, calc(64 * var(--atv-u))); font-weight: 700; letter-spacing: -.5px; line-height: 1.05; }\nhtml.atv-js .atv-detail__sub { margin: calc(-6 * var(--atv-u)) 0 0; font-size: max(13px, calc(22 * var(--atv-u))); font-weight: 400; color: rgba(255, 255, 255, .85); }\nhtml.atv-js .atv-detail__meta { display: flex; align-items: center; flex-wrap: wrap; gap: calc(8 * var(--atv-u)); font-size: max(13px, calc(24 * var(--atv-u))); font-weight: 600; color: #fff; }\nhtml.atv-js .atv-detail__desc { margin: 0; max-width: calc(560 * var(--atv-u)); padding-right: max(52px, calc(64 * var(--atv-u))); font-size: max(13px, calc(22 * var(--atv-u))); line-height: max(18px, calc(28 * var(--atv-u))); font-weight: 400; color: rgba(255, 255, 255, .85); }\nhtml.atv-js .atv-detail__facts { display: flex; align-items: center; flex-wrap: wrap; gap: calc(8 * var(--atv-u)); font-size: max(12px, calc(20 * var(--atv-u))); color: rgba(255, 255, 255, .64); }\nhtml.atv-js .atv-detail__facts .atv-badge { opacity: .85; }\nhtml.atv-js .atv-detail__actions { display: flex; align-items: center; gap: calc(16 * var(--atv-u)); margin-top: calc(10 * var(--atv-u)); flex-wrap: nowrap; width: max-content; max-width: 90vw; }\nhtml.atv-js .atv-detail__note { margin: calc(-4 * var(--atv-u)) 0 0; font-size: max(11px, calc(16 * var(--atv-u))); color: rgba(255, 255, 255, .64); }\nhtml.atv-js .atv-detail__credits {\n    position: absolute; right: calc(80 * var(--atv-u)); bottom: calc(110 * var(--atv-u)); max-width: calc(420 * var(--atv-u)); text-align: right;\n    font-size: max(11px, calc(18 * var(--atv-u))); line-height: max(16px, calc(24 * var(--atv-u))); text-shadow: 0 1px 2px rgba(0, 0, 0, .35);\n}\nhtml.atv-js .atv-detail__credits p { margin: 0 0 calc(10 * var(--atv-u)); }\nhtml.atv-js .atv-detail__credits p:last-child { margin-bottom: 0; }\nhtml.atv-js .atv-detail__credits .atv-label { color: rgba(255, 255, 255, .64); margin-right: .35em; }\nhtml.atv-js .atv-detail__credits a { color: rgba(255, 255, 255, .55); text-decoration: none; transition: color .15s; }\nhtml.atv-js .atv-detail__credits a:hover { color: rgba(255, 255, 255, .92); }\n/* native Elemente, die der Umbau ersetzt: SOFORT verborgen, sobald html.atv-js steht (kein Flackern);\n   .atv-native (Fallback nach 2,5 s oder fremder Item-Typ) zeigt die native Seite wieder */\nhtml.atv-js .itemDetailPage:not(.atv-native) #itemBackdrop,\nhtml.atv-js .itemDetailPage:not(.atv-native) .detailLogo,\nhtml.atv-js .itemDetailPage:not(.atv-native) .detailRibbon,\nhtml.atv-js .itemDetailPage:not(.atv-native) .detailImageContainer,\nhtml.atv-js .itemDetailPage:not(.atv-native) .detailSectionContent,\nhtml.atv-js .itemDetailPage:not(.atv-native) .itemDetailsGroup,\nhtml.atv-js .itemDetailPage:not(.atv-native) .trackSelections { display: none !important; }\nhtml.atv-js .itemDetailPage:not(.atv-native):not(.atv-detail-on):not(.atv-person-on) .detailPageWrapperContainer { opacity: 0; }\nhtml.atv-js .itemDetailPage.atv-detail-on .detailPageWrapperContainer, html.atv-js .itemDetailPage.atv-person-on .detailPageWrapperContainer { opacity: 1; transition: opacity .25s ease-out; }\nhtml.atv-js .atv-detail, html.atv-js .atv-person { animation: atv-fade .3s ease-out; }\nhtml.atv-js .homePage:not(.atv-native):not(.atv-hero-on) .homeSectionsContainer { opacity: 0; }\nhtml.atv-js .homePage.atv-hero-on .homeSectionsContainer { opacity: 1; transition: opacity .3s ease-out; }\n/* Spezifität bewusst hoch: das Branding-CSS blendet .detailPagePrimaryContainer bei :has(.atv-person) aus,\n   darin liegen aber Jellyfins Regale „Filme/Serien“ der Personenseite */\nhtml.atv-js.atv-js .itemDetailPage.atv-detail-on.atv-detail-on .detailPagePrimaryContainer, html.atv-js.atv-js .itemDetailPage.atv-person-on.atv-person-on:has(.atv-person) .detailPagePrimaryContainer { display: block !important; opacity: 1 !important; min-height: 0 !important; height: auto !important; padding-top: 0 !important; padding-bottom: 0 !important; margin-top: 0 !important; animation: none !important; }\nhtml.atv-js.atv-js .itemDetailPage.atv-person-on .detailPagePrimaryContent { padding-top: 0 !important; }\nhtml.atv-js .itemDetailPage.atv-detail-on .detailPagePrimaryContent, html.atv-js .itemDetailPage.atv-person-on .detailPagePrimaryContent,\nhtml.atv-js .itemDetailPage.atv-detail-on .detailSection, html.atv-js .itemDetailPage.atv-person-on .detailSection { display: block !important; opacity: 1 !important; padding-left: 0 !important; margin-left: 0 !important; width: auto !important; }\nhtml.atv-js .itemDetailPage.atv-detail-on .detailPageWrapperContainer, html.atv-js .itemDetailPage.atv-person-on .detailPageWrapperContainer { min-height: 0 !important; padding-top: 0 !important; margin-top: 0 !important; }\n/* Personenkarten: nie ein Play-Overlay (Klick = nur Personenseite) */\nhtml.atv-js .personCard .cardOverlayFab-primary, html.atv-js .personCard [data-action="play"], html.atv-js .personCard [data-action="resume"] { display: none !important; }\n\n/* ---------- Personenseite ---------- */\nhtml.atv-js .atv-person { display: flex; align-items: flex-start; gap: calc(48 * var(--atv-u)); padding: calc(60 * var(--atv-u)) calc(80 * var(--atv-u)) calc(24 * var(--atv-u)); color: #fff; }\nhtml.atv-js .atv-person__photo { flex: 0 0 auto; width: max(140px, calc(260 * var(--atv-u))); height: max(140px, calc(260 * var(--atv-u))); border-radius: 50%; overflow: hidden; background: #2b2b2b; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), 0 20px 50px rgba(0, 0, 0, .45); display: flex; align-items: center; justify-content: center; font-size: max(48px, calc(96 * var(--atv-u))); font-weight: 600; color: rgba(255, 255, 255, .55); }\nhtml.atv-js .atv-person__photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 15%; display: block; }\nhtml.atv-js .atv-person__body { flex: 1 1 auto; min-width: 0; padding-top: calc(16 * var(--atv-u)); }\nhtml.atv-js .atv-person__name { margin: 0 0 calc(10 * var(--atv-u)); font-size: max(28px, calc(56 * var(--atv-u))); font-weight: 700; letter-spacing: -.5px; line-height: 1.05; }\nhtml.atv-js .atv-person__facts { margin: 0 0 calc(18 * var(--atv-u)); font-size: max(13px, calc(20 * var(--atv-u))); color: rgba(255, 255, 255, .64); }\nhtml.atv-js .atv-person__bio { margin: 0; max-width: calc(900 * var(--atv-u)); padding-right: max(52px, calc(64 * var(--atv-u))); font-size: max(14px, calc(22 * var(--atv-u))); line-height: max(19px, calc(30 * var(--atv-u))); color: rgba(255, 255, 255, .85); -webkit-line-clamp: 4; }\nhtml.atv-js .itemDetailPage.atv-person-on #listChildrenCollapsible > .sectionTitle.hide { display: none; }\nhtml.atv-js .itemDetailPage.atv-person-on #listChildrenCollapsible { margin-top: 0 !important; }\nhtml.atv-js .itemDetailPage.atv-person-on #childrenContent .sectionTitle { padding-left: 0 !important; }\n@media (max-width: 799px) {\n    html.atv-js .atv-person { flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 72px 16px 8px; }\n    html.atv-js .atv-person__photo { width: 160px; height: 160px; }\n    html.atv-js .atv-person__body { padding-top: 0; }\n    html.atv-js .atv-person__name { font-size: 28px; }\n    html.atv-js .atv-person__bio { text-align: left; padding-right: 60px; max-width: none; width: 100%; }\n    html.atv-js .atv-person__body { width: 100%; }\n}\n\n/* ---------- Suche: Struktur (Optik gehört ins Branding-CSS) ---------- */\nhtml.atv-js #searchPage .searchSuggestions { display: none !important; }\nhtml.atv-js .atv-search { color: #fff; padding: 0 calc(80 * var(--atv-u)) calc(40 * var(--atv-u)); }\nhtml.atv-js .atv-search[hidden] { display: none; }\nhtml.atv-js .atv-search__title { margin: calc(24 * var(--atv-u)) 0 calc(16 * var(--atv-u)); font-size: max(17px, calc(31 * var(--atv-u))); font-weight: 700; letter-spacing: .4px; }\nhtml.atv-js .atv-search__pills { display: flex; flex-wrap: wrap; gap: calc(12 * var(--atv-u)); margin-bottom: calc(24 * var(--atv-u)); }\nhtml.atv-js .atv-search__pill { display: inline-flex; align-items: center; gap: 8px; height: max(36px, calc(44 * var(--atv-u))); padding: 0 max(14px, calc(20 * var(--atv-u))); border-radius: 999px; background: var(--atv-glass); color: #fff; font-size: max(14px, calc(18 * var(--atv-u))); font-weight: 500; -webkit-backdrop-filter: var(--atv-glass-blur); backdrop-filter: var(--atv-glass-blur); box-shadow: var(--atv-glass-line); white-space: nowrap; }\nhtml.atv-js .atv-search__pill svg { width: 1em; height: 1em; opacity: .7; }\nhtml.atv-js .atv-search__pill:hover, html.atv-js .atv-search__pill:focus-visible { background: #fff; color: #000; }\nhtml.atv-js .atv-search__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(max(120px, calc(200 * var(--atv-u))), 1fr)); gap: calc(24 * var(--atv-u)) calc(20 * var(--atv-u)); }\nhtml.atv-js .atv-search__card { display: block; position: relative; aspect-ratio: 2 / 3; border-radius: max(10px, calc(14 * var(--atv-u))); overflow: hidden; background: #2b2b2b; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16); transition: transform .25s var(--atv-ease), box-shadow .25s var(--atv-ease); color: #fff; text-decoration: none; }\nhtml.atv-js .atv-search__card img { width: 100%; height: 100%; object-fit: cover; display: block; }\nhtml.atv-js .atv-search__card:hover, html.atv-js .atv-search__card:focus-visible { transform: scale(1.06); box-shadow: 0 20px 40px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .25); z-index: 1; }\nhtml.atv-js .atv-search__card span { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 10px 10px; background: linear-gradient(to top, rgba(0, 0, 0, .75), rgba(0, 0, 0, 0)); font-size: 13px; font-weight: 600; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }\nhtml.atv-js .atv-search-count { margin-left: .5em; font-weight: 400; color: rgba(255, 255, 255, .5); font-size: .8em; }\nhtml.atv-js .atv-search__empty { padding: calc(48 * var(--atv-u)) 0; text-align: center; color: rgba(255, 255, 255, .64); font-size: max(15px, calc(22 * var(--atv-u))); }\nhtml.atv-js .atv-search__empty[hidden] { display: none; }\n@media (max-width: 799px) {\n    html.atv-js .atv-search { padding: 0 16px 24px; }\n    html.atv-js .atv-search__grid { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 14px 10px; }\n}\nhtml.atv-js.atv-page-detail .backdropContainer, html.atv-js.atv-page-home .backdropContainer { display: none !important; }\nhtml.atv-js.atv-page-detail .backgroundContainer, html.atv-js.atv-page-home .backgroundContainer { background: var(--atv-bg) !important; }\nhtml.atv-js .itemDetailPage.atv-detail-on .detailPageWrapperContainer { background: transparent; }\nhtml.atv-js .itemDetailPage.atv-detail-on.atv-detail-episodes .nextUpSection,\nhtml.atv-js .itemDetailPage.atv-detail-on.atv-detail-episodes #listChildrenCollapsible,\nhtml.atv-js .itemDetailPage.atv-detail-on.atv-detail-episodes #childrenCollapsible { display: none !important; }\n\n@keyframes atv-fade { from { opacity: 0; } to { opacity: 1; } }\n@keyframes atv-pop { from { opacity: 0; transform: scale(.98); } to { opacity: 1; transform: none; } }\n\n/* ==========================================================================\n   3. Regal (Episoden) + Glas-Menü (Staffel)\n   ========================================================================== */\nhtml.atv-js .atv-shelf { position: relative; margin: calc(48 * var(--atv-u)) 0 calc(40 * var(--atv-u)); }\nhtml.atv-js .atv-shelf__head { position: relative; display: flex; align-items: center; gap: calc(12 * var(--atv-u)); padding: 0 var(--atv-gutter, calc(80 * var(--atv-u))); margin-bottom: calc(40 * var(--atv-u)); }\nhtml.atv-js .atv-shelf__title, html.atv-js .atv-season {\n    display: inline-flex; align-items: center; gap: calc(6 * var(--atv-u)); margin: 0;\n    font-size: max(17px, calc(31 * var(--atv-u))); font-weight: 700; letter-spacing: .4px; color: #fff; line-height: 1.2;\n}\nhtml.atv-js .atv-season svg { width: .8em; height: .8em; margin-top: .1em; color: #0a84ff; transition: transform .2s; }\nhtml.atv-js .atv-season[aria-expanded="true"] svg { transform: rotate(180deg); }\nhtml.atv-js .atv-shelf__count { font-size: max(12px, calc(20 * var(--atv-u))); color: rgba(255, 255, 255, .64); font-weight: 400; margin-left: calc(6 * var(--atv-u)); }\nhtml.atv-js .atv-shelf__scroller {\n    display: flex; gap: calc(20 * var(--atv-u)); overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory;\n    padding: 12px var(--atv-gutter, calc(80 * var(--atv-u))) 16px; scroll-padding-left: var(--atv-gutter, calc(80 * var(--atv-u))); scrollbar-width: none; -webkit-overflow-scrolling: touch;\n}\nhtml.atv-js .atv-shelf__scroller::-webkit-scrollbar { display: none; }\nhtml.atv-js .atv-ep {\n    position: relative; flex: 0 0 auto; scroll-snap-align: start; overflow: hidden; cursor: pointer;\n    width: max(230px, calc(304 * var(--atv-u))); aspect-ratio: 304 / 234; border-radius: max(12px, calc(14 * var(--atv-u)));\n    background: #2b2b2b; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);\n    transition: transform .25s var(--atv-ease), box-shadow .25s var(--atv-ease);\n}\nhtml.atv-js .atv-ep:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }\nhtml.atv-js .atv-ep__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }\nhtml.atv-js .atv-ep__grad { position: absolute; left: 0; right: 0; bottom: 0; height: 68%; background: linear-gradient(to top, rgba(0, 0, 0, .78) 0%, rgba(0, 0, 0, .55) 35%, rgba(0, 0, 0, .25) 65%, rgba(0, 0, 0, 0) 100%); pointer-events: none; }\nhtml.atv-js .atv-ep__scrim { position: absolute; inset: 0; background: rgba(51, 51, 51, .3); opacity: 0; transition: opacity .15s linear; pointer-events: none; }\nhtml.atv-js .atv-ep:hover .atv-ep__scrim, html.atv-js .atv-ep:focus-within .atv-ep__scrim { opacity: 1; }\nhtml.atv-js .atv-ep__body { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 max(12px, calc(14 * var(--atv-u))) max(12px, calc(14 * var(--atv-u))); display: flex; flex-direction: column; gap: max(2px, calc(3 * var(--atv-u))); }\nhtml.atv-js .atv-ep__tag { font-size: max(10px, calc(11 * var(--atv-u))); font-weight: 500; letter-spacing: .6px; text-transform: uppercase; color: rgba(255, 255, 255, .7); line-height: 1.3; }\nhtml.atv-js .atv-ep__title { font-size: max(14px, calc(16 * var(--atv-u))); font-weight: 600; color: #fff; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: max(2px, calc(2 * var(--atv-u))); }\nhtml.atv-js .atv-ep__desc { font-size: max(12px, calc(13.5 * var(--atv-u))); font-weight: 500; line-height: 1.25; color: rgba(255, 255, 255, .7); }\nhtml.atv-js .atv-ep__foot { display: flex; align-items: center; gap: 8px; margin-top: max(4px, calc(6 * var(--atv-u))); font-size: max(11px, calc(12.5 * var(--atv-u))); font-weight: 600; color: rgba(255, 255, 255, .7); }\nhtml.atv-js .atv-ep__foot svg { width: 1em; height: 1em; }\nhtml.atv-js .atv-ep__bar { width: max(70px, calc(100 * var(--atv-u))); height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .3); overflow: hidden; }\nhtml.atv-js .atv-ep__bar i { display: block; height: 100%; background: rgba(255, 255, 255, .9); }\nhtml.atv-js button.atv-ep__more {\n    position: absolute; right: 10px; bottom: 10px; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;\n    background: rgba(40, 40, 40, .5); color: #fff; -webkit-backdrop-filter: saturate(1.8) blur(20px); backdrop-filter: saturate(1.8) blur(20px);\n    opacity: 0; transition: opacity .15s linear, background .15s;\n}\nhtml.atv-js .atv-ep__more svg { width: 16px; height: 16px; }\nhtml.atv-js .atv-ep:hover .atv-ep__more, html.atv-js .atv-ep:focus-within .atv-ep__more, html.atv-js .atv-ep__more:focus-visible { opacity: 1; }\nhtml.atv-js .atv-ep__more:hover { background: rgba(255, 255, 255, .25); }\n/* Folgenkarten: sichtbares Play-Symbol (kein Hover nötig, auch auf dem Handy) */\nhtml.atv-js .atv-ep__play { position: absolute; left: 12px; top: 12px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; pointer-events: none;\n    background: rgba(40, 40, 42, .55); -webkit-backdrop-filter: blur(20px) saturate(1.8); backdrop-filter: blur(20px) saturate(1.8);\n    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .18), 0 6px 18px rgba(0, 0, 0, .35); transition: transform .25s var(--atv-ease, ease), background .2s, color .2s; }\nhtml.atv-js .atv-ep__play svg { width: 20px; height: 20px; fill: currentColor; margin-left: 2px; }\nhtml.atv-js .atv-ep:hover .atv-ep__play, html.atv-js .atv-ep:focus-within .atv-ep__play { transform: scale(1.1); background: rgba(255, 255, 255, .92); color: #000; }\n\nhtml.atv-js .atv-shelf__empty { padding: 0 var(--atv-gutter, calc(80 * var(--atv-u))); color: rgba(255, 255, 255, .5); font-size: 15px; }\nhtml.atv-js .atv-menu {\n    position: absolute; z-index: 60; top: 100%; left: var(--atv-gutter, calc(80 * var(--atv-u))); margin-top: 8px; min-width: 200px; padding: 6px;\n    border-radius: 12px; background: rgba(40, 40, 40, .7); -webkit-backdrop-filter: blur(60px) saturate(2.2); backdrop-filter: blur(60px) saturate(2.2);\n    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2), 0 8px 40px rgba(0, 0, 0, .55); animation: atv-pop .12s ease-out;\n}\nhtml.atv-js .atv-menu__item { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 12px; border-radius: 8px; font-size: 15px; color: rgba(255, 255, 255, .92); text-align: left; white-space: nowrap; }\nhtml.atv-js .atv-menu__item:hover, html.atv-js .atv-menu__item:focus-visible { background: rgba(255, 255, 255, .1); }\nhtml.atv-js .atv-menu__item svg { width: 14px; height: 14px; visibility: hidden; }\nhtml.atv-js .atv-menu__item.is-selected svg { visibility: visible; }\n\n/* ---------- Infoblock (About) ---------- */\nhtml.atv-js .atv-about { margin: calc(24 * var(--atv-u)) var(--atv-gutter, calc(80 * var(--atv-u))) calc(48 * var(--atv-u)); display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: calc(1600 * var(--atv-u)); }\nhtml.atv-js .atv-about__col h3 { margin: 0 0 10px; font-size: max(13px, calc(17 * var(--atv-u))); font-weight: 700; color: rgba(255, 255, 255, .92); }\nhtml.atv-js .atv-about__col dl { margin: 0; font-size: max(12px, calc(14 * var(--atv-u))); line-height: 1.4; }\nhtml.atv-js .atv-about__col dt { color: rgba(255, 255, 255, .92); margin-top: 10px; }\nhtml.atv-js .atv-about__col dt:first-child { margin-top: 0; }\nhtml.atv-js .atv-about__col dd { margin: 0; color: rgba(255, 255, 255, .64); }\n\n/* ==========================================================================\n   4. Profilauswahl („Wer schaut?“) auf der Anmeldeseite\n   ========================================================================== */\nhtml.atv-js #loginPage.atv-who-on { position: relative; min-height: 100vh; }\nhtml.atv-js .atv-who {\n    position: fixed; inset: 0; z-index: 1; overflow: hidden; color: #fff;\n    background: radial-gradient(55% 45% at 18% 12%, #f3c9b4 0%, rgba(243, 201, 180, 0) 65%),\n                radial-gradient(45% 40% at 82% 22%, #cfe5f4 0%, rgba(207, 229, 244, 0) 65%),\n                radial-gradient(60% 50% at 55% 55%, #8fb7d6 0%, rgba(143, 183, 214, 0) 70%),\n                radial-gradient(70% 55% at 45% 100%, #4f7fa6 0%, rgba(79, 127, 166, 0) 70%), #7aa6cc;\n}\nhtml.atv-js .atv-who::before { content: ""; position: absolute; inset: -10%; background: inherit; filter: blur(60px) brightness(1.08) saturate(1.15); }\nhtml.atv-js .atv-who__title { position: absolute; left: 0; right: 0; top: 27%; margin: 0; text-align: center; font-size: max(24px, calc(42 * var(--atv-u))); font-weight: 700; letter-spacing: -.3px; text-shadow: 0 2px 16px rgba(0, 0, 0, .25); }\nhtml.atv-js .atv-who__row { position: absolute; left: 0; right: 0; top: 48%; transform: translateY(-50%); display: flex; justify-content: center; align-items: flex-start; flex-wrap: wrap; gap: calc(25 * var(--atv-u)); padding: 0 24px; }\nhtml.atv-js .atv-who__user { display: flex; flex-direction: column; align-items: center; width: max(96px, calc(170 * var(--atv-u))); }\nhtml.atv-js .atv-who__avatar {\n    width: max(96px, calc(170 * var(--atv-u))); height: max(96px, calc(170 * var(--atv-u))); border-radius: 50%; overflow: hidden; position: relative;\n    display: flex; align-items: center; justify-content: center; font-size: max(40px, calc(72 * var(--atv-u))); font-weight: 600; color: rgba(28, 28, 30, .8);\n    transition: transform .25s var(--atv-ease), box-shadow .25s var(--atv-ease);\n}\nhtml.atv-js .atv-who__avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }\nhtml.atv-js .atv-who__avatar--add { background: rgba(255, 255, 255, .25); color: #2b4a66; -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2); }\nhtml.atv-js .atv-who__avatar--add svg { width: 32%; height: 32%; }\nhtml.atv-js .atv-who__name { margin-top: max(14px, calc(26 * var(--atv-u))); font-size: max(14px, calc(22 * var(--atv-u))); color: rgba(255, 255, 255, .7); text-shadow: 0 1px 8px rgba(0, 0, 0, .25); transition: color .2s; text-align: center; }\nhtml.atv-js .atv-who__user:hover .atv-who__avatar, html.atv-js .atv-who__user:focus-visible .atv-who__avatar { transform: scale(1.15); box-shadow: 0 24px 60px rgba(0, 0, 0, .35); }\nhtml.atv-js .atv-who__user:hover .atv-who__name, html.atv-js .atv-who__user:focus-visible .atv-who__name { color: rgba(255, 255, 255, .92); }\nhtml.atv-js .atv-who__user:focus-visible { outline: none; }\n/* natives Formular als Glas-Karte, nur wenn geöffnet */\nhtml.atv-js #loginPage.atv-who-on > .padded-left.padded-right.padded-bottom-page { display: none; }\nhtml.atv-js #loginPage.atv-who-on.atv-who--form > .padded-left.padded-right.padded-bottom-page {\n    display: block; position: fixed; z-index: 2; left: 50%; top: 50%; transform: translate(-50%, -50%);\n    width: min(440px, 92vw); max-height: 90vh; overflow: auto; margin: 0; padding: 28px 24px 20px !important;\n    border-radius: 36px; background: rgba(30, 30, 34, .55); color: #fff;\n    -webkit-backdrop-filter: blur(40px) saturate(1.8); backdrop-filter: blur(40px) saturate(1.8);\n    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), 0 24px 80px rgba(0, 0, 0, .45); animation: atv-pop .2s var(--atv-ease);\n}\nhtml.atv-js #loginPage.atv-who-on.atv-who--form .manualLoginForm { width: 100%; }\nhtml.atv-js #loginPage.atv-who-on.atv-who--form .padded-bottom-page { padding-bottom: 12px !important; }\nhtml.atv-js #loginPage.atv-who-on.atv-who--form .readOnlyContent { width: 100%; }\nhtml.atv-js #loginPage.atv-who-on .visualLoginForm, html.atv-js #loginPage.atv-who-on .btnManual { display: none !important; }\nhtml.atv-js #loginPage.atv-who-on .atv-who__scrim { display: none; }\nhtml.atv-js #loginPage.atv-who-on.atv-who--form .atv-who__scrim { display: block; position: fixed; inset: 0; z-index: 1; background: rgba(0, 0, 0, .35); }\nhtml.atv-js .atv-who__close { position: absolute; top: 16px; left: 16px; z-index: 3; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; }\nhtml.atv-js .atv-who__close:hover { background: rgba(255, 255, 255, .12); }\nhtml.atv-js .atv-who__close svg { width: 22px; height: 22px; }\nhtml.atv-js #loginPage.atv-who-on .backdropImage { filter: blur(80px) brightness(1.2); }\n\n/* ==========================================================================\n   5. Glas-Tableiste (nur Mobil < 800 px)\n   ========================================================================== */\nhtml.atv-js .atv-tabbar { display: none; }\n@media (max-width: 799px) {\n    html.atv-js.atv-tabbar-on .atv-tabbar {\n        position: fixed; z-index: 1000; left: 50%; bottom: calc(8px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);\n        display: flex; align-items: center; gap: 8px;\n    }\n    html.atv-js .atv-tabbar__caps, html.atv-js .atv-tabbar__search {\n        display: flex; align-items: center; height: 50px; border-radius: 999px;\n        background: rgba(30, 30, 34, .6); -webkit-backdrop-filter: blur(30px) saturate(1.8); backdrop-filter: blur(30px) saturate(1.8);\n        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12), inset 0 1px 0 rgba(255, 255, 255, .18), 0 8px 30px rgba(0, 0, 0, .35);\n    }\n    html.atv-js .atv-tabbar__caps { padding: 0 6px; }\n    html.atv-js .atv-tabbar__search { width: 50px; justify-content: center; }\n    html.atv-js .atv-tabbar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 68px; height: 50px; border-radius: 999px; color: rgba(255, 255, 255, .7); font-size: 10px; font-weight: 500; }\n    html.atv-js .atv-tabbar__search a { width: 50px; }\n    html.atv-js .atv-tabbar a svg { width: 24px; height: 24px; }\n    html.atv-js .atv-tabbar a.is-active { color: #0a84ff; }\n    html.atv-js.atv-tabbar-on .mainAnimatedPage { padding-bottom: 80px !important; }\n}\n\n/* ==========================================================================\n   6. Mobil (< 800 px): Hochkant-Hero, Detailseite zentriert, Regal 230 px\n   ========================================================================== */\n@media (max-width: 799px) {\n    html.atv-js .atv-hero { height: min(176vw, 88vh); min-height: 520px; --atv-hero-overlap: -10vh; }\n    html.atv-js .atv-hero__art { object-position: 50% 15%; }\n    html.atv-js .atv-hero__shade { background: linear-gradient(to top, #000000 0%, #000000 20%, rgba(0, 0, 0, .9) 34%, rgba(0, 0, 0, .55) 46%, rgba(0, 0, 0, 0) 64%); }\n    html.atv-js .atv-hero__lockup { left: 16px; right: 16px; width: auto; max-width: none; bottom: calc(10vh + 72px); align-items: center; text-align: center; gap: 10px; }\n    html.atv-js .atv-hero__logo { max-width: min(300px, 77vw); max-height: 90px; object-position: center bottom; }\n    html.atv-js .atv-hero__title { font-size: 30px; text-align: center; }\n    html.atv-js .atv-hero__meta { font-size: 17px; gap: 8px; }\n    html.atv-js .atv-hero__meta .atv-badge { font-size: 11px; height: 18px; }\n    html.atv-js .atv-hero__desc { font-size: 17px; line-height: 22px; max-width: 100%; padding: 0 36px; }\n    html.atv-js .atv-hero__desc.atv-clamp--2 { -webkit-line-clamp: 3; }\n    html.atv-js .atv-hero__actions { margin-top: 8px; gap: 12px; }\n    html.atv-js .atv-hero .atv-pill { height: 44px; min-width: min(264px, 72vw); font-size: 17px; padding: 0 20px; }\n    html.atv-js .atv-hero .atv-circle { width: 44px; height: 44px; }\n    html.atv-js .atv-hero .atv-circle--info, html.atv-js .atv-hero .atv-circle--next { display: none; }\n    html.atv-js .atv-hero__dots { bottom: calc(10vh + 32px); height: auto; padding: 0; gap: 12px; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }\n    html.atv-js button.atv-hero__dot { width: 8px; height: 8px; }\n    html.atv-js button.atv-hero__dot.is-active { width: 12px; height: 12px; }\n    html.atv-js .atv-hero__nav { display: none; }\n\n    html.atv-js .atv-detail { height: auto; min-height: 0; }\n    html.atv-js .atv-detail__art { position: relative; display: block; height: 70vh; min-height: 420px; object-position: 50% 30%; }\n    html.atv-js .atv-detail__shade { background: linear-gradient(to top, #000000 0%, rgba(0, 0, 0, 1) 28%, rgba(0, 0, 0, .6) 44%, rgba(0, 0, 0, 0) 60%); }\n    html.atv-js .atv-detail__lockup { position: relative; left: 0; bottom: 0; width: auto; max-width: none; margin: calc(-30vh) 16px 0; align-items: center; text-align: center; gap: 10px; }\n    html.atv-js .atv-detail__logo { max-width: min(300px, 77vw); max-height: 90px; object-position: center bottom; }\n    html.atv-js .atv-detail__title { font-size: 30px; text-align: center; }\n    html.atv-js .atv-detail__meta { font-size: 15px; justify-content: center; }\n    html.atv-js .atv-detail__desc { font-size: 15px; line-height: 20px; text-align: left; align-self: stretch; max-width: none; }\n    html.atv-js .atv-detail__facts { font-size: 13px; justify-content: center; }\n    html.atv-js .atv-detail__logo, html.atv-js .atv-detail__title { order: 0; }\n    html.atv-js .atv-detail__sub { order: 1; }\n    html.atv-js .atv-detail__meta { order: 2; }\n    html.atv-js .atv-detail__actions { order: 3; justify-content: center; flex-wrap: wrap; width: auto; max-width: 100%; gap: 12px; margin: 4px 0 2px; }\n    html.atv-js .atv-detail__note { order: 4; }\n    html.atv-js .atv-detail__desc { order: 5; }\n    html.atv-js .atv-detail__facts { order: 6; }\n    html.atv-js .atv-detail .atv-pill { height: 44px; min-width: 181px; font-size: 17px; padding: 0 22px; }\n    html.atv-js .atv-detail .atv-circle { width: 44px; height: 44px; }\n    html.atv-js .atv-detail__note { margin: -2px 0 2px; font-size: 13px; }\n    html.atv-js .atv-detail__credits { position: relative; right: auto; bottom: auto; margin: 14px 16px 0; max-width: none; text-align: left; font-size: 13px; line-height: 18px; }\n    html.atv-js .atv-detail__lockup + .atv-detail__credits { margin-bottom: 8px; }\n\n    html.atv-js .atv-shelf__head { padding: 0 25px; margin-bottom: 14px; }\n    html.atv-js .atv-shelf__scroller { gap: 10px; padding: 6px 25px 12px; scroll-padding-left: 25px; }\n    html.atv-js .atv-ep { width: 230px; }\n    html.atv-js .atv-menu { left: 25px; }\n    html.atv-js .atv-about { margin: 16px 25px 32px; }\n    html.atv-js .atv-who__title { top: 24%; }\n    html.atv-js .atv-who__row { gap: 18px; }\n}\n@media (prefers-reduced-motion: reduce) {\n    html.atv-js .atv-hero__slide, html.atv-js .atv-hero__lockup, html.atv-js .atv-pill, html.atv-js .atv-circle, html.atv-js .atv-ep,\n    html.atv-js .atv-who__avatar, html.atv-js .atv-clamp, html.atv-js .atv-menu { transition: none !important; animation: none !important; }\n}\n\n/* Sprach-Badges (Ton / Untertitel) neben den Qualitäts-Badges */\nhtml.atv-js .atv-badge--lang { white-space: nowrap; letter-spacing: .3px; cursor: default; }\nhtml.atv-js .atv-badge__pre { opacity: .6; margin-right: .45em; font-size: .85em; letter-spacing: .6px; }\n\n/* ===== build/css/dashboard.css (eingebettet) ===== */\n/* ==========================================================================\n   12 Dashboard/Admin (Jellyfin 12.x lädt das Branding-CSS NICHT auf\n   /dashboard-Seiten; diese Datei wird deshalb zusätzlich über appletv-js.css\n   ausgeliefert – siehe build/css/dashboard.css). Nur Farben/Radien, kein Layout.\n   ========================================================================== */\n.MuiDrawer-paper, .MuiDrawer-docked .MuiPaper-root { background: #1b1c22 !important; border-right: 1px solid rgba(255, 255, 255, .06) !important; color: #fff !important; }\n.MuiDrawer-paper .MuiListItemButton-root { border-radius: 10px; margin: 1px 10px; padding: 8px 14px; }\n.MuiDrawer-paper .MuiListItemButton-root:hover { background: rgba(255, 255, 255, .08) !important; }\n.MuiDrawer-paper .MuiListItemButton-root.Mui-selected, .MuiDrawer-paper .MuiListItemButton-root.active, .MuiDrawer-paper a.MuiListItemButton-root[aria-current="page"] { background: rgba(255, 255, 255, .14) !important; }\n.MuiDrawer-paper .MuiListItemIcon-root { color: rgba(255, 255, 255, .8) !important; }\n.MuiDrawer-paper .MuiListSubheader-root { background: transparent !important; color: rgba(255, 255, 255, .55) !important; }\n.MuiDrawer-paper .MuiListItem-root img, .MuiDrawer-paper .MuiAvatar-root img { border-radius: 8px; }\nhtml:has(.dashboard-appBar), html:has(.dashboard-appBar) body { background: #000000 !important; }\n.dashboard-appBar { background: transparent !important; }\n.dashboard-appBar .MuiIconButton-root { color: #fff; }\n#dashboardPage, .type-interior, .content-primary { background: transparent !important; color: #fff; }\n.MuiPaper-root:not(.MuiAppBar-root):not(.MuiDrawer-paper):not(.MuiMenu-paper):not(.MuiPopover-paper):not(.MuiDialog-paper) { background: #1b1c22 !important; background-image: none !important; color: #fff !important; border-radius: 18px !important; box-shadow: none !important; }\n.MuiDialog-paper { background: #1f2026 !important; border-radius: 24px !important; color: #fff !important; }\n.MuiCard-root, .paperList, .MuiDataGrid-root, .MuiTableContainer-root { background: #1b1c22 !important; border-radius: 18px !important; border: 1px solid rgba(255, 255, 255, .06) !important; overflow: hidden; color: #fff; }\n.MuiTableCell-root { border-color: rgba(255, 255, 255, .08) !important; color: #fff !important; }\n.MuiTableHead-root .MuiTableCell-root { color: rgba(255, 255, 255, .64) !important; }\n.MuiDataGrid-root { --DataGrid-rowBorderColor: rgba(255, 255, 255, .08); }\n.MuiDataGrid-columnHeaders, .MuiDataGrid-columnHeader, .MuiDataGrid-footerContainer { background: #1b1c22 !important; border-color: rgba(255, 255, 255, .08) !important; }\n.MuiTableRow-root:hover, .MuiDataGrid-row:hover { background: rgba(255, 255, 255, .05) !important; }\n/* Jellyfin-Cyan (#00a4dc) → Weiß/Grau; Rot bleibt */\n.MuiButton-contained, .MuiButton-containedPrimary, .MuiLoadingButton-root.MuiButton-contained { border-radius: 999px !important; background: rgba(255, 255, 255, .92) !important; color: #000 !important; box-shadow: none !important; text-transform: none !important; font-weight: 600; }\n.MuiButton-contained.MuiButton-containedError, .MuiButton-contained.MuiButton-colorError { background: #ff453a !important; color: #fff !important; }\n.MuiButton-outlined, .MuiButton-outlinedPrimary { border-radius: 999px !important; color: #fff !important; border-color: rgba(255, 255, 255, .3) !important; text-transform: none !important; }\n.MuiButton-text, .MuiButton-textPrimary { border-radius: 999px !important; color: #fff !important; text-transform: none !important; }\n.MuiFab-primary { background: rgba(255, 255, 255, .92) !important; color: #000 !important; }\n.MuiChip-filled, .MuiChip-filledPrimary, .MuiChip-colorPrimary { background: rgba(255, 255, 255, .14) !important; color: #fff !important; border-radius: 999px; }\n.MuiLink-root, a.MuiLink-root { color: #fff !important; text-decoration-color: rgba(255, 255, 255, .4); }\n.MuiCheckbox-colorPrimary, .MuiCheckbox-root svg, .MuiRadio-root svg { color: rgba(255, 255, 255, .75) !important; }\n.MuiCheckbox-root.Mui-checked svg, .MuiRadio-root.Mui-checked svg { color: #0a84ff !important; }\n.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track { background-color: #34c759 !important; opacity: 1 !important; }\n.MuiSwitch-track { background-color: rgba(255, 255, 255, .25) !important; }\n.MuiAvatar-root.MuiAvatar-colorDefault, .MuiListItemAvatar-root .MuiAvatar-root { background: rgba(255, 255, 255, .12) !important; color: #fff !important; }\n.MuiIconButton-colorPrimary, .MuiSvgIcon-colorPrimary, .MuiTypography-colorPrimary, .MuiTab-root.Mui-selected { color: #fff !important; }\n.MuiTabs-indicator { background-color: #fff !important; }\n.MuiLinearProgress-root { background-color: rgba(255, 255, 255, .15) !important; border-radius: 999px; }\n.MuiLinearProgress-bar { background-color: rgba(255, 255, 255, .75) !important; border-radius: 999px; }\n.MuiLinearProgress-colorSuccess .MuiLinearProgress-bar, .MuiLinearProgress-barColorSuccess { background-color: #34c759 !important; }\n.MuiLinearProgress-colorError .MuiLinearProgress-bar, .MuiLinearProgress-barColorError { background-color: #ff453a !important; }\n.MuiFormControl-root .MuiInputBase-root, .MuiOutlinedInput-root, .MuiFilledInput-root { background: rgba(255, 255, 255, .1) !important; border-radius: 12px !important; color: #fff !important; }\n.MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, .14) !important; }\n.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { border-color: rgba(255, 255, 255, .6) !important; }\n.MuiInputLabel-root, .MuiFormLabel-root.Mui-focused { color: rgba(255, 255, 255, .64) !important; }\n.MuiAlert-standardInfo { background: rgba(10, 132, 255, .15) !important; color: #fff !important; border-radius: 14px; }\n.MuiPaginationItem-root.Mui-selected { background: #fff !important; color: #000 !important; }\n.MuiMenu-paper, .MuiPopover-paper { background: rgba(30, 30, 34, .95) !important; background-image: none !important; color: #fff !important; border-radius: 14px !important; }\n.MuiMenuItem-root:hover { background: rgba(255, 255, 255, .1) !important; }\n.MuiTooltip-tooltip { background: rgba(40, 40, 40, .95) !important; border-radius: 8px; }\n/* Gerätekarten / Aktivitätsicons mit Inline-Cyan */\n[style*="rgb(0, 164, 220)"], [style*="#00a4dc"], [style*="#00A4DC"] { background-color: #2c2d33 !important; }\n.activityItem .MuiAvatar-root, .MuiListItemAvatar-root .MuiAvatar-colorDefault { background: rgba(255, 255, 255, .12) !important; }\n/* Alte Jellyfin-Seiten im Dashboard (Benutzer, Bibliotheken, geplante Aufgaben, Plugins) */\n.dashboardDocument, .type-interior { background: transparent !important; }\n.card.squareCard.scalableCard .cardBox.visualCardBox, .visualCardBox { background: #1b1c22 !important; border-radius: 14px !important; box-shadow: none !important; overflow: hidden; }\n.visualCardBox .cardImage.defaultCardBackground, .defaultCardBackground { background: #30323a !important; }\n.visualCardBox .cardFooter { background: transparent !important; }\n.visualCardBox .cardText { color: #fff; }\n.visualCardBox .cardText-secondary { color: rgba(255, 255, 255, .64); }\n.fab.submit, .emby-button.fab { background: rgba(255, 255, 255, .92) !important; color: #000 !important; border-radius: 50% !important; }\n.raised.button-submit, .button-submit, .emby-button.raised.button-submit { background: #0a84ff !important; color: #fff !important; border-radius: 999px !important; }\n.raised, .emby-button.raised { border-radius: 999px !important; background: rgba(255, 255, 255, .14) !important; color: #fff !important; text-transform: none !important; }\n.raised.button-delete, .button-delete { background: rgba(255, 69, 58, .85) !important; color: #fff !important; }\n.emby-input, .emby-select, .emby-textarea { background: rgba(255, 255, 255, .1) !important; border-radius: 12px !important; border: 0 !important; color: #fff !important; }\n.emby-checkbox:checked + span + .checkboxOutline { background: #0a84ff !important; border-radius: 7px; }\n.checkboxOutline { background: rgba(255, 255, 255, .16) !important; border-radius: 7px !important; border: 0 !important; }\n.inputLabelFocused, .selectLabelFocused { color: #fff !important; }\n.listItem:hover { background: rgba(255, 255, 255, .06) !important; }\n.taskProgressOuter, .taskProgressInner { border-radius: 999px; }\n.taskProgressInner { background: rgba(255, 255, 255, .75) !important; }\n.paperList .listItem-border { border-color: rgba(255, 255, 255, .06) !important; }\n.sectionTitle a, .sectionTitleTextButton { color: #fff !important; }\n.MuiAppBar-root.MuiPaper-root { background: transparent !important; box-shadow: none !important; }\n';
 
-    var VERSION = '1.7.2';
+    var VERSION = '1.8.0';
     var CFG = {
         updateCheck: true,     // Admins sehen einen Hinweis, wenn es im Repository eine neuere Version gibt (1 Abruf pro Tag bei GitHub)
         repo: 'derpfiff/cinema-glass',
@@ -1026,8 +1026,10 @@
                 if (gutter) shelf.style.setProperty('--atv-gutter', gutter);
                 secondary.insertBefore(shelf, secondary.firstChild);
             }
-            mountSeriesShelf(page, token, item, secondary, gutter);   // hängt sich selbst ein, sobald die Reihe bekannt ist
-            mountDiscDetail(page, token, item, secondary, gutter);    // ebenso: Empfehlungen für Fehlendes
+            // Unter dem Kopf (bzw. den Folgen) steht zuerst, was zum Titel gehört: Jellyfins „Besetzung & Mitwirkende“. Die
+            // beiden Regale mit Empfehlungen hängen sich dahinter ein, sobald sie etwas zu zeigen haben (detailRecPlace).
+            mountSeriesShelf(page, token, item, secondary, gutter);   // Filmreihe
+            mountDiscDetail(page, token, item, secondary, gutter);    // Könnte dir auch gefallen
             var about = buildAbout(item);
             if (about) { if (gutter) about.style.setProperty('--atv-gutter', gutter); secondary.appendChild(about); }
         }).catch(function (e) { page.__atvDetailDone = true; page.classList.add('atv-native'); console.warn('[atv] Detailseite konnte nicht geladen werden', e); });
@@ -1628,8 +1630,8 @@
             bNext.addEventListener('click', function (e) { e.stopPropagation(); turn(1); });
             scroller.addEventListener('scroll', function () { clearTimeout(syncArrows.t); syncArrows.t = setTimeout(syncArrows, 80); }, { passive: true });
             window.addEventListener('resize', function () { if (shelf && shelf.isConnected) syncArrows(); });
-            // direkt unter dem Kopf der Seite, wo bei Serien das Folgenregal steht
-            secondary.insertBefore(shelf, secondary.firstChild);
+            // hinter dem, was zum Film selbst gehört (Besetzung), vor „Könnte dir auch gefallen“
+            detailRecPlace(secondary, shelf, 1);
         }
         function draw() {
             if (!alive()) return;
@@ -1645,7 +1647,7 @@
                 var c;
                 if (x.it) { c = partCard(x.it, x.it.Id === item.Id); if (x.it.Id === item.Id) cur = c; }
                 else {
-                    // dieselbe Karte und Anfrage-Ansicht wie im Regal „Nicht in deiner Mediathek“, nur gedimmt
+                    // dieselbe Karte und Anfrage-Ansicht wie im Regal „Nicht in deiner Mediathek“; sie kennzeichnet Fehlendes selbst
                     c = seerr.card(x.part); c.classList.add('atv-part', 'atv-part--missing');
                     var sub = c.querySelector('.atv-seerr__sub');
                     if (sub) sub.textContent = [x.date.slice(0, 4) === '9999' ? '' : x.date.slice(0, 4), st('missing')].filter(Boolean).join(' · ');
@@ -1680,328 +1682,1893 @@
     }
 
     /* =====================================================================
-       3c. Entdecken: Empfehlungen für Titel, die in der Mediathek fehlen
-       Jellyfins „Ähnliche Titel“ kennen nur die eigene Bibliothek. Hier kommen die Empfehlungen von TMDb (über Seerr) zu
-       den Titeln, die dem Konto etwas bedeuten: Merkliste/Favoriten zählen dreifach, Gesehenes einfach. Gezeigt wird nur,
-       was fehlt; die Karte öffnet die Anfrage-Ansicht des Seerr-Zusatzes. Auf der Startseite stehen die Reihen ganz unten
-       und kommen erst, wenn die Seite steht, damit sich darüber nichts verschiebt.
-       Sparsam: je Signal-Titel ein Abruf, im Browser je Konto gemerkt (DISC.keepMs), höchstens DISC.parallel zugleich.
+       3c. Entdecken: persönliche Empfehlungen
+       Die Rangfolge rechnet der Server (Plugin, /CinemaGlass/discover…). Hier wird nur gefragt, gezeigt und
+       zurückgemeldet: die Seite „Entdecken“ (#/discover), auf der Startseite die Reihen „Unterwegs zu dir“, „Neu für
+       dich“ und „Für dich“, auf der Film- und Serienseite das Regal „Könnte dir auch gefallen“, dazu der
+       Geschmacks-Check und „Dein Geschmack“. Fehlende Titel öffnen die Anfrage-Ansicht des Seerr-Zusatzes, vorhandene
+       Jellyfins Detailseite.
        ===================================================================== */
-    var DISC = { keepMs: 8 * 3600 * 1000, keepMax: 80, favs: 12, played: 12, parallel: 3, minRow: 4, maxRow: 18, rows: 3, fill: 10, perSignal: 3, hiddenMax: 500 };
-    var DISC_PREFS = 'cinemaglass-discover', DISC_CLIENT = 'cinemaglass';
-    var DISC_TXT = {
-        de: { forYou: 'Für dich', watched: 'Weil du „%1“ gesehen hast', liked: 'Weil dir „%1“ gefällt', also: 'Könnte dir auch gefallen', hide: 'Kein Interesse', hidden: '„%1“ wird nicht mehr vorgeschlagen', saveFail: 'Die Auswahl ließ sich nicht speichern.' },
-        en: { forYou: 'For you', watched: 'Because you watched “%1”', liked: 'Because you like “%1”', also: 'You might also like', hide: 'Not interested', hidden: '“%1” will no longer be suggested', saveFail: 'Could not save the selection.' }
+    var DSC = { ttlMs: 30 * 60 * 1000, pollMs: 1500, lanes: 5, minConf: .25, minRow: 4, holdMs: 480 };
+    var DSC_OLD_PREFS = 'cinemaglass-discover', DSC_OLD_CLIENT = 'cinemaglass';   // frühere Liste „Kein Interesse“ (siehe dscMigrate)
+    var DSC_TXT = {
+        de: {
+            nav: 'Entdecken', forYou: 'Für dich', movies: 'Filme', shows: 'Serien', also: 'Könnte dir auch gefallen', all: 'Alle ansehen',
+            onWay: 'Unterwegs zu dir', arrived: 'Neu für dich', kind: 'Art', genres: 'Genres', picks: 'Empfehlungen',
+            match: '%1 % Übereinstimmung', matchShort: '%1 %', request: 'Anfragen', requested: 'Angefragt', isNew: 'Neu',
+            missing: 'nicht in deiner Mediathek', available: 'in deiner Mediathek', onTheWay: 'unterwegs',
+            seen: 'Schon gesehen', seenQ: 'Schon gesehen?', liked: 'Mochte ich', disliked: 'Nicht meins', hide: 'Nicht mehr anzeigen', info: 'Mehr Infos', more: 'Mehr',
+            seenLiked: 'Gesehen – mochte ich', seenDisliked: 'Gesehen – nicht meins', moreSeasons: 'Weitere Staffeln anfragen',
+            undo: 'Rückgängig', tHide: '„%1“ wird nicht mehr angezeigt', tLike: '„%1“ gemerkt – mochtest du', tDislike: '„%1“ gemerkt – nicht deins', saveFail: 'Das ließ sich nicht speichern.',
+            here: '„%1“ ist da', hereMany: '„%1“ und %2 weitere sind da', watch: 'Ansehen',
+            season1: '1 Staffel', seasons: '%1 Staffeln',
+            building: 'Wir lernen deinen Geschmack kennen …', building2: 'Deine Empfehlungen werden zusammengestellt …', buildingSub: 'Das dauert nur einen Moment.',
+            eOffT: 'Entdecken ist noch nicht eingerichtet', eOff: 'Für persönliche Empfehlungen braucht das Plugin eine Verbindung zu Seerr.', eOffAdmin: 'Plugin-Einstellungen öffnen',
+            eSeerrT: 'Seerr ist gerade nicht erreichbar', eSeerr: 'Sobald die Verbindung wieder steht, sind deine Empfehlungen zurück.',
+            eNoneT: 'Hier gibt es gerade nichts zu entdecken', eNone: 'Für diese Auswahl haben wir nichts Passendes gefunden.', eNoneAll: 'Schau ein paar Titel an oder sag uns, was du magst – dann füllt sich diese Seite.',
+            eNetT: 'Entdecken ließ sich nicht laden', eNet: 'Prüfe die Verbindung und versuch es noch einmal.', retry: 'Erneut versuchen', reset: 'Auswahl zurücksetzen',
+            tasteT: 'Sag uns, was du magst', taste: 'Ein paar Tipps genügen, und Entdecken wird persönlich.', tasteGo: 'Geschmacks-Check starten', later: 'Später', refine: 'Geschmack verfeinern', yourTaste: 'Dein Geschmack',
+            about: 'Deine Empfehlungen entstehen aus dem, was du schaust, mit Herz markierst und hier zurückmeldest.',
+            tcStep: 'Schritt %1 von 2', tc1T: 'Was schaust du gern?', tc1: 'Wähl aus, was dich anspricht – so viel du magst.', tc2T: 'Was davon magst du?',
+            tc2: 'Einmal tippen: mag ich. Noch einmal: nicht meins. Was du nicht kennst, lässt du einfach aus.', next: 'Weiter', skip: 'Überspringen', back: 'Zurück', done: 'Fertig',
+            tcCount0: 'Noch nichts markiert', tcCount: '%1 markiert', tcWorlds0: 'Noch nichts gewählt', tcWorlds: '%1 gewählt', tcLike: 'Mag ich', tcNo: 'Nicht meins', rfSkip: 'Kenne ich nicht', rfCount: '%1 bewertet', rfEnd: 'Das war’s fürs Erste – neue Titel kommen nach.', tcFail: 'Der Geschmacks-Check ließ sich nicht laden.',
+            dpIntro: 'Daraus entstehen deine Empfehlungen. Tippe ein Merkmal an, um es stummzuschalten – es zählt dann nicht mehr mit.',
+            dpGenres: 'Genres', dpPeople: 'Personen', dpDecades: 'Jahrzehnte', dpKeywords: 'Stichworte', dpLiked: 'Gefällt mir', dpDisliked: 'Nicht meins', dpHidden: 'Nicht mehr anzeigen',
+            dpMuted: 'stummgeschaltet', dpTake: 'Zurücknehmen', dpEmpty: 'Noch nichts.', dpNone: 'Hier sammelt sich dein Geschmack, sobald du ein paar Titel gesehen oder bewertet hast.',
+            dpSignals: '%1 Signale', dpFail: '„Dein Geschmack“ ließ sich nicht laden.'
+        },
+        en: {
+            nav: 'Discover', forYou: 'For you', movies: 'Movies', shows: 'TV Shows', also: 'You might also like', all: 'See all',
+            onWay: 'On its way to you', arrived: 'New for you', kind: 'Type', genres: 'Genres', picks: 'Recommendations',
+            match: '%1% match', matchShort: '%1%', request: 'Request', requested: 'Requested', isNew: 'New',
+            missing: 'not in your library', available: 'in your library', onTheWay: 'on its way',
+            seen: 'Already watched', seenQ: 'Already watched?', liked: 'Liked it', disliked: 'Not for me', hide: 'Don’t show again', info: 'More info', more: 'More',
+            seenLiked: 'Watched – liked it', seenDisliked: 'Watched – not for me', moreSeasons: 'Request more seasons',
+            undo: 'Undo', tHide: '“%1” won’t be shown again', tLike: 'Noted: you liked “%1”', tDislike: 'Noted: “%1” wasn’t for you', saveFail: 'Could not save that.',
+            here: '“%1” is here', hereMany: '“%1” and %2 more are here', watch: 'Watch',
+            season1: '1 season', seasons: '%1 seasons',
+            building: 'Getting to know your taste …', building2: 'Putting your recommendations together …', buildingSub: 'This only takes a moment.',
+            eOffT: 'Discover isn’t set up yet', eOff: 'Personal recommendations need the plugin to be connected to Seerr.', eOffAdmin: 'Open plugin settings',
+            eSeerrT: 'Seerr is unreachable right now', eSeerr: 'Your recommendations will be back as soon as the connection is.',
+            eNoneT: 'Nothing to discover here right now', eNone: 'We couldn’t find anything that fits this selection.', eNoneAll: 'Watch a few titles or tell us what you like – this page will fill up.',
+            eNetT: 'Discover couldn’t be loaded', eNet: 'Check your connection and try again.', retry: 'Try again', reset: 'Reset selection',
+            tasteT: 'Tell us what you like', taste: 'A few taps are enough to make Discover personal.', tasteGo: 'Start taste check', later: 'Later', refine: 'Refine your taste', yourTaste: 'Your taste',
+            about: 'Your recommendations come from what you watch, what you heart and what you tell us here.',
+            tcStep: 'Step %1 of 2', tc1T: 'What do you like to watch?', tc1: 'Pick whatever appeals to you – as many as you like.', tc2T: 'Which of these do you like?',
+            tc2: 'Tap once: like it. Tap again: not for me. Just skip what you don’t know.', next: 'Next', skip: 'Skip', back: 'Back', done: 'Done',
+            tcCount0: 'Nothing marked yet', tcCount: '%1 marked', tcWorlds0: 'Nothing picked yet', tcWorlds: '%1 picked', tcLike: 'Like it', tcNo: 'Not for me', rfSkip: 'Don’t know it', rfCount: '%1 rated', rfEnd: 'That’s it for now – more titles will follow.', tcFail: 'The taste check couldn’t be loaded.',
+            dpIntro: 'This is what your recommendations are made of. Tap a trait to mute it – it then no longer counts.',
+            dpGenres: 'Genres', dpPeople: 'People', dpDecades: 'Decades', dpKeywords: 'Keywords', dpLiked: 'Liked', dpDisliked: 'Not for me', dpHidden: 'Don’t show again',
+            dpMuted: 'muted', dpTake: 'Take back', dpEmpty: 'Nothing yet.', dpNone: 'Your taste will show up here once you have watched or rated a few titles.',
+            dpSignals: '%1 signals', dpFail: '“Your taste” couldn’t be loaded.'
+        }
     };
-    function dt(k, a) { var str = (DISC_TXT[lang()] || DISC_TXT.de)[k]; return a == null ? str : str.replace('%1', function () { return a; }); }   // Funktion: „$“ im Titel bleibt wörtlich
-    var disc = { user: null, store: null, dirty: false, hidden: null, prefs: null, saving: false, again: false, lib: null, libAt: 0, home: null, loading: false };
-    // Schalter an, Seerr eingerichtet und der Seerr-Zusatz geladen? Sonst bleibt alles still.
-    function discApi() { var sa = window.__atvSeerrApi; return on('discover') && on('seerr') && sa && sa.recommendations ? sa : null; }
-    function discKey(type, id) { return (type === 'tv' ? 't' : 'm') + id; }
-    function discUser() {
+    // Funktion als Ersatz: ein „$“ im Titel bleibt wörtlich
+    function dt(k, a, b) {
+        var s = (DSC_TXT[lang()] || DSC_TXT.de)[k] || DSC_TXT.de[k] || k;
+        if (a != null) s = s.replace('%1', function () { return a; });
+        if (b != null) s = s.replace('%2', function () { return b; });
+        return s;
+    }
+    var DICON = {
+        eyeOff: 'M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z',
+        up: 'M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z',
+        down: 'M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z',
+        tune: 'M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z',
+        spark: 'M19 9l1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25L19 9zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25L19 15z',
+        cal: 'M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z',
+        clock: 'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z',
+        alert: 'M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z'
+    };
+    var dsc = null;       // Zustand je Konto (siehe dscUser)
+    var dscNav = { at: 0, link: 0 };
+    // Schalter an und das Plugin da (nur es kennt die Schnittstelle)?
+    function dscFeature() { return on('discover') && !!(PLUG && PLUG.base); }
+    // … und Seerr eingerichtet samt geladenem Zusatz (Anfrage-Ansicht, Bilder laufen über dessen Weiterleitung)?
+    function dscOn() { return dscFeature() && on('seerr') && !!window.__atvSeerrApi; }
+    function dscUser() {
         var uid = userId();
-        if (disc.user !== uid) disc = { user: uid, store: null, dirty: false, hidden: null, prefs: null, saving: false, again: false, lib: null, libAt: 0, home: null, loading: false };
+        if (dsc && dsc.user === uid) return;
+        if (dsc) { clearTimeout(dsc.rq.timer); if (dsc.page) dscPageDrop(dsc.page); }
+        dsc = { user: uid, conf: null, needsTaste: null, admin: null, page: null, home: null, homeBusy: false, lib: {}, confWait: null,
+                rq: { map: {}, items: [], poll: 0, at: 0, timer: null, off: false, busy: null, nodes: [] } };
+        var m = dscMem();
+        if (typeof m.conf === 'number') dsc.conf = m.conf;
+        if (typeof m.taste === 'boolean') dsc.needsTaste = m.taste;
+        try { localStorage.removeItem('atvDiscover:' + uid); } catch (e) { /* Zwischenspeicher der früheren Fassung, wird nicht mehr gebraucht */ }
+        Promise.resolve(api().getCurrentUser()).then(function (u) { if (dsc && dsc.user === uid) { dsc.admin = !!(u && u.Policy && u.Policy.IsAdministrator); schedule(); } }).catch(function () { /* dann ohne Admin-Hinweise */ });
+        if (dscOn()) dscMigrate();
     }
-    /* Gemerkte Empfehlungen (localStorage, je Konto): nur, was Karte und Rangfolge brauchen. */
-    function discPack(r) {
-        var o = { id: r.id, mediaType: r.mediaType, title: r.title, releaseDate: r.releaseDate, posterPath: r.posterPath, backdropPath: r.backdropPath, voteAverage: r.voteAverage, voteCount: r.voteCount, popularity: r.popularity };
-        var stt = r.mediaInfo && r.mediaInfo.status; if (stt > 1) o.mediaInfo = { status: stt };
-        if (r.have) o.have = 1;
-        return o;
+    /* Kleines Gedächtnis je Konto und Gerät (localStorage): zuletzt bekannte Treffsicherheit, welche Reihen die Startseite
+       zuletzt hatte, welche angekommenen Titel schon gemeldet wurden, ob der Geschmacks-Check übersprungen wurde. */
+    function dscMem() { try { return JSON.parse(localStorage.getItem('atvDsc:' + dsc.user) || '{}') || {}; } catch (e) { return {}; } }
+    function dscMemSet(k, v) {
+        var m = dscMem(); m[k] = v;
+        try { localStorage.setItem('atvDsc:' + dsc.user, JSON.stringify(m)); } catch (e) { /* voll oder gesperrt: dann ohne Gedächtnis */ }
     }
-    function discSlim(seerr, r) {
-        if (r.adult || !r.posterPath) return null;
-        var stt = seerr.status(r);
-        return discPack({ id: r.id, mediaType: r.mediaType, title: seerr.title(r), releaseDate: r.releaseDate || r.firstAirDate || '', posterPath: r.posterPath, backdropPath: r.backdropPath || null,
-            voteAverage: r.voteAverage || 0, voteCount: r.voteCount || 0, popularity: r.popularity || 0, mediaInfo: { status: stt }, have: stt === 5 || seerr.inLibrary(r) });
-    }
-    function discStore() {
-        if (disc.store) return disc.store;
-        var st = null;
-        try { st = JSON.parse(localStorage.getItem('atvDiscover:' + disc.user) || 'null'); } catch (e) { /* leer oder gesperrt */ }
-        if (!st || st.v !== 1 || st.lang !== lang() || !st.recs) st = { v: 1, lang: lang(), recs: {} };
-        disc.store = st;
-        return st;
-    }
-    function discStoreSave() {
-        var st = disc.store;
-        if (!st || !disc.dirty) return;
-        disc.dirty = false;
-        var now = Date.now(), keys = Object.keys(st.recs).filter(function (k) { return now - st.recs[k].t < DISC.keepMs; });
-        keys.sort(function (a, b) { return st.recs[b].t - st.recs[a].t; });
-        var out = { v: 1, lang: st.lang, recs: {} };
-        // neu verpackt: die Anfrage-Ansicht hängt den Karten Seerrs ganze Auskunft an, die gehört nicht in den Speicher
-        keys.slice(0, DISC.keepMax).forEach(function (k) { out.recs[k] = { t: st.recs[k].t, r: st.recs[k].r.map(discPack) }; });
-        try { localStorage.setItem('atvDiscover:' + disc.user, JSON.stringify(out)); } catch (e) { /* voll oder gesperrt: dann ohne Gedächtnis */ }
-    }
-    // Empfehlungen zu einem Titel: aus dem Gemerkten, sonst ein Abruf. null = Seerr nicht erreichbar (oder kein Abruf erlaubt).
-    function discRecs(seerr, type, tmdb, cachedOnly) {
-        var st = discStore(), k = discKey(type, tmdb), hit = st.recs[k];
-        if (hit && Date.now() - hit.t < DISC.keepMs) return Promise.resolve(hit.r);
-        if (cachedOnly) return Promise.resolve(null);
-        return seerr.recommendations(type, tmdb).then(function (list) {
-            if (!list) return null;
-            var out = [];
-            list.forEach(function (r) { var o = discSlim(seerr, r); if (o) out.push(o); });
-            st.recs[k] = { t: Date.now(), r: out };
-            if (disc.store === st) disc.dirty = true;
-            return out;
+    function dscCall(path, body) {
+        var h = { 'Authorization': 'MediaBrowser Token="' + api().accessToken() + '"', 'Accept': 'application/json' };
+        if (body) h['Content-Type'] = 'application/json';
+        return fetch(PLUG.base + '/discover' + path, { method: body ? 'POST' : 'GET', headers: h, body: body ? JSON.stringify(body) : undefined, credentials: 'omit' }).then(function (r) {
+            if (!r.ok) { var e = new Error('discover ' + r.status); e.status = r.status; throw e; }
+            return r.json();
         });
     }
-    // Anfrage gestellt oder Titel inzwischen da: den gemerkten Stand nachziehen, sonst zeigte die Karte bis zum Verfall den alten.
-    document.addEventListener('atv-seerr-status', function (e) {
-        var d = e.detail || {}, st = disc.store;
-        if (!st) return;
-        Object.keys(st.recs).forEach(function (k) {
-            st.recs[k].r.forEach(function (r) {
-                if (r.id !== d.id || r.mediaType !== d.mediaType) return;
-                if (d.status > 1) r.mediaInfo = { status: d.status };
-                if (d.status === 5 || d.inLibrary) r.have = 1;
+    function dscQuery(o) {
+        var q = ['lang=' + lang()];
+        Object.keys(o || {}).forEach(function (k) { if (o[k] != null && o[k] !== '') q.push(k + '=' + encodeURIComponent(o[k])); });
+        return '?' + q.join('&');
+    }
+    // Die frühere Fassung führte „Kein Interesse“ in den Anzeige-Einstellungen des Kontos. Die Liste geht einmal als
+    // „hide“ an den Server und wird dann geleert; danach kennt nur noch er sie.
+    function dscMigrate() {
+        if (dsc.migrating || dscMem().mig) return;
+        dsc.migrating = true;
+        var uid = dsc.user, mine = dsc;
+        Promise.resolve().then(function () { return api().getDisplayPreferences(DSC_OLD_PREFS, uid, DSC_OLD_CLIENT); }).then(function (p) {
+            var keys = String(((p && p.CustomPrefs) || {}).hidden || '').split(',').map(function (k) {
+                var m = /^([mt])(\d+)$/.exec(k); return m ? (m[1] === 't' ? 'tv:' : 'movie:') + m[2] : null;
+            }).filter(Boolean);
+            if (!keys.length) return true;
+            return dscCall('/feedback', { source: 'card', items: keys.map(function (k) { return { key: k, action: 'hide' }; }) }).then(function () {
+                p.CustomPrefs.hidden = '';
+                return api().updateDisplayPreferences(DSC_OLD_PREFS, p, uid, DSC_OLD_CLIENT);
+            }).then(function () { return true; });
+        }).then(function () { if (mine === dsc) dscMemSet('mig', 1); }).catch(function (e) {
+            mine.migrating = false;                                             // beim nächsten Seitenaufruf noch einmal
+            console.warn('[atv] Entdecken: frühere Liste nicht übernommen', e);
+        });
+    }
+    /* Treffsicherheit des Kontos (0–1): Erst ab DSC.minConf sagt „97 % Übereinstimmung“ etwas aus, darunter steht die
+       Bewertung. Die Seite liefert den Wert mit; Startseite und Detailseite kennen ihn nur aus dem Gedächtnis oder fragen
+       einmal „Dein Geschmack“. */
+    function dscConfSet(v, taste) {
+        if (typeof v === 'number' && v !== dsc.conf) { dsc.conf = v; dscMemSet('conf', v); }
+        if (typeof taste === 'boolean' && taste !== dsc.needsTaste) { dsc.needsTaste = taste; dscMemSet('taste', taste); }
+    }
+    function dscConf() {
+        if (dsc.conf != null) return Promise.resolve(dsc.conf);
+        if (!dsc.confWait) {
+            var mine = dsc;
+            dsc.confWait = dscCall('/profile' + dscQuery()).then(function (p) { if (mine === dsc) dscConfSet(p && p.confidence); return mine.conf; })
+                .catch(function () { return null; }).then(function (v) { mine.confWait = null; return v; });
+        }
+        return dsc.confWait;
+    }
+    function dscShowMatch() { return dsc.conf != null && dsc.conf >= DSC.minConf; }
+    function dscNum(v) { return v.toFixed(1).replace('.', lang() === 'en' ? '.' : ','); }
+    function dscLength(it) {
+        if (it.mediaType === 'tv') return it.seasons ? (it.seasons === 1 ? dt('season1') : dt('seasons', it.seasons)) : '';
+        return it.runtime ? fmtRuntime(it.runtime * 600000000, 'short') : '';
+    }
+    function dscIsThere(it) { return (it.state === 'available' || it.state === 'partial') && !!it.itemId; }
+    function dscAria(it) {
+        var s = it.title + (it.year ? ' (' + it.year + ')' : '');
+        if (dscShowMatch() && it.match) s += ', ' + dt('match', it.match);
+        s += ', ' + (dscIsThere(it) ? dt('available') : it.state === 'requested' ? (it.request && it.request.text) || dt('onTheWay') : dt('missing'));
+        return s;
+    }
+    // Übereinstimmung in der Akzentfarbe oder, solange das Konto zu wenig verrät, die Bewertung mit Stern.
+    function dscScore(it, long) {
+        var sp;
+        if (dscShowMatch() && it.match) return el('span', 'atv-match', dt(long ? 'match' : 'matchShort', it.match));
+        if (!it.rating) return null;
+        sp = el('span', 'atv-dsc-star'); sp.appendChild(svg(ICON.star)); sp.appendChild(document.createTextNode(dscNum(it.rating)));
+        return sp;
+    }
+
+    /* ---------------- Bilder ----------------
+       Plakate von TMDb laufen über die Weiterleitung des Plugins und brauchen die Anmeldung im Kopf der Anfrage: per
+       fetch geholt und als Blob-Adresse eingesetzt (kein Token in Adressen). Geladen wird erst, was in Sichtweite kommt,
+       höchstens DSC.lanes zugleich; Bilder aus Jellyfin selbst (Hintergrund, Logo) brauchen das nicht. */
+    var dimg = { cache: {}, queue: [], busy: 0, io: null };
+    function dscTmdb(size, path) { return path ? PLUG.base + '/seerr/imageproxy/tmdb/t/p/' + size + path : null; }
+    // Plakat passend zur Kartenbreite: 300 px reichen bis etwa 160 px Kartenbreite auf einem Retina-Schirm.
+    function dscPosterSize() { return (parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--tv-poster-w')) || 150) * (window.devicePixelRatio || 1) > 330 ? 'w440_and_h660_face' : 'w300_and_h450_face'; }
+    function dscBackdropSize() { return screenW() <= 1300 ? 'w1280' : 'w1920_and_h1080_bestv2'; }
+    function dscImgShow(im, src) {
+        var done = function () { im.classList.add('is-in'); };
+        im.addEventListener('load', done); im.addEventListener('error', done);
+        im.src = src;
+        if (im.complete && im.naturalWidth) done();
+    }
+    function dscImgPump() {
+        while (dimg.busy < DSC.lanes && dimg.queue.length) {
+            var job = dimg.queue.shift();
+            if (dimg.cache[job.url]) { dscImgShow(job.im, dimg.cache[job.url]); continue; }
+            dimg.busy++;
+            dscImgFetch(job);
+        }
+    }
+    function dscImgFetch(job) {
+        fetch(job.url, { headers: { 'Authorization': 'MediaBrowser Token="' + api().accessToken() + '"' }, credentials: 'omit' })
+            .then(function (r) { if (!r.ok) throw new Error('img ' + r.status); return r.blob(); })
+            .then(function (b) { dimg.cache[job.url] = URL.createObjectURL(b); dscImgShow(job.im, dimg.cache[job.url]); })
+            .catch(function () { job.im.dispatchEvent(new Event('error')); })
+            .then(function () { dimg.busy--; dscImgPump(); });
+    }
+    // url: Adresse oder Funktion, die sie erst beim Laden nennt (Querformat-Karten kennen ihr Bild erst nach dem
+    // Abgleich mit der Bibliothek). plain: Bild aus Jellyfin, direkt als src.
+    function dscImgLoad(im, url, plain) {
+        if (typeof url === 'function') { Promise.resolve(url()).then(function (u) { if (u) dscImgLoad(im, u.url, u.plain); else im.dispatchEvent(new Event('error')); }); return; }
+        if (!url) return;
+        if (plain) { dscImgShow(im, url); return; }
+        if (dimg.cache[url]) { dscImgShow(im, dimg.cache[url]); return; }
+        dimg.queue.push({ im: im, url: url }); dscImgPump();
+    }
+    function dscImgLazy(host, im, url, plain) {
+        if (!url) return;
+        if (!window.IntersectionObserver || (typeof url === 'string' && !plain && dimg.cache[url])) { dscImgLoad(im, url, plain); return; }
+        if (!dimg.io) dimg.io = new IntersectionObserver(function (es) {
+            es.forEach(function (e) {
+                if (!e.isIntersecting) return;
+                dimg.io.unobserve(e.target);
+                var jobs = e.target.__atvImgs || []; e.target.__atvImgs = null;
+                jobs.forEach(function (j) { dscImgLoad(j[0], j[1], j[2]); });
             });
-        });
-        disc.dirty = true; discStoreSave();
+        }, { rootMargin: '160px 320px' });
+        (host.__atvImgs = host.__atvImgs || []).push([im, url, plain]);
+        dimg.io.observe(host);
+    }
+    /* Vorhandene Titel: Hintergrundbild, Logo und Stand aus Jellyfin, gesammelt in einem Abruf. */
+    function dscLib(ids) {
+        var need = ids.filter(function (id) { return id && !dsc.lib[id]; }), mine = dsc;
+        if (!need.length) return Promise.resolve(dsc.lib);
+        var p = api().getItems(userId(), { Ids: need.join(','), EnableImageTypes: 'Backdrop,Logo,Thumb,Primary', EnableTotalRecordCount: false }).then(function (res) {
+            var by = {};
+            ((res && res.Items) || []).forEach(function (x) { by[x.Id] = x; });
+            return by;
+        }).catch(function () { return {}; });
+        need.forEach(function (id) { mine.lib[id] = p.then(function (by) { return by[id] || null; }); });
+        return p.then(function () { return mine.lib; });
+    }
+    function dscLibItem(id) { return id && dsc.lib[id] ? dsc.lib[id] : dscLib([id]).then(function () { return dsc.lib[id] || null; }); }
+
+    /* ---------------- Stand angefragter Titel ----------------
+       Ein Abruf (discover/requests) für alle Stellen, die den Stand zeigen. Er erneuert sich im Takt, den der Server
+       nennt, aber nur, solange eine dieser Stellen im Dokument steht und das Fenster sichtbar ist. Kennt der Server die
+       Adresse noch nicht, bleibt es beim schlichten „Angefragt“. */
+    function rqWanted() {
+        var rq = dsc.rq;
+        rq.nodes = rq.nodes.filter(function (n) { return n.isConnected; });
+        return !document.hidden && rq.nodes.length > 0;
+    }
+    function rqWatch(node) {
+        if (!dsc || dsc.rq.off) return;
+        if (dsc.rq.nodes.indexOf(node) < 0) dsc.rq.nodes.push(node);
+        rqArm();
+    }
+    function rqArm() {
+        var rq = dsc.rq;
+        clearTimeout(rq.timer); rq.timer = null;
+        if (rq.off || !rq.poll || !rqWanted()) return;
+        rq.timer = setTimeout(function () { rqLoad(); }, Math.max(5, rq.poll) * 1000);
+    }
+    function rqLoad() {
+        var rq = dsc.rq, mine = dsc;
+        if (rq.off) return Promise.resolve(rq);
+        if (rq.busy) return rq.busy;
+        rq.busy = dscCall('/requests' + dscQuery()).then(function (d) {
+            if (mine !== dsc) return rq;
+            var before = rq.items.map(function (x) { return x.key + ':' + x.state; }).join(',');
+            rq.items = (d && d.items) || []; rq.poll = (d && d.poll) || 0; rq.at = Date.now(); rq.map = {};
+            rq.items.forEach(function (x) { rq.map[x.key] = x; });
+            dscCardsSync();
+            // etwas ist angekommen oder neu dazugekommen: die Reihen der Startseite stimmen nicht mehr
+            if (before !== rq.items.map(function (x) { return x.key + ':' + x.state; }).join(',') && dsc.home) { dsc.home.stale = true; schedule(); }
+            try { document.dispatchEvent(new CustomEvent('atv-dsc-requests')); } catch (e) { /* ohne Ereignis: Stand beim nächsten Öffnen */ }
+            return rq;
+        }).catch(function (e) {
+            if (e && e.status === 404) rq.off = true;                            // Server ohne diese Ergänzung
+            return rq;
+        }).then(function (r) { rq.busy = null; if (mine === dsc) rqArm(); return r; });
+        return rq.busy;
+    }
+    document.addEventListener('visibilitychange', function () {
+        if (!dsc || document.hidden) return;
+        if (dsc.rq.poll && Date.now() - dsc.rq.at > dsc.rq.poll * 1000 && rqWanted()) rqLoad(); else rqArm();
     });
-    /* „Kein Interesse“ liegt beim Server in den Anzeige-Einstellungen des Kontos und gilt damit auf allen Geräten. */
-    function discHiddenLoad(fresh) {
-        if (disc.hidden && !fresh) return Promise.resolve(disc.hidden);
-        var uid = disc.user;
-        return Promise.resolve().then(function () { return api().getDisplayPreferences(DISC_PREFS, uid, DISC_CLIENT); }).then(function (p) {
-            var h = {};
-            String(((p && p.CustomPrefs) || {}).hidden || '').split(',').forEach(function (k) { if (k) h[k] = 1; });
-            if (disc.user !== uid) return h;
-            // was eben hier ausgeblendet, aber noch nicht gespeichert wurde, bleibt
-            if (disc.hidden && (disc.saving || disc.again)) Object.keys(disc.hidden).forEach(function (k) { h[k] = 1; });
-            disc.prefs = p || {}; disc.hidden = h;
-            return h;
-        }).catch(function () {
-            if (disc.user === uid && !disc.hidden) { disc.prefs = null; disc.hidden = {}; }
-            return disc.hidden || {};
+    // Ring mit Anteil (0–100); ohne Zahl ein ruhiger Kreis, bei laufender Arbeit mit einem langsam wandernden Bogen.
+    function dscRing(pct, busy) {
+        var ns = 'http://www.w3.org/2000/svg', s = document.createElementNS(ns, 'svg');
+        s.setAttribute('viewBox', '0 0 20 20'); s.setAttribute('aria-hidden', 'true');
+        s.setAttribute('class', 'atv-ring' + (pct == null ? (busy ? ' is-busy' : ' is-idle') : ''));
+        ['atv-ring__track', 'atv-ring__arc'].forEach(function (cls) {
+            var c = document.createElementNS(ns, 'circle');
+            c.setAttribute('cx', '10'); c.setAttribute('cy', '10'); c.setAttribute('r', '8'); c.setAttribute('class', cls);
+            if (cls === 'atv-ring__arc') { c.setAttribute('pathLength', '100'); c.style.strokeDasharray = (pct == null ? 26 : Math.max(3, Math.min(100, pct))) + ' 100'; }
+            s.appendChild(c);
         });
+        return s;
     }
-    function discHiddenSave() {
-        if (!disc.prefs) { toast(dt('saveFail')); return; }
-        if (disc.saving) { disc.again = true; return; }                         // zwei gleichzeitige Speicherungen könnten sich überholen
-        disc.saving = true; disc.again = false;
-        var keys = Object.keys(disc.hidden);
-        keys.slice(0, Math.max(0, keys.length - DISC.hiddenMax)).forEach(function (k) { delete disc.hidden[k]; });   // die ältesten fallen weg
-        disc.prefs.CustomPrefs = disc.prefs.CustomPrefs || {};
-        disc.prefs.CustomPrefs.hidden = Object.keys(disc.hidden).join(',');
-        var mine = disc, done = function () { mine.saving = false; if (mine.again && mine === disc) discHiddenSave(); };
-        try {
-            Promise.resolve(api().updateDisplayPreferences(DISC_PREFS, disc.prefs, disc.user, DISC_CLIENT)).catch(function () { toast(dt('saveFail')); }).then(done);
-        } catch (e) { done(); }
+    /* Zeichen zur Phase einer Anfrage. Gemessenes bekommt den Ring mit Anteil; nur das Einordnen (kurz) bewegt sich.
+       Warten ist kein Fehler und nichts, was „hängt“: Suche, Warteschlange, Ruhezeit und Freigabe stehen still da, noch
+       nicht Erschienenes sieht aus wie eine Vormerkung (Kalender). Unbekannte, künftige Phasen: neutral mit Uhr. */
+    function dscPhaseMark(rq) {
+        var ph = (rq && rq.phase) || '', ic;
+        if (rq && rq.percent != null && ph !== 'unreleased') return dscRing(rq.percent, false);
+        if (ph === 'importing' || ph === 'downloading') return dscRing(null, true);
+        if (!rq) return dscRing(null, false);
+        ic = svg(ph === 'unreleased' ? DICON.cal : ph === 'searching' ? ICON.search : ph === 'declined' || ph === 'failed' ? DICON.alert : DICON.clock);
+        ic.setAttribute('class', 'atv-rq__ic');
+        return ic;
     }
-    // Was die Mediathek wirklich hat (TMDb-Nummern): Seerr gleicht nur in Abständen ab, und Gemerktes kann Stunden alt sein.
-    function discLibrary() {
-        if (disc.lib && Date.now() - disc.libAt < CFG.cacheMs) return Promise.resolve(disc.lib);
-        var mine = disc;
-        // HasTmdbId: Titel ohne TMDb-Nummer (Kanäle, Heimvideos) lassen sich ohnehin nicht abgleichen und blähten die Antwort nur auf
-        return api().getItems(userId(), { Recursive: true, IncludeItemTypes: 'Movie,Series', HasTmdbId: true, Fields: 'ProviderIds', EnableImages: false, EnableUserData: false, EnableTotalRecordCount: false }).then(function (res) {
-            var lib = {};
-            ((res && res.Items) || []).forEach(function (it) { var id = it.ProviderIds && it.ProviderIds.Tmdb; if (id) lib[discKey(it.Type === 'Series' ? 'tv' : 'movie', id)] = 1; });
-            mine.lib = lib; mine.libAt = Date.now();
-            return lib;
-        }).catch(function () { return {}; });                                   // dann entscheidet allein Seerrs Stand
+    function dscPhaseSig(rq) { return rq ? [rq.phase, rq.percent, rq.short, rq.text].join('|') : 'none'; }
+    function dscReqOf(it) { return it.request || (dsc && dsc.rq.map[it.key] && dsc.rq.map[it.key].request) || null; }
+    /* Statuszeile eines angefragten Titels (großes Bild, Anfrage-Ansicht): Zeichen und der fertige Satz des Servers. */
+    function dscStatusLine(it) {
+        var box = el('div', 'atv-rq'); box.setAttribute('role', 'status'); box.setAttribute('aria-live', 'polite');
+        box.__atvKey = it.key;
+        dscStatusFill(box, dscReqOf(it));
+        return box;
     }
-    function discUsable(r, lib, hidden) { var k = discKey(r.mediaType, r.id); return !r.have && !lib[k] && !hidden[k]; }
-    // TMDb-Bewertung, bei wenigen Stimmen zur Mitte gezogen: zehn Stimmen mit 9,5 schlagen sonst jeden Klassiker.
-    function discRating(r) { var v = r.voteCount || 0; return ((r.voteAverage || 0) * v + 6.5 * 150) / (v + 150); }
-    // Signale des Kontos: Favoriten (Gewicht 3) und zuletzt Gesehenes (Gewicht 1). Serien zählen ab der ersten gesehenen
-    // Folge; „gesehen“ trägt eine Serie selbst erst, wenn alle Folgen durch sind, darum der Weg über die Folgen.
-    function discSignals() {
-        var a = api(), uid = userId();
-        function q(extra) {
-            var o = { Recursive: true, Fields: 'ProviderIds', EnableImages: false, EnableTotalRecordCount: false, SortOrder: 'Descending' };
-            Object.keys(extra).forEach(function (k) { o[k] = extra[k]; });
-            return a.getItems(uid, o).then(function (r) { return (r && r.Items) || []; });
+    function dscStatusFill(box, rq) {
+        var sig = dscPhaseSig(rq);
+        if (box.__atvSig === sig) return;
+        box.__atvSig = sig;
+        box.className = 'atv-rq' + (rq && /^(declined|failed)$/.test(rq.phase || '') ? ' is-bad' : '') + (rq && rq.phase === 'unreleased' ? ' is-note' : '');
+        box.replaceChildren(dscPhaseMark(rq), el('span', null, (rq && rq.text) || dt('requested')));
+    }
+
+    /* ---------------- Hinweis mit Aktion, Menü, Sheet ---------------- */
+    // Hinweis unten mit einem Knopf („Rückgängig“, „Ansehen“): bleibt länger stehen als der einfache.
+    function toastAct(msg, label, fn, ms) {
+        var tb = document.querySelector('.atv-toast') || document.body.appendChild(el('div', 'atv-toast'));
+        var b = el('button', 'atv-toast__act', label); b.type = 'button';
+        b.addEventListener('click', function () { tb.classList.remove('is-on'); fn(); });
+        tb.setAttribute('role', 'status');
+        tb.replaceChildren(el('span', 'atv-toast__msg', msg), b);
+        tb.classList.add('is-on'); clearTimeout(toast.t);
+        toast.t = setTimeout(function () { tb.classList.remove('is-on'); }, ms || 6500);
+    }
+    // Glas-Menü an einem Knopf: Einträge mit Symbol und Text. head: kleine Überschrift (optional).
+    function dscMenu(anchor, head, entries, byKey) {
+        closeMenus();
+        var menu = el('div', 'atv-menu atv-menu--float atv-menu--actions atv-menu--dsc'); menu.setAttribute('role', 'menu');
+        if (head) menu.appendChild(el('div', 'atv-menu__head', head));
+        entries.forEach(function (en) {
+            var it = el('button', 'atv-menu__item'); it.type = 'button'; it.setAttribute('role', 'menuitem');
+            it.appendChild(svg(en.icon)); it.appendChild(el('span', null, en.label));
+            it.addEventListener('click', function (e) { e.stopPropagation(); closeMenus(); en.run(); });
+            menu.appendChild(it);
+        });
+        menu.addEventListener('keydown', function (e) {
+            var items = [].slice.call(menu.querySelectorAll('button')), i = items.indexOf(document.activeElement);
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); e.stopPropagation(); items[(i + (e.key === 'ArrowDown' ? 1 : items.length - 1)) % items.length].focus(); }
+            else if (e.key === 'Escape' || e.key === 'Tab') { try { anchor.focus({ preventScroll: true }); } catch (e2) { /* Fokus optional */ } if (e.key === 'Tab') closeMenus(); }
+        });
+        document.body.appendChild(menu);
+        var r = anchor.getBoundingClientRect(), mw = menu.offsetWidth, mh = menu.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
+        var left = Math.min(Math.max(8, r.left), vw - mw - 8), top = r.bottom + 8;
+        if (top + mh > vh - 8) top = Math.max(8, r.top - mh - 8);
+        menu.style.left = Math.round(left) + 'px'; menu.style.top = Math.round(top) + 'px';
+        if (byKey) { var first = menu.querySelector('button'); if (first) first.focus(); }
+        var onScroll = function (e) { if (e.target && e.target.closest && e.target.closest('.atv-menu')) return; closeMenus(); window.removeEventListener('scroll', onScroll, true); };
+        window.addEventListener('scroll', onScroll, true);
+        return menu;
+    }
+    // Dasselbe am Handy als Sheet von unten, mit Plakat und Titel im Kopf.
+    function dscSheet(it, entries) {
+        var old = document.querySelector('.atv-sheet'); if (old) old.remove();
+        var wrap = el('div', 'atv-sheet atv-sheet--acts'); wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-modal', 'true'); wrap.setAttribute('aria-label', it.title);
+        var box = el('div', 'atv-sheet__box'); wrap.appendChild(box);
+        var head = el('div', 'atv-sheet__head'), pic = el('span', 'atv-sheet__thumb'), im = el('img'), text = el('div', 'atv-sheet__headtext');
+        im.alt = ''; pic.appendChild(im); dscImgLoad(im, dscTmdb('w300_and_h450_face', it.poster)); head.appendChild(pic);
+        text.appendChild(el('div', 'atv-sheet__title', it.title));
+        var sub = el('div', 'atv-sheet__series'), sc = dscScore(it, true);
+        if (sc) sub.appendChild(sc);
+        [it.year ? String(it.year) : '', dscLength(it)].forEach(function (x) { if (x) { if (sub.childNodes.length) sub.appendChild(el('span', 'atv-sep', '·')); sub.appendChild(document.createTextNode(x)); } });
+        text.appendChild(sub);
+        if (it.reason && it.reasonKind !== 'request') text.appendChild(el('div', 'atv-sheet__why', it.reason));
+        head.appendChild(text); box.appendChild(head);
+        var x = el('button', 'atv-sheet__close'); x.type = 'button'; x.setAttribute('aria-label', t('close')); x.appendChild(svg(ICON.close)); box.appendChild(x);
+        var list = el('div', 'atv-sheet__acts'); box.appendChild(list);
+        var prevOv = document.documentElement.style.overflow, shut = false;
+        function onKey(e) { if (e.key === 'Escape') { e.stopPropagation(); close(); } }
+        function close() {
+            if (shut) return; shut = true;
+            document.removeEventListener('keydown', onKey, true); document.documentElement.style.overflow = prevOv;
+            wrap.classList.add('is-out'); setTimeout(function () { wrap.remove(); }, 180);
         }
-        return Promise.all([
-            q({ IncludeItemTypes: 'Movie,Series', Filters: 'IsFavorite', HasTmdbId: true, SortBy: 'DatePlayed,DateCreated', Limit: DISC.favs }),
-            q({ IncludeItemTypes: 'Movie', Filters: 'IsPlayed', HasTmdbId: true, SortBy: 'DatePlayed', Limit: DISC.played }),
-            q({ IncludeItemTypes: 'Episode', Filters: 'IsPlayed', SortBy: 'DatePlayed', Limit: 80, Fields: '' })
-        ]).then(function (res) {
-            var seriesAt = {}, ids = [];
-            res[2].forEach(function (ep) { if (ep.SeriesId && !seriesAt[ep.SeriesId]) { seriesAt[ep.SeriesId] = (ep.UserData && ep.UserData.LastPlayedDate) || '0'; ids.push(ep.SeriesId); } });
-            ids = ids.slice(0, DISC.played);
-            return (ids.length ? q({ Ids: ids.join(','), IncludeItemTypes: 'Series' }) : Promise.resolve([])).then(function (shows) {
-                var watched = res[1].map(function (it) { return { it: it, at: (it.UserData && it.UserData.LastPlayedDate) || '0' }; })
-                    .concat(shows.map(function (it) { return { it: it, at: seriesAt[it.Id] || '0' }; }));
-                watched.sort(function (x, y) { return x.at < y.at ? 1 : x.at > y.at ? -1 : 0; });
-                var out = [], by = {};
-                function add(it, fav) {
-                    var tmdb = it.ProviderIds && it.ProviderIds.Tmdb;
-                    if (!tmdb || !/^\d+$/.test(tmdb)) return;
-                    var type = it.Type === 'Series' ? 'tv' : 'movie', k = discKey(type, tmdb), sg = by[k];
-                    if (!sg) { sg = by[k] = { key: k, type: type, tmdb: tmdb, name: it.Name || '', fav: false, weight: 1 }; out.push(sg); }
-                    if (fav) { sg.fav = true; sg.weight = 3; }
-                }
-                res[0].forEach(function (it) { add(it, true); });
-                watched.slice(0, DISC.played).forEach(function (x) { add(x.it, false); });
-                return out;
-            });
+        entries.forEach(function (en) {
+            var b = el('button', 'atv-sheet__act'); b.type = 'button';
+            b.appendChild(svg(en.icon)); b.appendChild(el('span', null, en.label));
+            b.addEventListener('click', function () { close(); en.run(); });
+            list.appendChild(b);
         });
+        x.addEventListener('click', close);
+        wrap.addEventListener('click', function (e) { if (e.target === wrap) close(); });
+        document.addEventListener('keydown', onKey, true);
+        document.documentElement.style.overflow = 'hidden';
+        document.body.appendChild(wrap);
+        return wrap;
     }
-    /* Reihen der Startseite. „Für dich“: was mehrere Signale empfehlen, nach Summe der Signalgewichte mal Bewertung, bei
-       Gleichstand nach Beliebtheit. Danach bis zu DISC.rows Reihen zu einzelnen Titeln (abwechselnd zuletzt Gesehenes und
-       Favoriten) in der Reihenfolge von TMDb. Jeder Titel steht nur einmal; Reihen unter DISC.minRow Titeln entfallen. */
-    function discRows(signals, recs, lib, hidden) {
-        var cand = {}, order = [];
-        signals.forEach(function (sg) {
-            (recs[sg.key] || []).forEach(function (r) {
-                if (!discUsable(r, lib, hidden)) return;
-                var k = discKey(r.mediaType, r.id), c = cand[k];
-                if (!c) { c = cand[k] = { k: k, r: r, w: 0, n: 0, from: sg }; order.push(c); }
-                c.w += sg.weight; c.n++;
-            });
-        });
-        order.forEach(function (c) { c.score = c.w * discRating(c.r); });
-        function byScore(x, y) { return (y.score - x.score) || ((y.r.popularity || 0) - (x.r.popularity || 0)); }
-        var favs = signals.filter(function (sg) { return sg.fav; }), seen = signals.filter(function (sg) { return !sg.fav; }), turn = [];
-        for (var i = 0; i < Math.max(favs.length, seen.length); i++) { if (seen[i]) turn.push(seen[i]); if (favs[i]) turn.push(favs[i]); }
-        function build(withMix) {
-            var used = {}, own = {}, because = [];
-            var mix = withMix ? order.filter(function (c) { return c.n > 1; }).sort(byScore).slice(0, DISC.maxRow) : [];
-            mix.forEach(function (c) { used[c.k] = 1; });
-            turn.forEach(function (sg) {
-                if (because.length >= DISC.rows) return;
-                var list = (recs[sg.key] || []).filter(function (r) { return discUsable(r, lib, hidden) && !used[discKey(r.mediaType, r.id)]; }).slice(0, DISC.maxRow);
-                if (list.length < DISC.minRow) return;
-                list.forEach(function (r) { used[discKey(r.mediaType, r.id)] = 1; });
-                own[sg.key] = 1;
-                because.push({ title: dt(sg.fav ? 'liked' : 'watched', sg.name), items: list });
-            });
-            // zu wenig Gemeinsames: mit den besten Empfehlungen der Titel auffüllen, die keine eigene Reihe bekommen haben
-            if (withMix && mix.length < DISC.fill) {
-                var per = {};
-                order.filter(function (c) { return !used[c.k] && !own[c.from.key]; }).sort(byScore).forEach(function (c) {
-                    if (mix.length >= DISC.fill || (per[c.from.key] || 0) >= DISC.perSignal) return;
-                    per[c.from.key] = (per[c.from.key] || 0) + 1; used[c.k] = 1; mix.push(c);
-                });
+
+    /* ---------------- Rückmelden ----------------
+       „Gesehen – mochte ich“ (like), „Gesehen – nicht meins“ (dislike), „Nicht mehr anzeigen“ (hide): Der Titel
+       verschwindet überall, wo er gerade steht, die Reihe rückt nach; „Rückgängig“ im Hinweis holt ihn zurück (clear). */
+    function dscCardsOf(key) {
+        var list = [].slice.call(document.querySelectorAll('.atv-dc[data-key]'));
+        // die Seite „Entdecken“ lebt weiter, während eine Detailseite offen ist (siehe dscPageAttach)
+        if (dsc && dsc.page && !dsc.page.root.isConnected) list = list.concat([].slice.call(dsc.page.root.querySelectorAll('.atv-dc[data-key]')));
+        return key ? list.filter(function (c) { return c.getAttribute('data-key') === key; }) : list;
+    }
+    // Nachrücken ohne Layout-Animation: Die Nachbarn springen an den neuen Platz und gleiten von dort, wo sie standen, hinüber.
+    function dscSlide(nodes, dx) {
+        if (!dx || !nodes.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        nodes.forEach(function (n) { n.style.transition = 'none'; n.style.transform = 'translateX(' + dx + 'px)'; });
+        if (nodes[0].isConnected) nodes[0].getBoundingClientRect();
+        nodes.forEach(function (n) { n.style.transition = 'transform .28s cubic-bezier(.2,.8,.2,1)'; n.style.transform = ''; });
+        setTimeout(function () { nodes.forEach(function (n) { n.style.transition = ''; }); }, 320);
+    }
+    function dscVanish(card) {
+        var host = card, parent = host.parentNode, shelf = host.closest('.atv-dr'), gone = false, back = false;
+        if (!parent) return function () {};
+        var next = host.nextSibling, step = function () {
+            var n = host.nextElementSibling;
+            return n ? n.getBoundingClientRect().left - host.getBoundingClientRect().left : 0;
+        };
+        var after = function () { var out = [], n = host.nextElementSibling; for (; n; n = n.nextElementSibling) out.push(n); return out; };
+        host.classList.add('is-gone');
+        var timer = setTimeout(function () {
+            if (back) return;
+            var dx = step(), rest = after();
+            if (document.activeElement === card && rest[0]) { var nf = rest[0].classList.contains('atv-dc') ? rest[0] : rest[0].querySelector('.atv-dc'); if (nf) { nf.tabIndex = 0; try { nf.focus({ preventScroll: true }); } catch (e) { /* Fokus optional */ } } }
+            host.remove(); gone = true;
+            dscSlide(rest, dx);
+            if (shelf) { if (!parent.querySelector('.atv-dc')) shelf.hidden = true; else if (shelf.__atvSync) shelf.__atvSync(); }
+        }, 190);
+        return function () {
+            back = true; clearTimeout(timer);
+            if (gone) {
+                parent.insertBefore(host, next && next.parentNode === parent ? next : null);
+                if (shelf) shelf.hidden = false;
+                dscSlide(after(), -step());
+                if (shelf && shelf.__atvSync) shelf.__atvSync();
             }
-            return { mix: mix, because: because };
-        }
-        var res = build(true);
-        if (res.mix.length < DISC.minRow) res = build(false);                    // sonst fehlten deren Titel in den übrigen Reihen
-        var rows = res.mix.length ? [{ title: dt('forYou'), items: res.mix.map(function (c) { return c.r; }) }] : [];
-        return rows.concat(res.because);
+            host.getBoundingClientRect(); host.classList.remove('is-gone');
+        };
     }
-    function discHide(r) {
-        var k = discKey(r.mediaType, r.id);
-        disc.hidden = disc.hidden || {};
-        disc.hidden[k] = 1;
-        discHiddenSave();
-        if (disc.home) disc.home.rows.forEach(function (row) { row.items = row.items.filter(function (x) { return discKey(x.mediaType, x.id) !== k; }); });
-        // überall, wo der Titel gerade steht (Startseite und eine Detailseite dahinter)
-        [].forEach.call(document.querySelectorAll('.atv-disc__card'), function (c) {
-            if (c.__atvDisc !== k) return;
-            var shelf = c.closest('.atv-disc');
-            c.classList.add('is-gone');
-            setTimeout(function () {
-                c.remove();
-                if (!shelf) return;
-                if (!shelf.querySelector('.atv-disc__card')) shelf.remove(); else if (shelf.__atvSync) shelf.__atvSync();
-            }, 220);
+    function dscFeedback(it, action, source) {
+        var undo = dscCardsOf(it.key).map(dscVanish), hero = dsc.page && dsc.page.hero ? dsc.page.hero.drop(it.key) : null;
+        var failed = function () { undo.forEach(function (f) { f(); }); if (hero) hero(); toast(dt('saveFail')); };
+        if (dsc.home) dsc.home.stale = true;
+        if (dsc.page) dsc.page.dirty = true;
+        dscCall('/feedback', { source: source || 'card', items: [{ key: it.key, action: action }] }).then(function (r) { dscConfSet(r && r.confidence); }).catch(failed);
+        toastAct(dt(action === 'like' ? 'tLike' : action === 'dislike' ? 'tDislike' : 'tHide', it.title), dt('undo'), function () {
+            undo.forEach(function (f) { f(); }); if (hero) hero();
+            dscCall('/feedback', { source: source || 'card', items: [{ key: it.key, action: 'clear' }] }).then(function (r) { dscConfSet(r && r.confidence); }).catch(function () { toast(dt('saveFail')); });
         });
-        toast(dt('hidden', r.title));
     }
-    // Karte und Anfrage-Ansicht kommen vom Seerr-Zusatz; hier kommt nur der Knopf „Kein Interesse“ dazu.
-    function discCard(seerr, r) {
-        var c = seerr.card(r);
-        c.classList.add('atv-disc__card'); c.__atvDisc = discKey(r.mediaType, r.id);
-        var b = el('button', 'atv-disc__no'); b.type = 'button'; b.title = dt('hide');
-        b.setAttribute('aria-label', dt('hide') + ': ' + r.title); b.appendChild(svg(ICON.close));
-        b.addEventListener('click', function (e) { e.preventDefault(); e.stopPropagation(); discHide(r); });
-        b.addEventListener('keydown', function (e) { e.stopPropagation(); });     // Enter gilt dem Knopf, nicht der Karte
-        (c.querySelector('.atv-seerr__poster') || c).appendChild(b);
+    // after: läuft vor der Rückmeldung (die Anfrage-Ansicht schließt sich, damit man die Karte verschwinden sieht)
+    function dscSeenMenu(anchor, it, source, byKey, after) {
+        var say = function (action) { return function () { if (after) after(); dscFeedback(it, action, source); }; };
+        return dscMenu(anchor, dt('seenQ'), [
+            { icon: DICON.up, label: dt('liked'), run: say('like') },
+            { icon: DICON.down, label: dt('disliked'), run: say('dislike') }
+        ], byKey);
+    }
+    // Brücke zur Anfrage-Ansicht des Seerr-Zusatzes: Der kennt Titel in der Form von Seerr.
+    function dscSeerrShape(it) {
+        var r = { id: it.tmdbId, mediaType: it.mediaType, overview: it.overview || '', posterPath: it.poster, backdropPath: it.backdrop, voteAverage: it.rating || 0 };
+        var date = it.releaseDate || (it.year ? it.year + '-01-01' : '');
+        if (it.mediaType === 'tv') { r.name = it.title; r.firstAirDate = date; } else { r.title = it.title; r.releaseDate = date; }
+        if (dscIsThere(it)) r.mediaInfo = { status: it.state === 'partial' ? 4 : 5, jellyfinMediaId: it.itemId };
+        else if (it.state === 'requested') r.mediaInfo = { status: 2 };
+        return r;
+    }
+    function dscOpen(it, card, source, forceSeerr) {
+        if (dscIsThere(it) && !forceSeerr) { showDetails(it.itemId); return; }
+        var sa = window.__atvSeerrApi;
+        if (sa && sa.open) sa.open(dscSeerrShape(it), card || null, { item: it, source: source || 'card' });
+    }
+    function dscPlay(it) {
+        if (!it.itemId) return;
+        playItem({ Id: it.itemId, Type: it.mediaType === 'tv' ? 'Series' : 'Movie', MediaType: 'Video' }, 0);
+    }
+    function dscEntries(it, card, source) {
+        var list = [];
+        if (dscIsThere(it)) list.push({ icon: ICON.play, label: t('play'), run: function () { dscPlay(it); } });
+        list.push({ icon: DICON.up, label: dt('seenLiked'), run: function () { dscFeedback(it, 'like', source); } });
+        list.push({ icon: DICON.down, label: dt('seenDisliked'), run: function () { dscFeedback(it, 'dislike', source); } });
+        list.push({ icon: DICON.eyeOff, label: dt('hide'), run: function () { dscFeedback(it, 'hide', source); } });
+        if (it.state === 'partial') list.push({ icon: ICON.plus, label: dt('moreSeasons'), run: function () { dscOpen(it, card, source, true); } });
+        list.push({ icon: ICON.info, label: dt('info'), run: function () { dscOpen(it, card, source); } });
+        return list;
+    }
+    function dscCardMenu(card, byKey) {
+        var it = card.__atvItem, src = card.__atvSrc; if (!it) return;
+        if (Date.now() - (dscCardMenu.at || 0) < 350) return;                   // langes Drücken und „contextmenu“ melden sich beide
+        dscCardMenu.at = Date.now();
+        if (isMobile()) { dscSheet(it, dscEntries(it, card, src)); return; }
+        var btn = card.querySelector('.atv-dc__more') || card;
+        card.classList.add('is-menu');
+        var menu = dscMenu(btn, null, dscEntries(it, card, src), byKey);
+        menu.__atvFor = card;
+        var mo2 = new MutationObserver(function () { if (!menu.isConnected) { card.classList.remove('is-menu'); mo2.disconnect(); } });
+        mo2.observe(document.body, { childList: true });
+    }
+
+    /* ---------------- Karte ----------------
+       Plakat (oder Querformat) mit Titel und einer Zeile darunter. Der Stand steht oben links in der Ecke und ist überall
+       derselbe: „+“ auf Glas = fehlt (das Plakat selbst ist eine Spur gedämpft und bekommt seine volle Farbe erst beim
+       Darüberfahren), weißer Knopf mit ▶ = vorhanden und spielt ab, Zeichen mit Kurzmarke = angefragt. */
+    function dscCard(it, o) {
+        o = o || {};
+        var c = el('div', 'atv-dc' + (o.wide ? ' atv-dc--wide' : '')); c.tabIndex = -1; c.setAttribute('role', 'button');
+        c.setAttribute('data-key', it.key); c.__atvItem = it; c.__atvSrc = o.source || 'card'; c.__atvRow = o.rowTitle || ''; c.__atvWhy = !!o.why;
+        var art = el('div', 'atv-dc__art'); c.appendChild(art);
+        var im = el('img', 'atv-dc__img'); im.alt = ''; im.decoding = 'async'; art.appendChild(im);
+        im.addEventListener('error', function () {
+            im.remove(); c.classList.add('atv-dc--noimg');
+            if (!o.wide && !art.querySelector('.atv-dc__fallback')) art.insertBefore(el('span', 'atv-dc__fallback', it.title), art.firstChild);
+        });
+        if (o.wide) dscWideArt(c, art, im, it);
+        else if (it.poster) dscImgLazy(c, im, dscTmdb(dscPosterSize(), it.poster));
+        else im.dispatchEvent(new Event('error'));
+        var more = el('button', 'atv-dc__more'); more.type = 'button'; more.tabIndex = -1; more.setAttribute('aria-haspopup', 'menu');
+        more.setAttribute('aria-label', dt('more') + ': ' + it.title); more.appendChild(svg(ICON.more));
+        c.appendChild(more);
+        if (!o.wide) c.appendChild(el('div', 'atv-dc__name', it.title));
+        c.appendChild(el('div', 'atv-dc__sub'));
+        dscCardState(c);
         return c;
     }
-    function discShelf(seerr, heading, items) {
-        var shelf = el('section', 'atv-shelf atv-disc');
-        var head = el('div', 'atv-shelf__head'); head.appendChild(el('h2', 'atv-shelf__title', heading)); shelf.appendChild(head);
+    // Querformat: Hintergrundbild und Logo aus Jellyfin, sonst das Bild von TMDb mit dem Titel als Schrift.
+    function dscWideArt(c, art, im, it) {
+        art.appendChild(el('span', 'atv-dc__shade'));
+        dscImgLazy(c, im, function () {
+            return Promise.resolve(dscLibItem(it.itemId)).then(function (li) {
+                var bd = li && li.BackdropImageTags && li.BackdropImageTags[0], logo = li && li.ImageTags && li.ImageTags.Logo;
+                var name = el('span', 'atv-dc__wtitle', it.title);
+                if (logo) {
+                    var lg = el('img', 'atv-dc__logo'); lg.alt = it.title;
+                    lg.addEventListener('error', function () { if (lg.parentNode) lg.parentNode.replaceChild(name, lg); });
+                    art.appendChild(lg); dscImgShow(lg, imgUrl(li.Id, { type: 'Logo', maxWidth: 420, tag: logo }));
+                } else art.appendChild(name);
+                if (bd) return { url: imgUrl(li.Id, { type: 'Backdrop', index: 0, maxWidth: 720, tag: bd }), plain: true };
+                return it.backdrop ? { url: dscTmdb('w780', it.backdrop) } : null;
+            });
+        });
+    }
+    function dscSame(a, b) { var n = function (s) { return String(s || '').toLowerCase().replace(/[^a-z0-9äöüß]+/g, ''); }; return n(a) === n(b); }
+    /* Zeile unter dem Titel: Übereinstimmung (oder Bewertung) und Jahr. Sagt die Begründung etwas, das die Reihe nicht
+       schon sagt, erscheint sie beim Darüberfahren an derselben Stelle. Immer da stehen der Termin eines noch nicht
+       erschienenen Titels und, in der Reihe der fehlenden Teile, der Name der Filmreihe. */
+    function dscCardLine(c, it, rq) {
+        var sub = c.querySelector('.atv-dc__sub'), wide = c.classList.contains('atv-dc--wide'), main, sc;
+        sub.className = 'atv-dc__sub';
+        if (rq && rq.text) { sub.textContent = rq.text; sub.classList.add('atv-dc__sub--rq'); return; }
+        main = el('span', 'atv-dc__l1');
+        if ((it.reasonKind === 'upcoming' || (it.reasonKind === 'collection' && c.__atvWhy)) && it.reason) main.textContent = it.reason;
+        else {
+            sc = dscScore(it); if (sc) main.appendChild(sc);
+            [it.year ? String(it.year) : '', wide ? dscLength(it) : ''].forEach(function (x) {
+                if (!x) return;
+                if (main.childNodes.length) main.appendChild(el('span', 'atv-sep', '·'));
+                main.appendChild(document.createTextNode(x));
+            });
+        }
+        sub.replaceChildren(main);
+        if (it.reason && it.reason !== main.textContent && !/^(library|request)$/.test(it.reasonKind || '') && !dscSame(it.reason, c.__atvRow)) {
+            sub.appendChild(el('span', 'atv-dc__l2', it.reason)); sub.classList.add('has-alt');
+        }
+    }
+    function dscCardState(c) {
+        var it = c.__atvItem, rq = dscReqOf(it);
+        if (rq && rq.phase === 'available' && !(rq.isNew)) rq = null;
+        var there = dscIsThere(it), open = (!!rq && rq.phase !== 'available') || (!there && it.state === 'requested');
+        var isNew = !!(rq && rq.isNew && there);
+        var sig = [it.state, there, dscPhaseSig(open || isNew ? rq : null), dscShowMatch() ? 1 : 0].join('|');
+        if (c.__atvSig === sig) return;
+        c.__atvSig = sig;
+        c.classList.toggle('is-there', there); c.classList.toggle('is-req', open); c.classList.toggle('is-missing', !there && !open);
+        c.setAttribute('aria-label', dscAria(it));
+        var art = c.querySelector('.atv-dc__art'), old = art.querySelector('.atv-dc__flag'), bar = art.querySelector('.atv-dc__bar'), flag, fill;
+        if (old) old.remove();
+        if (bar) bar.remove();
+        if (open) {
+            flag = el('span', 'atv-dc__flag atv-dc__flag--req' + (rq && rq.phase === 'unreleased' ? ' is-note' : '') + (rq && /^(declined|failed)$/.test(rq.phase || '') ? ' is-bad' : ''));
+            flag.appendChild(dscPhaseMark(rq)); flag.appendChild(el('b', null, (rq && rq.short) || dt('requested')));
+            if (rq && rq.percent != null && rq.phase !== 'unreleased') {
+                bar = el('span', 'atv-dc__bar'); fill = el('i'); fill.style.transform = 'scaleX(' + (Math.max(2, Math.min(100, rq.percent)) / 100) + ')';
+                bar.appendChild(fill); art.appendChild(bar);
+            }
+        } else if (there) {
+            flag = el('button', 'atv-dc__flag atv-dc__flag--play'); flag.type = 'button'; flag.tabIndex = -1;
+            flag.setAttribute('aria-label', t('play') + ': ' + it.title); flag.appendChild(svg(ICON.play));
+            if (isNew) flag.appendChild(el('b', null, rq.short || dt('isNew')));
+        } else { flag = el('span', 'atv-dc__flag atv-dc__flag--add'); flag.appendChild(svg(ICON.plus)); }
+        art.appendChild(flag);
+        dscCardLine(c, it, open || isNew ? rq : null);
+    }
+    // Neuer Stand vom Server (discover/requests): in die Titel aller Karten und des großen Bilds übernehmen.
+    function dscCardsSync() {
+        var map = dsc.rq.map, take = function (it) {
+            var r = map[it.key]; if (!r) return false;
+            it.request = r.request || null; it.state = r.state || it.state; if (r.itemId) it.itemId = r.itemId;
+            return true;
+        };
+        dscCardsOf(null).forEach(function (c) { if (c.__atvItem) { take(c.__atvItem); dscCardState(c); } });
+        if (dsc.page && dsc.page.hero) dsc.page.hero.sync(take);
+    }
+    // Eben angefragt (Ereignis des Seerr-Zusatzes): Karte und großes Bild zeigen es sofort, der genaue Stand kommt nach.
+    document.addEventListener('atv-seerr-status', function (e) {
+        var d = e.detail || {}; if (!dsc || !d.id || !(d.status >= 2)) return;
+        var key = d.mediaType + ':' + d.id, set = function (it) { if (it.key !== key || dscIsThere(it)) return false; it.state = 'requested'; return true; };
+        dscCardsOf(key).forEach(function (c) { if (c.__atvItem && set(c.__atvItem)) dscCardState(c); });
+        if (dsc.page && dsc.page.hero) dsc.page.hero.sync(set);
+        if (dsc.home) dsc.home.stale = true;
+        if (dsc.page) dsc.page.dirty = true;
+        rqLoad();
+    });
+
+    /* ---------------- Reihe ----------------
+       kind: „poster“ (Hochformat), „top10“ (die Auswahl ganz oben: ebenso, nur etwas größer) oder „wide“ (Querformat). Die Karten
+       entstehen erst, wenn die Reihe in die Nähe des Bildschirms kommt; bis dahin stehen Platzhalter in Endgröße da. */
+    var drow = { io: null };
+    function dscGhost(wide) {
+        var g = el('div', 'atv-dc atv-dc--ph' + (wide ? ' atv-dc--wide' : '')); g.setAttribute('aria-hidden', 'true');
+        g.appendChild(el('div', 'atv-dc__art'));
+        if (!wide) g.appendChild(el('div', 'atv-dc__name'));
+        g.appendChild(el('div', 'atv-dc__sub'));
+        return g;
+    }
+    function dscGhosts(scroller, kind, n) {
+        scroller.replaceChildren();
+        for (var i = 0; i < n; i++) {
+            scroller.appendChild(dscGhost(kind === 'wide'));
+        }
+    }
+    function dscFocus(c) {
+        if (!c) return false;
+        try { c.focus({ preventScroll: true }); } catch (e) { c.focus(); }
+        try { c.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); } catch (e2) { /* alter Browser */ }
+        return true;
+    }
+    // Eine Karte je Reihe steht in der Tab-Folge; innerhalb der Reihe wandern die Pfeiltasten.
+    function dscTabStop(scroller, c) {
+        if (scroller.__atvStop === c) return;
+        var old = scroller.__atvStop;
+        if (old) { old.tabIndex = -1; [].forEach.call(old.querySelectorAll('button'), function (b) { b.tabIndex = -1; }); }
+        scroller.__atvStop = c;
+        if (c) { c.tabIndex = 0; [].forEach.call(c.querySelectorAll('button'), function (b) { b.tabIndex = 0; }); }
+    }
+    function dscShelf(o) {
+        var kind = o.kind === 'top10' || o.kind === 'wide' ? o.kind : 'poster', items = o.items || [];
+        var why = items.length > 0 && items.every(function (x) { return x.reasonKind === 'collection'; });   // Reihe der fehlenden Teile von Filmreihen
+        var shelf = el('section', 'atv-shelf atv-dr atv-dr--' + kind + (o.cls ? ' ' + o.cls : '')); shelf.setAttribute('aria-label', o.title || '');
+        var head = el('div', 'atv-shelf__head'); head.appendChild(el('h2', 'atv-shelf__title', o.title || ''));
+        if (o.subtitle) head.appendChild(el('span', 'atv-shelf__count', o.subtitle));
+        if (o.more) {
+            var all = el('a', 'atv-dr__all'); all.href = o.more.href; all.appendChild(el('span', null, o.more.label)); all.appendChild(svg(ICON.next));
+            head.appendChild(all);
+        }
+        shelf.appendChild(head);
         var wrap = el('div', 'atv-shelf__wrap'); shelf.appendChild(wrap);
-        var scroller = el('div', 'atv-shelf__scroller'); wrap.appendChild(scroller);
+        var scroller = el('div', 'atv-shelf__scroller'); scroller.setAttribute('role', 'group'); scroller.setAttribute('aria-label', o.title || ''); wrap.appendChild(scroller);
         var arrows = el('div', 'atv-shelf__arrows');
-        var bPrev = el('button', 'atv-shelf__arrow'); bPrev.type = 'button'; bPrev.setAttribute('aria-label', t('prev')); bPrev.appendChild(svg(ICON.prev));
-        var bNext = el('button', 'atv-shelf__arrow'); bNext.type = 'button'; bNext.setAttribute('aria-label', t('next')); bNext.appendChild(svg(ICON.next));
+        var bPrev = el('button', 'atv-shelf__arrow'); bPrev.type = 'button'; bPrev.tabIndex = -1; bPrev.setAttribute('aria-label', t('prev')); bPrev.appendChild(svg(ICON.prev));
+        var bNext = el('button', 'atv-shelf__arrow'); bNext.type = 'button'; bNext.tabIndex = -1; bNext.setAttribute('aria-label', t('next')); bNext.appendChild(svg(ICON.next));
         arrows.appendChild(bPrev); arrows.appendChild(bNext); wrap.appendChild(arrows);
         var sync = shelf.__atvSync = function () {
             var max = scroller.scrollWidth - scroller.clientWidth;
             bPrev.disabled = scroller.scrollLeft <= 2; bNext.disabled = scroller.scrollLeft >= max - 2;
             arrows.classList.toggle('atv-hide', max <= 4);
         };
-        function turn(dir) { scroller.scrollBy({ left: dir * Math.max(240, scroller.clientWidth * .8), behavior: 'smooth' }); }
+        function turn(dir) { scroller.scrollBy({ left: dir * Math.max(240, scroller.clientWidth * .82), behavior: 'smooth' }); }
         bPrev.addEventListener('click', function (e) { e.stopPropagation(); turn(-1); });
         bNext.addEventListener('click', function (e) { e.stopPropagation(); turn(1); });
         scroller.addEventListener('scroll', function () { clearTimeout(sync.t); sync.t = setTimeout(sync, 80); }, { passive: true });
-        items.forEach(function (r) { scroller.appendChild(discCard(seerr, r)); });
-        requestAnimationFrame(sync);
+        shelf.__atvScroller = scroller;
+
+        shelf.__atvFill = function () {
+            if (shelf.__atvFilled) return;
+            shelf.__atvFilled = true;
+            if (drow.io) drow.io.unobserve(shelf);
+            if (kind === 'wide') dscLib(items.map(function (x) { return x.itemId; }));      // ein Abruf für die ganze Reihe
+            var frag = document.createDocumentFragment(), first = null;
+            items.forEach(function (it, i) {
+                var c = dscCard(it, { wide: kind === 'wide', source: o.source, rowTitle: o.title, why: why });
+                if (!first) first = c;
+                if (o.watch) o.watch(c);
+                frag.appendChild(c);
+            });
+            scroller.replaceChildren(frag);
+            dscTabStop(scroller, first);
+            requestAnimationFrame(sync);
+        };
+        if (o.eager || !window.IntersectionObserver) shelf.__atvFill();
+        else {
+            dscGhosts(scroller, kind, Math.min(items.length, 9));
+            if (!drow.io) drow.io = new IntersectionObserver(function (es) {
+                es.forEach(function (e) { if (e.isIntersecting && e.target.__atvFill) e.target.__atvFill(); });
+            }, { rootMargin: '700px 0px' });
+            drow.io.observe(shelf);
+        }
+
+        scroller.addEventListener('pointerdown', function (e) {
+            var b = e.target.closest('.atv-dc__more'), open = document.querySelector('.atv-menu--dsc');
+            if (b) b.__atvHad = !!open && open.__atvFor === b.parentNode;          // zweiter Klick auf denselben Knopf schließt nur
+        }, true);
+        scroller.addEventListener('click', function (e) {
+            var c = e.target.closest('.atv-dc'), b; if (!c || !c.__atvItem) return;
+            if (Date.now() - (c.__atvHeld || 0) < 800) { e.preventDefault(); return; }   // langes Drücken hat schon das Menü geöffnet
+            b = e.target.closest('.atv-dc__more');
+            if (b) { e.stopPropagation(); if (b.__atvHad) { b.__atvHad = false; return; } dscCardMenu(c, e.detail === 0); return; }
+            if (e.target.closest('.atv-dc__flag--play')) { e.stopPropagation(); dscPlay(c.__atvItem); return; }
+            dscOpen(c.__atvItem, c, c.__atvSrc);
+        });
+        scroller.addEventListener('focusin', function (e) { var c = e.target.closest('.atv-dc'); if (c && c.__atvItem) dscTabStop(scroller, c); });
+        scroller.addEventListener('keydown', function (e) {
+            var c = e.target.closest('.atv-dc'); if (!c || !c.__atvItem) return;
+            if (e.target !== c) { if (e.key === 'Escape') dscFocus(c); return; }      // Tasten im Knopf gehören dem Knopf
+            var cards = [].slice.call(scroller.querySelectorAll('.atv-dc')), i = cards.indexOf(c), rows, r, list, x, best;
+            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); dscOpen(c.__atvItem, c, c.__atvSrc); }
+            else if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { if (dscFocus(cards[i + (e.key === 'ArrowRight' ? 1 : -1)])) e.preventDefault(); }
+            else if (e.key === 'Home' || e.key === 'End') { if (dscFocus(cards[e.key === 'Home' ? 0 : cards.length - 1])) e.preventDefault(); }
+            else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                rows = [].filter.call(shelf.parentNode.children, function (n) { return n.classList.contains('atv-dr') && !n.hidden; });
+                r = rows[rows.indexOf(shelf) + (e.key === 'ArrowDown' ? 1 : -1)]; if (!r) return;
+                if (r.__atvFill) r.__atvFill();
+                list = [].slice.call(r.querySelectorAll('.atv-dc')); x = c.getBoundingClientRect().left; best = null;
+                list.forEach(function (n) { var d = Math.abs(n.getBoundingClientRect().left - x); if (!best || d < best.d) best = { n: n, d: d }; });
+                if (best && dscFocus(best.n)) e.preventDefault();
+            }
+            else if (e.key === 'ContextMenu' || (e.key === 'F10' && e.shiftKey)) { e.preventDefault(); dscCardMenu(c, true); }
+        });
+        // Handy: langes Drücken öffnet das Menü als Sheet (auch „contextmenu“, das Android dabei meldet)
+        var hold = null, unhold = function () { if (hold) { clearTimeout(hold.t); hold = null; } };
+        scroller.addEventListener('touchstart', function (e) {
+            var c = e.target.closest('.atv-dc'); unhold();
+            if (!c || !c.__atvItem || e.touches.length !== 1 || e.target.closest('button')) return;
+            hold = { x: e.touches[0].clientX, y: e.touches[0].clientY, t: setTimeout(function () { hold = null; c.__atvHeld = Date.now(); dscCardMenu(c, false); }, DSC.holdMs) };
+        }, { passive: true });
+        scroller.addEventListener('touchmove', function (e) {
+            if (hold && (Math.abs(e.touches[0].clientX - hold.x) > 10 || Math.abs(e.touches[0].clientY - hold.y) > 10)) unhold();
+        }, { passive: true });
+        scroller.addEventListener('touchend', unhold, { passive: true });
+        scroller.addEventListener('touchcancel', unhold, { passive: true });
+        scroller.addEventListener('contextmenu', function (e) {
+            var c = e.target.closest('.atv-dc'); if (!c || !c.__atvItem) return;
+            e.preventDefault(); c.__atvHeld = Date.now(); dscCardMenu(c, false);
+        });
         return shelf;
     }
     window.addEventListener('resize', function () {
-        [].forEach.call(document.querySelectorAll('.atv-disc'), function (sh) { if (sh.__atvSync) sh.__atvSync(); });
+        [].forEach.call(document.querySelectorAll('.atv-dr'), function (sh) { if (sh.__atvSync) sh.__atvSync(); });
     });
-    function discHomeLoad(seerr) {
-        return Promise.all([discSignals(), discLibrary(), discHiddenLoad(true)]).then(function (res) {
-            var signals = res[0], recs = {}, down = false, i = 0;
-            // nach dem ersten misslungenen Abruf keine weiteren: Seerr ist dann nicht da, Gemerktes gilt weiter
-            function next() {
-                if (i >= signals.length) return Promise.resolve();
-                var sg = signals[i++];
-                return discRecs(seerr, sg.type, sg.tmdb, down).then(function (list) { if (list) recs[sg.key] = list; else down = true; }).then(next);
-            }
-            var lanes = [];
-            for (var n = 0; n < DISC.parallel; n++) lanes.push(next());
-            return Promise.all(lanes).then(function () { discStoreSave(); return discRows(signals, recs, res[1], res[2]); });
-        });
-    }
-    function discHomeDraw(seerr, sections, box) {
-        if (box) box.remove();
-        box = el('div', 'atv-disc-home'); box.__atvAt = disc.home.at;         // auch leer eingehängt: Marke „für diesen Stand gezeichnet“
-        disc.home.rows.forEach(function (row) { if (row.items.length) box.appendChild(discShelf(seerr, row.title, row.items)); });
-        sections.parentNode.insertBefore(box, sections.nextSibling);
-    }
-    function mountDiscHome(page) {
-        var seerr = discApi();
-        if (!seerr || !apiReady()) return;
-        var sections = page.querySelector('#homeTab .homeSectionsContainer');
-        if (!sections || !sections.querySelector('.card')) return;              // erst, wenn die Startseite steht
-        if (on('hero') && !page.classList.contains('atv-native') && !page.querySelector('.atv-hero')) return;   // … samt Banner
-        discUser();
-        if (disc.home && Date.now() - disc.home.at < CFG.cacheMs) {
-            var box = sections.parentNode.querySelector('.atv-disc-home');
-            if (!box || box.__atvAt !== disc.home.at) discHomeDraw(seerr, sections, box);
-            return;
+
+    /* ---------------- Großes Bild ----------------
+       Bis zu fünf Titel im Wechsel. Den Takt gibt die Füllung des aktiven Punkts vor (eine CSS-Animation): Hält sie an
+       (Zeiger über dem Bild, Fokus darin, Berührung, Fenster im Hintergrund, Bild aus dem Blick), wartet auch der
+       Wechsel, ganz ohne eigenen Zeitgeber. Wer weniger Bewegung wünscht, bekommt keine Animation und damit keinen
+       selbsttätigen Wechsel. */
+    function dscTip(b, label) { b.setAttribute('data-tip', label); b.setAttribute('aria-label', label); b.classList.add('atv-tip'); return b; }
+    function dscHero(items, o) {
+        o = o || {};
+        var root = el('section', 'atv-dh'); root.setAttribute('aria-roledescription', t('carousel')); root.setAttribute('aria-label', dt('picks')); root.tabIndex = -1;
+        var st = { root: root, slides: [], index: -1 }, dots = [], dotBox = el('div', 'atv-dh__dots'), holds = {};
+        dotBox.setAttribute('role', 'tablist');
+        function live() { return st.slides.filter(function (s) { return !s.__atvGone; }); }
+        function step(from, dir) {
+            var n = st.slides.length, k = from, j;
+            for (j = 0; j < n; j++) { k = (k + dir + n) % n; if (!st.slides[k].__atvGone) return k; }
+            return -1;
         }
-        if (disc.loading) return;
-        disc.loading = true;
-        var mine = disc;
-        var run = function () {
-            discHomeLoad(seerr).catch(function (e) { console.warn('[atv] Entdecken', e); return []; }).then(function (rows) {
-                mine.loading = false;
-                mine.home = { at: Date.now(), rows: rows };                    // auch ein leeres Ergebnis gilt eine Weile, sonst fragte jeder Besuch neu
-                if (mine === disc) schedule();
+        function art(k) {
+            var s = st.slides[k], it; if (!s || s.__atvArtOn) return;
+            s.__atvArtOn = true; it = s.__atvItem;
+            var tmdb = function () { dscImgLoad(s.__atvArt, dscTmdb(dscBackdropSize(), it.backdrop || it.poster)); };
+            if (!dscIsThere(it)) { tmdb(); return; }
+            Promise.resolve(dscLibItem(it.itemId)).then(function (li) { var u = li && backdropUrl(li); if (u) dscImgShow(s.__atvArt, u); else tmdb(); });
+        }
+        function hold(why, yes) {
+            if (yes) holds[why] = 1; else delete holds[why];
+            root.classList.toggle('is-paused', Object.keys(holds).length > 0);
+        }
+        function restart() {
+            var d = dots[st.index], f = d && d.firstChild; if (!f) return;
+            f.style.animation = 'none'; f.getBoundingClientRect(); f.style.animation = '';
+        }
+        st.go = function (k) {
+            if (k < 0 || !st.slides[k] || st.slides[k].__atvGone) return;
+            st.index = k;
+            st.slides.forEach(function (s, j) {
+                var now = j === k;
+                s.classList.toggle('is-active', now); s.setAttribute('aria-hidden', now ? 'false' : 'true');
+                if (dots[j]) { dots[j].classList.toggle('is-active', now); dots[j].setAttribute('aria-selected', now ? 'true' : 'false'); dots[j].tabIndex = now ? 0 : -1; }
+            });
+            art(k); art(step(k, 1));
+            restart();
+            if (o.seen && st.inView) o.seen(st.slides[k].__atvItem.key);
+        };
+        st.next = function () { st.go(step(st.index, 1)); };
+        st.prev = function () { st.go(step(st.index, -1)); };
+        // Titel aus dem Wechsel nehmen (Rückmeldung); die Rückgabe holt ihn zurück.
+        st.drop = function (key) {
+            var hit = st.slides.filter(function (s) { return s.__atvItem.key === key && !s.__atvGone; });
+            if (!hit.length) return null;
+            var tidy = function () {
+                var n = live().length;
+                st.slides.forEach(function (s, j) { if (dots[j]) dots[j].hidden = !!s.__atvGone; });
+                dotBox.hidden = n < 2; root.classList.toggle('is-empty', n === 0);
+                if (o.empty) o.empty(n === 0);
+                if (n && (st.index < 0 || st.slides[st.index].__atvGone)) st.go(step(Math.max(0, st.index), 1));
+            };
+            hit.forEach(function (s) { s.__atvGone = true; }); tidy();
+            return function () { hit.forEach(function (s) { s.__atvGone = false; }); tidy(); };
+        };
+        st.sync = function (take) { st.slides.forEach(function (s) { if (take(s.__atvItem)) dscHeroActs(s); }); };
+        st.hold = hold;
+
+        items.forEach(function (it, i) {
+            var s = dscHeroSlide(it, i, items.length); st.slides.push(s); root.appendChild(s);
+            var d = el('button', 'atv-dh__dot'); d.type = 'button'; d.setAttribute('role', 'tab'); d.setAttribute('aria-label', t('slide', i + 1, items.length) + ': ' + it.title);
+            d.appendChild(el('i'));
+            d.addEventListener('click', function () { st.go(i); });
+            dots.push(d); dotBox.appendChild(d);
+        });
+        dotBox.hidden = items.length < 2;
+        root.appendChild(dotBox);
+        if (items.length > 1) {
+            var prev = el('button', 'atv-dh__nav atv-dh__nav--prev'), next = el('button', 'atv-dh__nav atv-dh__nav--next');
+            prev.type = next.type = 'button'; prev.tabIndex = next.tabIndex = -1; prev.setAttribute('aria-label', t('prev')); next.setAttribute('aria-label', t('next'));
+            prev.appendChild(svg(ICON.prev)); next.appendChild(svg(ICON.next));
+            prev.addEventListener('click', st.prev); next.addEventListener('click', st.next);
+            root.appendChild(prev); root.appendChild(next);
+        }
+        // Ende der Füllung = weiter; solange etwas das Bild verdeckt (Anfrage-Ansicht, Sheet), beginnt sie von vorn
+        dotBox.addEventListener('animationend', function (e) {
+            if (e.animationName !== 'atv-dh-fill') return;
+            if (document.querySelector('.atv-xd, .atv-sheet, .atv-tc, .atv-menu--dsc')) { restart(); return; }
+            st.next();
+        });
+        root.addEventListener('mouseenter', function () { hold('hover', true); });
+        root.addEventListener('mouseleave', function () { hold('hover', false); });
+        root.addEventListener('focusin', function (e) { if (e.target !== root) hold('focus', true); });
+        root.addEventListener('focusout', function (e) { if (!root.contains(e.relatedTarget)) hold('focus', false); });
+        var x0 = null, y0 = null, touchT = null;
+        root.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; clearTimeout(touchT); hold('touch', true); }, { passive: true });
+        root.addEventListener('touchend', function (e) {
+            clearTimeout(touchT); touchT = setTimeout(function () { hold('touch', false); }, 4000);
+            if (x0 == null) return;
+            var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+            if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.2) { if (dx < 0) st.next(); else st.prev(); }
+        }, { passive: true });
+        root.addEventListener('keydown', function (e) {
+            if (e.target.closest && e.target.closest('.atv-menu')) return;
+            if (e.key === 'ArrowRight') { st.next(); e.preventDefault(); }
+            else if (e.key === 'ArrowLeft') { st.prev(); e.preventDefault(); }
+        });
+        if (window.IntersectionObserver) {
+            st.io = new IntersectionObserver(function (es) {
+                st.inView = es[0].isIntersecting; hold('away', !st.inView);
+                if (st.inView && o.seen && st.index >= 0) o.seen(st.slides[st.index].__atvItem.key);
+            }, { threshold: .35 });
+            st.io.observe(root);
+        }
+        st.vis = function () { hold('hidden', document.hidden); };
+        document.addEventListener('visibilitychange', st.vis);
+        st.destroy = function () { document.removeEventListener('visibilitychange', st.vis); if (st.io) st.io.disconnect(); };
+        st.go(0);
+        return st;
+    }
+    function dscHeroSlide(it, i, n) {
+        var s = el('div', 'atv-dh__slide'); s.setAttribute('role', 'group'); s.setAttribute('aria-roledescription', 'slide');
+        s.setAttribute('aria-label', t('slide', i + 1, n) + ': ' + it.title); s.__atvItem = it;
+        var art = el('img', 'atv-dh__art'); art.alt = ''; art.decoding = 'async'; s.appendChild(art); s.__atvArt = art;
+        s.appendChild(el('div', 'atv-dh__shade'));
+        var lock = el('div', 'atv-dh__lock');
+        var title = el('h2', 'atv-dh__title' + (it.title.length > 30 ? ' is-long' : it.title.length > 18 ? ' is-mid' : ''), it.title); lock.appendChild(title);
+        // vorhandene Titel tragen ihr Logo aus Jellyfin; die Schrift bleibt stehen, bis es geladen ist
+        if (dscIsThere(it)) Promise.resolve(dscLibItem(it.itemId)).then(function (li) {
+            var u = li && logoUrl(li); if (!u) return;
+            var lg = el('img', 'atv-dh__logo'); lg.alt = it.title;
+            lg.addEventListener('load', function () { title.textContent = ''; title.className = 'atv-dh__title has-logo'; title.appendChild(lg); });
+            lg.src = u;
+        });
+        var meta = el('div', 'atv-dh__meta'), sc = dscScore(it, true), isMatch = !!sc && sc.className === 'atv-match';
+        if (sc) meta.appendChild(sc);
+        [it.year ? String(it.year) : '', dscLength(it), (it.genres || []).slice(0, 2).join(', ')].forEach(function (x) {
+            if (!x) return;
+            if (meta.childNodes.length) meta.appendChild(el('span', 'atv-sep', '·'));
+            meta.appendChild(el('span', null, x));
+        });
+        if (isMatch && it.rating) { var star = el('span', 'atv-dsc-star'); star.appendChild(svg(ICON.star)); star.appendChild(document.createTextNode(dscNum(it.rating))); meta.appendChild(el('span', 'atv-sep', '·')); meta.appendChild(star); }
+        lock.appendChild(meta);
+        if (it.reason && it.reasonKind !== 'request') lock.appendChild(el('p', 'atv-dh__why', it.reason));
+        if (it.overview) lock.appendChild(el('p', 'atv-dh__desc', it.overview));
+        var act = el('div', 'atv-dh__act'); lock.appendChild(act); s.__atvAct = act;
+        s.appendChild(lock);
+        dscHeroActs(s);
+        return s;
+    }
+    // Knöpfe einer Folie: weiße Pille je nach Stand (Abspielen, Anfragen, Statuszeile), dazu drei Glasknöpfe mit Beschriftung.
+    function dscHeroActs(s) {
+        var it = s.__atvItem, act = s.__atvAct, rq = dscReqOf(it), main, b;
+        var open = (!!rq && rq.phase !== 'available') || (!dscIsThere(it) && it.state === 'requested');
+        var sig = [it.state, dscIsThere(it), open ? dscPhaseSig(rq) : ''].join('|');
+        if (act.__atvSig === sig) return;
+        // nur die Statuszeile ändert sich laufend: an Ort und Stelle nachführen, damit der Fokus bleibt
+        if (open && act.firstChild && act.firstChild.classList.contains('atv-rq')) { act.__atvSig = sig; dscStatusFill(act.firstChild, rq); return; }
+        act.__atvSig = sig;
+        act.replaceChildren();
+        if (open) main = dscStatusLine(it);
+        else if (dscIsThere(it)) {
+            main = el('button', 'atv-pill'); main.type = 'button'; main.appendChild(svg(ICON.play)); main.appendChild(el('span', null, t('play')));
+            main.addEventListener('click', function () { dscPlay(it); });
+        } else {
+            main = el('button', 'atv-pill'); main.type = 'button'; main.appendChild(svg(ICON.plus)); main.appendChild(el('span', null, dt('request')));
+            main.addEventListener('click', function () {
+                var sa = window.__atvSeerrApi; if (!sa || !sa.request) { dscOpen(it, null, 'hero'); return; }
+                main.disabled = true;
+                // Film: ein Tipp genügt. Serie: der Zusatz fragt erst nach den Staffeln.
+                sa.request(dscSeerrShape(it), main).catch(function () { /* Meldung kommt vom Zusatz */ }).then(function () { main.disabled = false; });
+            });
+        }
+        act.appendChild(main);
+        b = dscTip(el('button', 'atv-circle'), dt('seen')); b.type = 'button'; b.appendChild(svg(ICON.check)); b.setAttribute('aria-haspopup', 'menu');
+        (function (btn) {
+            btn.addEventListener('pointerdown', function () { btn.__atvHad = !!document.querySelector('.atv-menu--dsc'); }, true);
+            btn.addEventListener('click', function (e) { e.stopPropagation(); if (btn.__atvHad) { btn.__atvHad = false; return; } dscSeenMenu(btn, it, 'hero', e.detail === 0); });
+        })(b);
+        act.appendChild(b);
+        b = dscTip(el('button', 'atv-circle'), dt('hide')); b.type = 'button'; b.appendChild(svg(DICON.eyeOff));
+        b.addEventListener('click', function () { dscFeedback(it, 'hide', 'hero'); });
+        act.appendChild(b);
+        b = dscTip(el('button', 'atv-circle'), dt('info')); b.type = 'button'; b.appendChild(svg(ICON.info));
+        b.addEventListener('click', function () { dscOpen(it, null, 'hero'); });
+        act.appendChild(b);
+    }
+
+    /* ---------------- Seite „Entdecken“ ----------------
+       Adresse: #/discover, dazu ?type=movie|tv und genre=<TMDb-Nummer>. Jellyfin kennt die Route nicht und zeichnet
+       dafür innerhalb der Oberfläche seine Seite „nicht gefunden“ (Kopfleiste bleibt, kein einziger Abruf beim Server,
+       Neuladen und Zurück/Vor funktionieren wie bei jeder Seite); auf diese leere Seite legt sich „Entdecken“. Eine
+       vorhandene Route (Liste, Favoriten) lüde dagegen jedes Mal Inhalte, die niemand sieht, und deutete „type“ und
+       „genre“ auf ihre eigene Weise.
+       Jellyfin baut die Seite beim Verlassen ab. Der aufgebaute Inhalt bleibt deshalb hier in der Hand und wird bei der
+       Rückkehr (Zurück von einer Detailseite) samt Stelle wieder eingehängt, statt neu zu entstehen. */
+    function dscRoute() {
+        if (!/^#\/discover(\?|$)/.test(location.hash)) return null;
+        var ty = hashParam('type'), g = hashParam('genre');
+        return { type: ty === 'movie' || ty === 'tv' ? ty : 'all', genre: /^\d+$/.test(g || '') ? g : '' };
+    }
+    function dscHash(f) {
+        var q = [];
+        if (f.type && f.type !== 'all') q.push('type=' + f.type);
+        if (f.genre) q.push('genre=' + f.genre);
+        return '#/discover' + (q.length ? '?' + q.join('&') : '');
+    }
+    function dscKey(f) { return f.type + '|' + f.genre + '|' + lang(); }
+    // Navigation mitlesen: „Zurück/Vor“ kehrt an die alte Stelle zurück, ein Klick auf einen Verweis beginnt oben.
+    if (!window.__atvDscNav) {
+        window.__atvDscNav = true;
+        try {
+            var dPush = window.history.pushState;
+            window.history.pushState = function () { dscNav.at = Date.now(); dscLeave(); return dPush.apply(this, arguments); };
+        } catch (e) { /* ohne Haken: Rückkehr beginnt oben */ }
+        document.addEventListener('click', function (e) { if (e.target && e.target.closest && e.target.closest('a[href^="#/"]')) { dscNav.link = Date.now(); dscLeave(); } }, true);
+        window.addEventListener('scroll', function () {
+            var pg = dsc && dsc.page;
+            if (pg && !pg.lockY && pg.root.isConnected && dscRoute()) pg.scrollY = window.scrollY;
+            if (dsc && dsc.home && dsc.home.pending && window.scrollY < 140) schedule();
+        }, { passive: true });
+        window.addEventListener('pagehide', function () { if (dsc && dsc.page) dscSeenSend(dsc.page, true); });
+    }
+    // Gleich geht es zu einer anderen Seite: Stelle merken, gesehene Titel melden.
+    function dscLeave() {
+        var pg = dsc && dsc.page;
+        if (!pg || !pg.root.isConnected || !dscRoute()) return;
+        if (!pg.lockY) pg.scrollY = window.scrollY;
+        [].forEach.call(pg.root.querySelectorAll('.atv-dr'), function (sh) { if (sh.__atvScroller) sh.__atvLeft = sh.__atvScroller.scrollLeft; });
+        dscSeenSend(pg, true);
+    }
+    /* Gezeigte Titel: erst gezählt, wenn eine Karte gut zur Hälfte und einen Augenblick lang im Bild war; gesammelt
+       gemeldet, je Besuch und Titel einmal. */
+    function dscSeen(pg, key) {
+        if (pg.seen[key] || !pg.root.isConnected || document.hidden) return;
+        pg.seen[key] = 1; pg.queue.push(key);
+        clearTimeout(pg.sendT); pg.sendT = setTimeout(function () { dscSeenSend(pg, false); }, 3000);
+    }
+    function dscSeenSend(pg, leaving) {
+        clearTimeout(pg.sendT);
+        var keys = pg.queue.splice(0, 300); if (!keys.length) return;
+        try {
+            fetch(PLUG.base + '/discover/impressions', { method: 'POST', keepalive: !!leaving, credentials: 'omit', body: JSON.stringify({ keys: keys }),
+                headers: { 'Authorization': 'MediaBrowser Token="' + api().accessToken() + '"', 'Content-Type': 'application/json' } }).catch(function () { /* nicht wichtig genug für eine Meldung */ });
+        } catch (e) { /* ebenso */ }
+    }
+    function dscWatchCard(pg, c) {
+        if (!window.IntersectionObserver) return;
+        if (!pg.io) pg.io = new IntersectionObserver(function (es) {
+            es.forEach(function (e) {
+                var c2 = e.target; clearTimeout(c2.__atvVisT);
+                if (!e.isIntersecting) return;
+                c2.__atvVisT = setTimeout(function () { pg.io.unobserve(c2); dscSeen(pg, c2.getAttribute('data-key')); }, 700);
+            });
+        }, { threshold: .6 });
+        pg.io.observe(c);
+    }
+    function dscPageNew(f) {
+        var root = el('div', 'atv-dsc');
+        var pg = { root: root, f: f, key: dscKey(f), at: 0, state: 'new', seq: 0, hero: null, scrollY: 0, seen: {}, queue: [], data: null, barSig: null };
+        pg.heroSlot = el('div', 'atv-dsc__heroslot'); root.appendChild(pg.heroSlot);
+        pg.bar = el('div', 'atv-dsc__bar'); root.appendChild(pg.bar);
+        pg.note = el('div', 'atv-dsc__note'); root.appendChild(pg.note);
+        pg.body = el('div', 'atv-dsc__rows'); root.appendChild(pg.body);
+        pg.foot = el('div', 'atv-dsc__foot'); root.appendChild(pg.foot);
+        return pg;
+    }
+    function dscPageDrop(pg) {
+        clearTimeout(pg.pollT); clearTimeout(pg.skelT); clearTimeout(pg.sendT);
+        if (pg.hero) pg.hero.destroy();
+        if (pg.io) pg.io.disconnect();
+        pg.root.remove();
+    }
+    // Bis unter die Kopfzeile ziehen (wie das Hero-Banner der Startseite): Jellyfin hält dort Platz frei.
+    function dscPagePad(pg) {
+        var cur = parseFloat(pg.root.style.getPropertyValue('--atv-pad')) || 0, pad = Math.max(0, offsetTopOf(pg.root) + cur);
+        if (pad !== cur || !pg.root.style.getPropertyValue('--atv-pad')) pg.root.style.setProperty('--atv-pad', pad + 'px');
+    }
+    // Der Platzhalter unter der Kopfzeile bekommt seine Höhe erst kurz nach dem Aufbau der Seite (und ändert sie mit der
+    // Fensterbreite): mitlesen, sonst stünde oben ein schwarzer Streifen.
+    function dscPadWatch(pg) {
+        var sp = document.querySelector('header.MuiAppBar-root + div');
+        [80, 250, 600, 1500].forEach(function (ms) { setTimeout(function () { if (dsc && dsc.page === pg && pg.root.isConnected) dscPagePad(pg); }, ms); });
+        if (!window.ResizeObserver || !sp) return;
+        if (!dscPadWatch.ro) dscPadWatch.ro = new ResizeObserver(function () { var p = dsc && dsc.page; if (p && p.root.isConnected) dscPagePad(p); });
+        dscPadWatch.ro.disconnect(); dscPadWatch.ro.observe(sp);
+    }
+    // Zur gemerkten Stelle – und dort bleiben, bis die Seite steht (Jellyfin rollt beim Seitenwechsel selbst noch einmal).
+    function dscScrollTo(pg, y) {
+        var n = 0, user = false, stop = function () { user = true; };
+        pg.lockY = true;
+        window.addEventListener('wheel', stop, { passive: true }); window.addEventListener('touchstart', stop, { passive: true });
+        (function tick() {
+            if (!user && pg.root.isConnected && Math.abs(window.scrollY - y) > 2) window.scrollTo(0, y);
+            if (!user && pg.root.isConnected && ++n < 14) { setTimeout(tick, 50); return; }
+            window.removeEventListener('wheel', stop); window.removeEventListener('touchstart', stop);
+            pg.lockY = false;
+        })();
+    }
+    function dscPageAttach(pg, page, back) {
+        page.appendChild(pg.root); page.classList.add('atv-dsc-on');
+        dscPagePad(pg); dscPadWatch(pg);
+        var rows = function () {
+            [].forEach.call(pg.root.querySelectorAll('.atv-dr'), function (sh) {
+                if (sh.__atvScroller) sh.__atvScroller.scrollLeft = back ? (sh.__atvLeft || 0) : 0;
+                if (sh.__atvSync) sh.__atvSync();
             });
         };
-        // der Startseite den Vortritt lassen: ihre Reihen und Bilder laden zuerst
-        if (window.requestIdleCallback) window.requestIdleCallback(run, { timeout: 2500 }); else setTimeout(run, 800);
+        rows();
+        // noch einmal, sobald Jellyfin die Seite wirklich zeigt: vorher nimmt eine Reihe keine Stelle an
+        if (back) [80, 300].forEach(function (ms) { setTimeout(function () { if (pg.root.isConnected && !pg.rowsTouched) rows(); }, ms); });
+        if (back) dscScrollTo(pg, pg.scrollY || 0);
+        else { pg.scrollY = 0; window.scrollTo(0, 0); if (pg.hero && pg.hero.index > 0) pg.hero.go(0); }
+        if (pg.state === 'building') dscPageLoad(pg);
+        if (pg.rq) { rqWatch(pg.root); if (Date.now() - dsc.rq.at > 15000) rqLoad(); }
+        dscTasteAuto(pg);
     }
-    // Detailseite: Regal „Könnte dir auch gefallen“ zu genau diesem Film oder dieser Serie.
+    function mountDiscPage(page) {
+        var f = dscRoute();
+        if (!f || !dscFeature() || !apiReady()) return;
+        dscUser();
+        // Ohne eben gesetzten Verlaufseintrag (pushState) ist es Zurück/Vor: Jellyfin zeigt die Seite dabei schon, bevor
+        // „popstate“ bei uns ankommt, darum zählt allein, ob gerade navigiert wurde.
+        var pg = dsc.page, key = dscKey(f), back = Date.now() - dscNav.at > 700;
+        if (pg && pg.root.parentNode === page) {
+            if (pg.key !== key) dscPageFilter(pg, f, false);                  // Adresse von außen geändert (Leiste, Zurück/Vor)
+            return;
+        }
+        if (pg && pg.key === key && pg.state === 'ready' && !pg.dirtyHard && Date.now() - pg.at < DSC.ttlMs) { dscPageAttach(pg, page, back); return; }
+        var y = pg && back && pg.key === key ? pg.scrollY : 0;
+        if (pg) dscPageDrop(pg);
+        pg = dsc.page = dscPageNew(f);
+        pg.wantY = y;
+        dscPageAttach(pg, page, false);
+        dscPageLoad(pg);
+    }
+    window.addEventListener('resize', function () { var pg = dsc && dsc.page; if (pg && pg.root.isConnected) { dscPagePad(pg); if (pg.barSync) pg.barSync(); } });
+    // Sofort einhängen, sobald Jellyfin seine leere Seite zeigt (nicht erst mit dem entprellten Durchlauf des Routers).
+    document.addEventListener('viewshow', function () {
+        var p = dscFeature() && dscRoute() && apiReady() ? visiblePage() : null;
+        if (p && !p.classList.contains('homePage') && !p.classList.contains('itemDetailPage')) mountDiscPage(p);
+    }, true);
+    // Schon beim Darüberfahren über den Eintrag „Entdecken“ fragen: die Antwort ist dann meist da, wenn die Seite steht.
+    function dscWarm() {
+        if (!dsc || !dscOn() || (dsc.warm && Date.now() - dsc.warm.at < 20000) || (dsc.page && dsc.page.state === 'ready')) return;
+        var f = { type: 'all', genre: '' };
+        dsc.warm = { key: dscKey(f), at: Date.now(), p: dscCall(dscQuery({})) };
+        dsc.warm.p.catch(function () { /* die Seite fragt selbst noch einmal */ });
+    }
+    function dscPageLoad(pg) {
+        var seq = ++pg.seq, f = pg.f, warm = dsc.warm, p;
+        clearTimeout(pg.pollT); clearTimeout(pg.skelT);
+        if (pg.data) pg.root.classList.add('is-busy');
+        // noch nichts zu sehen: Platzhalter, falls die Antwort nicht sofort da ist
+        else if (pg.state !== 'building') pg.skelT = setTimeout(function () { if (pg.seq === seq && !pg.data) dscPageSkeleton(pg, null); }, 140);
+        if (warm && warm.key === pg.key && Date.now() - warm.at < 20000) { p = warm.p; dsc.warm = null; }
+        else p = dscCall(dscQuery({ type: f.type === 'all' ? '' : f.type, genre: f.genre }));
+        p.then(function (d) {
+            if (pg.seq !== seq || dsc.page !== pg) return;
+            clearTimeout(pg.skelT);
+            dscPageData(pg, d || {});
+        }).catch(function (e) {
+            if (pg.seq !== seq || dsc.page !== pg) return;
+            clearTimeout(pg.skelT);
+            console.warn('[atv] Entdecken', e);
+            dscPageMsg(pg, 'net');
+        });
+    }
+    function dscPageData(pg, d) {
+        dscConfSet(d.confidence, d.status === 'ready' ? d.needsTaste : undefined);
+        pg.at = Date.now();
+        if (d.status === 'building') {
+            pg.state = 'building'; pg.data = null;
+            dscPageSkeleton(pg, d);
+            // erneut fragen, solange die Seite offen ist; im Hintergrund ruht das (dscPageAttach und die Rückkehr des Fensters stoßen es wieder an)
+            pg.pollT = setTimeout(function () { if (dsc.page === pg && pg.root.isConnected && !document.hidden) dscPageLoad(pg); }, DSC.pollMs);
+            return;
+        }
+        if (d.status !== 'ready' || (!(d.rows && d.rows.length) && !(d.hero && d.hero.length))) { dscPageMsg(pg, d.status === 'empty' && d.error ? d.error : 'none'); return; }
+        pg.state = 'ready'; pg.data = d; pg.dirty = false; pg.dirtyHard = false;
+        dscPageDraw(pg, d);
+    }
+    document.addEventListener('visibilitychange', function () {
+        var pg = dsc && dsc.page;
+        if (pg && !document.hidden && pg.state === 'building' && pg.root.isConnected) dscPageLoad(pg);
+    });
+    // Inhalt tauschen: beim ersten Mal sofort, bei einer neuen Auswahl weich (kurz ausblenden, ersetzen, einblenden).
+    function dscPageSwap(pg, put) {
+        var root = pg.root, soft = root.classList.contains('is-shown') && !root.classList.contains('is-skel') && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var run = function () {
+            root.style.minHeight = root.offsetHeight + 'px';                    // nichts fällt zusammen, während ersetzt wird
+            put();
+            root.classList.remove('is-busy', 'is-swap');
+            root.classList.add('is-shown');
+            requestAnimationFrame(function () { requestAnimationFrame(function () { root.style.minHeight = ''; }); });
+        };
+        if (soft) { root.classList.add('is-swap'); setTimeout(run, 170); } else run();
+    }
+    function dscPageDraw(pg, d) {
+        dscPageSwap(pg, function () {
+            var root = pg.root, frag = document.createDocumentFragment(), n = 0, rq = false;
+            root.classList.remove('is-skel', 'is-msg');
+            if (pg.hero) { pg.hero.destroy(); pg.hero = null; }
+            pg.heroSlot.replaceChildren();
+            if (d.hero && d.hero.length) {
+                pg.hero = dscHero(d.hero.slice(0, 5), {
+                    seen: function (key) { dscSeen(pg, key); },
+                    empty: function (yes) { root.classList.toggle('atv-dsc--nohero', yes); dscPagePad(pg); }
+                });
+                pg.heroSlot.appendChild(pg.hero.root);
+            }
+            root.classList.toggle('atv-dsc--nohero', !pg.hero);
+            dscBarDraw(pg, d);
+            dscNoteDraw(pg, d);
+            (d.rows || []).forEach(function (row) {
+                if (!row || !row.items || !row.items.length) return;
+                var isRq = row.items.some(function (x) { return x.state === 'requested' || !!x.request; });
+                var sh = dscShelf({ kind: row.kind, title: row.title, subtitle: row.subtitle, items: row.items, source: 'card', eager: n < 2,
+                    cls: (isRq ? 'atv-dr--rq ' : '') + (n < 6 ? 'atv-dr--in' : ''), watch: function (c) { dscWatchCard(pg, c); } });
+                sh.style.setProperty('--i', String(n)); n++;
+                if (isRq) rq = true;
+                frag.appendChild(sh);
+            });
+            pg.body.replaceChildren(frag);
+            dscFootDraw(pg);
+            pg.rq = rq;
+            if (rq && root.isConnected) { rqWatch(root); rqLoad(); }
+            if (pg.wantY) { var y = pg.wantY; pg.wantY = 0; if (root.isConnected) dscScrollTo(pg, y); }
+            if (root.isConnected) { dscPagePad(pg); dscTasteAuto(pg); }
+        });
+    }
+    /* Auswahl: links „Für dich · Filme · Serien“ als ein Schalter, daneben die Genres, die zum Konto passen (eines oder
+       keines), rechts der Weg zu „Dein Geschmack“. Die Wahl steht in der Adresse; „Zurück“ verlässt die Seite, statt die
+       Auswahl schrittweise zurückzudrehen (wie überall im Theme). */
+    function dscBarDraw(pg, d) {
+        var genres = (d.chips && d.chips.genres) || [], sig = lang() + '|' + genres.map(function (g) { return g.id; }).join(',');
+        if (pg.barSig !== sig) {
+            pg.barSig = sig;
+            var scroll = el('div', 'atv-dsc__filters'), seg = el('div', 'atv-dsc__seg'), chips = el('div', 'atv-dsc__chips');
+            seg.setAttribute('role', 'group'); seg.setAttribute('aria-label', dt('kind'));
+            [['all', dt('forYou')], ['movie', dt('movies')], ['tv', dt('shows')]].forEach(function (x) {
+                var b = el('button', 'atv-dsc__segbtn', x[1]); b.type = 'button'; b.setAttribute('data-type', x[0]);
+                b.addEventListener('click', function () { if (pg.f.type !== x[0]) dscPageFilter(pg, { type: x[0], genre: pg.f.genre }, true); });
+                seg.appendChild(b);
+            });
+            chips.setAttribute('role', 'group'); chips.setAttribute('aria-label', dt('genres'));
+            genres.forEach(function (g) {
+                var b = el('button', 'atv-dsc__chip', g.name); b.type = 'button'; b.setAttribute('data-genre', String(g.id));
+                b.addEventListener('click', function () { dscPageFilter(pg, { type: pg.f.type, genre: pg.f.genre === String(g.id) ? '' : String(g.id) }, true); });
+                chips.appendChild(b);
+            });
+            scroll.appendChild(seg); if (genres.length) scroll.appendChild(chips);
+            // Pfeiltasten wandern durch die Auswahl
+            scroll.addEventListener('keydown', function (e) {
+                if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                var list = [].slice.call(scroll.querySelectorAll('button')), nx = list[list.indexOf(document.activeElement) + (e.key === 'ArrowRight' ? 1 : -1)];
+                if (nx) { e.preventDefault(); nx.focus(); }
+            });
+            var mine = el('button', 'atv-dsc__mine'); mine.type = 'button'; mine.appendChild(svg(DICON.tune)); mine.appendChild(el('span', null, dt('yourTaste')));
+            mine.setAttribute('aria-label', dt('yourTaste'));
+            mine.addEventListener('click', function () { dscProfileOpen(); });
+            var sharpen = el('button', 'atv-dsc__mine atv-dsc__mine--refine'); sharpen.type = 'button'; sharpen.appendChild(svg(DICON.spark)); sharpen.appendChild(el('span', null, dt('refine')));
+            sharpen.setAttribute('aria-label', dt('refine'));
+            sharpen.addEventListener('click', function () { dscRefineOpen(); });
+            // Passen nicht alle Genres in die Zeile, blättern zwei kleine Pfeile (Maus ohne Seitwärts-Rad); der Rand blendet aus
+            var wrap = el('div', 'atv-dsc__filterwrap'), fPrev = el('button', 'atv-dsc__farrow atv-dsc__farrow--prev'), fNext = el('button', 'atv-dsc__farrow atv-dsc__farrow--next');
+            fPrev.type = fNext.type = 'button'; fPrev.tabIndex = fNext.tabIndex = -1; fPrev.setAttribute('aria-hidden', 'true'); fNext.setAttribute('aria-hidden', 'true');
+            fPrev.appendChild(svg(ICON.prev)); fNext.appendChild(svg(ICON.next));
+            var fSync = pg.barSync = function () {
+                var max = scroll.scrollWidth - scroll.clientWidth;
+                wrap.classList.toggle('is-start', scroll.scrollLeft <= 4); wrap.classList.toggle('is-end', scroll.scrollLeft >= max - 4);
+            };
+            fPrev.addEventListener('click', function () { scroll.scrollBy({ left: -scroll.clientWidth * .7, behavior: 'smooth' }); });
+            fNext.addEventListener('click', function () { scroll.scrollBy({ left: scroll.clientWidth * .7, behavior: 'smooth' }); });
+            scroll.addEventListener('scroll', function () { clearTimeout(fSync.t); fSync.t = setTimeout(fSync, 60); }, { passive: true });
+            wrap.classList.add('is-start');
+            wrap.appendChild(scroll); wrap.appendChild(fPrev); wrap.appendChild(fNext);
+            pg.bar.replaceChildren(wrap, sharpen, mine);
+        }
+        dscBarMark(pg);
+        if (pg.barSync) requestAnimationFrame(pg.barSync);
+    }
+    function dscBarMark(pg) {
+        [].forEach.call(pg.bar.querySelectorAll('[data-type]'), function (b) { var yes = b.getAttribute('data-type') === pg.f.type; b.classList.toggle('is-on', yes); b.setAttribute('aria-pressed', yes ? 'true' : 'false'); });
+        [].forEach.call(pg.bar.querySelectorAll('[data-genre]'), function (b) {
+            var yes = b.getAttribute('data-genre') === pg.f.genre; b.classList.toggle('is-on', yes); b.setAttribute('aria-pressed', yes ? 'true' : 'false');
+            if (yes && b.scrollIntoView && pg.root.isConnected) { var box = b.parentNode.parentNode, r = b.getBoundingClientRect(), br = box.getBoundingClientRect(); if (r.left < br.left || r.right > br.right) box.scrollLeft += r.left - br.left - 24; }
+        });
+    }
+    function dscPageFilter(pg, f, write) {
+        pg.f = f; pg.key = dscKey(f);
+        if (write) { try { window.history.replaceState(window.history.state, '', dscHash(f)); } catch (e) { location.hash = dscHash(f); } }
+        dscBarMark(pg);
+        dscPageLoad(pg);
+    }
+    // Ruhige Einladung zum Geschmacks-Check, solange das Konto ihn nicht gemacht hat und noch wenig von sich verrät.
+    function dscNoteDraw(pg, d) {
+        pg.note.replaceChildren();
+        if (!d.needsTaste) return;
+        var box = el('div', 'atv-dsc__invite'), ic = el('span', 'atv-dsc__inviteic'), text = el('div', 'atv-dsc__invitetext'), go = el('button', 'atv-dsc__invitego', dt('tasteGo'));
+        ic.appendChild(svg(DICON.spark));
+        text.appendChild(el('strong', null, dt('tasteT'))); text.appendChild(el('span', null, dt('taste')));
+        go.type = 'button'; go.addEventListener('click', function () { dscTasteOpen(); });
+        box.appendChild(ic); box.appendChild(text); box.appendChild(go);
+        pg.note.appendChild(box);
+    }
+    function dscFootDraw(pg) {
+        var a = el('button', 'atv-dsc__footbtn'), b = el('button', 'atv-dsc__footbtn');
+        a.type = b.type = 'button';
+        a.appendChild(svg(DICON.tune)); a.appendChild(el('span', null, dt('yourTaste'))); a.addEventListener('click', function () { dscProfileOpen(); });
+        b.appendChild(svg(DICON.spark)); b.appendChild(el('span', null, dt('refine'))); b.addEventListener('click', function () { dscRefineOpen(); });
+        var row = el('div', 'atv-dsc__footrow'); row.appendChild(a); row.appendChild(b);
+        pg.foot.replaceChildren(el('p', null, dt('about')), row);
+    }
+    /* Ladezustand in der Form der fertigen Seite. d = Antwort „building“ (dann mit Satz und Fortschritt), sonst null. */
+    function dscPageSkeleton(pg, d) {
+        var root = pg.root, sk = pg.skel, i, k, bar;
+        if (!root.classList.contains('is-skel')) {
+            if (pg.hero) { pg.hero.destroy(); pg.hero = null; }
+            sk = pg.skel = { hero: el('div', 'atv-dh atv-dh--skel'), lock: el('div', 'atv-dh__lock') };
+            sk.hero.appendChild(sk.lock);
+            pg.heroSlot.replaceChildren(sk.hero);
+            bar = el('div', 'atv-dsc__filters'); bar.setAttribute('aria-hidden', 'true');
+            for (i = 0; i < 5; i++) bar.appendChild(el('span', 'atv-dsc__chip atv-dsc__chip--ph'));
+            pg.bar.replaceChildren(bar); pg.barSig = null; pg.barSync = null;
+            pg.note.replaceChildren(); pg.foot.replaceChildren();
+            var frag = document.createDocumentFragment();
+            for (k = 0; k < 3; k++) {
+                var sh = el('section', 'atv-shelf atv-dr atv-dr--poster atv-dr--ph'); sh.setAttribute('aria-hidden', 'true');
+                var head = el('div', 'atv-shelf__head'); head.appendChild(el('span', 'atv-dr__phtitle')); sh.appendChild(head);
+                var wrap = el('div', 'atv-shelf__wrap'), sc = el('div', 'atv-shelf__scroller'); wrap.appendChild(sc); sh.appendChild(wrap);
+                dscGhosts(sc, 'poster', 9);
+                frag.appendChild(sh);
+            }
+            pg.body.replaceChildren(frag);
+            root.classList.remove('is-msg', 'is-busy', 'is-swap', 'atv-dsc--nohero'); root.classList.add('is-skel', 'is-shown');
+            sk.mode = null;
+            if (root.isConnected) dscPagePad(pg);
+        }
+        var mode = d ? 'text' : 'bars';
+        if (sk.mode !== mode) {
+            sk.mode = mode; sk.lock.replaceChildren();
+            if (d) {
+                var h = el('h2', 'atv-dh__title is-mid', dt(pg.afterTaste ? 'building2' : 'building')); h.setAttribute('role', 'status');
+                sk.fill = el('i'); var line = el('span', 'atv-dh__load'); line.appendChild(sk.fill);
+                sk.lock.appendChild(h); sk.lock.appendChild(el('p', 'atv-dh__why', dt('buildingSub'))); sk.lock.appendChild(line);
+            } else ['atv-dh__ph atv-dh__ph--title', 'atv-dh__ph atv-dh__ph--meta', 'atv-dh__ph atv-dh__ph--text', 'atv-dh__ph atv-dh__ph--btn'].forEach(function (c) { sk.lock.appendChild(el('span', c)); });
+        }
+        if (d && sk.fill) sk.fill.style.transform = 'scaleX(' + Math.max(.04, Math.min(1, d.progress || 0)) + ')';
+    }
+    /* Nichts zu zeigen: ruhiger Hinweis mit dem nächsten sinnvollen Schritt. kind: off, seerr, none (vom Server), net. */
+    function dscPageMsg(pg, kind) {
+        var root = pg.root, filtered = pg.f.type !== 'all' || !!pg.f.genre, box = el('div', 'atv-dsc__msg'), ic = el('span', 'atv-dsc__msgic'), acts = el('div', 'atv-dsc__msgacts');
+        if (kind !== 'off' && kind !== 'seerr' && kind !== 'net') kind = 'none';
+        pg.state = kind === 'net' ? 'error' : 'empty'; pg.data = null;
+        if (pg.hero) { pg.hero.destroy(); pg.hero = null; }
+        var add = function (label, primary, fn) {
+            var b = el('button', primary ? 'atv-pill' : 'atv-pill atv-pill--glass'); b.type = 'button'; b.appendChild(el('span', null, label));
+            b.addEventListener('click', fn); acts.appendChild(b); return b;
+        };
+        ic.appendChild(svg(kind === 'none' ? DICON.spark : kind === 'off' ? DICON.tune : DICON.alert));
+        box.appendChild(ic);
+        box.appendChild(el('h2', null, dt(kind === 'off' ? 'eOffT' : kind === 'seerr' ? 'eSeerrT' : kind === 'net' ? 'eNetT' : 'eNoneT')));
+        box.appendChild(el('p', null, dt(kind === 'off' ? 'eOff' : kind === 'seerr' ? 'eSeerr' : kind === 'net' ? 'eNet' : filtered ? 'eNone' : 'eNoneAll')));
+        if (kind === 'seerr' || kind === 'net') add(dt('retry'), true, function () { pg.state = 'new'; dscPageLoad(pg); });
+        if (kind === 'none' && filtered) add(dt('reset'), true, function () { dscPageFilter(pg, { type: 'all', genre: '' }, true); });
+        if (kind === 'none' && !filtered && dscOn()) add(dt('tasteGo'), true, function () { dscTasteOpen(); });
+        if (kind === 'off' && dsc.admin) {
+            // Nur wer verwaltet, kann daran etwas ändern: Verweis auf die Einstellungen des Plugins.
+            var link = add(dt('eOffAdmin'), true, function () { navigate(link.__atvTo || '/dashboard/plugins'); });
+            Promise.resolve().then(function () { return api().getInstalledPlugins(); }).then(function (list) {
+                var p = (list || []).filter(function (x) { return /cinema\s*glass/i.test(x.Name || ''); })[0];
+                if (p && p.Id) link.__atvTo = '/dashboard/plugins/' + p.Id;
+            }).catch(function () { /* dann die Liste der Plugins */ });
+        }
+        if (acts.childNodes.length) box.appendChild(acts);
+        dscPageSwap(pg, function () {
+            root.classList.remove('is-skel'); root.classList.add('is-msg', 'atv-dsc--nohero');
+            pg.heroSlot.replaceChildren(); pg.note.replaceChildren(); pg.foot.replaceChildren();
+            if (kind !== 'none' || !filtered) { pg.bar.replaceChildren(); pg.barSig = null; }
+            pg.body.replaceChildren(box);
+            if (root.isConnected) dscPagePad(pg);
+        });
+    }
+    /* Kopfleiste: Eintrag „Entdecken“ gleich nach „Start“. Jellyfin zeichnet die Leiste selbst (und gelegentlich neu),
+       deshalb wird der Eintrag bei jedem Durchlauf nachgehalten. Ohne eingerichtetes Seerr sieht ihn nur, wer verwaltet –
+       die Seite sagt dann, was fehlt. */
+    function dscWanted() { return dscFeature() && !!dsc && (dscOn() || dsc.admin === true); }
+    function dscNavEntry() {
+        var stack = document.querySelector('header .MuiToolbar-root > .MuiStack-root'), a = stack && stack.querySelector('.atv-nav-disc'), first;
+        document.documentElement.classList.toggle('atv-pg-discover', dscFeature() && !!dscRoute());
+        if (!stack) return;
+        if (!dscWanted()) { if (a) a.remove(); return; }
+        first = stack.querySelector('a.MuiButton-root:not(.atv-nav-disc)'); if (!first) return;
+        if (!a) {
+            // Klassen eines Nachbarn übernehmen: An ihnen hängt Jellyfins Grundgestalt der Einträge (Höhe, Ausrichtung)
+            var like = stack.querySelectorAll('a.MuiButton-root:not(.atv-nav-disc)')[1] || first;
+            a = el('a', like.className.replace(/\batv-nav-[a-z]+\b/g, '').replace(/\s+/g, ' ').trim() + ' atv-nav-disc', dt('nav'));
+            a.href = '#/discover'; a.style.order = '0';
+            a.addEventListener('click', function (e) { if (location.hash === '#/discover') { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); } });
+            a.addEventListener('mouseenter', dscWarm); a.addEventListener('focus', dscWarm);
+        }
+        if (first.nextSibling !== a) stack.insertBefore(a, first.nextSibling);
+        if (a.textContent !== dt('nav')) a.textContent = dt('nav');
+        var onNow = !!dscRoute();
+        a.classList.toggle('atv-nav-on', onNow);
+        if (onNow) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    }
+    // Handy: Chip „Entdecken“ vorn in der Reihe unter dem Banner der Startseite.
+    function discChip(nav) {
+        var old = nav.querySelector('.atv-chip--disc');
+        if (!dscWanted()) { if (old) old.remove(); return; }
+        if (!old) {
+            old = el('a', 'atv-chip atv-chip--disc'); old.href = '#/discover';
+            old.appendChild(svg(DICON.spark)); old.appendChild(el('span', null, dt('nav')));
+            old.addEventListener('touchstart', dscWarm, { passive: true });
+        }
+        if (nav.firstChild !== old) nav.insertBefore(old, nav.firstChild);
+        nav.hidden = false;
+    }
+
+    /* ---------------- Startseite ----------------
+       Drei Reihen, weit oben: gleich hinter Jellyfins „Weiterschauen“ und „Als Nächstes“, vor „Kürzlich hinzugefügt“.
+       „Unterwegs zu dir“ (nur wenn etwas unterwegs ist), „Neu für dich“ (Angekommenes) und die eine Reihe „Für dich“.
+       Damit nichts springt, stehen Reihen, die es beim letzten Besuch gab, sofort als Platzhalter an ihrem Platz; neue
+       kommen nur dazu, solange oben noch niemand weitergeblättert hat (oder unterhalb des sichtbaren Bereichs). */
+    function dscHomeSlot(sections) {
+        var kids = sections.children, last = null, i;
+        for (i = 0; i < kids.length; i++) {
+            if (kids[i].classList.contains('atv-dsc-home')) continue;
+            if (kids[i].querySelector('.itemsContainer[data-monitor*="playback"], .itemsContainer[data-monitor="markplayed"], a[href*="type=nextup"]')) last = kids[i];
+        }
+        return last ? last.nextSibling : sections.firstChild;
+    }
+    function dscHomeRows(d) {
+        var rows = [], rq = (d && d.requests) || {}, ar = (d && d.arrived) || {};
+        if (rq.items && rq.items.length) rows.push({ id: 'r', title: rq.title || dt('onWay'), items: rq.items, cls: 'atv-dr--rq' });
+        if (ar.items && ar.items.length) rows.push({ id: 'a', title: ar.title || dt('arrived'), items: ar.items, cls: 'atv-dr--rq' });
+        if (d && d.status === 'ready' && d.items && d.items.length >= DSC.minRow) rows.push({ id: 'f', title: d.title || dt('forYou'), items: d.items, more: { label: dt('all'), href: '#/discover' }, invite: dsc.needsTaste === true });
+        return rows;
+    }
+    function dscHomeGhostRow(id) {
+        var sh = el('section', 'atv-shelf atv-dr atv-dr--poster atv-dr--ph' + (id !== 'f' ? ' atv-dr--rq' : '')); sh.setAttribute('aria-hidden', 'true'); sh.__atvRowId = id;
+        var head = el('div', 'atv-shelf__head'); head.appendChild(el('span', 'atv-dr__phtitle')); sh.appendChild(head);
+        var wrap = el('div', 'atv-shelf__wrap'), sc = el('div', 'atv-shelf__scroller'); wrap.appendChild(sc); sh.appendChild(wrap);
+        dscGhosts(sc, 'poster', 9);
+        return sh;
+    }
+    function dscInviteCard() {
+        var c = el('button', 'atv-dc atv-dc--invite'); c.type = 'button';
+        var art = el('span', 'atv-dc__art'), ic = el('span', 'atv-dc__inviteic'); ic.appendChild(svg(DICON.spark));
+        art.appendChild(ic); art.appendChild(el('strong', null, dt('tasteT'))); art.appendChild(el('span', null, dt('taste')));
+        c.appendChild(art);
+        c.addEventListener('click', function (e) { e.stopPropagation(); dscTasteOpen(); });
+        return c;
+    }
+    function dscHomeDraw(box, d) {
+        var want = dscHomeRows(d), have = {}, vh = window.innerHeight, top = window.scrollY < 140, pending = false, before = null, i, row, node, sig, sh, r, h;
+        [].forEach.call(box.children, function (n) { if (n.__atvRowId) have[n.__atvRowId] = n; });
+        // was es nicht mehr gibt, geht; oberhalb des sichtbaren Bereichs gleicht die Seite den Sprung aus
+        Object.keys(have).forEach(function (id) {
+            if (want.some(function (w) { return w.id === id; })) return;
+            node = have[id]; r = node.getBoundingClientRect(); h = r.height + parseFloat(getComputedStyle(node).marginBottom || 0);
+            node.remove(); delete have[id];
+            if (r.bottom < 0) window.scrollBy(0, -h);
+        });
+        for (i = want.length - 1; i >= 0; i--) {
+            row = want[i]; node = have[row.id];
+            sig = row.items.map(function (x) { return x.key; }).join(',') + (row.invite ? '|i' : '') + '|' + lang();
+            if (node && node.__atvSig === sig) { before = node; continue; }      // dieselben Titel: stehen lassen (Stand führt dscCardsSync nach)
+            if (!node) {
+                r = (before || box).getBoundingClientRect();
+                if (!top && (before ? r.top : r.bottom) < vh) { pending = true; continue; }   // würde sichtbar etwas verschieben: später
+            }
+            sh = dscShelf({ kind: 'poster', title: row.title, items: row.items, source: 'card', more: row.more, cls: row.cls, eager: true });
+            sh.__atvRowId = row.id; sh.__atvSig = sig;
+            if (row.invite) sh.__atvScroller.insertBefore(dscInviteCard(), sh.__atvScroller.firstChild);
+            if (node) box.replaceChild(sh, node); else box.insertBefore(sh, before);
+            before = sh;
+        }
+        box.__atvAt = dsc.home.at;
+        dsc.home.pending = pending;
+        if (want.some(function (w) { return w.id === 'r'; })) rqWatch(box);
+    }
+    function dscArrivedToast(d) {
+        var list = (((d && d.arrived) || {}).items || []).filter(function (x) { return x.itemId && x.request && x.request.isNew; });
+        var told = dscMem().told || {}, fresh = list.filter(function (x) { return !told[x.key]; }), now = Date.now();
+        if (!fresh.length) return;
+        fresh.forEach(function (x) { told[x.key] = now; });
+        Object.keys(told).forEach(function (k) { if (now - told[k] > 30 * 86400000) delete told[k]; });
+        dscMemSet('told', told);                                             // einmal je Gerät
+        toastAct(fresh.length > 1 ? dt('hereMany', fresh[0].title, fresh.length - 1) : dt('here', fresh[0].title), dt('watch'), function () {
+            var rowEl = document.querySelector('.atv-dsc-home .atv-dr');
+            if (fresh.length === 1) showDetails(fresh[0].itemId);
+            else if (rowEl) [].forEach.call(document.querySelectorAll('.atv-dsc-home .atv-dr'), function (n) { if (n.__atvRowId === 'a') n.scrollIntoView({ block: 'center', behavior: 'smooth' }); });
+        }, 9000);
+    }
+    function dscHomeLoad() {
+        var mine = dsc;
+        mine.homeBusy = true;
+        Promise.all([dscCall('/home' + dscQuery()), dscConf()]).then(function (res) {
+            var d = res[0] || {}, rows;
+            if (typeof d.needsTaste === 'boolean') dscConfSet(null, d.needsTaste);
+            mine.home = { at: Date.now(), data: d, stale: false, pending: false };
+            if (mine !== dsc) return;
+            rows = dscHomeRows(d).map(function (r) { return r.id; });
+            dscMemSet('home', rows.join(''));                                   // für die Platzhalter des nächsten Besuchs
+            dscArrivedToast(d);
+        }).catch(function (e) {
+            console.warn('[atv] Entdecken: Startseite', e);
+            mine.home = { at: Date.now(), data: (mine.home && mine.home.data) || {}, stale: false, pending: false };
+        }).then(function () { mine.homeBusy = false; if (mine === dsc) schedule(); });
+    }
+    function mountDiscHome(page) {
+        if (!dscOn() || !apiReady()) return;
+        var sections = page.querySelector('#homeTab .homeSectionsContainer');
+        if (!sections || !sections.children.length) return;
+        dscUser();
+        var box = sections.querySelector('.atv-dsc-home'), h = dsc.home;
+        if (!box) {
+            box = el('div', 'atv-dsc-home');
+            sections.insertBefore(box, dscHomeSlot(sections));
+            if (!h || !h.data) String(dscMem().home || '').split('').forEach(function (id) { if ('raf'.indexOf(id) >= 0) box.appendChild(dscHomeGhostRow(id)); });
+        }
+        if (h && h.data && (box.__atvAt !== h.at || (h.pending && window.scrollY < 140))) dscHomeDraw(box, h.data);
+        if ((!h || h.stale || Date.now() - h.at > CFG.cacheMs) && !dsc.homeBusy) dscHomeLoad();
+    }
+
+    /* ---------------- Film- und Serienseite ----------------
+       Regal „Könnte dir auch gefallen“: Empfehlungen zu genau diesem Titel, vom Server nach dem Geschmack des Kontos
+       geordnet. Reihenfolge unter dem Kopf: erst, was zum Titel gehört (Folgen, Besetzung, Jellyfins übrige Abschnitte),
+       dann die Filmreihe (Rang 1), dann dieses Regal (Rang 2), danach Jellyfins „Ähnliches“ aus der eigenen Bibliothek. */
+    function detailRecPlace(secondary, shelf, rank) {
+        var kids = secondary.children, before = null, i;
+        shelf.__atvRank = rank;
+        for (i = 0; i < kids.length && !before; i++) {
+            if (kids[i] === shelf) continue;
+            if ((kids[i].__atvRank || 0) > rank || kids[i].id === 'similarCollapsible' || kids[i].classList.contains('atv-about')) before = kids[i];
+        }
+        secondary.insertBefore(shelf, before);
+    }
     function mountDiscDetail(page, token, item, secondary, gutter) {
-        var seerr = discApi(), tmdb = item.ProviderIds && item.ProviderIds.Tmdb;
-        if (!seerr || (item.Type !== 'Movie' && item.Type !== 'Series') || !tmdb || !/^\d+$/.test(tmdb)) return;
-        discUser();
-        Promise.all([discRecs(seerr, item.Type === 'Series' ? 'tv' : 'movie', tmdb), discLibrary(), discHiddenLoad()]).then(function (res) {
-            discStoreSave();
-            if (page.__atvToken !== token || !page.isConnected || !res[0]) return;
-            var list = res[0].filter(function (r) { return discUsable(r, res[1], res[2]); }).slice(0, DISC.maxRow);
-            if (list.length < DISC.minRow) return;
-            var shelf = discShelf(seerr, dt('also'), list), after = null;
+        var tmdb = item.ProviderIds && item.ProviderIds.Tmdb;
+        if (!dscOn() || (item.Type !== 'Movie' && item.Type !== 'Series') || !tmdb || !/^\d+$/.test(tmdb)) return;
+        dscUser();
+        Promise.all([dscCall('/similar' + dscQuery({ key: (item.Type === 'Series' ? 'tv' : 'movie') + ':' + tmdb })), dscConf()]).then(function (res) {
+            var d = res[0] || {}, items = (d.items || []).filter(function (x) { return x && x.key; });
+            if (page.__atvToken !== token || !page.isConnected || d.status !== 'ready' || items.length < DSC.minRow) return;
+            var shelf = dscShelf({ kind: 'poster', title: dt('also'), items: items, source: 'detail', eager: true, cls: 'atv-dr--detail' });
             if (gutter) shelf.style.setProperty('--atv-gutter', gutter);
-            // unter Folgen und Filmreihe, über Jellyfins Besetzung; die Filmreihe setzt sich, kommt sie später, selbst an den Anfang
-            [].forEach.call(secondary.children, function (n) { if (n.classList.contains('atv-episodes') || n.classList.contains('atv-series')) after = n; });
-            secondary.insertBefore(shelf, after ? after.nextSibling : secondary.firstChild);
+            detailRecPlace(secondary, shelf, 2);
         }).catch(function (e) { console.warn('[atv] Entdecken: Detailseite', e); });
     }
+
+    /* ---------------- Geschmacks-Check ----------------
+       Zwei kurze Schritte, bildschirmfüllend: erst die „Welten“ (Genres mit je drei Plakaten, Mehrfachwahl), dann ein
+       Raster bekannter Titel – einmal tippen „mag ich“, noch einmal „nicht meins“, ein drittes Mal wieder offen. Kennt
+       der Server die Welten nicht, bleibt es beim Raster. Öffnet sich beim ersten Besuch von „Entdecken“ von selbst,
+       solange das Konto wenig von sich verrät; wer „Später“ sagt, wird auf diesem Gerät nicht wieder gefragt. */
+    function dscTasteAuto(pg) {
+        if (!pg.data || !pg.data.needsTaste || pg.state !== 'ready' || document.querySelector('.atv-tc, .atv-xd')) return;
+        var m = dscMem();
+        if (m.asked) return;
+        dscMemSet('asked', Date.now());
+        dscTasteOpen();
+    }
+    // Vollbild-Fenster mit eigenem Verlaufseintrag: „Zurück“ (Knopf, Geste, Browser) schließt es, statt die Seite zu verlassen.
+    function dscOverlay(cls, label, onClose) {
+        var wrap = el('div', cls); wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-modal', 'true'); wrap.setAttribute('aria-label', label); wrap.tabIndex = -1;
+        var prevOv = document.documentElement.style.overflow, pushed = false, shut = false, last = document.activeElement;
+        function onKey(e) {
+            if (e.key === 'Escape') { e.stopPropagation(); api2.close(); return; }
+            if (e.key !== 'Tab') return;
+            var f = [].filter.call(wrap.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])'), function (n) { return !n.disabled && n.offsetParent !== null; });
+            if (!f.length) return;
+            if (e.shiftKey && (document.activeElement === f[0] || document.activeElement === wrap)) { e.preventDefault(); f[f.length - 1].focus(); }
+            else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+        }
+        function onPop() { api2.close(true); }
+        var api2 = {
+            root: wrap,
+            close: function (fromHistory) {
+                if (shut) return; shut = true;
+                document.removeEventListener('keydown', onKey, true); window.removeEventListener('popstate', onPop);
+                document.documentElement.style.overflow = prevOv;
+                wrap.classList.add('is-out'); setTimeout(function () { wrap.remove(); }, 200);
+                if (pushed && fromHistory !== true) { try { window.history.back(); } catch (e) { /* Verlauf nicht verfügbar */ } }
+                if (last && last.isConnected) { try { last.focus({ preventScroll: true }); } catch (e2) { /* Fokus optional */ } }
+                if (onClose) onClose();
+            }
+        };
+        document.addEventListener('keydown', onKey, true);
+        document.documentElement.style.overflow = 'hidden';
+        document.body.appendChild(wrap);
+        try { window.history.pushState({ atvXd: 1 }, ''); pushed = true; window.addEventListener('popstate', onPop); } catch (e) { /* ohne Verlauf: Knopf und Esc */ }
+        try { wrap.focus({ preventScroll: true }); } catch (e3) { /* Fokus optional */ }
+        return api2;
+    }
+    function dscTasteOpen() {
+        if (!dscOn() || document.querySelector('.atv-tc')) return;
+        dscUser();
+        var finished = false, step = 0, twoSteps = false, worlds = [], picks = {}, marks = {}, seq = 0;
+        var ov = dscOverlay('atv-tc', dt('tasteGo'), function () { if (!finished) dscMemSet('skip', Date.now()); });
+        var wrap = ov.root;
+        var top = el('div', 'atv-tc__top'), back = el('button', 'atv-tc__back'), dots = el('div', 'atv-tc__steps'), later = el('button', 'atv-tc__later', dt('later'));
+        back.type = later.type = 'button'; back.setAttribute('aria-label', dt('back')); back.appendChild(svg(ICON.prev)); back.hidden = true;
+        dots.appendChild(el('i')); dots.appendChild(el('i')); dots.hidden = true;
+        top.appendChild(back); top.appendChild(dots); top.appendChild(later); wrap.appendChild(top);
+        var scroll = el('div', 'atv-tc__scroll'), headBox = el('div', 'atv-tc__head'), h = el('h1', 'atv-tc__title'), hint = el('p', 'atv-tc__hint'), body = el('div', 'atv-tc__body');
+        headBox.appendChild(h); headBox.appendChild(hint); scroll.appendChild(headBox); scroll.appendChild(body); wrap.appendChild(scroll);
+        var foot = el('div', 'atv-tc__foot'), count = el('span', 'atv-tc__count'), skip = el('button', 'atv-tc__skip', dt('skip')), go = el('button', 'atv-pill atv-tc__go');
+        count.setAttribute('aria-live', 'polite'); skip.type = go.type = 'button'; var goText = el('span'); go.appendChild(goText);
+        foot.appendChild(count); foot.appendChild(skip); foot.appendChild(go); wrap.appendChild(foot);
+        later.addEventListener('click', function () { ov.close(); });
+
+        function fail() { body.replaceChildren(el('p', 'atv-tc__msg', dt('tcFail'))); go.disabled = true; }
+        function setStep(n) {
+            step = n;
+            wrap.setAttribute('data-step', String(n));
+            back.hidden = !(twoSteps && n === 2); dots.hidden = !twoSteps; skip.hidden = !(twoSteps && n === 1);
+            dots.setAttribute('aria-label', dt('tcStep', n)); dots.firstChild.className = n === 1 ? 'is-on' : 'is-done'; dots.lastChild.className = n === 2 ? 'is-on' : '';
+            h.textContent = dt(n === 1 ? 'tc1T' : 'tc2T'); hint.textContent = dt(n === 1 ? 'tc1' : 'tc2');
+            goText.textContent = dt(n === 1 ? 'next' : 'done');
+            scroll.scrollTop = 0;
+            counter();
+        }
+        function counter() {
+            var n = Object.keys(step === 1 ? picks : marks).length;
+            count.textContent = step === 1 ? (n ? dt('tcWorlds', n) : dt('tcWorlds0')) : (n ? dt('tcCount', n) : dt('tcCount0'));
+            go.disabled = step === 1 && !n;
+        }
+        function drawWorlds() {
+            var grid = el('div', 'atv-tc__worlds');
+            worlds.forEach(function (w) {
+                var b = el('button', 'atv-tc__world'); b.type = 'button'; b.setAttribute('aria-pressed', picks[w.feature] ? 'true' : 'false');
+                var fan = el('span', 'atv-tc__fan');
+                (w.posters || []).slice(0, 3).forEach(function (p) { var im = el('img'); im.alt = ''; fan.appendChild(im); dscImgLazy(b, im, dscTmdb('w300_and_h450_face', p)); });
+                var tick = el('span', 'atv-tc__tick'); tick.appendChild(svg(ICON.check));
+                b.appendChild(fan); b.appendChild(el('span', 'atv-tc__worldname', w.name)); b.appendChild(tick);
+                b.addEventListener('click', function () {
+                    if (picks[w.feature]) delete picks[w.feature]; else picks[w.feature] = 1;
+                    b.setAttribute('aria-pressed', picks[w.feature] ? 'true' : 'false'); counter();
+                });
+                grid.appendChild(b);
+            });
+            body.replaceChildren(grid);
+        }
+        function drawGrid(items) {
+            var grid = el('div', 'atv-tc__grid');
+            items.forEach(function (it) {
+                var b = el('button', 'atv-tc__item'); b.type = 'button';
+                var im = el('img'); im.alt = ''; b.appendChild(im);
+                if (it.poster) dscImgLazy(b, im, dscTmdb('w300_and_h450_face', it.poster)); else b.appendChild(el('span', 'atv-tc__noimg', it.title));
+                var mark = el('span', 'atv-tc__mark'); b.appendChild(mark);
+                b.appendChild(el('span', 'atv-tc__name', it.title));
+                var paint = function () {
+                    var m = marks[it.key] || '';
+                    b.className = 'atv-tc__item' + (m === 'like' ? ' is-like' : m === 'dislike' ? ' is-no' : '');
+                    mark.replaceChildren(); if (m) mark.appendChild(svg(m === 'like' ? DICON.up : DICON.down));
+                    b.setAttribute('aria-label', it.title + (it.year ? ' (' + it.year + ')' : '') + (m ? ': ' + dt(m === 'like' ? 'tcLike' : 'tcNo') : ''));
+                };
+                b.addEventListener('click', function () {
+                    var m = marks[it.key];
+                    if (!m) marks[it.key] = 'like'; else if (m === 'like') marks[it.key] = 'dislike'; else delete marks[it.key];
+                    paint(); counter();
+                });
+                paint();
+                grid.appendChild(b);
+            });
+            body.replaceChildren(grid);
+        }
+        function ghosts(cls, n) { var g = el('div', cls + ' is-ph'), i; g.setAttribute('aria-hidden', 'true'); for (i = 0; i < n; i++) g.appendChild(el('span')); body.replaceChildren(g); }
+        function loadGrid() {
+            var mine = ++seq, groups = Object.keys(picks);
+            setStep(2); marks = {}; counter(); ghosts('atv-tc__grid', 24);
+            dscCall('/taste' + dscQuery({ groups: groups.join(',') })).then(function (d) {
+                if (mine !== seq || !wrap.isConnected) return;
+                var items = ((d && d.items) || []).filter(function (x) { return x && x.key; });
+                if (!items.length) { fail(); return; }
+                drawGrid(items); go.disabled = false;
+            }).catch(function () { if (mine === seq) fail(); });
+        }
+        back.addEventListener('click', function () { seq++; setStep(1); drawWorlds(); });
+        skip.addEventListener('click', loadGrid);
+        go.addEventListener('click', function () {
+            if (step === 1) {
+                // die Wahl geht sofort an den Server; das Raster richtet sich danach
+                dscCall('/taste/groups', { features: Object.keys(picks) }).then(function (r) { dscConfSet(r && r.confidence); }).catch(function () { /* das Raster kommt trotzdem */ });
+                loadGrid(); return;
+            }
+            go.disabled = true;
+            var items = Object.keys(marks).map(function (k) { return { key: k, action: marks[k] }; });
+            dscCall('/feedback', { source: 'taste', items: items }).then(function (r) {
+                finished = true;
+                dscConfSet(r && r.confidence, false);
+                dscMemSet('skip', 0);
+                ov.close();
+                dscTasteDone();
+            }).catch(function () { go.disabled = false; toast(dt('saveFail')); });
+        });
+
+        setStep(2); twoSteps = false; ghosts('atv-tc__grid', 24); go.disabled = true;
+        dscCall('/taste' + dscQuery()).then(function (d) {
+            if (!wrap.isConnected) return;
+            worlds = ((d && d.groups) || []).filter(function (w) { return w && w.feature && w.name; });
+            if (worlds.length >= 2) {
+                twoSteps = true;
+                worlds.forEach(function (w) { if (w.selected) picks[w.feature] = 1; });
+                setStep(1); drawWorlds();
+                return;
+            }
+            var items = ((d && d.items) || []).filter(function (x) { return x && x.key; });
+            if (!items.length) { fail(); return; }
+            drawGrid(items); go.disabled = false;
+        }).catch(fail);
+    }
+    // Nach dem Check: Die Rangfolge ist neu gerechnet. Seite und Startseite holen sie frisch; die Seite zeigt dabei kurz ihren Ladezustand.
+    function dscTasteDone() {
+        var pg = dsc.page;
+        if (dsc.home) dsc.home.stale = true;
+        if (!pg) { schedule(); return; }
+        pg.dirtyHard = true;
+        if (!pg.root.isConnected) return;
+        pg.afterTaste = true; pg.data = null; pg.state = 'building';
+        window.scrollTo(0, 0);
+        dscPageSkeleton(pg, { progress: .6 });
+        clearTimeout(pg.pollT);
+        pg.pollT = setTimeout(function () { if (dsc.page === pg) dscPageLoad(pg); }, 1200);   // einen Augenblick stehen lassen, sonst blitzt der Satz nur auf
+    }
+
+    /* ---------- Geschmack verfeinern ----------
+       Jederzeit weiter schärfen: ein Titel nach dem anderen, groß, darunter drei Antworten – „Mag ich“, „Nicht meins“,
+       „Kenne ich nicht“. Am Handy auch per Wischen (rechts, links, hoch), am Rechner mit den Pfeiltasten. Jede Antwort
+       geht sofort an den Server (like, dislike, skip); neue Titel kommen nach, sobald wenige übrig sind. */
+    function dscRefineOpen() {
+        if (!dscOn() || document.querySelector('.atv-tc')) return;
+        dscUser();
+        var queue = [], asked = {}, n = 0, cur = null, card = null, busy = false, loading = false, dry = false;
+        var ov = dscOverlay('atv-tc atv-rf', dt('refine'), function () { document.removeEventListener('keydown', onKey, true); if (n) dscTasteDone(); });
+        var wrap = ov.root, top = el('div', 'atv-tc__top'), count = el('span', 'atv-rf__count'), done = el('button', 'atv-tc__later', dt('done'));
+        count.setAttribute('aria-live', 'polite'); done.type = 'button'; done.addEventListener('click', function () { ov.close(); });
+        top.appendChild(count); top.appendChild(done); wrap.appendChild(top);
+        var stage = el('div', 'atv-rf__stage'); wrap.appendChild(stage);
+        var acts = el('div', 'atv-rf__acts'); wrap.appendChild(acts);
+        var btns = {};
+        [['dislike', DICON.down, dt('tcNo')], ['skip', ICON.next, dt('rfSkip')], ['like', DICON.up, dt('tcLike')]].forEach(function (x) {
+            var b = el('button', 'atv-rf__btn atv-rf__btn--' + x[0]); b.type = 'button';
+            var ic = el('span', 'atv-rf__ic'); ic.appendChild(svg(x[1])); b.appendChild(ic); b.appendChild(el('span', null, x[2]));
+            b.addEventListener('click', function () { answer(x[0]); });
+            btns[x[0]] = b; acts.appendChild(b);
+        });
+        function counter() { count.textContent = n ? dt('rfCount', n) : dt('refine'); }
+        function more() {
+            if (loading || dry) return;
+            loading = true;
+            dscCall('/taste' + dscQuery()).then(function (d) {
+                var fresh = ((d && d.items) || []).filter(function (x) { return x && x.key && !asked[x.key]; });
+                fresh.forEach(function (x) { asked[x.key] = 1; queue.push(x); });
+                if (!fresh.length) dry = true;                                  // der Server hat gerade nichts Neues
+            }).catch(function () { dry = true; }).then(function () { loading = false; if (!cur && wrap.isConnected) show(); });
+        }
+        function build(it) {
+            var c = el('div', 'atv-rf__card'), pic = el('div', 'atv-rf__pic'), im = el('img'); im.alt = '';
+            pic.appendChild(im);
+            if (it.poster) dscImgLoad(im, dscTmdb('w440_and_h660_face', it.poster)); else pic.appendChild(el('span', 'atv-tc__noimg', it.title));
+            ['like', 'dislike', 'skip'].forEach(function (k) { pic.appendChild(el('span', 'atv-rf__stamp atv-rf__stamp--' + k, dt(k === 'like' ? 'tcLike' : k === 'dislike' ? 'tcNo' : 'rfSkip'))); });
+            c.appendChild(pic);
+            c.appendChild(el('h2', 'atv-rf__title', it.title));
+            c.appendChild(el('p', 'atv-rf__meta', [it.year ? String(it.year) : '', it.mediaType === 'tv' ? t('series') : t('movie')].concat((it.genres || []).slice(0, 2)).filter(Boolean).join(' · ')));
+            return c;
+        }
+        function show() {
+            cur = queue.shift() || null;
+            if (queue.length < 5) more();
+            if (queue[0] && queue[0].poster) { var pre = el('img'); dscImgLoad(pre, dscTmdb('w440_and_h660_face', queue[0].poster)); }   // das nächste Plakat schon holen
+            if (!cur) {
+                acts.hidden = !loading ? true : acts.hidden;
+                if (!loading) stage.replaceChildren(el('p', 'atv-tc__msg', dt('rfEnd')));
+                else if (!stage.firstChild) stage.appendChild(el('div', 'atv-rf__card atv-rf__card--ph'));
+                return;
+            }
+            acts.hidden = false;
+            card = build(cur); card.classList.add('is-in');
+            stage.replaceChildren(card);
+            drag(card);
+        }
+        function answer(action) {
+            if (!cur || busy) return;
+            var it = cur, c = card;
+            busy = true; cur = null; n++; counter();
+            btns[action].classList.add('is-hit'); setTimeout(function () { btns[action].classList.remove('is-hit'); }, 260);
+            dscCall('/feedback', { source: 'taste', items: [{ key: it.key, action: action }] }).then(function (r) { dscConfSet(r && r.confidence, false); }).catch(function () { toast(dt('saveFail')); });
+            c.style.transform = ''; c.classList.remove('is-in'); c.classList.add('is-' + action, 'is-out');
+            setTimeout(function () { busy = false; if (wrap.isConnected) show(); }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 230);
+        }
+        // Wischen: die Karte folgt dem Finger; weit genug gezogen zählt als Antwort
+        function drag(c) {
+            var s = null;
+            c.addEventListener('touchstart', function (e) { if (e.touches.length === 1) s = { x: e.touches[0].clientX, y: e.touches[0].clientY, dx: 0, dy: 0 }; }, { passive: true });
+            c.addEventListener('touchmove', function (e) {
+                if (!s) return;
+                s.dx = e.touches[0].clientX - s.x; s.dy = e.touches[0].clientY - s.y;
+                var up = s.dy < -30 && Math.abs(s.dy) > Math.abs(s.dx) * 1.3;
+                c.style.transition = 'none';
+                c.style.transform = 'translate(' + Math.round(s.dx) + 'px,' + Math.round(Math.min(0, s.dy)) + 'px) rotate(' + (s.dx / 28).toFixed(2) + 'deg)';
+                c.classList.toggle('is-like', !up && s.dx > 50); c.classList.toggle('is-dislike', !up && s.dx < -50); c.classList.toggle('is-skip', up && s.dy < -60);
+                if (e.cancelable) e.preventDefault();
+            }, { passive: false });
+            c.addEventListener('touchend', function () {
+                if (!s) return;
+                var up = s.dy < -90 && Math.abs(s.dy) > Math.abs(s.dx) * 1.3, a = up ? 'skip' : s.dx > 90 ? 'like' : s.dx < -90 ? 'dislike' : null;
+                s = null; c.style.transition = '';
+                if (a) answer(a); else { c.style.transform = ''; c.classList.remove('is-like', 'is-dislike', 'is-skip'); }
+            }, { passive: true });
+        }
+        function onKey(e) {
+            if (!wrap.isConnected) return;
+            var a = e.key === 'ArrowRight' ? 'like' : e.key === 'ArrowLeft' ? 'dislike' : e.key === 'ArrowUp' || e.key === 'ArrowDown' ? 'skip' : null;
+            if (a) { e.preventDefault(); e.stopPropagation(); answer(a); }
+        }
+        document.addEventListener('keydown', onKey, true);
+        counter(); acts.hidden = true;
+        stage.appendChild(el('div', 'atv-rf__card atv-rf__card--ph'));
+        more();
+    }
+
+    /* ---------------- „Dein Geschmack“ ----------------
+       Woraus die Empfehlungen entstehen: Genres, Personen, Jahrzehnte und Stichworte, je nach Gewicht gefüllt und einzeln
+       stummschaltbar; darunter alles, was das Konto zurückgemeldet hat, zum Zurücknehmen. */
+    function dscProfileOpen() {
+        if (!dscOn()) return;
+        dscUser();
+        var old = document.querySelector('.atv-sheet'); if (old) old.remove();
+        var wrap = el('div', 'atv-sheet atv-sheet--taste'); wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-modal', 'true'); wrap.setAttribute('aria-label', dt('yourTaste'));
+        var box = el('div', 'atv-sheet__box'); wrap.appendChild(box);
+        var x = el('button', 'atv-sheet__close'); x.type = 'button'; x.setAttribute('aria-label', t('close')); x.appendChild(svg(ICON.close)); box.appendChild(x);
+        var body = el('div', 'atv-sheet__body atv-dp'); box.appendChild(body);
+        body.appendChild(el('h2', 'atv-sheet__title', dt('yourTaste')));
+        var intro = el('p', 'atv-dp__intro', dt('about')); body.appendChild(intro);
+        var content = el('div', 'atv-dp__content'); body.appendChild(content);
+        var ph = el('div', 'atv-dp__chips is-ph'); for (var i = 0; i < 10; i++) ph.appendChild(el('span', 'atv-dp__chip')); content.appendChild(ph);
+        var prevOv = document.documentElement.style.overflow, shut = false, changed = false;
+        function onKey(e) { if (e.key === 'Escape') { e.stopPropagation(); close(); } }
+        function close() {
+            if (shut) return; shut = true;
+            document.removeEventListener('keydown', onKey, true); document.documentElement.style.overflow = prevOv;
+            wrap.classList.add('is-out'); setTimeout(function () { wrap.remove(); }, 180);
+            // etwas geändert: Die Rangfolge ist eine andere, die Seite lädt sie beim Schließen neu
+            if (changed && dsc.page && dsc.page.root.isConnected) dscPageLoad(dsc.page);
+        }
+        function touched() { changed = true; if (dsc.home) dsc.home.stale = true; if (dsc.page) dsc.page.dirtyHard = true; }
+        x.addEventListener('click', close);
+        wrap.addEventListener('click', function (e) { if (e.target === wrap) close(); });
+        document.addEventListener('keydown', onKey, true);
+        document.documentElement.style.overflow = 'hidden';
+        document.body.appendChild(wrap);
+        try { x.focus({ preventScroll: true }); } catch (e) { /* Fokus optional */ }
+
+        function chips(title, list) {
+            if (!list || !list.length) return;
+            var sec = el('section', 'atv-dp__sec'); sec.appendChild(el('h3', null, title));
+            var row = el('div', 'atv-dp__chips');
+            list.forEach(function (f) {
+                var b = el('button', 'atv-dp__chip'); b.type = 'button';
+                b.style.setProperty('--w', String(Math.round(Math.max(.06, Math.min(1, f.weight || 0)) * 100)) + '%');
+                b.appendChild(el('span', null, f.name));
+                if (f.role) b.appendChild(el('small', null, f.role));
+                var off = svg(DICON.eyeOff); off.setAttribute('class', 'atv-dp__off'); b.appendChild(off);
+                var paint = function () {
+                    b.classList.toggle('is-muted', !!f.muted); b.setAttribute('aria-pressed', f.muted ? 'true' : 'false');
+                    b.setAttribute('aria-label', f.name + (f.role ? ', ' + f.role : '') + (f.muted ? ' (' + dt('dpMuted') + ')' : ''));
+                };
+                b.addEventListener('click', function () {
+                    f.muted = !f.muted; paint(); touched();
+                    dscCall('/profile/mute', { feature: f.feature, muted: f.muted }).catch(function () { f.muted = !f.muted; paint(); toast(dt('saveFail')); });
+                });
+                paint();
+                row.appendChild(b);
+            });
+            sec.appendChild(row); content.appendChild(sec);
+        }
+        function list(title, items) {
+            if (!items || !items.length) return;
+            var sec = el('section', 'atv-dp__sec'), h3 = el('h3', null, title), cnt = el('span', 'atv-dp__n', String(items.length)); h3.appendChild(cnt); sec.appendChild(h3);
+            var ul = el('div', 'atv-dp__list');
+            items.forEach(function (it) {
+                var row = el('div', 'atv-dp__item'), pic = el('span', 'atv-dp__thumb'), im = el('img'), text = el('div', 'atv-dp__itemtext'), b = el('button', 'atv-dp__take', dt('dpTake'));
+                im.alt = ''; pic.appendChild(im); if (it.poster) dscImgLazy(row, im, dscTmdb('w300_and_h450_face', it.poster));
+                text.appendChild(el('strong', null, it.title));
+                text.appendChild(el('span', null, [it.mediaType === 'tv' ? t('series') : t('movie'), it.year || ''].filter(Boolean).join(' · ')));
+                b.type = 'button'; b.setAttribute('aria-label', dt('dpTake') + ': ' + it.title);
+                b.addEventListener('click', function () {
+                    b.disabled = true;
+                    dscCall('/feedback', { source: 'card', items: [{ key: it.key, action: 'clear' }] }).then(function (r) {
+                        dscConfSet(r && r.confidence); touched();
+                        row.classList.add('is-gone');
+                        setTimeout(function () { row.remove(); cnt.textContent = String(ul.children.length); if (!ul.children.length) sec.remove(); }, 200);
+                    }).catch(function () { b.disabled = false; toast(dt('saveFail')); });
+                });
+                row.appendChild(pic); row.appendChild(text); row.appendChild(b); ul.appendChild(row);
+            });
+            sec.appendChild(ul); content.appendChild(sec);
+        }
+        dscCall('/profile' + dscQuery()).then(function (p) {
+            if (!wrap.isConnected) return;
+            p = p || {}; dscConfSet(p.confidence);
+            content.replaceChildren();
+            var fb = p.feedback || {}, any = [p.genres, p.people, p.decades, p.keywords].some(function (l) { return l && l.length; });
+            if (any) { intro.textContent = dt('about') + ' ' + dt('dpIntro'); }
+            else content.appendChild(el('p', 'atv-dp__none', dt('dpNone')));
+            chips(dt('dpGenres'), p.genres); chips(dt('dpPeople'), p.people); chips(dt('dpDecades'), p.decades); chips(dt('dpKeywords'), p.keywords);
+            var refine = el('button', 'atv-pill atv-pill--glass atv-dp__refine'); refine.type = 'button'; refine.appendChild(svg(DICON.spark)); refine.appendChild(el('span', null, dt('refine')));
+            refine.addEventListener('click', function () { close(); dscRefineOpen(); });
+            content.appendChild(refine);
+            list(dt('dpLiked'), fb.liked); list(dt('dpDisliked'), fb.disliked); list(dt('dpHidden'), fb.hidden);
+        }).catch(function () { if (wrap.isConnected) content.replaceChildren(el('p', 'atv-dp__none', dt('dpFail'))); });
+    }
+
+    /* Brücke zum Seerr-Zusatz: Dessen Ansicht eines fehlenden Titels zeigt Stand, Übereinstimmung und die Knöpfe zum
+       Rückmelden mit den Bausteinen von hier. Ohne „Entdecken“ bleibt sie, wie sie war. */
+    window.__atvDiscover = {
+        on: function () { return dscOn() && apiReady(); },
+        text: dt, icons: DICON,
+        score: function (it, long) { if (!apiReady()) return null; dscUser(); return dscScore(it, long); },
+        tip: dscTip,
+        feedback: function (it, action, source) { dscUser(); dscFeedback(it, action, source); },
+        seenMenu: function (anchor, it, source, byKey, after) { dscUser(); return dscSeenMenu(anchor, it, source, byKey, after); },
+        mark: dscPhaseMark,
+        statusLine: function (it) { dscUser(); return dscStatusLine(it); },
+        statusFill: dscStatusFill,
+        requestOf: function (key) { return dsc && dsc.rq.map[key] ? dsc.rq.map[key].request || null : null; },
+        itemIdOf: function (key) { var x = dsc && dsc.rq.map[key]; return x && x.itemId && x.request && x.request.phase === 'available' ? x.itemId : null; },
+        watch: function (node) { if (dsc) rqWatch(node); },
+        reload: function () { if (!apiReady()) return Promise.resolve(null); dscUser(); return rqLoad(); }
+    };
 
     var EP_TXT = {
         de: { fromStart: 'Von Anfang an', markSeen: 'Als gesehen markieren', markUnseen: 'Als ungesehen markieren', addList: 'Gefällt mir', removeList: 'Gefällt mir nicht mehr', details: 'Details', seasonUp: 'STAFFEL', aired: 'Erstausstrahlung' },
@@ -2341,7 +3908,7 @@
     }
     // echte Seite fertig? (sichtbare Bilder geladen, Grundgerüst da)
     function pageReady(np) {
-        if (!np.querySelector('.card, .atv-detail, .atv-hero, .atv-person, .atv-search')) return false;
+        if (!np.querySelector('.card, .atv-detail, .atv-hero, .atv-person, .atv-search, .atv-dsc.is-shown')) return false;
         // Grundgerüst des Themes muss stehen – sonst schiebt z. B. der später eingesetzte Hero die Startseite nach dem Tausch nach unten
         if (!np.classList.contains('atv-native')) {
             if (np.classList.contains('homePage') && (!np.querySelector('.atv-hero') || !np.classList.contains('atv-hero-on') || !np.querySelector('.homeSectionsContainer .card') || !homeChipsReady(np))) return false;
@@ -2480,6 +4047,7 @@
         });
         nav.hidden = !views.length;
         tvChip(nav);
+        discChip(nav);
     }
     // Auf dem Handy gibt es die Leiste mit „TV“ nicht: die TV-Seite (Sender und Mediathek) bekommt dort einen eigenen Chip.
     var ICON_LIVETV = 'M21 6h-7.59l3.29-3.29L16 2l-4 4-4-4-.71.71L10.59 6H3c-1.1 0-2 .89-2 2v12c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.11-.9-2-2-2zm0 14H3V8h18v12zM9 10v8l7-4z';
@@ -2530,7 +4098,7 @@
             if (Date.now() - page.__atvChipsSince < 2500) { clearTimeout(page.__atvChipsTimer); page.__atvChipsTimer = setTimeout(schedule, 2600); return; }
         }
         var nav = page.querySelector('.atv-chips');
-        if (nav && (hero ? nav.previousElementSibling === hero : nav.nextElementSibling === box)) { tvChip(nav); return; }
+        if (nav && (hero ? nav.previousElementSibling === hero : nav.nextElementSibling === box)) { tvChip(nav); discChip(nav); return; }
         if (nav) nav.remove();
         nav = el('nav', 'atv-chips'); nav.setAttribute('aria-label', 'Bibliotheken'); nav.hidden = true;
         nav.classList.toggle('atv-chips--top', !hero);
@@ -3127,6 +4695,9 @@
         } else if (page.classList.contains('homePage')) {
             if (!page.classList.contains('atv-native') && (!page.querySelector('.atv-hero') || !homeChipsReady(page))) return false;
             if (!page.querySelector('.homeSectionsContainer .card') && age < 1500) return false;
+        } else if (dscFeature() && dscRoute()) {
+            // „Entdecken“ meldet selbst, wann es steht (Inhalt oder Platzhalter in Endgröße): danach klappt nichts mehr nach
+            return !!page.querySelector('.atv-dsc.is-shown');
         } else if (page.classList.contains('withTabs') || /^(movies|tv|boxsets|list|music)/.test(pageKey())) {
             if (!page.querySelector('.card, .listItem') && age < 1500) return false;
         }
@@ -3177,6 +4748,7 @@
         h.classList.toggle('atv-page-detail', !!(page && page.classList.contains('itemDetailPage')));
         h.classList.toggle('atv-pg-list', !!(page && !page.classList.contains('homePage') && !page.classList.contains('itemDetailPage') && page.classList.contains('withTabs')));
         h.classList.toggle('atv-pg-search', !!(page && page.id === 'searchPage'));
+        h.classList.toggle('atv-pg-discover', dscFeature() && !!dscRoute());
         h.classList.toggle('atv-pg-settings', !!(page && /userPreferencesPage|myPreferences/.test(page.className + ' ' + page.id)));
         return page;
     }
@@ -3853,10 +5425,13 @@
         if (!page) return;
         if (dlAllowed === null && apiReady()) canDownload();
         dlpResume();
+        if (dscFeature() && apiReady() && page.id !== 'loginPage') dscUser();
+        dscNavEntry();
         if (page.classList.contains('homePage')) { mountHero(page); tidyShelves(page); mountDiscHome(page); updCheck(); if (handoff.homeStale && homeReload()) handoff.homeStale = false; }
         else if (page.classList.contains('itemDetailPage')) mountDetail(page);
         else if (page.id === 'loginPage') mountLogin(page);
         else if (page.id === 'searchPage' || page.classList.contains('searchPage')) mountSearch(page);
+        else if (dscRoute()) mountDiscPage(page);
         var upd0 = document.querySelector('.atv-update'); if (upd0) upd0.style.display = page.classList.contains('homePage') ? '' : 'none';
         mountTvHub(page);
         mountTabbar(page);

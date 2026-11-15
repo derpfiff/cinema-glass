@@ -215,10 +215,11 @@ public class CinemaGlassController : ControllerBase
         }
 
         msg.Headers.Accept.ParseAdd("*/*");
+        string? body = null;
         if (method == HttpMethod.Post)
         {
             using var reader = new StreamReader(Request.Body, Encoding.UTF8);
-            var body = await reader.ReadToEndAsync(ct).ConfigureAwait(false);
+            body = await reader.ReadToEndAsync(ct).ConfigureAwait(false);
             if (body.Length > 16384)
             {
                 return StatusCode(StatusCodes.Status413PayloadTooLarge);
@@ -227,7 +228,41 @@ public class CinemaGlassController : ControllerBase
             msg.Content = new StringContent(body, Encoding.UTF8, "application/json");
         }
 
-        return await RelayAsync(msg, path.StartsWith("imageproxy/", StringComparison.OrdinalIgnoreCase), ct).ConfigureAwait(false);
+        var result = await RelayAsync(msg, path.StartsWith("imageproxy/", StringComparison.OrdinalIgnoreCase), ct).ConfigureAwait(false);
+        if (body is not null && result is FileContentResult && Response.StatusCode is >= 200 and < 300)
+        {
+            NoteRequest(body);
+        }
+
+        return result;
+    }
+
+    // Seerr hat die Anfrage angenommen. Sie läuft dort unter einem festen Konto; welches Jellyfin-Konto den Titel wollte,
+    // merken sich die Empfehlungen („Schon angefragt“, und der Wunsch zählt als Signal). Ändert nichts an der Antwort.
+    private void NoteRequest(string body)
+    {
+        try
+        {
+            if (!Guid.TryParse(User.FindFirst("Jellyfin-UserId")?.Value, out var user)
+                || HttpContext.RequestServices.GetService(typeof(Discover.DiscoverService)) is not Discover.DiscoverService discover)
+            {
+                return;
+            }
+
+            using var doc = JsonDocument.Parse(body);
+            var root = doc.RootElement;
+            if (root.ValueKind == JsonValueKind.Object
+                && root.TryGetProperty("mediaType", out var type) && type.ValueKind == JsonValueKind.String
+                && root.TryGetProperty("mediaId", out var id) && id.ValueKind == JsonValueKind.Number && id.TryGetInt32(out var tmdb)
+                && Discover.MediaKey.TryParse(type.GetString() + ":" + tmdb.ToString(System.Globalization.CultureInfo.InvariantCulture), out var key))
+            {
+                discover.NoteRequest(user, key);
+            }
+        }
+        catch (Exception)
+        {
+            // Die Anfrage selbst ist durch; ohne Vermerk erscheint der Titel nur nicht unter „Schon angefragt“.
+        }
     }
 
     [HttpGet("mdb/tmdb/{kind}/{id}")]

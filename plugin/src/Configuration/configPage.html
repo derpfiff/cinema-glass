@@ -41,6 +41,12 @@
         <div class="inputContainer"><input is="emby-input" type="password" data-k="SeerrApiKey" label="Seerr-API-Schlüssel" autocomplete="off"></div>
         <div class="inputContainer"><input is="emby-input" type="text" data-k="SeerrUserId" label="Seerr-Nutzernummer für Anfragen (leer = Hauptkonto)"></div>
 
+        <h3>Ruhezeit der Download-Dienste</h3>
+        <p>Für den Stand angefragter Titel („Unterwegs zu dir“): Ruhen die Download-Dienste zu bestimmten Zeiten, steht dort währenddessen „Startet heute/morgen gegen …“ statt „Wird gesucht“. Alles leer = aus.</p>
+        <div class="inputContainer"><input is="emby-input" type="text" data-k="DownloadsQuietFrom" label="Ruhezeit von (HH:mm in der Zeitzone des Servers, z. B. 23:00)"></div>
+        <div class="inputContainer"><input is="emby-input" type="text" data-k="DownloadsQuietTo" label="Ruhezeit bis (HH:mm, z. B. 07:30)"></div>
+        <div class="inputContainer"><input is="emby-input" type="text" data-k="DownloadsDeferMarker" label="Kennzeichen im Namen von Qualitätsprofilen, die erst nach der nächsten Ruhezeit laden (z. B. (morgen)); braucht beide Uhrzeiten"></div>
+
         <h3>Bewertungen</h3>
         <label class="emby-checkbox-label"><input is="emby-checkbox" type="checkbox" data-k="Ratings"><span>Bewertungen (IMDb, Rotten Tomatoes …) über MDBList</span></label>
         <div class="inputContainer"><input is="emby-input" type="password" data-k="MdbListApiKey" label="MDBList-API-Schlüssel" autocomplete="off"></div>
