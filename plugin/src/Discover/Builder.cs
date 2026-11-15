@@ -68,7 +68,8 @@ internal sealed class Builder
     }
 
     /// <param name="unchangedIf">Prüfsumme der Bibliothek vom letzten Mal; ist sie gleich geblieben, endet die Berechnung sofort.</param>
-    public async Task<BuildResult> RunAsync(User user, string lang, Pool? previous, string reason, ulong? unchangedIf, Action<float> progress, CancellationToken ct)
+    /// <param name="replay">Für einen Messlauf: Bibliothek, Zustand und Gewichte vorgegeben, nichts wird gespeichert.</param>
+    public async Task<BuildResult> RunAsync(User user, string lang, Pool? previous, string reason, ulong? unchangedIf, Action<float> progress, CancellationToken ct, Replay? replay = null)
     {
         var info = new BuildInfo { Started = DateTime.UtcNow, Reason = reason };
         var watch = Stopwatch.StartNew();
@@ -90,7 +91,7 @@ internal sealed class Builder
             info.Timings["total"] = watch.ElapsedMilliseconds;
         }
 
-        var lib = await Task.Run(() => _library.Read(user), ct).ConfigureAwait(false);
+        var lib = replay?.Lib ?? await Task.Run(() => _library.Read(user), ct).ConfigureAwait(false);
         Lap("library");
         if (unchangedIf.HasValue && lib.Fingerprint == unchangedIf.Value)
         {
@@ -112,14 +113,21 @@ internal sealed class Builder
         await LearnGenresAsync(lang, ct).ConfigureAwait(false);
         // Für die Rangfolge genügt ein Stand der Anfragen, der bis zu zwei Minuten alt ist.
         var requests = await _requests.GetAsync(TimeSpan.FromMinutes(2), TimeSpan.FromSeconds(8), ct).ConfigureAwait(false);
+        if (replay is not null)
+        {
+            requests = replay.Requests(requests);
+        }
+
         Lap("requests");
         progress(0.08f);
 
         var now = DateTime.UtcNow;
         var local = DateTime.Now;
-        var state = _store.View(user.Id);
-        Scorer.Requests(user.Id, requests, state, _store.ThemeRequests(), lib, now, out var own, out _);
-        var signals = Profile.BuildSignals(lib, state, own, now);
+        var state = replay?.State ?? _store.View(user.Id);
+        var theme = replay?.Theme ?? _store.ThemeRequests();
+        var tuning = replay?.Tuning;
+        Scorer.Requests(user.Id, requests, state, theme, lib, now, out var own, out _);
+        var signals = Profile.BuildSignals(lib, state, own, now, tuning);
 
         // Merkmale der starken Signale: aus den Details. Titel außerhalb der Bibliothek brauchen dabei auch ihren Namen.
         var strong = signals.Where(s => s.Kind != SignalKind.Unseen).Take(SignalDetails)
@@ -127,7 +135,7 @@ internal sealed class Builder
         info.DetailsFetched += await DetailsAsync(strong, lang, f => progress(0.08f + (0.14f * f)), ct).ConfigureAwait(false);
         Lap("signalDetails");
 
-        var profile = Profile.Build(signals, _catalog, lang, state.Muted, state.Worlds);
+        var profile = Profile.Build(signals, _catalog, lang, state.Muted, state.Worlds, tuning);
         var pool = new Pool();
         var jobs = Plan(pool, profile, lib, lang, local, ct);
         if (previous is not null)
@@ -150,7 +158,7 @@ internal sealed class Builder
         Lap("lists");
 
         // Stufe 1: grob bewerten, den Bestand begrenzen, für die Besten die Details holen.
-        var first = Scorer.Rank(new RankInput { User = user.Id, Lang = lang, Pool = pool, Lib = lib, Requests = requests, Theme = _store.ThemeRequests(), State = state, Catalog = _catalog, BuiltAt = now, Info = info });
+        var first = Scorer.Rank(new RankInput { User = user.Id, Lang = lang, Pool = pool, Lib = lib, Requests = requests, Theme = theme, State = state, Catalog = _catalog, BuiltAt = now, Info = info, Tuning = tuning });
         Limit(pool, first, state);
         Lap("stage1");
         progress(0.75f);
@@ -168,7 +176,11 @@ internal sealed class Builder
         info.DetailsFetched += await DetailsAsync(wanted, lang, f => progress(0.75f + (0.22f * f)), ct).ConfigureAwait(false);
         Lap("details");
 
-        _catalog.Save();
+        if (replay is null)
+        {
+            _catalog.Save();
+        }
+
         info.PoolSize = pool.Items.Count;
         Count();
         return new BuildResult { Pool = pool, Lib = lib, Requests = requests, Info = info };

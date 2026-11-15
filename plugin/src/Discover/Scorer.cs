@@ -59,14 +59,16 @@ internal static class Scorer
     /// Serien sind bei TMDb durchweg höher bewertet. Die Abbildung ist um 7,0 herum am steilsten, weil dort der
     /// Unterschied zwischen „ordentlich“ und „gut“ liegt: 6,0 → 0,14 · 7,0 → 0,50 · 8,0 → 0,86.
     /// </summary>
-    public static float Quality(float rating, int votes, bool tv)
+    public static float Quality(float rating, int votes, bool tv) => Quality(rating, votes, tv, TvRatingOffset);
+
+    public static float Quality(float rating, int votes, bool tv, float tvOffset)
     {
         var prior = tv ? 300f : 500f;
         var mean = tv ? 7.0f : 6.6f;
         var smooth = ((votes * rating) + (prior * mean)) / (votes + prior);
         if (tv)
         {
-            smooth -= TvRatingOffset;
+            smooth -= tvOffset;
         }
 
         return 1f / (1f + MathF.Exp(-1.8f * (smooth - 7f)));
@@ -99,12 +101,13 @@ internal static class Scorer
         var lib = input.Lib;
 
         Requests(input.User, input.Requests, state, input.Theme, lib, now, out var own, out var open);
-        var signals = Profile.BuildSignals(lib, state, own, now);
-        var profile = Profile.Build(signals, catalog, lang, state.Muted, state.Worlds);
+        var tuning = input.Tuning ?? Tuning.Default;
+        var signals = Profile.BuildSignals(lib, state, own, now, tuning);
+        var profile = Profile.Build(signals, catalog, lang, state.Muted, state.Worlds, tuning);
 
         var bytes = input.User.ToByteArray();
         var seed = BitConverter.ToUInt64(bytes, 0) ^ BitConverter.ToUInt64(bytes, 8) ^ ((ulong)day * 0x9E3779B97F4A7C15UL);
-        var ctx = new Context(profile, state, lang, seed, Catalog.Now, catalog);
+        var ctx = new Context(profile, state, lang, seed, Catalog.Now, catalog) { Tuning = tuning };
 
         var ranked = new List<Scored>(input.Pool.Items.Count);
         var upcoming = new List<Scored>();
@@ -284,6 +287,7 @@ internal static class Scorer
     private static void Score(Scored s, Context ctx)
     {
         var p = ctx.Profile;
+        var tune = ctx.Tuning;
         var title = s.Title;
         var detail = s.Detail;
         var c = s.Candidate;
@@ -417,11 +421,11 @@ internal static class Scorer
         {
             // Noch ohne Bewertung: stattdessen zählt zur Hälfte, wie sehr der Titel erwartet wird.
             var buzz = Math.Clamp(MathF.Log10(1f + title.Popularity) / 2.4f, 0f, 1f);
-            s.Quality = (0.5f * Quality(title.Rating, title.Votes, title.Key.Tv)) + (0.5f * buzz);
+            s.Quality = (0.5f * Quality(title.Rating, title.Votes, title.Key.Tv, tune.TvRatingOffset)) + (0.5f * buzz);
         }
         else
         {
-            s.Quality = Quality(title.Rating, title.Votes, title.Key.Tv);
+            s.Quality = Quality(title.Rating, title.Votes, title.Key.Tv, tune.TvRatingOffset);
         }
 
         // Sprachen, die das Konto nie schaut, deutlich abwerten; jedes positive Signal in der Sprache hebt das wieder auf.
@@ -430,7 +434,7 @@ internal static class Scorer
         if (language.Length > 0 && language != "en" && language != ctx.Lang)
         {
             var known = Math.Max(director, Math.Min(1f, p.Langs.GetValueOrDefault(language) / 2f));
-            s.LangFactor = ForeignFactor + ((1f - ForeignFactor) * known);
+            s.LangFactor = tune.ForeignFactor + ((1f - tune.ForeignFactor) * known);
         }
 
         // Formate, die im Geschauten nicht vorkommen: Abzug, der mit der Sicherheit über den Geschmack wächst und mit
@@ -446,20 +450,20 @@ internal static class Scorer
             }
         }
 
-        s.FormatFactor = 1f - (FormatPenalty * Math.Min(1f, p.N / 10f) * format);
+        s.FormatFactor = 1f - (tune.FormatPenalty * Math.Min(1f, p.N / 10f) * format);
 
         // Oft gezeigt, nie darauf reagiert: ab dem dritten Mal je 4 % nach hinten, höchstens 24 %; nach 60 Tagen vergessen.
-        if (ctx.State.Shown.TryGetValue(s.Key, out var shown) && ctx.NowUnix - shown.At < 60L * 86400L)
+        if (tune.Shown && ctx.State.Shown.TryGetValue(s.Key, out var shown) && ctx.NowUnix - shown.At < 60L * 86400L)
         {
             s.ShownFactor = 1f - Math.Min(0.24f, 0.04f * Math.Max(0, shown.Count - 2));
         }
 
         // Kleine Verschiebung, die von Konto, Titel und Tag abhängt: jeden Tag etwas anders, innerhalb des Tages gleich.
-        s.Jitter = 1f + (0.03f * Noise(ctx.Seed, s.Key));
+        s.Jitter = tune.Jitter ? 1f + (0.03f * Noise(ctx.Seed, s.Key)) : 1f;
 
         // Der Geschmacksanteil hängt selbst von der Qualität ab: Sehr Ähnliches, aber Mittelmäßiges soll nicht vor klar
         // Besserem stehen, das auch passt. Ein Titel mit Qualität 0 brächte nur 45 % seines Geschmackswerts ein.
-        s.Score = ((p.Alpha * s.Taste * (TasteFloor + ((1f - TasteFloor) * s.Quality))) + ((1f - p.Alpha) * s.Quality))
+        s.Score = ((p.Alpha * s.Taste * (tune.TasteFloor + ((1f - tune.TasteFloor) * s.Quality))) + ((1f - p.Alpha) * s.Quality))
             * s.LangFactor * s.FormatFactor * s.ShownFactor * s.Jitter;
 
         // „Mal was anderes“: gut, in vertrauter Sprache, aber abseits der Vorlieben und von niemandem empfohlen.
@@ -505,5 +509,7 @@ internal static class Scorer
         public Catalog Catalog { get; }
 
         public List<(int Id, float Part)> Canonical { get; } = new(8);
+
+        public Tuning Tuning { get; init; } = Tuning.Default;
     }
 }

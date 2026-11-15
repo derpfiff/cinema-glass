@@ -39,6 +39,7 @@ public sealed partial class DiscoverService : IHostedService, IDisposable
     private readonly ConcurrentDictionary<(Guid User, string Lang), Session> _sessions = new();
     private readonly ConcurrentDictionary<Guid, long> _userChanged = new();
     private readonly CancellationTokenSource _stop = new();
+    private readonly Evaluator _evaluator;
     private readonly object _configLock = new();
     private long _libraryChanged;
     private long _builds;
@@ -61,6 +62,7 @@ public sealed partial class DiscoverService : IHostedService, IDisposable
         _requests = new RequestSource(_seerr, _stop.Token);
         _builder = new Builder(_seerr, _catalog, _library, _store, _requests);
         _tracker = new RequestTracker(_requests, _catalog, _store, _library, _builder, ChangeStamp, _stop.Token);
+        _evaluator = new Evaluator(_builder, _library, _store, _catalog, _stop.Token);
 
         // Nur merken, dass sich etwas geändert hat. Gerechnet wird erst, wenn das Konto das nächste Mal nachfragt.
         _userData.UserDataSaved += OnUserDataSaved;

@@ -326,6 +326,51 @@ public partial class DiscoverController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Für Administratoren: misst die Empfehlungen eines Kontos an seinen jüngsten Signalen (zurückgehalten, dann gesucht).
+    /// Läuft im Hintergrund; derselbe Abruf liefert erst den Fortschritt, dann das Ergebnis. Ändert nichts am Konto.
+    /// </summary>
+    [HttpGet("eval")]
+    [Authorize(Policy = "RequiresElevation")]
+    public ActionResult GetEval([FromQuery] string? userId, [FromQuery] string? lang, [FromQuery] int? holdout, [FromQuery] int? folds, [FromQuery] string? set, [FromQuery] string? restart, [FromQuery] string? watched) =>
+        Eval(userId, lang, holdout, folds, set, false, restart, watched);
+
+    /// <summary>Für Administratoren: dieselbe Messung für eine Reihe von Varianten der Gewichte, als Tabelle.</summary>
+    [HttpGet("eval/sweep")]
+    [Authorize(Policy = "RequiresElevation")]
+    public ActionResult GetEvalSweep([FromQuery] string? userId, [FromQuery] string? lang, [FromQuery] int? holdout, [FromQuery] int? folds, [FromQuery] string? restart, [FromQuery] string? watched) =>
+        Eval(userId, lang, holdout, folds, null, true, restart, watched);
+
+    private ActionResult Eval(string? userId, string? lang, int? holdout, int? folds, string? set, bool sweep, string? restart, string? watched)
+    {
+        Guid user;
+        if (string.IsNullOrEmpty(userId))
+        {
+            if (!TryUser(out user))
+            {
+                return Unauthorized();
+            }
+        }
+        else if (!Guid.TryParse(userId, out user))
+        {
+            return BadRequest();
+        }
+
+        if (set is { Length: > 300 })
+        {
+            return BadRequest();
+        }
+
+        try
+        {
+            return Send(_discover.Eval(user, Texts.Lang(lang), holdout ?? 10, folds ?? 1, set, sweep, restart is "1" or "true", watched is "1" or "true"));
+        }
+        catch (Exception ex)
+        {
+            return Send(new { status = "empty", error = "none" }, ex);
+        }
+    }
+
     private bool TryUser(out Guid user) => Guid.TryParse(User.FindFirst("Jellyfin-UserId")?.Value, out user) && user != Guid.Empty;
 
     private async Task<T?> ReadAsync<T>(CancellationToken ct)

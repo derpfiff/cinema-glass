@@ -9,6 +9,30 @@ public sealed partial class DiscoverService
     /// Der Stand der Anfragen eines Kontos, wie er gerade oder zu einer gestellten Uhrzeit angezeigt würde (ohne Abruf bei
     /// Seerr und ohne etwas festzuhalten). Zum Nachvollziehen von „heute/morgen“ und der Ruhezeit.
     /// </summary>
+    /// <summary>Messlauf: wie weit vorn die zurückgehaltenen jüngsten Signale eines Kontos in der Rangfolge landen.</summary>
+    internal object Eval(Guid user, string lang, int holdout, int folds, string? set, bool sweep, bool restart, bool watched)
+    {
+        if (!Enabled)
+        {
+            return new { status = "empty", error = "off" };
+        }
+
+        var account = _users.GetUserById(user);
+        if (account is null)
+        {
+            return new { status = "none" };
+        }
+
+        var tuning = Tuning.Parse(set, Tuning.Default with { Jitter = false, Shown = false }, out var error);
+        if (tuning is null)
+        {
+            return new { status = "empty", error };
+        }
+
+        CheckConfig();
+        return _evaluator.Get(account, lang, Math.Clamp(holdout, 3, 50), Math.Clamp(folds, 1, 5), tuning, set ?? string.Empty, sweep, restart, watched);
+    }
+
     internal object DebugRequests(Guid user, string lang, DateTime? atLocal, bool refresh = false)
     {
         if (!Enabled)

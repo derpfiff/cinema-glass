@@ -101,8 +101,10 @@ internal sealed class Profile
     }
 
     /// <summary>Leitet aus Bibliothek, Rückmeldungen und Anfragen die Signale ab (noch ohne Merkmale).</summary>
-    public static List<Signal> BuildSignals(LibrarySnapshot lib, StateView state, IReadOnlyDictionary<MediaKey, DateTime> ownRequests, DateTime now)
+    /// <param name="tuning">Gewichte für einen Messlauf; ohne Angabe die üblichen.</param>
+    public static List<Signal> BuildSignals(LibrarySnapshot lib, StateView state, IReadOnlyDictionary<MediaKey, DateTime> ownRequests, DateTime now, Tuning? tuning = null)
     {
+        var t = tuning ?? Tuning.Default;
         var map = new Dictionary<MediaKey, Signal>();
         foreach (var e in lib.Items.Values)
         {
@@ -114,21 +116,21 @@ internal sealed class Profile
             Signal s;
             if (e.Favorite)
             {
-                s = New(e, SignalKind.Favorite, Favorite, e.LastPlayed, true);
+                s = New(e, SignalKind.Favorite, t.Favorite, e.LastPlayed, true);
             }
             else if (!e.Key.Tv)
             {
                 if (e.Played)
                 {
-                    s = e.PlayCount >= 2 ? New(e, SignalKind.Rewatched, Completed, e.LastPlayed, true) : New(e, SignalKind.Seen, Seen, e.LastPlayed, true);
+                    s = e.PlayCount >= 2 ? New(e, SignalKind.Rewatched, t.Completed, e.LastPlayed, true) : New(e, SignalKind.Seen, t.Seen, e.LastPlayed, true);
                 }
                 else if (e.Progress > 0f && e.Progress < 0.2f && e.LastPlayed.HasValue && now - e.LastPlayed.Value > TimeSpan.FromDays(14))
                 {
-                    s = New(e, SignalKind.Abandoned, Abandoned, e.LastPlayed, false);
+                    s = New(e, SignalKind.Abandoned, t.Abandoned, e.LastPlayed, false);
                 }
                 else
                 {
-                    s = New(e, SignalKind.Unseen, Unseen, null, false);
+                    s = New(e, SignalKind.Unseen, t.Unseen, null, false);
                 }
             }
             else
@@ -136,19 +138,19 @@ internal sealed class Profile
                 var share = e.EpisodesTotal > 0 ? Math.Clamp(e.EpisodesPlayed / (float)e.EpisodesTotal, 0f, 1f) : 0f;
                 if (e.EpisodesPlayed > 0 && share >= 0.8f)
                 {
-                    s = New(e, SignalKind.Rewatched, Completed, e.LastPlayed, true);
+                    s = New(e, SignalKind.Rewatched, t.Completed, e.LastPlayed, true);
                 }
                 else if (e.EpisodesPlayed > 0)
                 {
                     // Abgebrochen heißt bei Serien: nach höchstens drei Folgen (und unter 20 %) seit über zwei Wochen liegen gelassen.
                     var idle = !e.LastPlayed.HasValue || now - e.LastPlayed.Value > TimeSpan.FromDays(14);
                     s = share < 0.2f && e.EpisodesPlayed <= 3 && idle
-                        ? New(e, SignalKind.Abandoned, Abandoned, e.LastPlayed, false)
-                        : New(e, SignalKind.Partial, Math.Max(PartialMin, share * Seen), e.LastPlayed, true);
+                        ? New(e, SignalKind.Abandoned, t.Abandoned, e.LastPlayed, false)
+                        : New(e, SignalKind.Partial, Math.Max(t.PartialMin, share * t.Seen), e.LastPlayed, true);
                 }
                 else
                 {
-                    s = New(e, SignalKind.Unseen, Unseen, null, false);
+                    s = New(e, SignalKind.Unseen, t.Unseen, null, false);
                 }
             }
 
@@ -163,9 +165,9 @@ internal sealed class Profile
             var visible = entry is { Visible: true } ? entry : null;
             var signal = f.Value.Action switch
             {
-                "like" => new Signal { Key = f.Key, Kind = SignalKind.Like, Base = Like, When = when, Strong = true, Lib = visible },
-                "dislike" => new Signal { Key = f.Key, Kind = SignalKind.Dislike, Base = Dislike, When = when, Strong = true, Lib = visible },
-                "hide" => new Signal { Key = f.Key, Kind = SignalKind.Hidden, Base = Hidden, When = when, Strong = false, Lib = visible },
+                "like" => new Signal { Key = f.Key, Kind = SignalKind.Like, Base = t.Like, When = when, Strong = true, Lib = visible },
+                "dislike" => new Signal { Key = f.Key, Kind = SignalKind.Dislike, Base = t.Dislike, When = when, Strong = true, Lib = visible },
+                "hide" => new Signal { Key = f.Key, Kind = SignalKind.Hidden, Base = t.Hidden, When = when, Strong = false, Lib = visible },
                 _ => null,
             };
             if (signal is not null)
@@ -179,7 +181,7 @@ internal sealed class Profile
         {
             if (!map.TryGetValue(r.Key, out var old) || old.Kind == SignalKind.Unseen)
             {
-                map[r.Key] = new Signal { Key = r.Key, Name = old?.Name ?? string.Empty, Kind = SignalKind.Requested, Base = Requested, When = r.Value, Strong = true, Lib = old?.Lib };
+                map[r.Key] = new Signal { Key = r.Key, Name = old?.Name ?? string.Empty, Kind = SignalKind.Requested, Base = t.Requested, When = r.Value, Strong = true, Lib = old?.Lib };
             }
         }
 
@@ -229,8 +231,9 @@ internal sealed class Profile
 
     /// <summary>Baut das Profil aus den Signalen. Merkmale kommen aus den Details, sonst aus der Bibliothek, sonst aus den Listen.</summary>
     /// <param name="worlds">Im Geschmacks-Check gewählte Welten (Genre-Nummern).</param>
-    public static Profile Build(List<Signal> signals, Catalog catalog, string lang, HashSet<string> muted, int[]? worlds = null)
+    public static Profile Build(List<Signal> signals, Catalog catalog, string lang, HashSet<string> muted, int[]? worlds = null, Tuning? tuning = null)
     {
+        var tune = tuning ?? Tuning.Default;
         var p = new Profile();
         p.Signals.AddRange(signals);
 
@@ -348,7 +351,7 @@ internal sealed class Profile
 
         // Nach oben begrenzt: Auch bei sehr vielen Signalen behält die Qualität für sich knapp ein Drittel des Gewichts.
         p.N = positive + (0.5f * rejected) + (chosen * Worlds.SignalWeight);
-        p.Alpha = Math.Min(AlphaCap, p.N / (p.N + HalfConfidence));
+        p.Alpha = Math.Min(tune.AlphaCap, p.N / (p.N + tune.HalfConfidence));
 
         // Genres: häufige Genres abwerten, dann auf das stärkste normieren.
         var genrePref = new Dictionary<int, float>();

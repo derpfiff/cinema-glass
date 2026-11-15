@@ -28,13 +28,13 @@
         partial: 'Teilweise', available: 'Verfügbar', movie: 'Film', series: 'Serie', seasons: 'Staffeln anfragen',
         all: 'Alle Staffeln', cancel: 'Abbrechen', send: 'Anfragen', ok: 'Anfrage gesendet', fail: 'Anfrage fehlgeschlagen',
         offline: 'Seerr nicht erreichbar', noconn: 'Keine Verbindung zu Seerr', retry: 'Erneut versuchen', season: 'Staffel', episodes: 'Folgen', more: 'Mehr', close: 'Schließen', quality: 'Qualität', standard: 'Standard',
-        open: 'Öffnen', moreSeasons: 'Weitere Staffeln anfragen', reqAll: 'Alle Staffeln anfragen', reqOne: '1 Staffel anfragen', reqN: '%1 Staffeln anfragen', noSeasons: 'Zu dieser Serie sind noch keine Staffeln bekannt.'
+        trailer: 'Trailer', open: 'Öffnen', moreSeasons: 'Weitere Staffeln anfragen', reqAll: 'Alle Staffeln anfragen', reqOne: '1 Staffel anfragen', reqN: '%1 Staffeln anfragen', noSeasons: 'Zu dieser Serie sind noch keine Staffeln bekannt.'
     } : {
         title: 'Not in your library', request: 'Request', requested: 'Requested', processing: 'Processing',
         partial: 'Partial', available: 'Available', movie: 'Movie', series: 'Series', seasons: 'Request seasons',
         all: 'All seasons', cancel: 'Cancel', send: 'Request', ok: 'Request sent', fail: 'Request failed',
         offline: 'Seerr unreachable', noconn: 'No connection to Seerr', retry: 'Retry', season: 'Season', episodes: 'episodes', more: 'More', close: 'Close', quality: 'Quality', standard: 'Default',
-        open: 'Open', moreSeasons: 'Request more seasons', reqAll: 'Request all seasons', reqOne: 'Request 1 season', reqN: 'Request %1 seasons', noSeasons: 'No seasons are known for this show yet.'
+        trailer: 'Trailer', open: 'Open', moreSeasons: 'Request more seasons', reqAll: 'Request all seasons', reqOne: 'Request 1 season', reqN: 'Request %1 seasons', noSeasons: 'No seasons are known for this show yet.'
     };
 
     // Optik: dieselben Bausteine wie das Theme (Regal, Poster, Detailseite .atv-detail, Pille, Glas-Kreis).
@@ -287,6 +287,13 @@
     // angefragt ist, steht gekennzeichnet und gesperrt in der Liste. Dazu, wenn Seerr mehrere kennt, das Qualitätsprofil;
     // unten wird bestätigt. tvP: Seerrs Auskunft zur Serie, svcP: Profile (beides Promises); send(seasons, quality)
     // stellt die Anfrage. Ergebnis: Antwort der Anfrage, null bei „Abbrechen“.
+    // Bester YouTube-Trailer aus Seerrs „relatedVideos“: offizieller Trailer vor Teaser, sonst irgendein Video.
+    function pickTrailer(list) {
+        var v = (list || []).filter(function (x) { return x && x.site === 'YouTube' && x.key; });
+        var rank = function (x) { return (x.type === 'Trailer' ? 0 : x.type === 'Teaser' ? 1 : 2); };
+        v.sort(function (a, b) { return rank(a) - rank(b); });
+        return v.length ? v[0].key : null;
+    }
     function seasonSheet(r, tvP, svcP, send) {
         return new Promise(function (resolve) {
             var old = document.querySelector('.atv-sheet'); if (old) old.remove();
@@ -430,6 +437,17 @@
             return b;
         }
         function requested() { fillActions(); fillQuality(); loadDetails(); }
+        // Trailer (YouTube über Seerr/TMDb), auch für Titel, die fehlen: gleiches Fenster wie auf der Detailseite
+        var trailerKey = null;
+        function addTrailer(d) {
+            var k = pickTrailer(d && d.relatedVideos);
+            if (k) trailerKey = k;
+            if (!trailerKey || !window.__atvTrailer || act.querySelector('.atv-xd__trailer')) return;
+            var tb = pill(ICON.play, T.trailer, true); tb.classList.add('atv-xd__trailer');
+            tb.addEventListener('click', function () { window.__atvTrailer(trailerKey); });
+            var circle = act.querySelector('.atv-circle');
+            act.insertBefore(tb, circle || null);
+        }
         // Serie: erst das Fenster mit den Staffeln, dort wird bestätigt. Film: ein Tipp.
         function ask(b) {
             if (isTv) {
@@ -477,6 +495,7 @@
                 act.appendChild(hide);
             }
             note.textContent = def ? '' : T.title; note.hidden = !!def;
+            addTrailer(null);
         }
         // Qualitätsprofil wählen (nur Filme; bei Serien steht die Wahl im Staffel-Fenster). Erscheint nur, wenn Seerr
         // mehrere Profile liefert und noch angefragt werden kann. Standard = das in Seerr hinterlegte Profil.
@@ -511,6 +530,7 @@
                 if (d.overview && !r.overview) { desc.textContent = d.overview; if (!desc.isConnected) lock.insertBefore(desc, facts); }
                 if (!r.backdropPath && d.backdropPath) loadImg(art, tmdbImg('w1280', d.backdropPath));
                 fillFacts(d);
+                addTrailer(d);
                 credits.textContent = '';
                 var cast = ((d.credits && d.credits.cast) || []).slice(0, 3).map(function (p) { return p.name; });
                 var crew = (d.credits && d.credits.crew) || [];

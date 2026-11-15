@@ -221,4 +221,7 @@ internal sealed class RankInput
     public DateTime BuiltAt { get; init; }
 
     public BuildInfo Info { get; init; } = new();
+
+    /// <summary>Gewichte für einen Messlauf; <c>null</c> = die üblichen.</summary>
+    public Tuning? Tuning { get; init; }
 }
