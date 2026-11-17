@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.10.25.0",
+        "changelog": "- Besetzung über die ganze linke Seite: Ausgeklappt zeigt die Besetzung mehrere Spalten auf der linken Bildhälfte, die Personenkarte erscheint rechts.\n- Verschwindet mit dem Overlay: „Besetzung“ blendet im selben Moment und genauso aus wie die Steuerung.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.25.0.zip",
+        "checksum": "8bca9bd82dd37068e6e7f669ea05534a",
+        "timestamp": "2026-11-17T23:26:32Z"
+      },
+      {
         "version": "1.10.24.0",
         "changelog": "- Besetzung verschwindet mit dem Overlay: Blendet sich die Steuerung aus, ist auch „Besetzung“ sofort weg – ohne seitliches Ausblenden.",
         "targetAbi": "12.4.0.0",
