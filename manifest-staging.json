@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.10.26.0",
+        "changelog": "- Besetzung als eine lange Spalte: Ausgeklappt wächst die Besetzung nach unten bis knapp über die Zeitleiste; Titel und Folge blenden so lange aus. Namen und Rollen stehen immer vollständig da.\n- Schauspieler über den ganzen Bildschirm: Ein Tipp auf eine Person zeigt Foto, Lebensdaten, die ganze Biografie und ihre anderen Titel bildschirmfüllend; das Kreuz schließt.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.26.0.zip",
+        "checksum": "6dea3785063f11804eb40272e061d987",
+        "timestamp": "2026-11-17T23:31:41Z"
+      },
+      {
         "version": "1.10.25.0",
         "changelog": "- Besetzung über die ganze linke Seite: Ausgeklappt zeigt die Besetzung mehrere Spalten auf der linken Bildhälfte, die Personenkarte erscheint rechts.\n- Verschwindet mit dem Overlay: „Besetzung“ blendet im selben Moment und genauso aus wie die Steuerung.",
         "targetAbi": "12.4.0.0",

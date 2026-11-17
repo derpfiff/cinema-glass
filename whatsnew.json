@@ -1,5 +1,33 @@
 [
   {
+    "version": "1.10.26",
+    "date": "2026-11-18",
+    "items": [
+      {
+        "icon": "people",
+        "de": [
+          "Besetzung als eine lange Spalte",
+          "Ausgeklappt wächst die Besetzung nach unten bis knapp über die Zeitleiste; Titel und Folge blenden so lange aus. Namen und Rollen stehen immer vollständig da."
+        ],
+        "en": [
+          "Cast as one long column",
+          "Expanded, the cast grows down to just above the timeline; title and episode fade out meanwhile. Names and roles are always shown in full."
+        ]
+      },
+      {
+        "icon": "star",
+        "de": [
+          "Schauspieler über den ganzen Bildschirm",
+          "Ein Tipp auf eine Person zeigt Foto, Lebensdaten, die ganze Biografie und ihre anderen Titel bildschirmfüllend; das Kreuz schließt."
+        ],
+        "en": [
+          "Actors full screen",
+          "Tap a person to see photo, life dates, the full bio and their other titles full screen; the cross closes it."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.10.25",
     "date": "2026-11-18",
     "items": [
