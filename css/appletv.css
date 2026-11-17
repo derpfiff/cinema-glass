@@ -3926,7 +3926,7 @@ html.atv-osd-titled .osdControls .osdTimeText { display: none !important; }
 .atv-upd-pill__spin { flex: 0 0 auto; width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .3); border-top-color: #fff; animation: atvSpin .8s linear infinite; }
 .atv-upd-pill__spin[hidden] { display: none; }
 @keyframes atvSpin { to { transform: rotate(360deg); } }
-.atv-upd-pill__tx { min-width: 0; padding-right: 8px; }
+.atv-upd-pill__tx { min-width: 0; padding-right: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .atv-upd-pill__acts { display: flex; gap: 6px; }
 .atv-upd-pill__acts:empty { display: none; }
 .atv-upd-pill__btn { height: 32px; padding: 0 14px; border: 0; border-radius: 999px; cursor: pointer; font: inherit; font-size: 13px; color: #fff; background: rgba(255, 255, 255, .16); }

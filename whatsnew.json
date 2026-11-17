@@ -1,5 +1,33 @@
 [
   {
+    "version": "1.10.21",
+    "date": "2026-11-17",
+    "items": [
+      {
+        "icon": "people",
+        "de": [
+          "Besetzung auch in der App",
+          "Die Besetzung erkennt den laufenden Titel jetzt auch dann, wenn die App sich anders beim Server meldet – sie erscheint zwei Sekunden nach dem Pausieren."
+        ],
+        "en": [
+          "Cast in the app too",
+          "The cast now recognises the playing title even when the app reports itself differently to the server – it appears two seconds after you pause."
+        ]
+      },
+      {
+        "icon": "fix",
+        "de": [
+          "Update-Hinweis in einer Zeile",
+          "Der Fortschritt beim Aktualisieren bricht nicht mehr um."
+        ],
+        "en": [
+          "Update notice on one line",
+          "The update progress no longer wraps onto a second line."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.10.20",
     "date": "2026-11-17",
     "admin": true,
