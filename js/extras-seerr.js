@@ -22,20 +22,26 @@
         posterSize: 'w300_and_h450_face',
         language: (document.documentElement.lang || navigator.language || 'de').slice(0, 2)
     };
-    var DE = (CFG.language !== 'en');
-    var T = DE ? {
+    // Sprache wie Jellyfins Anzeige (<html lang>, von Jellyfin gesetzt); ändert sie sich, gelten ab da die neuen Texte
+    var DE, T, T_DE = {
         title: 'Nicht in deiner Mediathek', request: 'Anfragen', requested: 'Angefragt', processing: 'In Arbeit',
         partial: 'Teilweise', available: 'Verfügbar', movie: 'Film', series: 'Serie', seasons: 'Staffeln anfragen',
         all: 'Alle Staffeln', cancel: 'Abbrechen', send: 'Anfragen', ok: 'Anfrage gesendet', fail: 'Anfrage fehlgeschlagen',
         offline: 'Seerr nicht erreichbar', noconn: 'Keine Verbindung zu Seerr', retry: 'Erneut versuchen', season: 'Staffel', episodes: 'Folgen', more: 'Mehr', close: 'Schließen', quality: 'Qualität', standard: 'Standard',
         trailer: 'Trailer', open: 'Öffnen', moreSeasons: 'Weitere Staffeln anfragen', reqAll: 'Alle Staffeln anfragen', coll: 'Filmreihe', collAll: 'Alle fehlenden anfragen', collAllN: 'Alle %1 fehlenden anfragen', collDone: '%1 Filme angefragt', collHere: 'Komplett', reqOne: '1 Staffel anfragen', reqN: '%1 Staffeln anfragen', noSeasons: 'Zu dieser Serie sind noch keine Staffeln bekannt.'
-    } : {
+    }, T_EN = {
         title: 'Not in your library', request: 'Request', requested: 'Requested', processing: 'Processing',
         partial: 'Partial', available: 'Available', movie: 'Movie', series: 'Series', seasons: 'Request seasons',
         all: 'All seasons', cancel: 'Cancel', send: 'Request', ok: 'Request sent', fail: 'Request failed',
         offline: 'Seerr unreachable', noconn: 'No connection to Seerr', retry: 'Retry', season: 'Season', episodes: 'episodes', more: 'More', close: 'Close', quality: 'Quality', standard: 'Default',
         trailer: 'Trailer', open: 'Open', moreSeasons: 'Request more seasons', reqAll: 'Request all seasons', coll: 'Collection', collAll: 'Request all missing', collAllN: 'Request all %1 missing', collDone: '%1 movies requested', collHere: 'Complete', reqOne: 'Request 1 season', reqN: 'Request %1 seasons', noSeasons: 'No seasons are known for this show yet.'
     };
+    function setLang() {
+        CFG.language = /^en/i.test(document.documentElement.lang || navigator.language || 'de') ? 'en' : 'de';
+        DE = CFG.language !== 'en'; T = DE ? T_DE : T_EN;
+    }
+    setLang();
+    new MutationObserver(setLang).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 
     // Optik: dieselben Bausteine wie das Theme (Regal, Poster, Detailseite .atv-detail, Pille, Glas-Kreis).
     // Die Variablen (--tv-*, --atv-*) kommen aus dem Theme; ohne Theme greifen die Rückfallwerte.
