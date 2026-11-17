@@ -3908,3 +3908,13 @@ html.atv-av-open, html.atv-av-open body { overflow: hidden !important; }
 .atv-wn__dots[hidden] { display: none !important; }
 /* „Endet um“ steht klein unter dem Titel (Theme); Jellyfins Angabe neben den Knöpfen wäre doppelt */
 html.atv-osd-titled .osdControls .osdTimeText { display: none !important; }
+/* Plugin-Updates: gleiche Glas-Karte wie „Was ist neu“ */
+.atv-upd__row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin: 4px 0 6px; }
+.atv-upd__row b { font-size: 17px; font-weight: 700; }
+.atv-upd__row .atv-wn__ver { margin: 0; }
+.atv-upd__note { margin: 4px 0 0; padding-left: 14px; position: relative; font-size: 14px; line-height: 1.45; color: rgba(255, 255, 255, .72); }
+.atv-upd__note::before { content: ''; position: absolute; left: 2px; top: .62em; width: 5px; height: 5px; border-radius: 50%; background: rgba(255, 255, 255, .45); }
+.atv-upd__status { margin: 0; padding: 4px 26px 0; font-size: 14px; color: rgba(255, 255, 255, .8); }
+.atv-upd .atv-wn__foot { gap: 10px; }
+.atv-upd .atv-wn__go { margin-left: 0; }
+.atv-upd .atv-wn__foot .atv-pill--glass { margin-left: auto; }

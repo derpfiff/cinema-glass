@@ -1,5 +1,33 @@
 [
   {
+    "version": "1.10.17",
+    "date": "2026-11-17",
+    "items": [
+      {
+        "icon": "download",
+        "de": [
+          "Updates direkt in der App",
+          "Gibt es neue Versionen deiner Plugins, fragt Jellyfin beim Öffnen: „Jetzt aktualisieren“ installiert alles und startet neu, „Später“ fragt beim nächsten Öffnen wieder."
+        ],
+        "en": [
+          "Updates right in the app",
+          "When new plugin versions are available, Jellyfin asks when you open it: “Update now” installs everything and restarts, “Later” asks again next time."
+        ]
+      },
+      {
+        "icon": "fix",
+        "de": [
+          "Besetzung kommt wieder",
+          "Eingeklappt bleibt die Besetzung nur bis zum nächsten Pausieren."
+        ],
+        "en": [
+          "Cast comes back",
+          "Folding the cast now only lasts until you pause again."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.10.16",
     "date": "2026-11-17",
     "items": [

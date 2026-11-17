@@ -27,6 +27,7 @@ public class PluginConfiguration : BasePluginConfiguration
     public bool ShelfWheel { get; set; } = true;       // Regale folgen dem Trackpad direkt (Safari, Chrome, JellyDesk)
     public bool NativeApp { get; set; } = true;        // Zusammenspiel mit der Mac-App JellyDesk (Downloads, Vollbild, Wiedergabe)
     public bool UpdateCheck { get; set; } = false;
+    public bool PluginUpdates { get; set; } = true;    // Admins: beim Öffnen fragen, ob neue Plugin-Versionen installiert werden sollen
 
     // Anfragen über Seerr (Jellyseerr/Overseerr)
     public bool Seerr { get; set; } = false;

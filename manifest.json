@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.10.17.0",
+        "changelog": "- Updates direkt in der App: Gibt es neue Versionen deiner Plugins, fragt Jellyfin beim Öffnen: „Jetzt aktualisieren“ installiert alles und startet neu, „Später“ fragt beim nächsten Öffnen wieder.\n- Besetzung kommt wieder: Eingeklappt bleibt die Besetzung nur bis zum nächsten Pausieren.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.17.0.zip",
+        "checksum": "026fa34e9c45e576b9ffb128348f4bfd",
+        "timestamp": "2026-11-17T21:39:57Z"
+      },
+      {
         "version": "1.10.16.0",
         "changelog": "- Besetzung wie bei Amazon: Beim Pausieren steht die Besetzung als wischbare Reihe von Porträts direkt über der Steuerleiste und verschwindet mit ihr. „Besetzung“ klappt sie ein.\n- Mehr über die Schauspieler: Ein Tipp auf ein Porträt zeigt Geburtstag, Alter, Herkunft, eine kurze Biografie und was von der Person in deiner Mediathek liegt.\n- Release Notes mit OK: Nach einem Update siehst du einmal, was neu ist, und bestätigst mit OK. Im Plugin-Katalog steht jetzt zu jeder Version, was sie gebracht hat.",
         "targetAbi": "12.4.0.0",

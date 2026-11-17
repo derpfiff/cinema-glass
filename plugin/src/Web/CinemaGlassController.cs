@@ -242,6 +242,7 @@ public class CinemaGlassController : ControllerBase
                 nativeApp = c.NativeApp,
                 shelfWheel = c.ShelfWheel,
                 updateCheck = c.UpdateCheck,
+                pluginUpdates = c.PluginUpdates,
                 seerr = c.Seerr && c.SeerrUrl.Length > 0 && c.SeerrApiKey.Length > 0,
                 discover = c.Discover,
                 letterboxd = c.Letterboxd && c.Discover,

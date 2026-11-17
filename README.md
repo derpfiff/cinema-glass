@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/img/banner.svg" alt="Cinema Glass – Kino-Oberfläche für Jellyfin" width="100%"></p>
 
 <p align="center">
-  <a href="https://github.com/derpfiff/cinema-glass/releases/latest"><img alt="Version" src="https://img.shields.io/badge/Version-1.10.16-7a5cff?style=flat-square"></a>
+  <a href="https://github.com/derpfiff/cinema-glass/releases/latest"><img alt="Version" src="https://img.shields.io/badge/Version-1.10.17-7a5cff?style=flat-square"></a>
   <img alt="Jellyfin" src="https://img.shields.io/badge/Jellyfin-12.4-22c1ff?style=flat-square">
   <img alt=".NET" src="https://img.shields.io/badge/.NET-10-512bd4?style=flat-square">
   <a href="https://github.com/derpfiff/jellyfin-plugins"><img alt="Katalog" src="https://img.shields.io/badge/Katalog-derpfiff%2Fjellyfin--plugins-ff5c8a?style=flat-square"></a>
@@ -92,6 +92,8 @@ sonst deutsch.
 - **Profilbild wie bei Netflix:** In den Einstellungen öffnet ein Tipp aufs Bild Reihen mit Avataren, dazu Farben und
   eigene Fotos. Die Avatare legt der Admin selbst auf den Server, im Paket sind keine
   ([Anleitung](docs/PLUGIN.md#eigene-avatare-profilbild-auswahl-wie-bei-netflix)).
+- **Updates in der App:** Gibt es neue Versionen installierter Plugins, fragt Jellyfin Admins beim Öffnen. Ein Tipp
+  installiert alles und startet neu, „Später“ fragt beim nächsten Öffnen wieder.
 - **Was ist neu:** Nach einem Update zeigt ein Fenster einmal pro Konto, was in jedem Plugin dazugekommen ist. Jedes
   Plugin bringt dafür seine eigene `whatsnew.json` mit.
 
