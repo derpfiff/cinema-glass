@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.11.0.0",
+        "changelog": "- Besetzung im Player: Tippst du beim Schauen aufs Bild, steht oben links „Besetzung“. Ausgeklappt zeigt eine Liste, wer wen spielt – mit Foto, Name und Rolle.\n- Schauspieler im Porträt: Ein Tipp auf eine Person zeigt bildschirmfüllend Geburtstag, Alter, Herkunft, die Biografie und was sie sonst in deiner Mediathek gespielt hat.\n- Steuerung bleibt länger: Die Steuerung im Player bleibt nach dem letzten Tippen acht Sekunden stehen.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.11.0.0.zip",
+        "checksum": "47f89fb1466cc93f0c332d3b84338316",
+        "timestamp": "2026-11-17T23:46:39Z"
+      },
+      {
         "version": "1.10.17.0",
         "changelog": "- Updates direkt in der App: Gibt es neue Versionen deiner Plugins, fragt Jellyfin beim Öffnen: „Jetzt aktualisieren“ installiert alles und startet neu, „Später“ fragt beim nächsten Öffnen wieder.\n- Besetzung kommt wieder: Eingeklappt bleibt die Besetzung nur bis zum nächsten Pausieren.",
         "targetAbi": "12.4.0.0",

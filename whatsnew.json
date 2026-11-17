@@ -1,199 +1,39 @@
 [
   {
-    "version": "1.10.26",
+    "version": "1.11.0",
     "date": "2026-11-18",
     "items": [
       {
         "icon": "people",
         "de": [
-          "Besetzung als eine lange Spalte",
-          "Ausgeklappt wächst die Besetzung nach unten bis knapp über die Zeitleiste; Titel und Folge blenden so lange aus. Namen und Rollen stehen immer vollständig da."
+          "Besetzung im Player",
+          "Tippst du beim Schauen aufs Bild, steht oben links „Besetzung“. Ausgeklappt zeigt eine Liste, wer wen spielt – mit Foto, Name und Rolle."
         ],
         "en": [
-          "Cast as one long column",
-          "Expanded, the cast grows down to just above the timeline; title and episode fade out meanwhile. Names and roles are always shown in full."
+          "Cast in the player",
+          "Tap the picture while watching and “Cast” appears top left. Expand it for a list of who plays whom – with photo, name and role."
         ]
       },
       {
         "icon": "star",
         "de": [
-          "Schauspieler über den ganzen Bildschirm",
-          "Ein Tipp auf eine Person zeigt Foto, Lebensdaten, die ganze Biografie und ihre anderen Titel bildschirmfüllend; das Kreuz schließt."
+          "Schauspieler im Porträt",
+          "Ein Tipp auf eine Person zeigt bildschirmfüllend Geburtstag, Alter, Herkunft, die Biografie und was sie sonst in deiner Mediathek gespielt hat."
         ],
         "en": [
-          "Actors full screen",
-          "Tap a person to see photo, life dates, the full bio and their other titles full screen; the cross closes it."
-        ]
-      }
-    ]
-  },
-  {
-    "version": "1.10.25",
-    "date": "2026-11-18",
-    "items": [
-      {
-        "icon": "people",
-        "de": [
-          "Besetzung über die ganze linke Seite",
-          "Ausgeklappt zeigt die Besetzung mehrere Spalten auf der linken Bildhälfte, die Personenkarte erscheint rechts."
-        ],
-        "en": [
-          "Cast across the left side",
-          "Expanded, the cast fills several columns on the left half of the screen; the person card appears on the right."
-        ]
-      },
-      {
-        "icon": "fix",
-        "de": [
-          "Verschwindet mit dem Overlay",
-          "„Besetzung“ blendet im selben Moment und genauso aus wie die Steuerung."
-        ],
-        "en": [
-          "Hides with the overlay",
-          "“Cast” fades out at the same moment and in the same way as the controls."
-        ]
-      }
-    ]
-  },
-  {
-    "version": "1.10.24",
-    "date": "2026-11-18",
-    "items": [
-      {
-        "icon": "people",
-        "de": [
-          "Besetzung verschwindet mit dem Overlay",
-          "Blendet sich die Steuerung aus, ist auch „Besetzung“ weg – ohne seitliches Ausblenden."
-        ],
-        "en": [
-          "Cast disappears with the overlay",
-          "When the controls hide, “Cast” goes away too – no sideways fade."
-        ]
-      }
-    ]
-  },
-  {
-    "version": "1.10.23",
-    "date": "2026-11-18",
-    "items": [
-      {
-        "icon": "people",
-        "de": [
-          "Besetzung bleibt über dem Titel",
-          "Liste und Personenkarte reichen nie mehr über Folge und Titel unten im Player. Die Karte ist kompakter, die Biografie klappt per Tipp auf und scrollt in der Karte."
-        ],
-        "en": [
-          "Cast stays above the title",
-          "The list and the person card never cover the episode and title at the bottom of the player. The card is more compact; tap the bio to expand it and scroll inside the card."
-        ]
-      }
-    ]
-  },
-  {
-    "version": "1.10.22",
-    "date": "2026-11-17",
-    "items": [
-      {
-        "icon": "people",
-        "de": [
-          "Besetzung im Player-Overlay",
-          "Tippst du einmal aufs Bild, steht oben links „Besetzung“ – zum Ausklappen. Ist das Overlay weg, ist auch die Besetzung weg; ausgeklappt bleibt ausgeklappt."
-        ],
-        "en": [
-          "Cast in the player overlay",
-          "Tap the picture once and “Cast” appears top left – tap to expand. When the overlay goes away, so does the cast; once expanded it stays expanded."
+          "Actor profiles",
+          "Tap a person to see, full screen, their birthday, age, birthplace, bio and what else they're in in your library."
         ]
       },
       {
         "icon": "clock",
         "de": [
           "Steuerung bleibt länger",
-          "Die Steuerleiste bleibt nach dem letzten Tippen acht Sekunden stehen statt drei. Ein Tipp aufs Bild schließt sie sofort."
+          "Die Steuerung im Player bleibt nach dem letzten Tippen acht Sekunden stehen."
         ],
         "en": [
           "Controls stay longer",
-          "The controls stay for eight seconds after your last tap instead of three. Tap the picture to close them right away."
-        ]
-      }
-    ]
-  },
-  {
-    "version": "1.10.21",
-    "date": "2026-11-17",
-    "items": [
-      {
-        "icon": "people",
-        "de": [
-          "Besetzung auch in der App",
-          "Die Besetzung erkennt den laufenden Titel jetzt auch dann, wenn die App sich anders beim Server meldet – sie erscheint zwei Sekunden nach dem Pausieren."
-        ],
-        "en": [
-          "Cast in the app too",
-          "The cast now recognises the playing title even when the app reports itself differently to the server – it appears two seconds after you pause."
-        ]
-      },
-      {
-        "icon": "fix",
-        "de": [
-          "Update-Hinweis in einer Zeile",
-          "Der Fortschritt beim Aktualisieren bricht nicht mehr um."
-        ],
-        "en": [
-          "Update notice on one line",
-          "The update progress no longer wraps onto a second line."
-        ]
-      }
-    ]
-  },
-  {
-    "version": "1.10.20",
-    "date": "2026-11-17",
-    "admin": true,
-    "items": [
-      {
-        "icon": "download",
-        "de": [
-          "Test des Update-Ablaufs",
-          "Keine sichtbaren Änderungen – diese Version prüft nur, dass Aktualisieren und Neustart ohne Hängen durchlaufen."
-        ],
-        "en": [
-          "Update flow test",
-          "No visible changes – this version only checks that updating and restarting run through without getting stuck."
-        ]
-      }
-    ]
-  },
-  {
-    "version": "1.10.19",
-    "date": "2026-11-17",
-    "admin": true,
-    "items": [
-      {
-        "icon": "download",
-        "de": [
-          "Update ohne Hängen",
-          "Nach „Jetzt aktualisieren“ schließt das Fenster sofort; oben zeigt eine kleine Pille den Fortschritt, danach lädt die Seite von selbst neu."
-        ],
-        "en": [
-          "Updates without getting stuck",
-          "After “Update now” the window closes right away; a small pill at the top shows progress and the page reloads by itself afterwards."
-        ]
-      }
-    ]
-  },
-  {
-    "version": "1.10.18",
-    "date": "2026-11-17",
-    "items": [
-      {
-        "icon": "people",
-        "de": [
-          "Besetzung wie bei Amazon X-Ray",
-          "Beim Pausieren steht links eine Liste mit Fotos, Namen und Rollen. Ein Tipp aufs Bild blendet sie aus, ein Tipp auf eine Person zeigt daneben ihr Porträt."
-        ],
-        "en": [
-          "Cast like Prime Video X-Ray",
-          "When you pause, a list with photos, names and roles appears on the left. Tap the picture to hide it, tap a person to see their profile next to it."
+          "The player controls stay for eight seconds after your last tap."
         ]
       }
     ]
