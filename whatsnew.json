@@ -1,5 +1,44 @@
 [
   {
+    "version": "1.10.16",
+    "date": "2026-11-17",
+    "items": [
+      {
+        "icon": "people",
+        "de": [
+          "Besetzung wie bei Amazon",
+          "Beim Pausieren steht die Besetzung als wischbare Reihe von Porträts direkt über der Steuerleiste und verschwindet mit ihr. „Besetzung“ klappt sie ein."
+        ],
+        "en": [
+          "Cast like on Prime Video",
+          "When you pause, the cast appears as a swipeable row of portraits right above the controls and goes away with them. Tap “Cast” to fold it."
+        ]
+      },
+      {
+        "icon": "star",
+        "de": [
+          "Mehr über die Schauspieler",
+          "Ein Tipp auf ein Porträt zeigt Geburtstag, Alter, Herkunft, eine kurze Biografie und was von der Person in deiner Mediathek liegt."
+        ],
+        "en": [
+          "More about the actors",
+          "Tap a portrait to see birthday, age, birthplace, a short bio and what else they're in in your library."
+        ]
+      },
+      {
+        "icon": "bell",
+        "de": [
+          "Release Notes mit OK",
+          "Nach einem Update siehst du einmal, was neu ist, und bestätigst mit OK. Im Plugin-Katalog steht jetzt zu jeder Version, was sie gebracht hat."
+        ],
+        "en": [
+          "Release notes with OK",
+          "After an update you see once what's new and confirm with OK. The plugin catalog now lists what each version brought."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.10.15",
     "date": "2026-11-17",
     "items": [
@@ -67,6 +106,23 @@
     ]
   },
   {
+    "version": "1.10.13",
+    "date": "2026-11-17",
+    "items": [
+      {
+        "icon": "play",
+        "de": [
+          "Pause mit Kontext",
+          "Beim Pausieren erscheinen links Titel, Kapitel, Besetzung mit Rollen und die Endzeit. Ein Tipp auf eine Person zeigt, was von ihr in deiner Mediathek liegt."
+        ],
+        "en": [
+          "Pause with context",
+          "When you pause, the title, chapter, cast with roles and end time appear on the left. Tap a person to see what else of theirs is in your library."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.10.12",
     "date": "2026-11-17",
     "items": [
@@ -107,6 +163,1323 @@
         "en": [
           "Next episode",
           "At the end of an episode, a slim glass pill with a ring counts down to the next one."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.10",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "glass",
+        "de": [
+          "Helleres Glas",
+          "Kreise, Leiste und die Kopfzeile am Handy wirken jetzt wie Liquid Glass, Abspielen und Fortsetzen als weißes Milchglas."
+        ],
+        "en": [
+          "Brighter glass",
+          "Circles, the bar and the header on phones now look like Liquid Glass, with Play and Resume in frosted white."
+        ]
+      },
+      {
+        "icon": "home",
+        "de": [
+          "Wegwischen auf der Startseite",
+          "Die Detailansicht aus „Unterwegs zu dir“ lässt sich mit einer Wischgeste schließen."
+        ],
+        "en": [
+          "Swipe to dismiss",
+          "The detail view from “On its way to you” can now be swiped away on the home screen."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.9",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "glass",
+        "de": [
+          "Kategorien als Glas-Kapsel",
+          "Am Handy sitzt die Kategorie-Leiste in einer Glas-Kapsel wie die Kopfzeile am Rechner."
+        ],
+        "en": [
+          "Categories in a glass capsule",
+          "On phones, the category bar now sits in one glass capsule, just like the header on desktop."
+        ]
+      },
+      {
+        "icon": "sparkle",
+        "de": [
+          "README aufgefrischt",
+          "Die Beschreibung zeigt jetzt Entdecken, Bewerten und die Startseite mit neuen Bildschirmfotos."
+        ],
+        "en": [
+          "Refreshed README",
+          "The description now covers Discover, Ratings and the home screen, with new screenshots."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.8",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "play",
+        "de": [
+          "Eigenes Weiterschauen",
+          "Eine Karte je Serie mit der nächsten Folge, nur Aktuelles, und jede Karte lässt sich entfernen."
+        ],
+        "en": [
+          "Smarter Continue Watching",
+          "One card per series with the next episode, only recent titles, and any card can be removed."
+        ]
+      },
+      {
+        "icon": "home",
+        "de": [
+          "Neu hinzugefügt",
+          "Eine eigene Reihe zeigt, was neu in deiner Mediathek ist, statt Jellyfins Standardreihen."
+        ],
+        "en": [
+          "Recently Added",
+          "A dedicated row shows what’s new in your library, replacing Jellyfin’s default rows."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.7",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "star",
+        "de": [
+          "Bewerten im richtigen Moment",
+          "Die Frage nach einer Bewertung kommt direkt nach dem Schauen oder Abhaken, nicht mehr beim Start für Älteres."
+        ],
+        "en": [
+          "Rate at the right moment",
+          "You’re asked to rate right after watching or marking something as watched, no longer for older titles at startup."
+        ]
+      },
+      {
+        "icon": "globe",
+        "de": [
+          "Plakate in Originalsprache",
+          "Neue Titel bekommen Plakate in ihrer Originalsprache. Das lässt sich abschalten."
+        ],
+        "en": [
+          "Posters in the original language",
+          "New titles get posters in their original language. You can turn this off."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.6",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "star",
+        "de": [
+          "Alle Letterboxd-Bewertungen",
+          "Deine Letterboxd-Bewertungen fließen ins Profil und erscheinen bei Filmen in der Mediathek, die du hier noch nicht bewertet hast – auch ohne Tagebuch."
+        ],
+        "en": [
+          "All your Letterboxd ratings",
+          "Your Letterboxd ratings feed into your profile and show up on library movies you haven’t rated here yet, even without a diary."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.5",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "star",
+        "de": [
+          "Verlässlicher bewerten",
+          "Gefragt wird nur nach Filmen, die du wirklich zu Ende geschaut hast. Auf mehreren Geräten geht nichts mehr verloren, und schnelles Speichern landet trotzdem auf Letterboxd."
+        ],
+        "en": [
+          "More reliable ratings",
+          "You’re only asked about movies you actually finished. Nothing gets lost across devices, and a quick save still reaches Letterboxd."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.4",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "download",
+        "de": [
+          "Anfrage zurückziehen",
+          "Eigene Anfragen ohne Datei lassen sich zurücknehmen: der Download stoppt und die Anfrage verschwindet – mit Rückgängig."
+        ],
+        "en": [
+          "Withdraw a request",
+          "Take back your own requests that haven’t arrived yet: the download stops and the request is removed, with Undo."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.3",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "search",
+        "de": [
+          "Live-Stand in der Suche",
+          "Angefragte Titel zeigen in der Suche laufend, wie weit sie sind, und „Keine Ergebnisse“ steht nicht mehr über Treffern zum Anfragen."
+        ],
+        "en": [
+          "Live status in search",
+          "Requested titles show their progress in search as it happens, and “No results” no longer appears above titles you can request."
+        ]
+      },
+      {
+        "icon": "heart",
+        "de": [
+          "Letterboxd-Tagebuch verknüpfen",
+          "In „Dein Geschmack“ kannst du dein Letterboxd-Tagebuch verbinden (mit Jellyscribe)."
+        ],
+        "en": [
+          "Link your Letterboxd diary",
+          "Connect your Letterboxd diary in “Your Taste” (with Jellyscribe)."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.2",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "settings",
+        "de": [
+          "Einstellungen in der Seitenleiste",
+          "Die Einstellungen von Cinema Glass sind direkt über die Seitenleiste des Dashboards erreichbar."
+        ],
+        "en": [
+          "Settings in the sidebar",
+          "Cinema Glass settings are now one click away in the dashboard sidebar."
+        ],
+        "admin": true
+      }
+    ]
+  },
+  {
+    "version": "1.10.1",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "settings",
+        "de": [
+          "Neue Einstellungsseite",
+          "Bereiche mit Sprungleiste, Glas-Schalter mit Erklärung, ausgegraute Abhängigkeiten, Verbindungstest für Seerr und ein Hinweis auf ungespeicherte Änderungen."
+        ],
+        "en": [
+          "New settings page",
+          "Sections with a jump bar, glass toggles with explanations, dimmed dependencies, a Seerr connection test and a reminder about unsaved changes."
+        ],
+        "admin": true
+      }
+    ]
+  },
+  {
+    "version": "1.10.0",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "Profilmenü am Handy",
+          "Der Profil-Knopf öffnet wieder das Profilmenü statt „Dein Geschmack“."
+        ],
+        "en": [
+          "Profile menu on phones",
+          "The profile button opens the profile menu again instead of “Your Taste”."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.9.9",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "star",
+        "de": [
+          "Bewerten beim Abhaken",
+          "Der Bewerten-Dialog erscheint auch, wenn du etwas als gesehen markierst – nur noch mit „Überspringen“ und „Speichern“ und mit Cover am Handy."
+        ],
+        "en": [
+          "Rate when marking watched",
+          "The rating dialog also appears when you mark something as watched, now with just “Skip” and “Save” and cover art on phones."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.9.8",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "star",
+        "de": [
+          "Schlichterer Bewerten-Dialog",
+          "Das Herz sieht aus wie die Sterne, Zusammenfassung und Beschriftungen sind weg."
+        ],
+        "en": [
+          "Simpler rating dialog",
+          "The heart matches the stars, and the summary line and labels are gone."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.9.7",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "glass",
+        "de": [
+          "Bewerten in Cinema-Glass-Farben",
+          "Sterne und Herz sind jetzt weiß statt grün und orange."
+        ],
+        "en": [
+          "Rating in Cinema Glass colors",
+          "Stars and heart are now white instead of green and orange."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.9.6",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "star",
+        "de": [
+          "Bewerten wie bei Letterboxd",
+          "Mit Datum, „schon mal gesehen“, Kommentar samt Spoiler-Hinweis, halben Sternen und Herz – jederzeit über das Drei-Punkte-Menü."
+        ],
+        "en": [
+          "Rate like on Letterboxd",
+          "With date, rewatch, a review with spoiler warning, half stars and a heart – any time from the three-dot menu."
+        ]
+      },
+      {
+        "icon": "heart",
+        "de": [
+          "Letterboxd nur auf Wunsch",
+          "Ein Eintrag auf Letterboxd entsteht nur, wenn du es ausdrücklich willst (mit passendem Plugin)."
+        ],
+        "en": [
+          "Letterboxd only if you want",
+          "An entry is only posted to Letterboxd when you explicitly ask for it (with the matching plugin)."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.9.5",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "star",
+        "de": [
+          "Nach dem Schauen bewerten",
+          "Gib gesehenen Filmen ½ bis 5 Sterne und ein Herz – auch offline geschauten, sobald die App sie meldet. Standardmäßig aus."
+        ],
+        "en": [
+          "Rate after watching",
+          "Give watched movies ½ to 5 stars and a heart, even ones watched offline once the app reports them. Off by default."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.9.4",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "compass",
+        "de": [
+          "Studios und Sender mit Logo",
+          "Studios und Sender erscheinen mit ihren Logos, die Marvel-Liste ist entfallen."
+        ],
+        "en": [
+          "Studios and networks with logos",
+          "Studios and networks now show their logos, and the Marvel list has been removed."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.9.3",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "people",
+        "de": [
+          "Freunde vollständig",
+          "In „Von deinen Freunden“ bleiben Namen und Sterne ganz, die Zeile darf zweizeilig werden."
+        ],
+        "en": [
+          "Friends in full",
+          "In “From your friends”, names and stars are no longer cut off; the line can wrap to two rows."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.9.2",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "people",
+        "de": [
+          "Letterboxd in Entdecken",
+          "Deine eigenen Bewertungen fließen ins Profil, dazu eine Reihe „Von deinen Freunden“. Standardmäßig aus."
+        ],
+        "en": [
+          "Letterboxd in Discover",
+          "Your own ratings feed into your profile, plus a “From your friends” row. Off by default."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.9.1",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "compass",
+        "de": [
+          "Entdecken nur aus der Mediathek",
+          "Entdecken lässt sich auf deine eigene Mediathek beschränken, und Empfehlungen gibt es auch bei fehlenden Titeln."
+        ],
+        "en": [
+          "Discover your own library",
+          "Discover can be limited to your own library, and titles you don’t have get recommendations too."
+        ]
+      },
+      {
+        "icon": "film",
+        "de": [
+          "Trailer überall",
+          "Ein Trailer-Knopf auch für Mediathek-Titel ohne hinterlegten Trailer, am Handy hochkant gehalten quer über den ganzen Bildschirm."
+        ],
+        "en": [
+          "Trailers everywhere",
+          "A Trailer button even for library titles without a stored trailer, and on phones it fills the screen sideways even when held upright."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.9.0",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "film",
+        "de": [
+          "Ganze Filmreihe anfragen",
+          "„Alle fehlenden anfragen“ gibt es jetzt auch bei Titeln, die dir fehlen."
+        ],
+        "en": [
+          "Request a whole collection",
+          "“Request all missing” now also works on titles you don’t have yet."
+        ]
+      },
+      {
+        "icon": "compass",
+        "de": [
+          "Hitlisten, Studios und Sender",
+          "Neu in Entdecken und in der Kategorien-Auswahl, dazu das Marvel Cinematic Universe in Reihenfolge."
+        ],
+        "en": [
+          "Charts, studios and networks",
+          "New in Discover and the category picker, plus the Marvel Cinematic Universe in order."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.8.9",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "film",
+        "de": [
+          "Trailer am iPhone",
+          "Trailer spielen wieder am iPhone."
+        ],
+        "en": [
+          "Trailers on iPhone",
+          "Trailers play on iPhone again."
+        ]
+      },
+      {
+        "icon": "heart",
+        "de": [
+          "Dein Geschmack in der Kopfleiste",
+          "„Dein Geschmack“ und „Geschmack verfeinern“ als runder Knopf oben, die Auswahlzeile in Entdecken nutzt die volle Breite."
+        ],
+        "en": [
+          "Your Taste in the header",
+          "“Your Taste” and “Refine your taste” now live in a round button at the top, and the Discover picker uses the full width."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.8.8",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "film",
+        "de": [
+          "Trailer im Glas-Look",
+          "Trailer haben eine eigene Glas-Bedienung statt der YouTube-Oberfläche."
+        ],
+        "en": [
+          "Trailers in glass",
+          "Trailers get their own glass controls instead of YouTube’s."
+        ]
+      },
+      {
+        "icon": "compass",
+        "de": [
+          "Entdecken in der Leiste",
+          "„Entdecken“ steht hinter den Bibliotheken, am Handy wählst du Filme, Serien oder Kategorien statt einer langen Genre-Reihe."
+        ],
+        "en": [
+          "Discover in the bar",
+          "“Discover” sits after your libraries, and on phones you pick Movies, Shows or Categories instead of a long genre row."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.8.7",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "heart",
+        "de": [
+          "Bewerten im Drei-Punkte-Menü",
+          "„Gefällt mir“ und „Nicht meins“ für Titel aus der Mediathek und für fehlende Titel. Die Suche in „Geschmack verfeinern“ ist wieder weg."
+        ],
+        "en": [
+          "Rate from the three-dot menu",
+          "“Like” and “Not for me” for library titles and missing ones. The search in “Refine your taste” has been removed."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.8.6",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "heart",
+        "de": [
+          "Gezielt bewerten",
+          "Herz und „Nicht meins“ auch bei fehlenden Titeln, dazu eine Suche in „Geschmack verfeinern“."
+        ],
+        "en": [
+          "Rate on purpose",
+          "Heart and “Not for me” also for missing titles, plus a search in “Refine your taste”."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.8.5",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "compass",
+        "de": [
+          "Bessere Empfehlungen",
+          "Entdecken findet deutlich mehr passende Titel – über Filmreihen, Regie, Originalsprachen und Jahrzehnte – und ordnet sie treffsicherer."
+        ],
+        "en": [
+          "Better recommendations",
+          "Discover finds many more fitting titles – across collections, directors, original languages and decades – and ranks them more accurately."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.8.4",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "film",
+        "de": [
+          "Trailer für fehlende Titel",
+          "Trailer gibt es jetzt auch für Titel, die dir fehlen – im großen Bild in Entdecken, in der Detailansicht und in „Geschmack verfeinern“."
+        ],
+        "en": [
+          "Trailers for missing titles",
+          "Trailers now play for titles you don’t have yet – in the Discover hero, the detail view and “Refine your taste”."
+        ]
+      },
+      {
+        "icon": "settings",
+        "de": [
+          "Treffsicherheit messen",
+          "Administratoren können prüfen, wie gut die Empfehlungen treffen."
+        ],
+        "en": [
+          "Measure accuracy",
+          "Admins can check how well the recommendations hit."
+        ],
+        "admin": true
+      }
+    ]
+  },
+  {
+    "version": "1.8.3",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "download",
+        "de": [
+          "Qualität nach Originalsprache",
+          "Anfragen bekommen das passende Qualitätsprofil nach Originalsprache, nachts automatisch die spätere Variante."
+        ],
+        "en": [
+          "Quality by original language",
+          "Requests get the right quality profile for their original language, and at night the deferred variant automatically."
+        ]
+      },
+      {
+        "icon": "clock",
+        "de": [
+          "Klarer Stand in der Ruhezeit",
+          "Statt „Fehlgeschlagen“ steht dort „Startet … gegen …“."
+        ],
+        "en": [
+          "Clear status during quiet hours",
+          "Instead of “Failed” you now see “Starts … around …”."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.8.2",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "Entdecken aufgeräumt",
+          "Am Seitenende gibt es keine doppelten Knöpfe mehr."
+        ],
+        "en": [
+          "Tidier Discover",
+          "No more duplicate buttons at the bottom of the page."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.8.1",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "heart",
+        "de": [
+          "Geschmack verfeinern, schneller",
+          "Reagiert sofort, mit Zurück, „Mehr Infos“ und „Anfragen“ direkt am Titel."
+        ],
+        "en": [
+          "Faster taste refining",
+          "Responds instantly, with Back, “More info” and “Request” right on each title."
+        ]
+      },
+      {
+        "icon": "clock",
+        "de": [
+          "Genauere Startzeit",
+          "„Startet gegen …“ erscheint nur noch für Anfragen aus der laufenden Ruhezeit."
+        ],
+        "en": [
+          "More accurate start time",
+          "“Starts around …” now only appears for requests made during the current quiet hours."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.8.0",
+    "date": "2026-11-15",
+    "items": [
+      {
+        "icon": "compass",
+        "de": [
+          "Entdecken",
+          "Persönliche Empfehlungen im Netflix-Stil, auch für fehlende Titel, mit Geschmacks-Check und „Geschmack verfeinern“."
+        ],
+        "en": [
+          "Discover",
+          "Personal Netflix-style recommendations, including titles you don’t have, with a taste check and “Refine your taste”."
+        ]
+      },
+      {
+        "icon": "download",
+        "de": [
+          "Anfragen im Blick",
+          "Angefragte Titel zeigen auf der Startseite Prozent und Termin, und Serien fragst du in einem Staffel-Fenster an."
+        ],
+        "en": [
+          "Requests at a glance",
+          "Requested titles show progress and timing on the home screen, and shows are requested through a season picker."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.7.2",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "Aufgeräumte Plakate",
+          "Der Fassungszähler sitzt unten links, der Gesehen-Haken steht oben links allein."
+        ],
+        "en": [
+          "Cleaner posters",
+          "The version count moves to the bottom left, leaving the watched check alone at the top left."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.7.1",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "Fehlerbehebungen",
+          "„Nicht in deiner Mediathek“ steht in der Suche immer unter deinen Treffern, und das Herz füllt sich ohne Farbwechsel."
+        ],
+        "en": [
+          "Fixes",
+          "“Not in your library” always appears below your own results in search, and the heart fills without changing color."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.7.0",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "compass",
+        "de": [
+          "Entdecken",
+          "Empfehlungen für Titel, die dir fehlen: „Für dich“ und „Weil du … gesehen hast“ auf der Startseite, „Könnte dir auch gefallen“ bei Filmen und Serien – direkt anfragbar."
+        ],
+        "en": [
+          "Discover",
+          "Recommendations for titles you don’t have: “For you” and “Because you watched …” on the home screen, “You might also like” on movies and shows – ready to request."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.6.5",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "heart",
+        "de": [
+          "Herz für „Gefällt mir“",
+          "Ein Herz statt Plus, das sofort reagiert und jetzt auch gespeichert wird."
+        ],
+        "en": [
+          "A heart for “Like”",
+          "A heart instead of a plus that responds instantly and is now actually saved."
+        ]
+      },
+      {
+        "icon": "star",
+        "de": [
+          "Qualitäts-Zeichen gezielter",
+          "Nur noch auf der Film- und Folgenseite, eigene Zeichen ohne Rahmen."
+        ],
+        "en": [
+          "Quality badges where they matter",
+          "Now only on movie and episode pages, with custom badges shown without a frame."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.6.4",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "settings",
+        "de": [
+          "Eigene Qualitäts-Zeichen",
+          "Zeichen für die Qualitäts-Marken lassen sich aus einem Ordner auf dem Server laden; eine Anleitung erklärt, woher man sie bekommt."
+        ],
+        "en": [
+          "Custom quality badges",
+          "Badge artwork can be loaded from a folder on the server, with a guide on where to get it."
+        ],
+        "admin": true
+      }
+    ]
+  },
+  {
+    "version": "1.6.3",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "search",
+        "de": [
+          "Suche entschlackt",
+          "Die allgemeine Suche und ihre Vorschläge kommen ohne Mediathek aus – die hat ihre eigene Suche auf der TV-Seite. Lange Sendungen ohne Staffeln bekommen ein Filterfeld."
+        ],
+        "en": [
+          "Leaner search",
+          "The main search and its suggestions no longer include the Mediathek, which has its own search on the TV page. Long shows without seasons get a filter field."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.6.2",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "star",
+        "de": [
+          "Qualitäts-Marken als Zeichen",
+          "4K Ultra HD, HDR, Dolby Vision und Dolby Atmos als Zeichen unten auf den Plakaten, der Fassungszähler im Glas-Stil neben dem Haken."
+        ],
+        "en": [
+          "Quality badges as logos",
+          "4K Ultra HD, HDR, Dolby Vision and Dolby Atmos as logos at the bottom of posters, with the version count in glass next to the check."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.6.1",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "film",
+        "de": [
+          "Nur echte Filmreihen",
+          "Die Filmreihe zeigt keine selbst angelegten Sammlungen und Merklisten mehr."
+        ],
+        "en": [
+          "Real collections only",
+          "The collection row no longer shows hand-made collections or watchlists."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.6.0",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "film",
+        "de": [
+          "Filmreihe",
+          "Auf der Detailseite stehen alle Teile einer Reihe in Reihenfolge, fehlende lassen sich anfragen."
+        ],
+        "en": [
+          "Collections",
+          "The detail page lists every part of a series in order, and missing ones can be requested."
+        ]
+      },
+      {
+        "icon": "star",
+        "de": [
+          "Qualitäts-Marken",
+          "Karten zeigen, ob ein Titel in 4K, HDR oder Dolby Vision vorliegt."
+        ],
+        "en": [
+          "Quality badges",
+          "Cards show whether a title is available in 4K, HDR or Dolby Vision."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.5.2",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "download",
+        "de": [
+          "Download-Fortschritt für die Mediathek",
+          "Mediathek-Downloads zeigen in der Jellyfin-App denselben Fortschritt wie Filme."
+        ],
+        "en": [
+          "Mediathek download progress",
+          "Mediathek downloads show the same progress in the Jellyfin app as movies."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.5.1",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "tv",
+        "de": [
+          "Live-TV am Handy",
+          "Im Querformat überlappen keine Titel mehr, und das Einschalt-Bild im Hochformat zeigt die ganze Sendung."
+        ],
+        "en": [
+          "Live TV on phones",
+          "No more overlapping titles in landscape, and the tune-in picture shows the full frame in portrait."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.5.0",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "download",
+        "de": [
+          "Download-Qualität, die wirkt",
+          "Gilt auch bei transkodierten Downloads der Jellyfin-App und begrenzt jetzt wirklich die Bildgröße."
+        ],
+        "en": [
+          "Download quality that sticks",
+          "Now also applies to transcoded downloads in the Jellyfin app and truly limits the resolution."
+        ]
+      },
+      {
+        "icon": "fix",
+        "de": [
+          "Fehlerbehebungen",
+          "Serien aus der Suche öffnen sich auch nach einem Besuch der TV-Seite, die Verwaltung hat das Menü links und das Profil rechts oben."
+        ],
+        "en": [
+          "Fixes",
+          "Shows from search open correctly after visiting the TV page, and the admin area has its menu on the left and profile at the top right."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.4.9",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "Fehlerbehebungen",
+          "Die Verwaltung am Handy hat wieder ein Menü zu allen Bereichen, das Suchfeld der TV-Seite keinen weißen Rahmen, und Mediathek-Titel erscheinen in der Suche nur einmal und im Querformat."
+        ],
+        "en": [
+          "Fixes",
+          "The admin area on phones has its full menu back, the TV page search field loses its white border, and Mediathek titles show up once and in landscape in search."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.4.8",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "series",
+        "de": [
+          "Staffeln in Reihenfolge",
+          "Staffeln stehen in ihrer Reihenfolge, die neueste ist vorgewählt, und Folgenlisten sind vollständig."
+        ],
+        "en": [
+          "Seasons in order",
+          "Seasons appear in order with the newest selected, and episode lists are complete."
+        ]
+      },
+      {
+        "icon": "tv",
+        "de": [
+          "TV am Handy",
+          "Die TV-Seite erreichst du über den Chip „TV“."
+        ],
+        "en": [
+          "TV on phones",
+          "Reach the TV page from the “TV” chip."
+        ]
+      },
+      {
+        "icon": "download",
+        "de": [
+          "Mediathek herunterladen",
+          "Mediathek-Titel lassen sich in der Jellyfin-App herunterladen."
+        ],
+        "en": [
+          "Download from the Mediathek",
+          "Mediathek titles can be downloaded in the Jellyfin app."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.4.7",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "series",
+        "de": [
+          "Neueste Staffel zuerst",
+          "Serien der Mediathek beginnen mit der neuesten Staffel, laufende Sendungen ohne Bild bekommen eine Karte mit ihrem Titel."
+        ],
+        "en": [
+          "Newest season first",
+          "Mediathek shows open on their latest season, and airing programs without artwork get a title card."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.4.6",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "tv",
+        "de": [
+          "Ruhigeres Laden",
+          "Folgen einer Sendung erscheinen stückweise mit Platzhaltern, der Serienkopf im Querformat, die Knöpfe der Senderseite mittig."
+        ],
+        "en": [
+          "Smoother loading",
+          "Episodes load in gradually with placeholders, the show header is in landscape, and channel page buttons are centered."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.4.5",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "tv",
+        "de": [
+          "Mediathek im Querformat",
+          "Mediathek-Karten sind durchgehend im Querformat, und Jellyfins Lautstärke-Anzeige weicht dem Regler in der Leiste."
+        ],
+        "en": [
+          "Mediathek in landscape",
+          "Mediathek cards are landscape throughout, and Jellyfin’s volume popup gives way to the slider in the bar."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.4.4",
+    "date": "2026-11-14",
+    "items": [
+      {
+        "icon": "tv",
+        "de": [
+          "TV-Seite mit Weiterschauen",
+          "Mit gemerkter Stelle, Sendern zum Aus- und Einblenden und einer ruhigen Live-Zeitleiste."
+        ],
+        "en": [
+          "TV page with Continue Watching",
+          "With resume points, channels you can show or hide, and a steadier live timeline."
+        ]
+      },
+      {
+        "icon": "download",
+        "de": [
+          "JellyDesk",
+          "Nach der Wiedergabe ist der Stand sofort aktuell, und Mediathek-Titel lassen sich herunterladen."
+        ],
+        "en": [
+          "JellyDesk",
+          "Progress updates right after playback, and Mediathek titles can be downloaded."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.4.3",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "tv",
+        "de": [
+          "Live-TV mit Zeitleiste",
+          "Mit „LIVE“-Anzeige, Zeitleiste seit dem Einschalten, laufender Sendung im Player und einer Überbrückung beim Umschalten."
+        ],
+        "en": [
+          "Live TV with a timeline",
+          "With a “LIVE” marker, a timeline since tuning in, the current program in the player and a smooth handover when switching."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.4.2",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "search",
+        "de": [
+          "Mediathek-Suche",
+          "Mit Ladeansicht und Gruppen; die Startseite kommt ohne TV-Abschnitte aus, die Leiste hat eine feste Reihenfolge."
+        ],
+        "en": [
+          "Mediathek search",
+          "With a loading view and groups; the home screen drops its TV sections, and the bar keeps a fixed order."
+        ]
+      },
+      {
+        "icon": "fix",
+        "de": [
+          "Fehlerbehebungen",
+          "Live-TV vorerst ohne Zeitleiste, und der Stand nach der Wiedergabe in JellyDesk stimmt."
+        ],
+        "en": [
+          "Fixes",
+          "Live TV without a timeline for now, and playback progress in JellyDesk is correct."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.4.1",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "Geduldigere Serienansicht",
+          "Die TV-Seite wartet länger auf Folgen, die der Server erst zusammenstellt."
+        ],
+        "en": [
+          "More patient show view",
+          "The TV page waits longer for episodes the server is still gathering."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.4.0",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "tv",
+        "de": [
+          "TV-Seite",
+          "Live-TV und Mediathek auf einer Seite, Kanal-Titel starten direkt."
+        ],
+        "en": [
+          "TV page",
+          "Live TV and the Mediathek on one page, with channel titles starting right away."
+        ]
+      },
+      {
+        "icon": "search",
+        "de": [
+          "Aus der Mediathek",
+          "Die Suche zeigt auch Treffer aus der Mediathek."
+        ],
+        "en": [
+          "From the Mediathek",
+          "Search now includes results from the Mediathek."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.3.0",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "play",
+        "de": [
+          "JellyDesk-Player",
+          "Der Play-Knopf startet in JellyDesk den Player der App."
+        ],
+        "en": [
+          "JellyDesk player",
+          "In JellyDesk, the Play button starts the app’s own player."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.2.9",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "Saubere Dialoge",
+          "Die Überschrift mittiger Dialoge steht auf derselben Achse wie Text und Knopf."
+        ],
+        "en": [
+          "Tidier dialogs",
+          "Headings in centered dialogs now line up with the text and button."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.2.8",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "JellyDesk: Vollbild ohne Rutschen",
+          "Die Seite rutscht nach dem Wechsel zwischen Fenster und Vollbild nicht mehr nach."
+        ],
+        "en": [
+          "JellyDesk: steady fullscreen",
+          "The page no longer shifts after switching between window and fullscreen."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.2.7",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "Regale bis zum Ende",
+          "Regale laufen bis ans echte Ende, und die Seite bleibt nicht mehr seitlich verschoben stehen."
+        ],
+        "en": [
+          "Shelves to the very end",
+          "Shelves scroll all the way to the end, and the page no longer gets stuck shifted sideways."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.2.6",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "glass",
+        "de": [
+          "Flüssiges Scrollen",
+          "Regale folgen dem Trackpad direkt statt zu ruckeln – in Safari, Chrome und JellyDesk."
+        ],
+        "en": [
+          "Smooth scrolling",
+          "Shelves follow your trackpad directly instead of stuttering – in Safari, Chrome and JellyDesk."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.2.5",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "JellyDesk: sanfter ins Vollbild",
+          "Der Wechsel ins Vollbild endet ohne Größensprung."
+        ],
+        "en": [
+          "JellyDesk: smoother fullscreen",
+          "Entering fullscreen no longer ends with a jump in size."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.2.4",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "JellyDesk: Player und Vollbild",
+          "Das ✕ des Players sitzt unter den Fensterknöpfen, und die Seite übernimmt den Vollbild-Zustand des Fensters."
+        ],
+        "en": [
+          "JellyDesk: player and fullscreen",
+          "The player’s ✕ sits below the window buttons, and the page follows the window’s fullscreen state."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.2.3",
+    "date": "2026-11-13",
+    "items": [
+      {
+        "icon": "tv",
+        "de": [
+          "Mac-App JellyDesk",
+          "Cinema Glass arbeitet mit JellyDesk zusammen: Vollbild läuft über das App-Fenster, mit eigenem Schalter in den Einstellungen."
+        ],
+        "en": [
+          "JellyDesk for Mac",
+          "Cinema Glass works with JellyDesk: fullscreen uses the app window, with its own switch in settings."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.2.2",
+    "date": "2026-11-12",
+    "items": [
+      {
+        "icon": "play",
+        "de": [
+          "Besserer Player",
+          "Der Überspringen-Knopf bleibt während Vor- und Abspann sichtbar über der Steuerleiste, die Position im Zeitbalken ist ein kleiner Punkt."
+        ],
+        "en": [
+          "Better player",
+          "The Skip button stays visible above the controls during intros and credits, and the timeline position is a small dot."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.2.1",
+    "date": "2026-11-12",
+    "items": [
+      {
+        "icon": "glass",
+        "de": [
+          "Cinema Glass",
+          "Eine Kino-Oberfläche für Jellyfin: großes Titelbild, Folgenregal, Player, Downloads, Anfragen und Bewertungen – jede Funktion einzeln schaltbar."
+        ],
+        "en": [
+          "Cinema Glass",
+          "A cinematic look for Jellyfin: hero banner, episode shelf, player, downloads, requests and ratings – every feature can be switched on or off."
         ]
       }
     ]

@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/img/banner.svg" alt="Cinema Glass – Kino-Oberfläche für Jellyfin" width="100%"></p>
 
 <p align="center">
-  <a href="https://github.com/derpfiff/cinema-glass/releases/latest"><img alt="Version" src="https://img.shields.io/badge/Version-1.10.15-7a5cff?style=flat-square"></a>
+  <a href="https://github.com/derpfiff/cinema-glass/releases/latest"><img alt="Version" src="https://img.shields.io/badge/Version-1.10.16-7a5cff?style=flat-square"></a>
   <img alt="Jellyfin" src="https://img.shields.io/badge/Jellyfin-12.4-22c1ff?style=flat-square">
   <img alt=".NET" src="https://img.shields.io/badge/.NET-10-512bd4?style=flat-square">
   <a href="https://github.com/derpfiff/jellyfin-plugins"><img alt="Katalog" src="https://img.shields.io/badge/Katalog-derpfiff%2Fjellyfin--plugins-ff5c8a?style=flat-square"></a>
@@ -85,8 +85,9 @@ sonst deutsch.
 
 ## Im Player und im Konto
 
-- **Pause mit Kontext:** Beim Pausieren erscheint links die Besetzung mit Rollen, ein Tipp zeigt, was die Person sonst in
-  der Mediathek hat. „Endet um …“ steht klein unter dem Titel.
+- **Besetzung beim Pausieren (wie X-Ray):** eine wischbare Reihe Porträts mit Rollen unten über der Steuerleiste. Ein
+  Tipp zeigt Geburtstag, Herkunft, Kurzbiografie und was die Person sonst in der Mediathek hat. „Endet um …“ steht klein
+  unter dem Titel.
 - **Nächste Folge:** eine schmale Glas-Pille mit Ring, der bis zum Start herunterläuft.
 - **Profilbild wie bei Netflix:** In den Einstellungen öffnet ein Tipp aufs Bild Reihen mit Avataren, dazu Farben und
   eigene Fotos. Die Avatare legt der Admin selbst auf den Server, im Paket sind keine

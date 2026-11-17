@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.10.16.0",
+        "changelog": "- Besetzung wie bei Amazon: Beim Pausieren steht die Besetzung als wischbare Reihe von Porträts direkt über der Steuerleiste und verschwindet mit ihr. „Besetzung“ klappt sie ein.\n- Mehr über die Schauspieler: Ein Tipp auf ein Porträt zeigt Geburtstag, Alter, Herkunft, eine kurze Biografie und was von der Person in deiner Mediathek liegt.\n- Release Notes mit OK: Nach einem Update siehst du einmal, was neu ist, und bestätigst mit OK. Im Plugin-Katalog steht jetzt zu jeder Version, was sie gebracht hat.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.16.0.zip",
+        "checksum": "e711f2d22c9d42766d6185a7196b2e1d",
+        "timestamp": "2026-11-17T20:33:18Z"
+      },
+      {
         "version": "1.10.15.0",
         "changelog": "- Profilbild wie bei Netflix: Tippe in den Einstellungen auf dein Bild: Avatare in Reihen, Farben oder ein eigenes Foto.\n- Neue Einstellungsseite: Dein Profilbild oben, darunter alles übersichtlich in Gruppen.\n- Was ist neu: Nach jedem Update zeigt dir dieses Fenster einmal, was dazugekommen ist.",
         "targetAbi": "12.4.0.0",
@@ -17,7 +25,7 @@
       },
       {
         "version": "1.10.14.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Wer spielt mit?: Pausiere einen Film oder eine Folge: links erscheint die Besetzung mit Rollen. Ein Tipp zeigt, was die Person sonst in deiner Mediathek hat.\n- Endet um …: Unter dem Titel im Player steht, wann Film oder Folge zu Ende ist.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.14.0.zip",
         "checksum": "536a9eded6e5a6427bcc1ac66166583a",
@@ -25,7 +33,7 @@
       },
       {
         "version": "1.10.13.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Pause mit Kontext: Beim Pausieren erscheinen links Titel, Kapitel, Besetzung mit Rollen und die Endzeit. Ein Tipp auf eine Person zeigt, was von ihr in deiner Mediathek liegt.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.13.0.zip",
         "checksum": "6fdb4248df67d142d20aac330c7ac878",
@@ -33,7 +41,7 @@
       },
       {
         "version": "1.10.12.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Weiterschauen führt zur Serie: Das Bild spielt ab, die Zeile darunter öffnet die Serie.\n- Alles in deiner Sprache: Cinema Glass folgt der Sprache, die du in Jellyfin eingestellt hast: Deutsch oder Englisch.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.12.0.zip",
         "checksum": "32959a95771776b46a8fdced273d6495",
@@ -41,7 +49,7 @@
       },
       {
         "version": "1.10.11.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Nächste Folge: Am Ende einer Folge zeigt eine schmale Glas-Pille mit Ring, wann es weitergeht.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.11.0.zip",
         "checksum": "050b4c71ecfb7aba5b0831c44bc1bf9a",
@@ -49,7 +57,7 @@
       },
       {
         "version": "1.10.10.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Helleres Glas: Kreise, Leiste und die Kopfzeile am Handy wirken jetzt wie Liquid Glass, Abspielen und Fortsetzen als weißes Milchglas.\n- Wegwischen auf der Startseite: Die Detailansicht aus „Unterwegs zu dir“ lässt sich mit einer Wischgeste schließen.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.10.0.zip",
         "checksum": "352ae8f10da58aa08498ffe2ff77ed53",
@@ -57,7 +65,7 @@
       },
       {
         "version": "1.10.9.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Kategorien als Glas-Kapsel: Am Handy sitzt die Kategorie-Leiste in einer Glas-Kapsel wie die Kopfzeile am Rechner.\n- README aufgefrischt: Die Beschreibung zeigt jetzt Entdecken, Bewerten und die Startseite mit neuen Bildschirmfotos.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.9.0.zip",
         "checksum": "f239a71fe10e7815124da62684407604",
@@ -65,7 +73,7 @@
       },
       {
         "version": "1.10.8.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Eigenes Weiterschauen: Eine Karte je Serie mit der nächsten Folge, nur Aktuelles, und jede Karte lässt sich entfernen.\n- Neu hinzugefügt: Eine eigene Reihe zeigt, was neu in deiner Mediathek ist, statt Jellyfins Standardreihen.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.8.0.zip",
         "checksum": "162a9c61219af360e8e46c02999bf5d8",
@@ -73,7 +81,7 @@
       },
       {
         "version": "1.10.7.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Bewerten im richtigen Moment: Die Frage nach einer Bewertung kommt direkt nach dem Schauen oder Abhaken, nicht mehr beim Start für Älteres.\n- Plakate in Originalsprache: Neue Titel bekommen Plakate in ihrer Originalsprache. Das lässt sich abschalten.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.7.0.zip",
         "checksum": "b4945584f83b9c01689226ae8df3592f",
@@ -81,7 +89,7 @@
       },
       {
         "version": "1.10.6.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Alle Letterboxd-Bewertungen: Deine Letterboxd-Bewertungen fließen ins Profil und erscheinen bei Filmen in der Mediathek, die du hier noch nicht bewertet hast – auch ohne Tagebuch.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.6.0.zip",
         "checksum": "2ad91bffd8ed96842d5df518b95aab8a",
@@ -89,7 +97,7 @@
       },
       {
         "version": "1.10.5.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Verlässlicher bewerten: Gefragt wird nur nach Filmen, die du wirklich zu Ende geschaut hast. Auf mehreren Geräten geht nichts mehr verloren, und schnelles Speichern landet trotzdem auf Letterboxd.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.5.0.zip",
         "checksum": "2cf91973decc0ba81838fbc5e61417d9",
@@ -97,7 +105,7 @@
       },
       {
         "version": "1.10.4.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Anfrage zurückziehen: Eigene Anfragen ohne Datei lassen sich zurücknehmen: der Download stoppt und die Anfrage verschwindet – mit Rückgängig.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.4.0.zip",
         "checksum": "1b2b8fcfd5409c0bbdf5cb166a713e84",
@@ -105,7 +113,7 @@
       },
       {
         "version": "1.10.3.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Live-Stand in der Suche: Angefragte Titel zeigen in der Suche laufend, wie weit sie sind, und „Keine Ergebnisse“ steht nicht mehr über Treffern zum Anfragen.\n- Letterboxd-Tagebuch verknüpfen: In „Dein Geschmack“ kannst du dein Letterboxd-Tagebuch verbinden (mit Jellyscribe).",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.3.0.zip",
         "checksum": "f982f39d612653286a4304b876666727",
@@ -113,7 +121,7 @@
       },
       {
         "version": "1.10.2.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Einstellungen in der Seitenleiste: Die Einstellungen von Cinema Glass sind direkt über die Seitenleiste des Dashboards erreichbar.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.2.0.zip",
         "checksum": "6822e66a53718c9df3c4173266f74b7f",
@@ -121,7 +129,7 @@
       },
       {
         "version": "1.10.1.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Neue Einstellungsseite: Bereiche mit Sprungleiste, Glas-Schalter mit Erklärung, ausgegraute Abhängigkeiten, Verbindungstest für Seerr und ein Hinweis auf ungespeicherte Änderungen.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.1.0.zip",
         "checksum": "b71aa50c8300435147d40ea7fb2e0119",
@@ -129,7 +137,7 @@
       },
       {
         "version": "1.10.0.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Profilmenü am Handy: Der Profil-Knopf öffnet wieder das Profilmenü statt „Dein Geschmack“.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.0.0.zip",
         "checksum": "87b1c5523577ff05df8db02b523b9f7c",
@@ -137,7 +145,7 @@
       },
       {
         "version": "1.9.9.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Bewerten beim Abhaken: Der Bewerten-Dialog erscheint auch, wenn du etwas als gesehen markierst – nur noch mit „Überspringen“ und „Speichern“ und mit Cover am Handy.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.9.9.0.zip",
         "checksum": "33f9e05e44db3e9b276e8347b490748d",
@@ -145,7 +153,7 @@
       },
       {
         "version": "1.9.8.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Schlichterer Bewerten-Dialog: Das Herz sieht aus wie die Sterne, Zusammenfassung und Beschriftungen sind weg.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.9.8.0.zip",
         "checksum": "4a7e1ffd8ea6cb7e1fbc3cb7b536ebc8",
@@ -153,7 +161,7 @@
       },
       {
         "version": "1.9.7.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Bewerten in Cinema-Glass-Farben: Sterne und Herz sind jetzt weiß statt grün und orange.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.9.7.0.zip",
         "checksum": "c2a85875bdc11ca72d0a7231c9b6091a",
@@ -161,7 +169,7 @@
       },
       {
         "version": "1.9.6.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Bewerten wie bei Letterboxd: Mit Datum, „schon mal gesehen“, Kommentar samt Spoiler-Hinweis, halben Sternen und Herz – jederzeit über das Drei-Punkte-Menü.\n- Letterboxd nur auf Wunsch: Ein Eintrag auf Letterboxd entsteht nur, wenn du es ausdrücklich willst (mit passendem Plugin).",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.9.6.0.zip",
         "checksum": "1a6a9ba09640675e1c4fd2977d03383b",
@@ -169,7 +177,7 @@
       },
       {
         "version": "1.9.5.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Nach dem Schauen bewerten: Gib gesehenen Filmen ½ bis 5 Sterne und ein Herz – auch offline geschauten, sobald die App sie meldet. Standardmäßig aus.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.9.5.0.zip",
         "checksum": "1dc81c820e1b99d0c2d941b99b54238e",
@@ -177,7 +185,7 @@
       },
       {
         "version": "1.9.4.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Studios und Sender mit Logo: Studios und Sender erscheinen mit ihren Logos, die Marvel-Liste ist entfallen.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.9.4.0.zip",
         "checksum": "9613324e2b1aa039f299676c3749574e",
@@ -185,7 +193,7 @@
       },
       {
         "version": "1.9.3.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Freunde vollständig: In „Von deinen Freunden“ bleiben Namen und Sterne ganz, die Zeile darf zweizeilig werden.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.9.3.0.zip",
         "checksum": "16463d48d7ad7b3345680ff5f0cd8f5c",
@@ -193,7 +201,7 @@
       },
       {
         "version": "1.9.2.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Letterboxd in Entdecken: Deine eigenen Bewertungen fließen ins Profil, dazu eine Reihe „Von deinen Freunden“. Standardmäßig aus.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.9.2.0.zip",
         "checksum": "66ff6fa80c5aaf598805f6b06eb351d4",
@@ -201,7 +209,7 @@
       },
       {
         "version": "1.9.1.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Entdecken nur aus der Mediathek: Entdecken lässt sich auf deine eigene Mediathek beschränken, und Empfehlungen gibt es auch bei fehlenden Titeln.\n- Trailer überall: Ein Trailer-Knopf auch für Mediathek-Titel ohne hinterlegten Trailer, am Handy hochkant gehalten quer über den ganzen Bildschirm.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.9.1.0.zip",
         "checksum": "89098bc4ed081ea9011951bbf0b57d25",
@@ -209,7 +217,7 @@
       },
       {
         "version": "1.9.0.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Ganze Filmreihe anfragen: „Alle fehlenden anfragen“ gibt es jetzt auch bei Titeln, die dir fehlen.\n- Hitlisten, Studios und Sender: Neu in Entdecken und in der Kategorien-Auswahl, dazu das Marvel Cinematic Universe in Reihenfolge.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.9.0.0.zip",
         "checksum": "c8b652756518dad3c8050875069708df",
@@ -217,7 +225,7 @@
       },
       {
         "version": "1.8.9.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Trailer am iPhone: Trailer spielen wieder am iPhone.\n- Dein Geschmack in der Kopfleiste: „Dein Geschmack“ und „Geschmack verfeinern“ als runder Knopf oben, die Auswahlzeile in Entdecken nutzt die volle Breite.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.8.9.0.zip",
         "checksum": "9ab81701b15172b0045a52576c72e21c",
@@ -225,7 +233,7 @@
       },
       {
         "version": "1.8.8.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Trailer im Glas-Look: Trailer haben eine eigene Glas-Bedienung statt der YouTube-Oberfläche.\n- Entdecken in der Leiste: „Entdecken“ steht hinter den Bibliotheken, am Handy wählst du Filme, Serien oder Kategorien statt einer langen Genre-Reihe.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.8.8.0.zip",
         "checksum": "34bb895c7094b425d56f6f434b97ad22",
@@ -233,7 +241,7 @@
       },
       {
         "version": "1.8.7.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Bewerten im Drei-Punkte-Menü: „Gefällt mir“ und „Nicht meins“ für Titel aus der Mediathek und für fehlende Titel. Die Suche in „Geschmack verfeinern“ ist wieder weg.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.8.7.0.zip",
         "checksum": "74cf81fb5cf30a16376b58982e5f3e76",
@@ -241,7 +249,7 @@
       },
       {
         "version": "1.8.6.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Gezielt bewerten: Herz und „Nicht meins“ auch bei fehlenden Titeln, dazu eine Suche in „Geschmack verfeinern“.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.8.6.0.zip",
         "checksum": "ad9f84c5ca334d67667b256ec7a85b20",
@@ -249,7 +257,7 @@
       },
       {
         "version": "1.8.5.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Bessere Empfehlungen: Entdecken findet deutlich mehr passende Titel – über Filmreihen, Regie, Originalsprachen und Jahrzehnte – und ordnet sie treffsicherer.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.8.5.0.zip",
         "checksum": "a4f3f8e0abab6aae6917f707a966e0be",
@@ -257,7 +265,7 @@
       },
       {
         "version": "1.8.4.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Trailer für fehlende Titel: Trailer gibt es jetzt auch für Titel, die dir fehlen – im großen Bild in Entdecken, in der Detailansicht und in „Geschmack verfeinern“.\n- Treffsicherheit messen: Administratoren können prüfen, wie gut die Empfehlungen treffen.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.8.4.0.zip",
         "checksum": "4747da67e6067cdc3f0ac4a61bb7ee3b",
@@ -265,7 +273,7 @@
       },
       {
         "version": "1.8.3.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Qualität nach Originalsprache: Anfragen bekommen das passende Qualitätsprofil nach Originalsprache, nachts automatisch die spätere Variante.\n- Klarer Stand in der Ruhezeit: Statt „Fehlgeschlagen“ steht dort „Startet … gegen …“.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.8.3.0.zip",
         "checksum": "95f15dc29f0d9905e74d49c43fcc1e0f",
@@ -273,7 +281,7 @@
       },
       {
         "version": "1.8.2.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Entdecken aufgeräumt: Am Seitenende gibt es keine doppelten Knöpfe mehr.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.8.2.0.zip",
         "checksum": "59131d83645b088b877ad42fda2810be",
@@ -281,7 +289,7 @@
       },
       {
         "version": "1.8.1.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Geschmack verfeinern, schneller: Reagiert sofort, mit Zurück, „Mehr Infos“ und „Anfragen“ direkt am Titel.\n- Genauere Startzeit: „Startet gegen …“ erscheint nur noch für Anfragen aus der laufenden Ruhezeit.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.8.1.0.zip",
         "checksum": "61b42dc8a2df8e5d5ee31ae93ad01107",
@@ -289,7 +297,7 @@
       },
       {
         "version": "1.8.0.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Entdecken: Persönliche Empfehlungen im Netflix-Stil, auch für fehlende Titel, mit Geschmacks-Check und „Geschmack verfeinern“.\n- Anfragen im Blick: Angefragte Titel zeigen auf der Startseite Prozent und Termin, und Serien fragst du in einem Staffel-Fenster an.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.8.0.0.zip",
         "checksum": "eaa5161227ae4c5e3dd21012a1c0f677",
@@ -297,7 +305,7 @@
       },
       {
         "version": "1.7.2.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Aufgeräumte Plakate: Der Fassungszähler sitzt unten links, der Gesehen-Haken steht oben links allein.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.7.2.0.zip",
         "checksum": "ca081bfe2772e49ee95f448843645613",
@@ -305,7 +313,7 @@
       },
       {
         "version": "1.7.1.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Fehlerbehebungen: „Nicht in deiner Mediathek“ steht in der Suche immer unter deinen Treffern, und das Herz füllt sich ohne Farbwechsel.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.7.1.0.zip",
         "checksum": "3c396a4c7b72d6355d52118c25833a63",
@@ -313,7 +321,7 @@
       },
       {
         "version": "1.7.0.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Entdecken: Empfehlungen für Titel, die dir fehlen: „Für dich“ und „Weil du … gesehen hast“ auf der Startseite, „Könnte dir auch gefallen“ bei Filmen und Serien – direkt anfragbar.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.7.0.0.zip",
         "checksum": "8cbaa204b9c5d1cab7152aa273bde575",
@@ -321,7 +329,7 @@
       },
       {
         "version": "1.6.5.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Herz für „Gefällt mir“: Ein Herz statt Plus, das sofort reagiert und jetzt auch gespeichert wird.\n- Qualitäts-Zeichen gezielter: Nur noch auf der Film- und Folgenseite, eigene Zeichen ohne Rahmen.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.6.5.0.zip",
         "checksum": "ef9ebc47c3a98ac90fe506d1e88b4a7b",
@@ -329,7 +337,7 @@
       },
       {
         "version": "1.6.4.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Eigene Qualitäts-Zeichen: Zeichen für die Qualitäts-Marken lassen sich aus einem Ordner auf dem Server laden; eine Anleitung erklärt, woher man sie bekommt.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.6.4.0.zip",
         "checksum": "655cc8e22aac16b074c638b343ce4a52",
@@ -337,7 +345,7 @@
       },
       {
         "version": "1.6.3.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Suche entschlackt: Die allgemeine Suche und ihre Vorschläge kommen ohne Mediathek aus – die hat ihre eigene Suche auf der TV-Seite. Lange Sendungen ohne Staffeln bekommen ein Filterfeld.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.6.3.0.zip",
         "checksum": "41406914280afd58391fc12a96490f70",
@@ -345,7 +353,7 @@
       },
       {
         "version": "1.6.2.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Qualitäts-Marken als Zeichen: 4K Ultra HD, HDR, Dolby Vision und Dolby Atmos als Zeichen unten auf den Plakaten, der Fassungszähler im Glas-Stil neben dem Haken.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.6.2.0.zip",
         "checksum": "bf658eb73e7a652cc8dcbc8e649aaf3c",
@@ -353,7 +361,7 @@
       },
       {
         "version": "1.6.1.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Nur echte Filmreihen: Die Filmreihe zeigt keine selbst angelegten Sammlungen und Merklisten mehr.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.6.1.0.zip",
         "checksum": "4152c178d427a01701e265e767828998",
@@ -361,7 +369,7 @@
       },
       {
         "version": "1.6.0.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Filmreihe: Auf der Detailseite stehen alle Teile einer Reihe in Reihenfolge, fehlende lassen sich anfragen.\n- Qualitäts-Marken: Karten zeigen, ob ein Titel in 4K, HDR oder Dolby Vision vorliegt.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.6.0.0.zip",
         "checksum": "525612be105740869b9b86b0dc5a1fa1",
@@ -369,7 +377,7 @@
       },
       {
         "version": "1.5.2.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Download-Fortschritt für die Mediathek: Mediathek-Downloads zeigen in der Jellyfin-App denselben Fortschritt wie Filme.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.5.2.0.zip",
         "checksum": "765f856099292fe3ae046dbba620f438",
@@ -377,7 +385,7 @@
       },
       {
         "version": "1.5.1.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Live-TV am Handy: Im Querformat überlappen keine Titel mehr, und das Einschalt-Bild im Hochformat zeigt die ganze Sendung.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.5.1.0.zip",
         "checksum": "c92561b556ac80b385d246eaa4b671a1",
@@ -385,7 +393,7 @@
       },
       {
         "version": "1.5.0.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Download-Qualität, die wirkt: Gilt auch bei transkodierten Downloads der Jellyfin-App und begrenzt jetzt wirklich die Bildgröße.\n- Fehlerbehebungen: Serien aus der Suche öffnen sich auch nach einem Besuch der TV-Seite, die Verwaltung hat das Menü links und das Profil rechts oben.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.5.0.0.zip",
         "checksum": "3b41c32763fe8e44d72d06a18f05149f",
@@ -393,7 +401,7 @@
       },
       {
         "version": "1.4.9.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Fehlerbehebungen: Die Verwaltung am Handy hat wieder ein Menü zu allen Bereichen, das Suchfeld der TV-Seite keinen weißen Rahmen, und Mediathek-Titel erscheinen in der Suche nur einmal und im Querformat.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.4.9.0.zip",
         "checksum": "d94cab89ef7fc1dee7af637b8e73722a",
@@ -401,7 +409,7 @@
       },
       {
         "version": "1.4.8.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Staffeln in Reihenfolge: Staffeln stehen in ihrer Reihenfolge, die neueste ist vorgewählt, und Folgenlisten sind vollständig.\n- TV am Handy: Die TV-Seite erreichst du über den Chip „TV“.\n- Mediathek herunterladen: Mediathek-Titel lassen sich in der Jellyfin-App herunterladen.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.4.8.0.zip",
         "checksum": "e80d700b68b3eb0efcd0636c95754f30",
@@ -409,7 +417,7 @@
       },
       {
         "version": "1.4.7.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Neueste Staffel zuerst: Serien der Mediathek beginnen mit der neuesten Staffel, laufende Sendungen ohne Bild bekommen eine Karte mit ihrem Titel.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.4.7.0.zip",
         "checksum": "ecde3bddeb981a867369475f33aedd15",
@@ -417,7 +425,7 @@
       },
       {
         "version": "1.4.6.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Ruhigeres Laden: Folgen einer Sendung erscheinen stückweise mit Platzhaltern, der Serienkopf im Querformat, die Knöpfe der Senderseite mittig.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.4.6.0.zip",
         "checksum": "a66cbb6153fd0e6b8dac0b3099ba8cd4",
@@ -425,7 +433,7 @@
       },
       {
         "version": "1.4.5.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Mediathek im Querformat: Mediathek-Karten sind durchgehend im Querformat, und Jellyfins Lautstärke-Anzeige weicht dem Regler in der Leiste.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.4.5.0.zip",
         "checksum": "8ca2d35e2c254bb20dcecfee4db9d1d5",
@@ -433,7 +441,7 @@
       },
       {
         "version": "1.4.4.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- TV-Seite mit Weiterschauen: Mit gemerkter Stelle, Sendern zum Aus- und Einblenden und einer ruhigen Live-Zeitleiste.\n- JellyDesk: Nach der Wiedergabe ist der Stand sofort aktuell, und Mediathek-Titel lassen sich herunterladen.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.4.4.0.zip",
         "checksum": "c9a9d5ef12da29146ac3eda776dddee4",
@@ -441,7 +449,7 @@
       },
       {
         "version": "1.4.3.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Live-TV mit Zeitleiste: Mit „LIVE“-Anzeige, Zeitleiste seit dem Einschalten, laufender Sendung im Player und einer Überbrückung beim Umschalten.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.4.3.0.zip",
         "checksum": "8f84bde40fe717b106aa3884bee1e068",
@@ -449,7 +457,7 @@
       },
       {
         "version": "1.4.2.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Mediathek-Suche: Mit Ladeansicht und Gruppen; die Startseite kommt ohne TV-Abschnitte aus, die Leiste hat eine feste Reihenfolge.\n- Fehlerbehebungen: Live-TV vorerst ohne Zeitleiste, und der Stand nach der Wiedergabe in JellyDesk stimmt.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.4.2.0.zip",
         "checksum": "59afe5cbe979fabd61ee813a941e4d81",
@@ -457,7 +465,7 @@
       },
       {
         "version": "1.4.1.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Geduldigere Serienansicht: Die TV-Seite wartet länger auf Folgen, die der Server erst zusammenstellt.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.4.1.0.zip",
         "checksum": "7113a43b160cdfae9219f64dbeac73fa",
@@ -465,7 +473,7 @@
       },
       {
         "version": "1.4.0.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- TV-Seite: Live-TV und Mediathek auf einer Seite, Kanal-Titel starten direkt.\n- Aus der Mediathek: Die Suche zeigt auch Treffer aus der Mediathek.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.4.0.0.zip",
         "checksum": "61642aa299bce178eef7566989f3a201",
@@ -473,7 +481,7 @@
       },
       {
         "version": "1.3.0.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- JellyDesk-Player: Der Play-Knopf startet in JellyDesk den Player der App.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.3.0.0.zip",
         "checksum": "033e440fcde3de7fb0c6c7cec29b9dc2",
@@ -481,7 +489,7 @@
       },
       {
         "version": "1.2.9.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Saubere Dialoge: Die Überschrift mittiger Dialoge steht auf derselben Achse wie Text und Knopf.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.2.9.0.zip",
         "checksum": "694cc0c3629f00e1cfff07d3214e943f",
@@ -489,7 +497,7 @@
       },
       {
         "version": "1.2.8.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- JellyDesk: Vollbild ohne Rutschen: Die Seite rutscht nach dem Wechsel zwischen Fenster und Vollbild nicht mehr nach.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.2.8.0.zip",
         "checksum": "e194a75ac4b266ab95699fcdb648a2fb",
@@ -497,7 +505,7 @@
       },
       {
         "version": "1.2.7.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Regale bis zum Ende: Regale laufen bis ans echte Ende, und die Seite bleibt nicht mehr seitlich verschoben stehen.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.2.7.0.zip",
         "checksum": "57a0f3d35f5e6004260a69e57306e806",
@@ -505,7 +513,7 @@
       },
       {
         "version": "1.2.6.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Flüssiges Scrollen: Regale folgen dem Trackpad direkt statt zu ruckeln – in Safari, Chrome und JellyDesk.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.2.6.0.zip",
         "checksum": "754e706b9b716672f8523fb54849096b",
@@ -513,7 +521,7 @@
       },
       {
         "version": "1.2.5.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- JellyDesk: sanfter ins Vollbild: Der Wechsel ins Vollbild endet ohne Größensprung.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.2.5.0.zip",
         "checksum": "28bdd636de87a0fc849cfd03bedc88ce",
@@ -521,7 +529,7 @@
       },
       {
         "version": "1.2.4.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- JellyDesk: Player und Vollbild: Das ✕ des Players sitzt unter den Fensterknöpfen, und die Seite übernimmt den Vollbild-Zustand des Fensters.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.2.4.0.zip",
         "checksum": "ada2a35b67f82e2e4ae91a56a21ef8aa",
@@ -529,7 +537,7 @@
       },
       {
         "version": "1.2.3.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Mac-App JellyDesk: Cinema Glass arbeitet mit JellyDesk zusammen: Vollbild läuft über das App-Fenster, mit eigenem Schalter in den Einstellungen.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.2.3.0.zip",
         "checksum": "220c9a67f1c31f59ef1dee27d782144f",
@@ -537,7 +545,7 @@
       },
       {
         "version": "1.2.2.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Besserer Player: Der Überspringen-Knopf bleibt während Vor- und Abspann sichtbar über der Steuerleiste, die Position im Zeitbalken ist ein kleiner Punkt.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.2.2.0.zip",
         "checksum": "e9d1ddd0141d0c1db4aa7fbc6536c96b",
@@ -545,7 +553,7 @@
       },
       {
         "version": "1.2.1.0",
-        "changelog": "Siehe Repository.",
+        "changelog": "- Cinema Glass: Eine Kino-Oberfläche für Jellyfin: großes Titelbild, Folgenregal, Player, Downloads, Anfragen und Bewertungen – jede Funktion einzeln schaltbar.",
         "targetAbi": "12.4.0.0",
         "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.2.1.0.zip",
         "checksum": "d42443824bd1867df01a3d362ea2a390",
