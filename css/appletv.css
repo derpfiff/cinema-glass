@@ -3707,8 +3707,8 @@ html.atv-js .atv-dc .atv-hc__sub:hover { color: #fff; }
 .atv-xr { position: fixed; z-index: 4; left: 0; top: 0; bottom: 0; width: min(380px, 42vw); display: flex; flex-direction: column; pointer-events: none;
   padding: calc(env(safe-area-inset-top, 0px) + 84px) 0 var(--atv-xr-bottom, calc(var(--atv-skip-bottom, 28px) + 12px)) max(var(--tv-gutter, 48px), env(safe-area-inset-left, 0px));
   background: linear-gradient(90deg, rgba(0, 0, 0, .82) 0%, rgba(0, 0, 0, .6) 55%, rgba(0, 0, 0, 0) 100%);
-  opacity: 0; transform: translateX(-12px); transition: opacity .35s ease, transform .4s var(--tv-ease, ease), padding-bottom .3s var(--tv-ease, ease); }
-.atv-xr.is-on { opacity: 1; transform: none; }
+  opacity: 0; transition: opacity .2s ease; }
+.atv-xr.is-on { opacity: 1; }
 .atv-xr > * { pointer-events: auto; }
 .atv-xr.is-folded { background: none; }
 .atv-xr__tog { align-self: flex-start; display: inline-flex; align-items: center; gap: 4px; margin: 0 0 12px; padding: 0; border: 0; background: none; cursor: pointer;
@@ -3774,7 +3774,7 @@ html.atv-js .atv-dc .atv-hc__sub:hover { color: #fff; }
   .atv-xr { width: 78vw; padding-left: 16px; }
   .atv-xr__card { left: 16px; width: calc(100vw - 32px); }
 }
-@media (prefers-reduced-motion: reduce) { .atv-xr { transition: opacity .2s; transform: none; } .atv-xr__card { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .atv-xr { transition: none; } .atv-xr__card { animation: none; } }
 /* „Endet um …“ klein an der Titelzeile des Players */
 .atv-osd-title__end { display: block; margin-top: 4px; font-size: clamp(12px, .95vw, 16px); font-weight: 500; color: rgba(255, 255, 255, .62); font-variant-numeric: tabular-nums; }
 

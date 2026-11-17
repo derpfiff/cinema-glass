@@ -1,5 +1,22 @@
 [
   {
+    "version": "1.10.24",
+    "date": "2026-11-18",
+    "items": [
+      {
+        "icon": "people",
+        "de": [
+          "Besetzung verschwindet mit dem Overlay",
+          "Blendet sich die Steuerung aus, ist auch „Besetzung“ sofort weg – ohne seitliches Ausblenden."
+        ],
+        "en": [
+          "Cast disappears with the overlay",
+          "When the controls hide, “Cast” disappears right away – no sideways fade."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.10.23",
     "date": "2026-11-18",
     "items": [

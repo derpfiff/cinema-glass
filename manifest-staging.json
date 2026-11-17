@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.10.24.0",
+        "changelog": "- Besetzung verschwindet mit dem Overlay: Blendet sich die Steuerung aus, ist auch „Besetzung“ sofort weg – ohne seitliches Ausblenden.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.24.0.zip",
+        "checksum": "58db7c8a523a5e92a50690137b08a664",
+        "timestamp": "2026-11-17T23:14:58Z"
+      },
+      {
         "version": "1.10.23.0",
         "changelog": "- Besetzung bleibt über dem Titel: Liste und Personenkarte reichen nie mehr über Folge und Titel unten im Player. Die Karte ist kompakter, die Biografie klappt per Tipp auf und scrollt in der Karte.",
         "targetAbi": "12.4.0.0",
