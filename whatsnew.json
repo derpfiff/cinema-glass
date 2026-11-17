@@ -1,5 +1,22 @@
 [
   {
+    "version": "1.10.18",
+    "date": "2026-11-17",
+    "items": [
+      {
+        "icon": "people",
+        "de": [
+          "Besetzung wie bei Amazon X-Ray",
+          "Beim Pausieren steht links eine Liste mit Fotos, Namen und Rollen. Ein Tipp aufs Bild blendet sie aus, ein Tipp auf eine Person zeigt daneben ihr Porträt."
+        ],
+        "en": [
+          "Cast like Prime Video X-Ray",
+          "When you pause, a list with photos, names and roles appears on the left. Tap the picture to hide it, tap a person to see their profile next to it."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.10.17",
     "date": "2026-11-17",
     "items": [
