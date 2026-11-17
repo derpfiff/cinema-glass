@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.10.15.0",
+        "changelog": "- Profilbild wie bei Netflix: Tippe in den Einstellungen auf dein Bild: Avatare in Reihen, Farben oder ein eigenes Foto.\n- Neue Einstellungsseite: Dein Profilbild oben, darunter alles übersichtlich in Gruppen.\n- Was ist neu: Nach jedem Update zeigt dir dieses Fenster einmal, was dazugekommen ist.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.15.0.zip",
+        "checksum": "68f82094645d56ba554032422974cb33",
+        "timestamp": "2026-11-17T20:08:19Z"
+      },
+      {
         "version": "1.10.14.0",
         "changelog": "Siehe Repository.",
         "targetAbi": "12.4.0.0",

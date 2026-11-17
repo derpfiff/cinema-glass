@@ -3,8 +3,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>Jellyfin.Plugin.CinemaGlass</RootNamespace>
     <AssemblyName>Jellyfin.Plugin.CinemaGlass</AssemblyName>
-    <AssemblyVersion>1.10.14.0</AssemblyVersion>
-    <FileVersion>1.10.14.0</FileVersion>
+    <AssemblyVersion>1.10.15.0</AssemblyVersion>
+    <FileVersion>1.10.15.0</FileVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
@@ -27,5 +27,6 @@
     <EmbeddedResource Include="../../js/appletv.js" LogicalName="CinemaGlass.core.js" />
     <EmbeddedResource Include="../../js/extras-seerr.js" LogicalName="CinemaGlass.seerr.js" />
     <EmbeddedResource Include="../../js/extras-ratings.js" LogicalName="CinemaGlass.ratings.js" />
+    <EmbeddedResource Include="../../whatsnew.json" LogicalName="CinemaGlass.whatsnew.json" />
   </ItemGroup>
 </Project>

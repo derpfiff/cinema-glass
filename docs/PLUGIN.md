@@ -78,6 +78,50 @@ get hdr10plus.svg "HDR%2010%20plus%20logo%20%28black%29.svg"
 Danach Jellyfin neu starten. Die Dateien müssen für das Konto lesbar sein, unter dem Jellyfin läuft. Ob und wofür man
 die Zeichen verwenden darf, regeln ihre Inhaber; für die Anzeige auf dem eigenen Server ist das üblich.
 
+### Eigene Avatare (Profilbild-Auswahl wie bei Netflix)
+
+In den Einstellungen öffnet ein Tipp auf das Profilbild die Auswahl: Reihen mit Avataren, darunter Farben und „Eigenes
+Foto“. Die Avatare kommen aus dem Ordner `CinemaGlass-avatars` neben den Plugin-Einstellungen
+(`<Jellyfin-Konfiguration>/plugins/configurations/CinemaGlass-avatars/`). Jeder Unterordner wird eine Reihe, sein Name
+die Überschrift (eine Zahl davor wie in `00 Klassiker` bestimmt nur die Reihenfolge und wird nicht angezeigt); Bilder
+direkt im Ordner bilden die Reihe „Avatare“. Erkannt werden `.png`, `.jpg`, `.jpeg` und `.webp`,
+höchstens 150 je Reihe, quadratisch am besten (sonst wird die Mitte genommen). Im Paket und im Repository liegen keine
+Bilder: welche man verwendet und ob man das darf, entscheidet jeder für seinen Server selbst.
+
+```
+CinemaGlass-avatars/
+├── Klassiker/
+│   ├── rot.png
+│   └── blau.png
+├── Stranger Things/
+│   ├── eleven.png
+│   └── dustin.png
+└── Pixel/
+    └── ...
+```
+
+```sh
+cd "<Jellyfin-Konfiguration>/plugins/configurations" && mkdir -p "CinemaGlass-avatars/Klassiker"
+# Bilder hineinkopieren, z. B.:
+cp ~/Downloads/avatare/*.png "CinemaGlass-avatars/Klassiker/"
+```
+
+**Netflix-Profilbilder:** Eine öffentliche Sammlung mit Links zu den Profilbildern von Netflix (nach Serie geordnet)
+gibt es als [Google-Tabelle](https://docs.google.com/spreadsheets/d/1T5q4qNTFOiU-45iTDUDDkxsj_Hb9S9mZpg4GyLNYarw/htmlview).
+Das Skript [`tools/avatars-aus-tabelle.py`](../tools/avatars-aus-tabelle.py) lädt sie in den Ordner, eine Reihe je Serie
+(„00 Klassiker“ zuerst, dann Stranger Things, Wednesday, Squid Game …):
+
+```sh
+python3 tools/avatars-aus-tabelle.py 1T5q4qNTFOiU-45iTDUDDkxsj_Hb9S9mZpg4GyLNYarw \
+  "<Jellyfin-Konfiguration>/plugins/configurations/CinemaGlass-avatars"
+```
+
+Die Bilder gehören Netflix; das Repository enthält keine davon, nur den Weg dorthin. Ob du sie auf deinem Server
+verwendest, entscheidest du selbst.
+
+Neue Bilder erscheinen sofort, ein Neustart ist nicht nötig. Die Dateien müssen für das Konto lesbar sein, unter dem
+Jellyfin läuft. Das gewählte Bild wird als normales Jellyfin-Benutzerbild gespeichert und gilt damit in allen Apps.
+
 ### Seerr
 
 - **Adresse:** so, wie der Jellyfin-Server Seerr erreicht (z. B. `http://seerr:5055`), nicht die Adresse aus dem Browser.

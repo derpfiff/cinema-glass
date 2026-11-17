@@ -1,0 +1,114 @@
+[
+  {
+    "version": "1.10.15",
+    "date": "2026-11-17",
+    "items": [
+      {
+        "icon": "avatar",
+        "de": [
+          "Profilbild wie bei Netflix",
+          "Tippe in den Einstellungen auf dein Bild: Avatare in Reihen, Farben oder ein eigenes Foto."
+        ],
+        "en": [
+          "Profile pictures like Netflix",
+          "Tap your picture in Settings: rows of avatars, colors or your own photo."
+        ]
+      },
+      {
+        "icon": "settings",
+        "de": [
+          "Neue Einstellungsseite",
+          "Dein Profilbild oben, darunter alles übersichtlich in Gruppen."
+        ],
+        "en": [
+          "Redesigned settings",
+          "Your picture at the top, everything else neatly grouped below."
+        ]
+      },
+      {
+        "icon": "sparkle",
+        "de": [
+          "Was ist neu",
+          "Nach jedem Update zeigt dir dieses Fenster einmal, was dazugekommen ist."
+        ],
+        "en": [
+          "What's new",
+          "After every update, this window shows you once what's new."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.14",
+    "date": "2026-11-17",
+    "items": [
+      {
+        "icon": "people",
+        "de": [
+          "Wer spielt mit?",
+          "Pausiere einen Film oder eine Folge: links erscheint die Besetzung mit Rollen. Ein Tipp zeigt, was die Person sonst in deiner Mediathek hat."
+        ],
+        "en": [
+          "Who's in this?",
+          "Pause a movie or episode: the cast and their roles appear on the left. Tap someone to see what else they're in."
+        ]
+      },
+      {
+        "icon": "clock",
+        "de": [
+          "Endet um …",
+          "Unter dem Titel im Player steht, wann Film oder Folge zu Ende ist."
+        ],
+        "en": [
+          "Ends at …",
+          "The player shows when the movie or episode will end, right under the title."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.12",
+    "date": "2026-11-17",
+    "items": [
+      {
+        "icon": "series",
+        "de": [
+          "Weiterschauen führt zur Serie",
+          "Das Bild spielt ab, die Zeile darunter öffnet die Serie."
+        ],
+        "en": [
+          "Continue Watching opens the series",
+          "The picture plays, the line below it opens the series."
+        ]
+      },
+      {
+        "icon": "globe",
+        "de": [
+          "Alles in deiner Sprache",
+          "Cinema Glass folgt der Sprache, die du in Jellyfin eingestellt hast: Deutsch oder Englisch."
+        ],
+        "en": [
+          "Everything in your language",
+          "Cinema Glass follows the language you set in Jellyfin: German or English."
+        ]
+      }
+    ]
+  },
+  {
+    "version": "1.10.11",
+    "date": "2026-11-17",
+    "items": [
+      {
+        "icon": "next",
+        "de": [
+          "Nächste Folge",
+          "Am Ende einer Folge zeigt eine schmale Glas-Pille mit Ring, wann es weitergeht."
+        ],
+        "en": [
+          "Next episode",
+          "At the end of an episode, a slim glass pill with a ring counts down to the next one."
+        ]
+      }
+    ]
+  }
+]

@@ -24,8 +24,132 @@ public class CinemaGlassController : ControllerBase
     private static readonly Dictionary<string, string> Cache = new();
 
     private readonly IHttpClientFactory _http;
+    private readonly MediaBrowser.Common.Plugins.IPluginManager _plugins;
 
-    public CinemaGlassController(IHttpClientFactory http) => _http = http;
+    public CinemaGlassController(IHttpClientFactory http, MediaBrowser.Common.Plugins.IPluginManager plugins)
+    {
+        _http = http;
+        _plugins = plugins;
+    }
+
+    /// <summary>
+    /// „Was ist neu“: Jedes Plugin bringt seine eigene whatsnew.json im Paket mit (liegt dann in seinem Ordner). Geliefert wird
+    /// je installiertem Plugin, was bis zur installierten Version dazugekommen ist. Was das Konto schon gesehen hat, merkt
+    /// sich das Theme in den Anzeige-Einstellungen des Kontos.
+    /// </summary>
+    [HttpGet("whatsnew")]
+    [Authorize]
+    public ActionResult GetWhatsNew()
+    {
+        var list = new List<object>();
+        foreach (var p in _plugins.Plugins)
+        {
+            string? text = null;
+            try
+            {
+                var file = string.IsNullOrEmpty(p.Path) ? null : Path.Combine(p.Path, "whatsnew.json");
+                if (file is not null && System.IO.File.Exists(file))
+                {
+                    text = System.IO.File.ReadAllText(file, Encoding.UTF8);
+                }
+                else if (p.Instance is Plugin)
+                {
+                    text = Resource("whatsnew.json");   // eigenes Paket ohne Datei (Entwicklung)
+                }
+            }
+            catch (IOException)
+            {
+                text = null;
+            }
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                continue;
+            }
+
+            try
+            {
+                using var doc = JsonDocument.Parse(text);
+                foreach (var e in doc.RootElement.EnumerateArray())
+                {
+                    if (e.TryGetProperty("version", out var ve) && Version.TryParse(ve.GetString(), out var v) && Norm(v) <= Norm(p.Version))
+                    {
+                        list.Add(new { plugin = p.Name, entry = e.Clone() });
+                    }
+                }
+            }
+            catch (JsonException)
+            {
+                // kaputte Datei eines Plugins: dieses Plugin auslassen
+            }
+        }
+
+        Response.Headers.CacheControl = "no-store";
+        return new JsonResult(list);
+    }
+
+    // Eigene Avatare: Bilder im Ordner „CinemaGlass-avatars“ neben den Plugin-Einstellungen. Jeder Unterordner ist eine Reihe
+    // in der Profilbild-Auswahl (wie bei Netflix), Bilder direkt im Ordner bilden die Reihe „Avatare“. Im Paket liegen keine.
+    private static readonly string[] AvatarExt = { ".png", ".jpg", ".jpeg", ".webp" };
+
+    internal static string AvatarFolder =>
+        Path.Combine(Path.GetDirectoryName(Plugin.Instance!.ConfigurationFilePath) ?? ".", "CinemaGlass-avatars");
+
+    private static string[] AvatarFiles(string dir) =>
+        Directory.EnumerateFiles(dir).Where(f => AvatarExt.Contains(Path.GetExtension(f), StringComparer.OrdinalIgnoreCase))
+            .Select(f => Path.GetFileName(f)).OrderBy(f => f, StringComparer.OrdinalIgnoreCase).Take(150).ToArray();
+
+    [HttpGet("avatars")]
+    [Authorize]
+    public ActionResult GetAvatars()
+    {
+        var rows = new List<object>();
+        var root = Plugin.Instance is null ? null : AvatarFolder;
+        if (root is not null && Directory.Exists(root))
+        {
+            var top = AvatarFiles(root);
+            if (top.Length > 0)
+            {
+                rows.Add(new { row = "_", items = top });
+            }
+
+            foreach (var dir in Directory.EnumerateDirectories(root).OrderBy(d => d, StringComparer.OrdinalIgnoreCase).Take(60))
+            {
+                var files = AvatarFiles(dir);
+                if (files.Length > 0)
+                {
+                    rows.Add(new { row = Path.GetFileName(dir), items = files });
+                }
+            }
+        }
+
+        Response.Headers.CacheControl = "no-store";
+        return new JsonResult(rows);
+    }
+
+    [HttpGet("avatars/{row}/{file}")]
+    [AllowAnonymous]
+    public ActionResult GetAvatar([FromRoute] string row, [FromRoute] string file)
+    {
+        if (Plugin.Instance is null || file.Contains("..", StringComparison.Ordinal) || row.Contains("..", StringComparison.Ordinal)
+            || !AvatarExt.Contains(Path.GetExtension(file), StringComparer.OrdinalIgnoreCase))
+        {
+            return NotFound();
+        }
+
+        var root = Path.GetFullPath(AvatarFolder);
+        var path = Path.GetFullPath(row == "_" ? Path.Combine(root, file) : Path.Combine(root, row, file));
+        if (!path.StartsWith(root + Path.DirectorySeparatorChar, StringComparison.Ordinal) || !System.IO.File.Exists(path))
+        {
+            return NotFound();
+        }
+
+        var ext = Path.GetExtension(path).ToLowerInvariant();
+        Response.Headers["Cache-Control"] = "public, max-age=86400";
+        return PhysicalFile(path, ext == ".png" ? "image/png" : ext == ".webp" ? "image/webp" : "image/jpeg");
+    }
+
+    private static Version Norm(Version v) => new(v.Major, Math.Max(v.Minor, 0), Math.Max(v.Build, 0), Math.Max(v.Revision, 0));
 
     private static string Resource(string name)
     {
