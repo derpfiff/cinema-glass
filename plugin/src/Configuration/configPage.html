@@ -81,111 +81,111 @@
       <form id="CinemaGlassForm" class="cgx" autocomplete="off">
         <header class="cgx-hero">
           <h1>Cinema Glass<span class="cgx-ver" id="cgxVer"></span></h1>
-          <p>Die Glas-Oberfläche für Jellyfin – mit Entdecken, Anfragen über Seerr und Bewerten nach dem Schauen. Alles lässt sich hier einzeln ein- und ausschalten.</p>
+          <p data-en="The glass interface for Jellyfin – with Discover, requests through Seerr and ratings after watching. Turn each part on or off here.">Die Glas-Oberfläche für Jellyfin – mit Entdecken, Anfragen über Seerr und Bewerten nach dem Schauen. Alles lässt sich hier einzeln ein- und ausschalten.</p>
           <div class="cgx-status">
-            <span class="cgx-chip" id="cgxStTheme"><i></i>Oberfläche</span>
+            <span class="cgx-chip" id="cgxStTheme" data-en="Interface"><i></i>Oberfläche</span>
             <span class="cgx-chip" id="cgxStSeerr"><i></i>Seerr</span>
-            <span class="cgx-chip" id="cgxStDisc"><i></i>Entdecken</span>
+            <span class="cgx-chip" id="cgxStDisc" data-en="Discover"><i></i>Entdecken</span>
             <span class="cgx-chip" id="cgxStMdb"><i></i>MDBList</span>
           </div>
         </header>
 
-        <nav class="cgx-nav" aria-label="Bereiche">
-          <a href="#cgx-look">Aussehen</a><a href="#cgx-ui">Oberfläche</a><a href="#cgx-seerr">Seerr &amp; Entdecken</a><a href="#cgx-rate">Bewerten &amp; Letterboxd</a><a href="#cgx-auto">Anfragen-Automatik</a><a href="#cgx-dl">Downloads &amp; Apps</a><a href="#cgx-ratings">Bewertungen</a><a href="#cgx-misc">Sonstiges</a>
+        <nav class="cgx-nav" aria-label="Bereiche" data-en-aria-label="Sections">
+          <a href="#cgx-look" data-en="Look">Aussehen</a><a href="#cgx-ui" data-en="Interface">Oberfläche</a><a href="#cgx-seerr" data-en="Seerr &amp; Discover">Seerr &amp; Entdecken</a><a href="#cgx-rate" data-en="Rating &amp; Letterboxd">Bewerten &amp; Letterboxd</a><a href="#cgx-auto" data-en="Request automation">Anfragen-Automatik</a><a href="#cgx-dl">Downloads &amp; Apps</a><a href="#cgx-ratings" data-en="Ratings">Bewertungen</a><a href="#cgx-misc" data-en="Other">Sonstiges</a>
         </nav>
 
         <section class="cgx-sec" id="cgx-look">
-          <h2><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3-4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>Aussehen</h2>
-          <p>Die beiden Hauptschalter. Ohne „Funktionen“ bleibt nur der Look, alles Weitere ruht.</p>
+          <h2 data-en="Look"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.38-.61-.38-.99 0-.83.67-1.5 1.5-1.5H16c2.76 0 5-2.24 5-5 0-4.42-4.03-8-9-8zm-5.5 9a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3-4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm3 4a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></svg>Aussehen</h2>
+          <p data-en="The two main switches. With Features off, only the look remains and everything else is paused.">Die beiden Hauptschalter. Ohne „Funktionen“ bleibt nur der Look, alles Weitere ruht.</p>
           <div class="cgx-card">
-            <label class="cgx-row"><div class="cgx-txt"><b>Glas-Look</b><small>Farben, Glas, Karten und Player im Stil von Apple TV.</small></div><span class="cgx-sw"><input type="checkbox" data-k="EnableTheme"><span></span></span></label>
-            <label class="cgx-row"><div class="cgx-txt"><b>Funktionen</b><small>Eigene Startseite, Filmseiten, Entdecken und alles in den Bereichen darunter.</small></div><span class="cgx-sw"><input type="checkbox" data-k="EnableClient"><span></span></span></label>
+            <label class="cgx-row"><div class="cgx-txt"><b data-en="Glass look">Glas-Look</b><small data-en="Colors, glass, cards and player in the style of Apple TV.">Farben, Glas, Karten und Player im Stil von Apple TV.</small></div><span class="cgx-sw"><input type="checkbox" data-k="EnableTheme"><span></span></span></label>
+            <label class="cgx-row"><div class="cgx-txt"><b data-en="Features">Funktionen</b><small data-en="Custom home screen, movie pages, Discover and everything in the sections below.">Eigene Startseite, Filmseiten, Entdecken und alles in den Bereichen darunter.</small></div><span class="cgx-sw"><input type="checkbox" data-k="EnableClient"><span></span></span></label>
           </div>
         </section>
 
         <section class="cgx-sec" id="cgx-ui">
-          <h2><svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>Oberfläche</h2>
-          <p>Wie Startseite, Film- und Serienseiten aussehen und sich anfühlen.</p>
+          <h2 data-en="Interface"><svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>Oberfläche</h2>
+          <p data-en="How the home screen and movie and show pages look and feel.">Wie Startseite, Film- und Serienseiten aussehen und sich anfühlen.</p>
           <div class="cgx-card">
-            <label class="cgx-row"><div class="cgx-txt"><b>Plakate nach Originalsprache</b><small>Neue Filme und Serien: deutscher Film → deutsches Plakat, englischer → Original, andere Sprachen → deutsches (sonst englisches). Braucht die Seerr-Verbindung.</small></div><span class="cgx-sw"><input type="checkbox" data-k="PosterLanguage"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Eigenes „Weiterschauen“ und „Neu hinzugefügt“</b><small>Eine Karte je Serie (angefangene oder nächste Folge), Filme und Serien nach letzter Aktivität; kurz Reingeschautes und über 60 Tage Altes fällt raus. „Neu hinzugefügt“ für Filme und Serien gemeinsam, neue Folgen als eine Karte. Ersetzt Jellyfins Reihen.</small></div><span class="cgx-sw"><input type="checkbox" data-k="HomeRows"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Hero-Banner</b><small>Großes wechselndes Bild oben auf der Startseite.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Hero"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Eigene Film- und Serienseite</b><small>Folgenregal, Infos, Besetzung im Glas-Stil.</small></div><span class="cgx-sw"><input type="checkbox" data-k="DetailPage"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Filmreihe</b><small>Regal mit allen Teilen einer Reihe; fehlende Teile mit Seerr anfragbar.</small></div><span class="cgx-sw"><input type="checkbox" data-k="CollectionShelf"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Karten spielen direkt ab</b><small>Ein Tipp auf eine Karte der Startseite startet die Wiedergabe.</small></div><span class="cgx-sw"><input type="checkbox" data-k="HomeCardPlay"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Menü und Infofenster bei Folgen</b><small>Eigenes „···“-Menü statt Jellyfins Liste.</small></div><span class="cgx-sw"><input type="checkbox" data-k="EpisodeMenu"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Fassungen als Knöpfe</b><small>Kinofassung, Extended &amp; Co. direkt auf der Filmseite wählen.</small></div><span class="cgx-sw"><input type="checkbox" data-k="VersionPicker"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Qualitäts-Abzeichen</b><small>4K, HDR, Dolby Vision und Atmos auf Film- und Folgenseite.</small></div><span class="cgx-sw"><input type="checkbox" data-k="QualityBadges"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Trailer im eigenen Fenster</b><small>Mit Glas-Bedienung statt YouTube-Oberfläche, am Handy quer.</small></div><span class="cgx-sw"><input type="checkbox" data-k="TrailerModal"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Sauberer Übergang nach dem Vorspann</b><small>Kein stehenbleibendes Bild zwischen Intro und Film.</small></div><span class="cgx-sw"><input type="checkbox" data-k="IntroTransition"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Seiten erst fertig zeigen</b><small>Kein Aufbauen und Springen beim Öffnen einer Seite.</small></div><span class="cgx-sw"><input type="checkbox" data-k="PageGate"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Regale folgen dem Trackpad</b><small>Seitwärts wischen in Safari, Chrome und JellyDesk.</small></div><span class="cgx-sw"><input type="checkbox" data-k="ShelfWheel"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Zurückwischen am Handy</b><small>Vom linken Rand wischen geht eine Seite zurück.</small></div><span class="cgx-sw"><input type="checkbox" data-k="SwipeBack"><span></span></span></label>
+            <label class="cgx-row"><div class="cgx-txt"><b data-en="Posters by original language">Plakate nach Originalsprache</b><small data-en="New movies and shows: German film → German poster, English → original, other languages → German (otherwise English). Requires the Seerr connection.">Neue Filme und Serien: deutscher Film → deutsches Plakat, englischer → Original, andere Sprachen → deutsches (sonst englisches). Braucht die Seerr-Verbindung.</small></div><span class="cgx-sw"><input type="checkbox" data-k="PosterLanguage"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Custom “Continue Watching” and “Recently Added”">Eigenes „Weiterschauen“ und „Neu hinzugefügt“</b><small data-en="One card per show (episode in progress or up next), movies and shows sorted by latest activity; brief peeks and anything older than 60 days drop out. “Recently Added” combines movies and shows, with new episodes as a single card. Replaces Jellyfin’s rows.">Eine Karte je Serie (angefangene oder nächste Folge), Filme und Serien nach letzter Aktivität; kurz Reingeschautes und über 60 Tage Altes fällt raus. „Neu hinzugefügt“ für Filme und Serien gemeinsam, neue Folgen als eine Karte. Ersetzt Jellyfins Reihen.</small></div><span class="cgx-sw"><input type="checkbox" data-k="HomeRows"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Hero banner">Hero-Banner</b><small data-en="Large rotating image at the top of the home screen.">Großes wechselndes Bild oben auf der Startseite.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Hero"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Custom movie and show pages">Eigene Film- und Serienseite</b><small data-en="Episode shelf, details and cast in the glass style.">Folgenregal, Infos, Besetzung im Glas-Stil.</small></div><span class="cgx-sw"><input type="checkbox" data-k="DetailPage"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Collections">Filmreihe</b><small data-en="A shelf with every part of a collection; missing parts can be requested through Seerr.">Regal mit allen Teilen einer Reihe; fehlende Teile mit Seerr anfragbar.</small></div><span class="cgx-sw"><input type="checkbox" data-k="CollectionShelf"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Cards play instantly">Karten spielen direkt ab</b><small data-en="Tapping a card on the home screen starts playback.">Ein Tipp auf eine Karte der Startseite startet die Wiedergabe.</small></div><span class="cgx-sw"><input type="checkbox" data-k="HomeCardPlay"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Episode menu and info sheet">Menü und Infofenster bei Folgen</b><small data-en="A custom “···” menu instead of Jellyfin’s list.">Eigenes „···“-Menü statt Jellyfins Liste.</small></div><span class="cgx-sw"><input type="checkbox" data-k="EpisodeMenu"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Versions as buttons">Fassungen als Knöpfe</b><small data-en="Choose the theatrical cut, extended edition and more right on the movie page.">Kinofassung, Extended &amp; Co. direkt auf der Filmseite wählen.</small></div><span class="cgx-sw"><input type="checkbox" data-k="VersionPicker"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Quality badges">Qualitäts-Abzeichen</b><small data-en="4K, HDR, Dolby Vision and Atmos on movie and episode pages.">4K, HDR, Dolby Vision und Atmos auf Film- und Folgenseite.</small></div><span class="cgx-sw"><input type="checkbox" data-k="QualityBadges"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Trailers in their own window">Trailer im eigenen Fenster</b><small data-en="Glass controls instead of the YouTube interface, landscape on phones.">Mit Glas-Bedienung statt YouTube-Oberfläche, am Handy quer.</small></div><span class="cgx-sw"><input type="checkbox" data-k="TrailerModal"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Clean transition after the intro">Sauberer Übergang nach dem Vorspann</b><small data-en="No frozen frame between the intro and the movie.">Kein stehenbleibendes Bild zwischen Intro und Film.</small></div><span class="cgx-sw"><input type="checkbox" data-k="IntroTransition"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Show pages when ready">Seiten erst fertig zeigen</b><small data-en="No building up and jumping around when a page opens.">Kein Aufbauen und Springen beim Öffnen einer Seite.</small></div><span class="cgx-sw"><input type="checkbox" data-k="PageGate"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Shelves follow the trackpad">Regale folgen dem Trackpad</b><small data-en="Swipe sideways in Safari, Chrome and JellyDesk.">Seitwärts wischen in Safari, Chrome und JellyDesk.</small></div><span class="cgx-sw"><input type="checkbox" data-k="ShelfWheel"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Swipe back on phones">Zurückwischen am Handy</b><small data-en="Swipe from the left edge to go back a page.">Vom linken Rand wischen geht eine Seite zurück.</small></div><span class="cgx-sw"><input type="checkbox" data-k="SwipeBack"><span></span></span></label>
           </div>
         </section>
 
         <section class="cgx-sec" id="cgx-seerr">
-          <h2><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>Seerr &amp; Entdecken</h2>
-          <p>Mit Seerr zeigt Cinema Glass auch Titel, die fehlen, lässt sie anfragen und baut daraus „Entdecken“ – persönliche Empfehlungen je Konto.</p>
+          <h2 data-en="Seerr &amp; Discover"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>Seerr &amp; Entdecken</h2>
+          <p data-en="With Seerr, Cinema Glass also shows titles you don’t have yet, lets people request them and builds Discover from them – personal recommendations for every account.">Mit Seerr zeigt Cinema Glass auch Titel, die fehlen, lässt sie anfragen und baut daraus „Entdecken“ – persönliche Empfehlungen je Konto.</p>
           <div class="cgx-card">
-            <label class="cgx-field"><span>Seerr-Adresse</span><input type="text" data-k="SeerrUrl" placeholder="http://seerr:5055"><small>Vom Jellyfin-Server aus erreichbar.</small></label>
-            <label class="cgx-field"><span>API-Schlüssel</span><span class="cgx-secret"><input type="password" data-k="SeerrApiKey" placeholder="Aus Seerr › Einstellungen › Allgemein"><button type="button" class="cgx-eye">Zeigen</button></span></label>
-            <label class="cgx-field"><span>Seerr-Nutzernummer für Anfragen</span><input type="text" data-k="SeerrUserId" placeholder="leer = Hauptkonto" inputmode="numeric"></label>
-            <div class="cgx-test"><button type="button" class="cgx-btn" id="cgxTest">Verbindung prüfen</button><span class="cgx-msg" id="cgxTestMsg">Prüft die gespeicherten Angaben.</span></div>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Fehlende Titel anfragen</b><small>In der Suche und auf Personenseiten, mit Trailer und Filmreihe.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Seerr"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient Seerr"><div class="cgx-txt"><b>Entdecken</b><small>Seite „Entdecken“, Reihen „Für dich“ auf der Startseite und „Könnte dir auch gefallen“ auf Filmseiten.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Discover"><span></span></span></label>
+            <label class="cgx-field"><span data-en="Seerr URL">Seerr-Adresse</span><input type="text" data-k="SeerrUrl" placeholder="http://seerr:5055"><small data-en="Must be reachable from the Jellyfin server.">Vom Jellyfin-Server aus erreichbar.</small></label>
+            <label class="cgx-field"><span data-en="API key">API-Schlüssel</span><span class="cgx-secret"><input type="password" data-k="SeerrApiKey" placeholder="Aus Seerr › Einstellungen › Allgemein" data-en-placeholder="From Seerr › Settings › General"><button type="button" class="cgx-eye" data-en="Show">Zeigen</button></span></label>
+            <label class="cgx-field"><span data-en="Seerr user ID for requests">Seerr-Nutzernummer für Anfragen</span><input type="text" data-k="SeerrUserId" placeholder="leer = Hauptkonto" data-en-placeholder="Empty = main account" inputmode="numeric"></label>
+            <div class="cgx-test"><button type="button" class="cgx-btn" id="cgxTest" data-en="Test connection">Verbindung prüfen</button><span class="cgx-msg" id="cgxTestMsg" data-en="Uses the saved settings.">Prüft die gespeicherten Angaben.</span></div>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Request missing titles">Fehlende Titel anfragen</b><small data-en="In search and on person pages, with trailer and collection.">In der Suche und auf Personenseiten, mit Trailer und Filmreihe.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Seerr"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient Seerr"><div class="cgx-txt"><b data-en="Discover">Entdecken</b><small data-en="The Discover page, “For You” rows on the home screen and “You Might Also Like” on movie pages.">Seite „Entdecken“, Reihen „Für dich“ auf der Startseite und „Könnte dir auch gefallen“ auf Filmseiten.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Discover"><span></span></span></label>
           </div>
         </section>
 
         <section class="cgx-sec" id="cgx-rate">
-          <h2><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Bewerten &amp; Letterboxd</h2>
-          <p>Sterne nach dem Schauen und was Freunde auf Letterboxd mögen. Jedes Konto kann beides in „Dein Geschmack“ für sich abschalten.</p>
+          <h2 data-en="Rating &amp; Letterboxd"><svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>Bewerten &amp; Letterboxd</h2>
+          <p data-en="Stars after watching, and what your friends love on Letterboxd. Each account can turn both off for itself in “Your Taste”.">Sterne nach dem Schauen und was Freunde auf Letterboxd mögen. Jedes Konto kann beides in „Dein Geschmack“ für sich abschalten.</p>
           <div class="cgx-card">
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Nach dem Schauen bewerten</b><small>Fragt einmal nach ½–5 Sternen, Herz und Kommentar – auch für offline geschaute Filme, sobald die App sie meldet. Mit Jellyscribe wird der Eintrag auf Letterboxd übernommen.</small></div><span class="cgx-sw"><input type="checkbox" data-k="RatePrompt"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient Seerr Discover"><div class="cgx-txt"><b>Letterboxd-Freunde</b><small>Eigene Letterboxd-Bewertungen fließen in den Geschmack ein, dazu die Reihe „Von deinen Freunden“. Liest nur öffentliche Seiten, höchstens alle 6 Stunden je Person.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Letterboxd"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Rate after watching">Nach dem Schauen bewerten</b><small data-en="Asks once for ½–5 stars, a heart and a comment – also for movies watched offline, as soon as the app reports them. With Jellyscribe, the entry is logged to Letterboxd.">Fragt einmal nach ½–5 Sternen, Herz und Kommentar – auch für offline geschaute Filme, sobald die App sie meldet. Mit Jellyscribe wird der Eintrag auf Letterboxd übernommen.</small></div><span class="cgx-sw"><input type="checkbox" data-k="RatePrompt"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient Seerr Discover"><div class="cgx-txt"><b data-en="Letterboxd friends">Letterboxd-Freunde</b><small data-en="Your own Letterboxd ratings feed into your taste, plus a “From Your Friends” row. Reads public pages only, at most every 6 hours per person.">Eigene Letterboxd-Bewertungen fließen in den Geschmack ein, dazu die Reihe „Von deinen Freunden“. Liest nur öffentliche Seiten, höchstens alle 6 Stunden je Person.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Letterboxd"><span></span></span></label>
           </div>
         </section>
 
         <section class="cgx-sec" id="cgx-auto">
-          <h2><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>Anfragen-Automatik</h2>
-          <p>Für Server mit festen Ruhezeiten der Download-Dienste und Qualitätsprofilen nach Sprache. Alles leer = aus.</p>
+          <h2 data-en="Request automation"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>Anfragen-Automatik</h2>
+          <p data-en="For servers with fixed quiet hours for download services and quality profiles by language. Leave everything empty to turn it off.">Für Server mit festen Ruhezeiten der Download-Dienste und Qualitätsprofilen nach Sprache. Alles leer = aus.</p>
           <div class="cgx-card">
             <div class="cgx-field cgx-two">
-              <label><span style="display:block;margin-bottom:7px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.42)">Ruhezeit von</span><input type="text" data-k="DownloadsQuietFrom" placeholder="23:00"></label>
-              <label><span style="display:block;margin-bottom:7px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.42)">Ruhezeit bis</span><input type="text" data-k="DownloadsQuietTo" placeholder="07:30"></label>
+              <label><span style="display:block;margin-bottom:7px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.42)" data-en="Quiet hours from">Ruhezeit von</span><input type="text" data-k="DownloadsQuietFrom" placeholder="23:00"></label>
+              <label><span style="display:block;margin-bottom:7px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.42)" data-en="Quiet hours until">Ruhezeit bis</span><input type="text" data-k="DownloadsQuietTo" placeholder="07:30"></label>
             </div>
-            <label class="cgx-field"><span>Kennzeichen für „später laden“</span><input type="text" data-k="DownloadsDeferMarker" placeholder="(morgen)"><small>Qualitätsprofile mit diesem Zusatz im Namen laden erst nach der Ruhezeit. Braucht beide Uhrzeiten.</small></label>
-            <label class="cgx-field"><span>Qualitätsprofil nach Originalsprache</span><textarea data-k="AutoProfileRules" rows="3" placeholder="de=[German]&#10;en=[German]&#10;*=[OG + EN]"></textarea><small>Eine Regel je Zeile: <code>Sprache=Textstück im Profilnamen</code>, <code>*</code> für alle übrigen. Gesetzt: kein Profil-Fenster beim Anfragen, in der Ruhezeit automatisch die Variante mit Kennzeichen.</small></label>
+            <label class="cgx-field"><span data-en="Marker for “download later”">Kennzeichen für „später laden“</span><input type="text" data-k="DownloadsDeferMarker" placeholder="(morgen)"><small data-en="Quality profiles with this suffix in their name only download after quiet hours. Requires both times.">Qualitätsprofile mit diesem Zusatz im Namen laden erst nach der Ruhezeit. Braucht beide Uhrzeiten.</small></label>
+            <label class="cgx-field"><span data-en="Quality profile by original language">Qualitätsprofil nach Originalsprache</span><textarea data-k="AutoProfileRules" rows="3" placeholder="de=[German]&#10;en=[German]&#10;*=[OG + EN]"></textarea><small data-en="One rule per line: &lt;code&gt;language=text in profile name&lt;/code&gt;, &lt;code&gt;*&lt;/code&gt; for everything else. When set, no profile picker appears when requesting, and during quiet hours the marked variant is used automatically.">Eine Regel je Zeile: <code>Sprache=Textstück im Profilnamen</code>, <code>*</code> für alle übrigen. Gesetzt: kein Profil-Fenster beim Anfragen, in der Ruhezeit automatisch die Variante mit Kennzeichen.</small></label>
           </div>
         </section>
 
         <section class="cgx-sec" id="cgx-dl">
           <h2><svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>Downloads &amp; Apps</h2>
-          <p>Filme und Folgen zum Mitnehmen – am Handy und in JellyDesk am Mac.</p>
+          <p data-en="Movies and episodes to go – on your phone and in JellyDesk on the Mac.">Filme und Folgen zum Mitnehmen – am Handy und in JellyDesk am Mac.</p>
           <div class="cgx-card">
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Download-Knöpfe</b><small>Bei Filmen, Folgen, Staffeln und ganzen Serien (Handy und Apps).</small></div><span class="cgx-sw"><input type="checkbox" data-k="Downloads"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient Downloads"><div class="cgx-txt"><b>Fortschritt beim Umwandeln</b><small>Zeigt, wie weit eine Datei für den Download vorbereitet ist.</small></div><span class="cgx-sw"><input type="checkbox" data-k="DownloadProgress"><span></span></span></label>
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>JellyDesk</b><small>Download-Knöpfe am Mac, Vollbild über das App-Fenster, Wiedergabe im Player der App.</small></div><span class="cgx-sw"><input type="checkbox" data-k="NativeApp"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Download buttons">Download-Knöpfe</b><small data-en="On movies, episodes, seasons and entire shows (phones and apps).">Bei Filmen, Folgen, Staffeln und ganzen Serien (Handy und Apps).</small></div><span class="cgx-sw"><input type="checkbox" data-k="Downloads"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient Downloads"><div class="cgx-txt"><b data-en="Conversion progress">Fortschritt beim Umwandeln</b><small data-en="Shows how far along a file is in being prepared for download.">Zeigt, wie weit eine Datei für den Download vorbereitet ist.</small></div><span class="cgx-sw"><input type="checkbox" data-k="DownloadProgress"><span></span></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>JellyDesk</b><small data-en="Download buttons on the Mac, full screen across the app window, playback in the app’s player.">Download-Knöpfe am Mac, Vollbild über das App-Fenster, Wiedergabe im Player der App.</small></div><span class="cgx-sw"><input type="checkbox" data-k="NativeApp"><span></span></span></label>
           </div>
         </section>
 
         <section class="cgx-sec" id="cgx-ratings">
-          <h2><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>Bewertungen</h2>
-          <p>IMDb, Rotten Tomatoes und Co. auf Film- und Serienseiten, über MDBList.</p>
+          <h2 data-en="Ratings"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>Bewertungen</h2>
+          <p data-en="IMDb, Rotten Tomatoes and more on movie and show pages, via MDBList.">IMDb, Rotten Tomatoes und Co. auf Film- und Serienseiten, über MDBList.</p>
           <div class="cgx-card">
-            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b>Bewertungen anzeigen</b><small>Braucht einen kostenlosen MDBList-Schlüssel.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Ratings"><span></span></span></label>
-            <label class="cgx-field"><span>MDBList-API-Schlüssel</span><span class="cgx-secret"><input type="password" data-k="MdbListApiKey" placeholder="mdblist.com › Einstellungen › API"><button type="button" class="cgx-eye">Zeigen</button></span></label>
+            <label class="cgx-row" data-needs="EnableClient"><div class="cgx-txt"><b data-en="Show ratings">Bewertungen anzeigen</b><small data-en="Requires a free MDBList API key.">Braucht einen kostenlosen MDBList-Schlüssel.</small></div><span class="cgx-sw"><input type="checkbox" data-k="Ratings"><span></span></span></label>
+            <label class="cgx-field"><span data-en="MDBList API key">MDBList-API-Schlüssel</span><span class="cgx-secret"><input type="password" data-k="MdbListApiKey" placeholder="mdblist.com › Einstellungen › API" data-en-placeholder="mdblist.com › Preferences › API"><button type="button" class="cgx-eye" data-en="Show">Zeigen</button></span></label>
           </div>
         </section>
 
         <section class="cgx-sec" id="cgx-misc">
-          <h2><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.07.63-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>Sonstiges</h2>
+          <h2 data-en="Other"><svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.07.63-.07.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></svg>Sonstiges</h2>
           <div class="cgx-card">
-            <label class="cgx-row"><div class="cgx-txt"><b>Auf neue Versionen hinweisen</b><small>Admins sehen einen Hinweis, wenn es ein Update gibt (ein Abruf pro Tag bei GitHub).</small></div><span class="cgx-sw"><input type="checkbox" data-k="UpdateCheck"><span></span></span></label>
+            <label class="cgx-row"><div class="cgx-txt"><b data-en="Notify about new versions">Auf neue Versionen hinweisen</b><small data-en="Admins see a notice when an update is available (one check per day on GitHub).">Admins sehen einen Hinweis, wenn es ein Update gibt (ein Abruf pro Tag bei GitHub).</small></div><span class="cgx-sw"><input type="checkbox" data-k="UpdateCheck"><span></span></span></label>
           </div>
         </section>
 
-        <div class="cgx-save" id="cgxSave"><span id="cgxSaveMsg">Alles gespeichert. Nach Änderungen die Seite neu laden, Apps einmal schließen.</span><button type="submit" id="cgxSaveBtn" disabled>Speichern</button></div>
+        <div class="cgx-save" id="cgxSave"><span id="cgxSaveMsg" data-en="All saved. Reload the page and fully close apps once to apply changes.">Alles gespeichert. Nach Änderungen die Seite neu laden, Apps einmal schließen.</span><button type="submit" id="cgxSaveBtn" disabled data-en="Save">Speichern</button></div>
       </form>
     </div>
   </div>
@@ -195,6 +195,32 @@
       var page = document.querySelector('#CinemaGlassConfigPage');
       var form = page.querySelector('#CinemaGlassForm'), saved = '';
       function fields() { return page.querySelectorAll('[data-k]'); }
+      // Sprache: Jellyfin setzt <html lang> aus der Anzeigesprache (auto = Browser). de* -> Deutsch, sonst Englisch.
+      // Deutsch steht im Markup; data-en / data-en-<attr> tragen die englische Fassung, beim Anzeigen getauscht.
+      function isDe() { return /^de/i.test(document.documentElement.lang || navigator.language || ''); }
+      function tr(de, en) { return isDe() ? de : en; }
+      function applyLang(root) {
+        var en = !isDe();
+        Array.prototype.forEach.call(root.querySelectorAll('[data-en]'), function (el) {
+          var v = el.getAttribute('data-en');
+          if (v.indexOf('<') >= 0 || !el.children.length) {
+            if (!el.hasAttribute('data-de')) el.setAttribute('data-de', el.innerHTML);
+            el.innerHTML = en ? v : el.getAttribute('data-de');
+          } else {
+            var n = el.lastChild;
+            while (n && !(n.nodeType === 3 && n.nodeValue.trim())) n = n.previousSibling;
+            if (!n) return;
+            if (!el.hasAttribute('data-de')) el.setAttribute('data-de', n.nodeValue);
+            n.nodeValue = en ? v : el.getAttribute('data-de');
+          }
+        });
+        ['placeholder', 'title', 'aria-label', 'label'].forEach(function (a) {
+          Array.prototype.forEach.call(root.querySelectorAll('[data-en-' + a + ']'), function (el) {
+            if (!el.hasAttribute('data-de-' + a)) el.setAttribute('data-de-' + a, el.getAttribute(a) || '');
+            el.setAttribute(a, en ? el.getAttribute('data-en-' + a) : el.getAttribute('data-de-' + a));
+          });
+        });
+      }
       function val(el) { return el.type === 'checkbox' ? el.checked : el.value.trim(); }
       function state() { var o = {}; fields().forEach(function (el) { o[el.getAttribute('data-k')] = val(el); }); return JSON.stringify(o); }
       function on(k) { var el = page.querySelector('[data-k="' + k + '"]'); return !!el && el.checked; }
@@ -212,11 +238,12 @@
         var dirty = state() !== saved;
         page.querySelector('#cgxSave').classList.toggle('is-dirty', dirty);
         page.querySelector('#cgxSaveBtn').disabled = !dirty;
-        page.querySelector('#cgxSaveMsg').innerHTML = dirty ? 'Ungespeicherte Änderungen' : 'Alles gespeichert<span class="cgx-long">. Nach Änderungen die Seite neu laden, Apps einmal schließen.</span>';
+        page.querySelector('#cgxSaveMsg').innerHTML = dirty ? tr('Ungespeicherte Änderungen', 'Unsaved changes') : tr('Alles gespeichert<span class="cgx-long">. Nach Änderungen die Seite neu laden, Apps einmal schließen.</span>', 'All saved<span class="cgx-long">. Reload the page and fully close apps once to apply changes.</span>');
       }
       form.addEventListener('input', sync); form.addEventListener('change', sync);
+      function eyeLabel(b) { b.textContent = b.parentNode.querySelector('input').type === 'password' ? tr('Zeigen', 'Show') : tr('Verbergen', 'Hide'); }
       page.querySelectorAll('.cgx-eye').forEach(function (b) {
-        b.addEventListener('click', function () { var i = b.parentNode.querySelector('input'); var show = i.type === 'password'; i.type = show ? 'text' : 'password'; b.textContent = show ? 'Verbergen' : 'Zeigen'; });
+        b.addEventListener('click', function () { var i = b.parentNode.querySelector('input'); i.type = i.type === 'password' ? 'text' : 'password'; eyeLabel(b); });
       });
       // Sprungleiste: aktiven Bereich markieren
       var links = page.querySelectorAll('.cgx-nav a');
@@ -227,13 +254,14 @@
       }
       // Seerr prüfen (über den Durchgang des Plugins, also mit den gespeicherten Angaben)
       page.querySelector('#cgxTest').addEventListener('click', function () {
-        var m = page.querySelector('#cgxTestMsg'); m.className = 'cgx-msg'; m.textContent = 'Prüfe …';
+        var m = page.querySelector('#cgxTestMsg'); m.className = 'cgx-msg'; m.textContent = tr('Prüfe …', 'Checking …');
         fetch(ApiClient.getUrl('CinemaGlass/seerr/api/v1/status'), { headers: { 'Authorization': 'MediaBrowser Token="' + ApiClient.accessToken() + '"' } })
-          .then(function (r) { if (!r.ok) throw new Error(r.status === 404 || r.status === 503 ? 'Seerr ist nicht eingerichtet oder abgeschaltet.' : 'Antwort ' + r.status); return r.json(); })
-          .then(function (d) { m.className = 'cgx-msg is-ok'; m.textContent = 'Verbunden' + (d && d.version ? ' – Seerr ' + d.version : '') + (state() !== saved ? ' (gespeicherter Stand)' : ''); })
-          .catch(function (e) { m.textContent = 'Keine Verbindung: ' + (e && e.message ? e.message : 'unbekannt'); });
+          .then(function (r) { if (!r.ok) throw new Error(r.status === 404 || r.status === 503 ? tr('Seerr ist nicht eingerichtet oder abgeschaltet.', 'Seerr isn’t set up or is turned off.') : tr('Antwort ', 'Response ') + r.status); return r.json(); })
+          .then(function (d) { m.className = 'cgx-msg is-ok'; m.textContent = tr('Verbunden', 'Connected') + (d && d.version ? ' – Seerr ' + d.version : '') + (state() !== saved ? tr(' (gespeicherter Stand)', ' (saved settings)') : ''); })
+          .catch(function (e) { m.textContent = tr('Keine Verbindung: ', 'Couldn’t connect: ') + (e && e.message ? e.message : tr('unbekannt', 'unknown')); });
       });
       page.addEventListener('pageshow', function () {
+        applyLang(page); page.querySelectorAll('.cgx-eye').forEach(eyeLabel);
         Dashboard.showLoadingMsg();
         ApiClient.getPluginConfiguration(pluginId).then(function (cfg) {
           fields().forEach(function (el) {

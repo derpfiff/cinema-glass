@@ -3685,3 +3685,19 @@ html.atv-js .atv-lba .atv-pill { height: 38px; padding: 0 16px; font-size: 14px;
 .atv-hn { cursor: pointer; }
 .atv-hn .atv-dc__art { position: relative; }
 .atv-hn__badge { position: absolute; z-index: 2; left: 8px; top: 8px; padding: 3px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 700; color: #000; background: rgba(255, 255, 255, .92); }
+
+/* Weiterschauen: Bild spielt ab, Unterzeile führt zur Serie (mit ›); beim Darüberfahren ein Glas-▶ auf dem Bild */
+html.atv-js .atv-dc .atv-hc__sub { display: flex; align-items: center; gap: 2px; cursor: pointer; border-radius: 6px; transition: color .2s; }
+html.atv-js .atv-dc .atv-hc__sub .atv-dc__l1 { flex: 0 1 auto; min-width: 0; }
+.atv-hc__chev { flex: 0 0 auto; width: 1.25em; height: 1.25em; fill: currentColor; opacity: .7; transition: transform .2s var(--tv-ease), opacity .2s; }
+html.atv-js .atv-dc .atv-hc__sub:hover { color: #fff; }
+.atv-hc__sub:hover .atv-hc__chev { opacity: 1; transform: translateX(2px); }
+.atv-hc .atv-dc__art::after {
+  content: ''; position: absolute; z-index: 3; left: 50%; top: 50%; width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 50%;
+  background: rgba(255, 255, 255, .2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23fff' d='M8 5v14l11-7z'/%3E%3C/svg%3E") 55% 50% / 24px no-repeat;
+  -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2), inset 0 1px 0 rgba(255, 255, 255, .45), 0 8px 24px rgba(0, 0, 0, .3);
+  opacity: 0; transform: scale(.9); transition: opacity .2s, transform .2s var(--tv-ease); pointer-events: none;
+}
+@media (hover: hover) { .atv-hc:hover .atv-dc__art::after { opacity: 1; transform: scale(1); } }
+.atv-hc:focus-visible .atv-dc__art::after { opacity: 1; transform: scale(1); }

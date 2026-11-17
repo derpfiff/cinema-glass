@@ -37,7 +37,7 @@
         trailer: 'Trailer', open: 'Open', moreSeasons: 'Request more seasons', reqAll: 'Request all seasons', coll: 'Collection', collAll: 'Request all missing', collAllN: 'Request all %1 missing', collDone: '%1 movies requested', collHere: 'Complete', reqOne: 'Request 1 season', reqN: 'Request %1 seasons', noSeasons: 'No seasons are known for this show yet.'
     };
     function setLang() {
-        CFG.language = /^en/i.test(document.documentElement.lang || navigator.language || 'de') ? 'en' : 'de';
+        CFG.language = /^de/i.test(document.documentElement.lang || navigator.language || 'de') ? 'de' : 'en';
         DE = CFG.language !== 'en'; T = DE ? T_DE : T_EN;
     }
     setLang();

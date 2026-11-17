@@ -42,7 +42,7 @@
         tmdb: 'M3 8h18v2.2H3V8zm0 3.4h12.5v2.2H3v-2.2zm0 3.4h16v2.2H3v-2.2z',
         letterboxd: 'M7 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5 0a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5 0a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z'
     };
-    var LABEL = { imdb: 'IMDb', tomatoes: 'Rotten Tomatoes', popcorn: 'Rotten Tomatoes (Publikum)', metacritic: 'Metacritic', tmdb: 'TMDb', letterboxd: 'Letterboxd' };
+    var LABEL = { imdb: 'IMDb', tomatoes: 'Rotten Tomatoes', popcorn: 'Rotten Tomatoes (' + (/^de/i.test(document.documentElement.lang || navigator.language || 'de') ? 'Publikum' : 'Audience') + ')', metacritic: 'Metacritic', tmdb: 'TMDb', letterboxd: 'Letterboxd' };
 
     function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
     function svg(path) { var ns = 'http://www.w3.org/2000/svg', s = document.createElementNS(ns, 'svg'); s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true'); var p = document.createElementNS(ns, 'path'); p.setAttribute('d', path); s.appendChild(p); return s; }
