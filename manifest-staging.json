@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.10.19.0",
+        "changelog": "- Update ohne Hängen: Nach „Jetzt aktualisieren“ schließt das Fenster sofort; oben zeigt eine kleine Pille den Fortschritt, danach lädt die Seite von selbst neu.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.19.0.zip",
+        "checksum": "e82f7c5514a6136470ee8816a49ff3e0",
+        "timestamp": "2026-11-17T22:16:36Z"
+      },
+      {
         "version": "1.10.18.0",
         "changelog": "- Besetzung wie bei Amazon X-Ray: Beim Pausieren steht links eine Liste mit Fotos, Namen und Rollen. Ein Tipp aufs Bild blendet sie aus, ein Tipp auf eine Person zeigt daneben ihr Porträt.",
         "targetAbi": "12.4.0.0",

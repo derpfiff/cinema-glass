@@ -3916,3 +3916,19 @@ html.atv-osd-titled .osdControls .osdTimeText { display: none !important; }
 .atv-upd .atv-wn__foot { gap: 10px; }
 .atv-upd .atv-wn__go { margin-left: 0; }
 .atv-upd .atv-wn__foot .atv-pill--glass { margin-left: auto; }
+/* Fortschritt beim Aktualisieren: kleine Glas-Pille oben, blockiert nichts */
+.atv-upd-pill { position: fixed; z-index: 2200; top: calc(env(safe-area-inset-top, 0px) + 74px); left: 50%; display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px);
+  min-height: 44px; padding: 6px 8px 6px 16px; border-radius: 999px; color: #fff; font-size: 14px; font-weight: 600;
+  background: rgba(36, 36, 42, .72); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), inset 0 1px 0 rgba(255, 255, 255, .35), 0 12px 36px rgba(0, 0, 0, .45);
+  opacity: 0; transform: translate(-50%, -8px); transition: opacity .3s ease, transform .35s var(--tv-ease, ease); }
+.atv-upd-pill.is-on { opacity: 1; transform: translate(-50%, 0); }
+.atv-upd-pill__spin { flex: 0 0 auto; width: 16px; height: 16px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .3); border-top-color: #fff; animation: atvSpin .8s linear infinite; }
+.atv-upd-pill__spin[hidden] { display: none; }
+@keyframes atvSpin { to { transform: rotate(360deg); } }
+.atv-upd-pill__tx { min-width: 0; padding-right: 8px; }
+.atv-upd-pill__acts { display: flex; gap: 6px; }
+.atv-upd-pill__acts:empty { display: none; }
+.atv-upd-pill__btn { height: 32px; padding: 0 14px; border: 0; border-radius: 999px; cursor: pointer; font: inherit; font-size: 13px; color: #fff; background: rgba(255, 255, 255, .16); }
+.atv-upd-pill__btn.is-main { color: #000; background: rgba(255, 255, 255, .92); }
+@media (prefers-reduced-motion: reduce) { .atv-upd-pill__spin { animation-duration: 2s; } }

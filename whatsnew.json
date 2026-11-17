@@ -1,5 +1,23 @@
 [
   {
+    "version": "1.10.19",
+    "date": "2026-11-17",
+    "admin": true,
+    "items": [
+      {
+        "icon": "download",
+        "de": [
+          "Update ohne Hängen",
+          "Nach „Jetzt aktualisieren“ schließt das Fenster sofort; oben zeigt eine kleine Pille den Fortschritt, danach lädt die Seite von selbst neu."
+        ],
+        "en": [
+          "Updates without getting stuck",
+          "After “Update now” the window closes right away; a small pill at the top shows progress and the page reloads by itself afterwards."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.10.18",
     "date": "2026-11-17",
     "items": [
