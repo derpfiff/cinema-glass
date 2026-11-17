@@ -3705,7 +3705,7 @@ html.atv-js .atv-dc .atv-hc__sub:hover { color: #fff; }
 /* --- Besetzung beim Pausieren (wie X-Ray bei Amazon): Liste links ohne Kasten, kleine rechteckige Fotos, Name und Rolle
    daneben; ein Verlauf vom Rand trägt die Schrift. Die Karte zu einer Person steht rechts daneben. --- */
 .atv-xr { position: fixed; z-index: 4; left: 0; top: 0; bottom: 0; width: min(380px, 42vw); display: flex; flex-direction: column; pointer-events: none;
-  padding: calc(env(safe-area-inset-top, 0px) + 84px) 0 calc(var(--atv-skip-bottom, 28px) + 12px) max(var(--tv-gutter, 48px), env(safe-area-inset-left, 0px));
+  padding: calc(env(safe-area-inset-top, 0px) + 84px) 0 var(--atv-xr-bottom, calc(var(--atv-skip-bottom, 28px) + 12px)) max(var(--tv-gutter, 48px), env(safe-area-inset-left, 0px));
   background: linear-gradient(90deg, rgba(0, 0, 0, .82) 0%, rgba(0, 0, 0, .6) 55%, rgba(0, 0, 0, 0) 100%);
   opacity: 0; transform: translateX(-12px); transition: opacity .35s ease, transform .4s var(--tv-ease, ease), padding-bottom .3s var(--tv-ease, ease); }
 .atv-xr.is-on { opacity: 1; transform: none; }
@@ -3730,7 +3730,7 @@ html.atv-js .atv-dc .atv-hc__sub:hover { color: #fff; }
 .atv-xr__name { grid-area: name; align-self: end; font-size: 15px; font-weight: 600; line-height: 1.25; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .atv-xr__role { grid-area: role; align-self: start; font-size: 13px; line-height: 1.3; color: rgba(255, 255, 255, .62); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* Karte zu einer Person: rechts neben der Liste */
-.atv-xr__card { position: absolute; left: calc(100% - 20px); top: calc(env(safe-area-inset-top, 0px) + 84px); z-index: 3; width: min(480px, calc(100vw - 100% - 40px)); max-height: calc(100% - 84px - var(--atv-skip-bottom, 28px) - 24px);
+.atv-xr__card { position: absolute; left: calc(100% - 20px); top: calc(env(safe-area-inset-top, 0px) + 84px); z-index: 3; width: min(440px, calc(100vw - 100% - 40px)); box-sizing: border-box; max-height: calc(100% - 84px - var(--atv-xr-bottom, 40px) - 12px);
   overflow-y: auto; scrollbar-width: none; display: grid; gap: 12px; padding: 16px; border-radius: 22px; color: #fff;
   background: rgba(28, 28, 32, .62); -webkit-backdrop-filter: blur(40px) saturate(180%); backdrop-filter: blur(40px) saturate(180%);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), inset 0 1px 0 rgba(255, 255, 255, .3), 0 20px 60px rgba(0, 0, 0, .5);
@@ -3748,8 +3748,9 @@ html.atv-js .atv-dc .atv-hc__sub:hover { color: #fff; }
 .atv-xr__crole { font-size: 14px; color: rgba(255, 255, 255, .7); }
 .atv-xr__facts { margin-top: 4px; font-size: 13px; line-height: 1.4; color: rgba(255, 255, 255, .6); }
 .atv-xr__facts:empty { display: none; }
-.atv-xr__bio { margin: 0; font-size: 13.5px; line-height: 1.5; color: rgba(255, 255, 255, .82); cursor: pointer; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.atv-xr__bio { margin: 0; font-size: 13.5px; line-height: 1.5; color: rgba(255, 255, 255, .82); cursor: pointer; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .atv-xr__bio.is-open { -webkit-line-clamp: unset; display: block; }
+.atv-xr__bio:not(.is-open)::after { content: ''; }
 .atv-xr__label { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255, 255, 255, .5); margin-bottom: 6px; }
 .atv-xr__hint { font-size: 13px; color: rgba(255, 255, 255, .6); }
 .atv-xr__posters { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; }
@@ -3759,13 +3760,14 @@ html.atv-js .atv-dc .atv-hc__sub:hover { color: #fff; }
 .atv-xr__poster figcaption { font-size: 11px; line-height: 1.25; color: rgba(255, 255, 255, .8); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 /* Handy quer / niedrige Fenster: schmalere Liste, kleinere Fotos */
 @media (max-height: 560px) {
-  .atv-xr { width: min(300px, 46vw); padding-top: calc(env(safe-area-inset-top, 0px) + 74px); padding-bottom: calc(var(--atv-skip-bottom, 28px) + 6px); }
+  .atv-xr { width: min(300px, 46vw); padding-top: calc(env(safe-area-inset-top, 0px) + 74px); padding-bottom: var(--atv-xr-bottom, calc(var(--atv-skip-bottom, 28px) + 6px)); }
   .atv-xr__tog { margin-bottom: 6px; font-size: 11.5px; }
   .atv-xr__p { grid-template-columns: 40px minmax(0, 1fr); column-gap: 10px; padding: 4px 8px 4px 0; }
   .atv-xr__ph { width: 40px; font-size: 14px; }
   .atv-xr__name { font-size: 13px; } .atv-xr__role { font-size: 11px; }
-  .atv-xr__card { top: calc(env(safe-area-inset-top, 0px) + 40px); max-height: calc(100% - 60px); width: min(400px, calc(100vw - 100% - 24px)); padding: 12px; gap: 8px; }
-  .atv-xr__cph { width: 56px; } .atv-xr__cname { font-size: 16px; } .atv-xr__bio { -webkit-line-clamp: 3; font-size: 12.5px; } .atv-xr__poster { width: 56px; }
+  .atv-xr__card { top: calc(env(safe-area-inset-top, 0px) + 74px); max-height: calc(100% - 74px - var(--atv-xr-bottom, 40px)); width: min(340px, calc(100vw - 100% - 24px)); padding: 12px; gap: 8px; border-radius: 18px; }
+  .atv-xr__cph { width: 48px; } .atv-xr__ctop { gap: 10px; padding-right: 30px; } .atv-xr__cname { font-size: 15px; } .atv-xr__crole { font-size: 12.5px; } .atv-xr__facts { font-size: 11.5px; margin-top: 2px; }
+  .atv-xr__bio { -webkit-line-clamp: 2; font-size: 12px; line-height: 1.45; } .atv-xr__poster { width: 52px; } .atv-xr__x { width: 26px; height: 26px; top: 8px; right: 8px; }
 }
 /* Handy hochkant: Liste breiter, Karte darüber statt daneben */
 @media (max-width: 600px) and (min-height: 561px) {

@@ -1,5 +1,22 @@
 [
   {
+    "version": "1.10.23",
+    "date": "2026-11-18",
+    "items": [
+      {
+        "icon": "people",
+        "de": [
+          "Besetzung bleibt über dem Titel",
+          "Liste und Personenkarte reichen nie mehr über Folge und Titel unten im Player. Die Karte ist kompakter, die Biografie klappt per Tipp auf und scrollt in der Karte."
+        ],
+        "en": [
+          "Cast stays above the title",
+          "The list and the person card never cover the episode and title at the bottom of the player. The card is more compact; tap the bio to expand it and scroll inside the card."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.10.22",
     "date": "2026-11-17",
     "items": [
