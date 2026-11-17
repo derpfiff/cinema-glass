@@ -1,5 +1,23 @@
 [
   {
+    "version": "1.10.20",
+    "date": "2026-11-17",
+    "admin": true,
+    "items": [
+      {
+        "icon": "download",
+        "de": [
+          "Test des Update-Ablaufs",
+          "Keine sichtbaren Änderungen – diese Version prüft nur, dass Aktualisieren und Neustart ohne Hängen durchlaufen."
+        ],
+        "en": [
+          "Update flow test",
+          "No visible changes – this version only checks that updating and restarting run through without getting stuck."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.10.19",
     "date": "2026-11-17",
     "admin": true,

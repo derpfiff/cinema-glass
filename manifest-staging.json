@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.10.20.0",
+        "changelog": "- Test des Update-Ablaufs: Keine sichtbaren Änderungen – diese Version prüft nur, dass Aktualisieren und Neustart ohne Hängen durchlaufen.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.20.0.zip",
+        "checksum": "9589cdf992b68914a79b5efc95d66e9d",
+        "timestamp": "2026-11-17T22:37:54Z"
+      },
+      {
         "version": "1.10.19.0",
         "changelog": "- Update ohne Hängen: Nach „Jetzt aktualisieren“ schließt das Fenster sofort; oben zeigt eine kleine Pille den Fortschritt, danach lädt die Seite von selbst neu.",
         "targetAbi": "12.4.0.0",
