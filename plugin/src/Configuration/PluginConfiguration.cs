@@ -19,6 +19,7 @@ public class PluginConfiguration : BasePluginConfiguration
     public bool QualityBadges { get; set; } = true;    // Abzeichen 4K, HDR, Dolby Vision, Atmos (Detailseite und Karten)
     public bool TrailerModal { get; set; } = true;
     public bool IntroTransition { get; set; } = true;
+    public bool PauseInfo { get; set; } = true;        // Pause mit Kontext: Kapitel, Besetzung, Endzeit
     public bool SwipeBack { get; set; } = true;
     public bool PageGate { get; set; } = true;
     public bool Downloads { get; set; } = true;

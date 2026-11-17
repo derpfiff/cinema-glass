@@ -110,6 +110,7 @@ public class CinemaGlassController : ControllerBase
                 qualityBadges = c.QualityBadges,
                 trailerModal = c.TrailerModal,
                 introTransition = c.IntroTransition,
+                pauseInfo = c.PauseInfo,
                 swipeBack = c.SwipeBack,
                 pageGate = c.PageGate,
                 downloads = c.Downloads,
