@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.10.22.0",
+        "changelog": "- Besetzung im Player-Overlay: Tippst du einmal aufs Bild, steht oben links „Besetzung“ – zum Ausklappen. Ist das Overlay weg, ist auch die Besetzung weg; ausgeklappt bleibt ausgeklappt.\n- Steuerung bleibt länger: Die Steuerleiste bleibt nach dem letzten Tippen acht Sekunden stehen statt drei. Ein Tipp aufs Bild schließt sie sofort.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.10.22.0.zip",
+        "checksum": "ecab03660809676daa188e4cb8aa7cdf",
+        "timestamp": "2026-11-17T22:58:31Z"
+      },
+      {
         "version": "1.10.21.0",
         "changelog": "- Besetzung auch in der App: Die Besetzung erkennt den laufenden Titel jetzt auch dann, wenn die App sich anders beim Server meldet – sie erscheint zwei Sekunden nach dem Pausieren.\n- Update-Hinweis in einer Zeile: Der Fortschritt beim Aktualisieren bricht nicht mehr um.",
         "targetAbi": "12.4.0.0",

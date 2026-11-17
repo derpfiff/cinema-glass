@@ -3759,7 +3759,7 @@ html.atv-js .atv-dc .atv-hc__sub:hover { color: #fff; }
 .atv-xr__poster figcaption { font-size: 11px; line-height: 1.25; color: rgba(255, 255, 255, .8); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 /* Handy quer / niedrige Fenster: schmalere Liste, kleinere Fotos */
 @media (max-height: 560px) {
-  .atv-xr { width: min(300px, 46vw); padding-top: calc(env(safe-area-inset-top, 0px) + 50px); padding-bottom: calc(var(--atv-skip-bottom, 28px) + 6px); }
+  .atv-xr { width: min(300px, 46vw); padding-top: calc(env(safe-area-inset-top, 0px) + 74px); padding-bottom: calc(var(--atv-skip-bottom, 28px) + 6px); }
   .atv-xr__tog { margin-bottom: 6px; font-size: 11.5px; }
   .atv-xr__p { grid-template-columns: 40px minmax(0, 1fr); column-gap: 10px; padding: 4px 8px 4px 0; }
   .atv-xr__ph { width: 40px; font-size: 14px; }

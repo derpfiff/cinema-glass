@@ -1,5 +1,33 @@
 [
   {
+    "version": "1.10.22",
+    "date": "2026-11-17",
+    "items": [
+      {
+        "icon": "people",
+        "de": [
+          "Besetzung im Player-Overlay",
+          "Tippst du einmal aufs Bild, steht oben links „Besetzung“ – zum Ausklappen. Ist das Overlay weg, ist auch die Besetzung weg; ausgeklappt bleibt ausgeklappt."
+        ],
+        "en": [
+          "Cast in the player overlay",
+          "Tap the picture once and “Cast” appears top left – tap to expand. When the overlay goes away, so does the cast; once expanded it stays expanded."
+        ]
+      },
+      {
+        "icon": "clock",
+        "de": [
+          "Steuerung bleibt länger",
+          "Die Steuerleiste bleibt nach dem letzten Tippen acht Sekunden stehen statt drei. Ein Tipp aufs Bild schließt sie sofort."
+        ],
+        "en": [
+          "Controls stay longer",
+          "The controls stay for eight seconds after your last tap instead of three. Tap the picture to close them right away."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.10.21",
     "date": "2026-11-17",
     "items": [
