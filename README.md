@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/img/banner.svg" alt="Cinema Glass – Kino-Oberfläche für Jellyfin" width="100%"></p>
 
 <p align="center">
-  <a href="https://github.com/derpfiff/cinema-glass/releases/latest"><img alt="Version" src="https://img.shields.io/badge/Version-1.11.1-7a5cff?style=flat-square"></a>
+  <a href="https://github.com/derpfiff/cinema-glass/releases/latest"><img alt="Version" src="https://img.shields.io/badge/Version-1.12.0-7a5cff?style=flat-square"></a>
   <img alt="Jellyfin" src="https://img.shields.io/badge/Jellyfin-12.4-22c1ff?style=flat-square">
   <img alt=".NET" src="https://img.shields.io/badge/.NET-10-512bd4?style=flat-square">
   <a href="https://github.com/derpfiff/jellyfin-plugins"><img alt="Katalog" src="https://img.shields.io/badge/Katalog-derpfiff%2Fjellyfin--plugins-ff5c8a?style=flat-square"></a>

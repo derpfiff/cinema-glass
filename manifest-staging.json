@@ -6,15 +6,6 @@
     "overview": "Oberfläche im Kino-Glas-Stil mit schaltbaren Zusatzfunktionen",
     "owner": "derpfiff",
     "category": "General",
-    "versions": [
-      {
-        "version": "1.11.1.0",
-        "changelog": "- Passt das zu dir? Schon in der Suche: Suchst du einen Film oder eine Serie, die noch nicht in der Mediathek ist, steht unter dem Plakat gleich, wie gut sie zu deinem Geschmack passt – berechnet aus allem, was du geschaut und bewertet hast.",
-        "targetAbi": "12.4.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.11.1.0.zip",
-        "checksum": "510bcb1c061048fba0336c0dba5726b4",
-        "timestamp": "2026-11-18T14:25:40Z"
-      }
-    ]
+    "versions": []
   }
 ]
