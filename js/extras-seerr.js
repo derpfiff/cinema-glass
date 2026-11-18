@@ -422,6 +422,13 @@
             if (sc) why.appendChild(sc);
             if (extra.item.reason && extra.item.reasonKind !== 'request') why.appendChild(el('span', null, extra.item.reason));
             if (why.childNodes.length) lock.appendChild(why);
+        } else if (D && D.match && !inLibrary(r)) {
+            // aus der Suche oder einer Filmreihe: die Übereinstimmung nachreichen
+            D.match([key]).then(function (m) {
+                if (!m[key] || !wrap.isConnected) return;
+                var w = el('p', 'atv-xd__why'); w.appendChild(el('span', 'atv-match', DE ? m[key] + ' % Übereinstimmung' : m[key] + '% match'));
+                lock.insertBefore(w, meta.nextSibling);
+            });
         }
         var desc = el('p', 'atv-detail__desc atv-xd__desc', r.overview || ''); desc.addEventListener('click', function () { desc.classList.toggle('is-open'); });
         if (r.overview) lock.appendChild(desc);
@@ -666,6 +673,24 @@
     }
 
     /* ------------------------------------------------------------ Suche */
+    // Übereinstimmung mit dem eigenen Geschmack vor Art und Jahr, wie in „Entdecken“ (rechnet der Server aus dem Profil des
+    // Kontos). Kommt sie nicht (Entdecken aus, zu wenig Signale), bleibt die Zeile wie sie ist.
+    function matchCards(grid, q) {
+        var D = window.__atvDiscover;
+        if (!D || !D.match || !D.on()) return;
+        var cards = [].slice.call(grid.querySelectorAll('.atv-seerr__card')).filter(function (c) { return c.__atvR; });
+        D.match(cards.map(function (c) { return c.__atvR.mediaType + ':' + c.__atvR.id; })).then(function (m) {
+            if (grid.__atvQ !== q) return;
+            cards.forEach(function (c) {
+                var v = m[c.__atvR.mediaType + ':' + c.__atvR.id], sub = c.querySelector('.atv-seerr__sub');
+                if (!v || !sub || sub.querySelector('.atv-match')) return;
+                sub.insertBefore(document.createTextNode(' · '), sub.firstChild);
+                sub.insertBefore(el('span', 'atv-match', v + (DE ? ' %' : '%')), sub.firstChild);
+                c.setAttribute('aria-label', c.getAttribute('aria-label') + ', ' + (DE ? v + ' % Übereinstimmung' : v + '% match'));
+            });
+        });
+        grid.__atvQ = q;
+    }
     function mount(page) {
         var input = page.querySelector('.searchfields-txtSearch'), results = page.querySelector('.searchResults');
         if (!input || !apiReady()) return;                              // Trefferbereich fehlt, wenn die Mediathek nichts findet – gerade dann wird das Regal gebraucht
@@ -721,6 +746,7 @@
                     var items = (res.results || []).filter(function (r) { return (r.mediaType === 'movie' || r.mediaType === 'tv') && !inLibrary(r) && r.posterPath; }).slice(0, CFG.maxCards);
                     grid.textContent = '';
                     items.forEach(function (r) { grid.appendChild(card(r)); });
+                    matchCards(grid, q);
                     cnt.textContent = items.length ? String(items.length) : '';
                     grid.scrollLeft = 0; requestAnimationFrame(syncArrows);
                     sec.hidden = !items.length; sec.__err = false;

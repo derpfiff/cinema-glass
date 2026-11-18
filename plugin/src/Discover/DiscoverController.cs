@@ -123,6 +123,40 @@ public partial class DiscoverController : ControllerBase
         }
     }
 
+    /// <summary>Übereinstimmung einzelner Titel (<c>keys=movie:603,tv:1399</c>), etwa für die Treffer der Suche.</summary>
+    [HttpGet("match")]
+    [Authorize]
+    public async Task<ActionResult> GetMatchAsync([FromQuery] string? keys, [FromQuery] string? lang, CancellationToken ct)
+    {
+        if (!TryUser(out var user))
+        {
+            return Unauthorized();
+        }
+
+        var list = new List<MediaKey>();
+        foreach (var part in (keys ?? string.Empty).Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Take(40))
+        {
+            if (MediaKey.TryParse(part, out var k))
+            {
+                list.Add(k);
+            }
+        }
+
+        if (list.Count == 0)
+        {
+            return BadRequest();
+        }
+
+        try
+        {
+            return Send(await _discover.MatchAsync(user, Texts.Lang(lang), list, ct).ConfigureAwait(false));
+        }
+        catch (Exception ex)
+        {
+            return Send(new MatchDto { Status = "empty" }, ex);
+        }
+    }
+
     /// <summary>Rückmeldungen zu Titeln: gefällt mir, nicht meins, kein Interesse, zurücknehmen.</summary>
     [HttpPost("feedback")]
     [Authorize]

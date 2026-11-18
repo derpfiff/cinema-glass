@@ -1,5 +1,22 @@
 [
   {
+    "version": "1.11.1",
+    "date": "2026-11-18",
+    "items": [
+      {
+        "icon": "search",
+        "de": [
+          "Passt das zu dir? Schon in der Suche",
+          "Suchst du einen Film oder eine Serie, die noch nicht in der Mediathek ist, steht unter dem Plakat gleich, wie gut sie zu deinem Geschmack passt – berechnet aus allem, was du geschaut und bewertet hast."
+        ],
+        "en": [
+          "Does it suit you? Right in search",
+          "Search for a film or show that isn’t in the library yet and the poster tells you how well it matches your taste – based on everything you’ve watched and rated."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.11.0",
     "date": "2026-11-18",
     "items": [
