@@ -1,5 +1,22 @@
 [
   {
+    "version": "1.12.1",
+    "date": "2026-11-20",
+    "items": [
+      {
+        "icon": "star",
+        "de": [
+          "Bewerten geht nicht mehr verloren",
+          "Hast du die App gleich nach dem Film zugemacht, fragt Cinema Glass beim nächsten Öffnen nach – für alles, was du in den letzten drei Tagen gesehen hast."
+        ],
+        "en": [
+          "Rating prompts no longer get lost",
+          "Closed the app right after the film? Cinema Glass asks the next time you open it – for anything you watched in the last three days."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.12.0",
     "date": "2026-11-18",
     "items": [
