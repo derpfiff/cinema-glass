@@ -8,6 +8,14 @@
     "category": "General",
     "versions": [
       {
+        "version": "1.13.0.0",
+        "changelog": "- Bewerten auch nach Offline-Filmen: Hast du einen Film ohne Netz geschaut oder die App gleich nach dem Abspann zugemacht, fragt Cinema Glass beim nächsten Öffnen nach deiner Bewertung – für alles aus den letzten drei Tagen.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.13.0.0.zip",
+        "checksum": "3ba0bfadc312c2805094b4cd1d628939",
+        "timestamp": "2026-11-20T15:09:12Z"
+      },
+      {
         "version": "1.12.0.0",
         "changelog": "- Passt das zu dir? Schon in der Suche: Suchst du einen Film oder eine Serie, die noch nicht in der Mediathek ist, steht unter dem Plakat gleich, wie gut sie zu deinem Geschmack passt – berechnet aus allem, was du geschaut und bewertet hast.",
         "targetAbi": "12.4.0.0",

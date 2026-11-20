@@ -1,17 +1,17 @@
 [
   {
-    "version": "1.12.1",
+    "version": "1.13.0",
     "date": "2026-11-20",
     "items": [
       {
         "icon": "star",
         "de": [
-          "Bewerten geht nicht mehr verloren",
-          "Hast du die App gleich nach dem Film zugemacht, fragt Cinema Glass beim nächsten Öffnen nach – für alles, was du in den letzten drei Tagen gesehen hast."
+          "Bewerten auch nach Offline-Filmen",
+          "Hast du einen Film ohne Netz geschaut oder die App gleich nach dem Abspann zugemacht, fragt Cinema Glass beim nächsten Öffnen nach deiner Bewertung – für alles aus den letzten drei Tagen."
         ],
         "en": [
-          "Rating prompts no longer get lost",
-          "Closed the app right after the film? Cinema Glass asks the next time you open it – for anything you watched in the last three days."
+          "Rate films watched offline too",
+          "Watched a film without a connection, or closed the app right after the credits? Cinema Glass asks for your rating the next time you open it – for anything from the last three days."
         ]
       }
     ]

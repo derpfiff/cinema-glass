@@ -6,15 +6,6 @@
     "overview": "Oberfläche im Kino-Glas-Stil mit schaltbaren Zusatzfunktionen",
     "owner": "derpfiff",
     "category": "General",
-    "versions": [
-      {
-        "version": "1.12.1.0",
-        "changelog": "- Bewerten geht nicht mehr verloren: Hast du die App gleich nach dem Film zugemacht, fragt Cinema Glass beim nächsten Öffnen nach – für alles, was du in den letzten drei Tagen gesehen hast.",
-        "targetAbi": "12.4.0.0",
-        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.12.1.0.zip",
-        "checksum": "5d6b120148e74361a4a0ac904e92edcd",
-        "timestamp": "2026-11-20T14:49:14Z"
-      }
-    ]
+    "versions": []
   }
 ]
