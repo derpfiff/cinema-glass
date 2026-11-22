@@ -1,5 +1,33 @@
 [
   {
+    "version": "1.13.1",
+    "date": "2026-11-22",
+    "items": [
+      {
+        "icon": "next",
+        "de": [
+          "Nächste Folge, sobald der Abspann beginnt",
+          "Bei Folgen mit erkanntem Abspann erscheint „Nächste Folge“ genau dort, wo er anfängt – auch nach dem Vorspulen – und startet nach 15 Sekunden von selbst. Die Karte blitzt nicht mehr groß auf."
+        ],
+        "en": [
+          "Next episode as soon as the credits roll",
+          "For episodes with detected credits, “Next episode” appears right where they start – also after skipping ahead – and plays automatically after 15 seconds. The big card no longer flashes up."
+        ]
+      },
+      {
+        "icon": "series",
+        "de": [
+          "Weiterschauen zeigt die nächste Folge",
+          "Hörst du im Abspann auf, gilt die Folge als gesehen, und „Weiterschauen“ bietet gleich die nächste an."
+        ],
+        "en": [
+          "Continue watching shows the next episode",
+          "Stop during the credits and the episode counts as watched – “Continue watching” offers the next one right away."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.13.0",
     "date": "2026-11-20",
     "items": [

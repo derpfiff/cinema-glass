@@ -6,6 +6,15 @@
     "overview": "Oberfläche im Kino-Glas-Stil mit schaltbaren Zusatzfunktionen",
     "owner": "derpfiff",
     "category": "General",
-    "versions": []
+    "versions": [
+      {
+        "version": "1.13.1.0",
+        "changelog": "- Nächste Folge, sobald der Abspann beginnt: Bei Folgen mit erkanntem Abspann erscheint „Nächste Folge“ genau dort, wo er anfängt – auch nach dem Vorspulen – und startet nach 15 Sekunden von selbst. Die Karte blitzt nicht mehr groß auf.\n- Weiterschauen zeigt die nächste Folge: Hörst du im Abspann auf, gilt die Folge als gesehen, und „Weiterschauen“ bietet gleich die nächste an.",
+        "targetAbi": "12.4.0.0",
+        "sourceUrl": "https://raw.githubusercontent.com/derpfiff/cinema-glass/main/plugin/dist/cinema-glass_1.13.1.0.zip",
+        "checksum": "ce77be8ed6794dfd86544219608fe63c",
+        "timestamp": "2026-11-22T12:56:16Z"
+      }
+    ]
   }
 ]

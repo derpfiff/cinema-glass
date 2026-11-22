@@ -850,7 +850,7 @@ h3.osdTitle { font-size: clamp(22px, 2.19vw, 42px); font-weight: 700; letter-spa
 }
 .skip-button:hover, .skip-button:focus { background: rgba(255, 255, 255, .92) !important; color: #000 !important; }
 /* Nächste Folge: schmale Glas-Pille unten rechts – Ring mit ▶ läuft bis zum Start herunter (Inhalt: JS) */
-.upNextContainer.upNextDialog {
+.upNextContainer.upNextDialog, .atv-unbox {
   width: auto !important; max-width: min(400px, calc(100vw - 32px)); padding: 6px !important; margin: 0 !important;
   right: var(--tv-gutter, 48px); bottom: calc(var(--atv-skip-bottom, 28px) + env(safe-area-inset-bottom, 0px));
   border-radius: 999px !important; color: #fff;
@@ -859,8 +859,13 @@ h3.osdTitle { font-size: clamp(22px, 2.19vw, 42px); font-weight: 700; letter-spa
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16), inset 0 1px 0 rgba(255, 255, 255, .4), inset 0 -1px 0 rgba(255, 255, 255, .06), 0 10px 32px rgba(0, 0, 0, .35);
   transition: opacity .3s ease-out, bottom .25s var(--tv-ease);
 }
-html.atv-skip-on .upNextContainer.upNextDialog { bottom: calc(var(--atv-skip-bottom, 28px) + 64px + env(safe-area-inset-bottom, 0px)); }
-.upNextContainer.upNextDialog:has(.atv-un) > :not(.atv-un) { display: none !important; }
+html.atv-skip-on .upNextContainer.upNextDialog, html.atv-skip-on .atv-unbox { bottom: calc(var(--atv-skip-bottom, 28px) + 64px + env(safe-area-inset-bottom, 0px)); }
+.upNextContainer.upNextDialog > :not(.atv-un) { display: none !important; }
+/* Jellyfins Karte erst zeigen, wenn die Pille drin ist (sonst blitzt die große Karte kurz auf); bei Folgen mit Abspann übernimmt .atv-unbox */
+.upNextContainer.upNextDialog:not(:has(.atv-un)) { opacity: 0 !important; transition: none !important; }
+html.atv-cr .upNextContainer.upNextDialog { display: none !important; }
+.atv-unbox { position: fixed; z-index: 1000; animation: atv-unbox-in .3s ease-out; }
+@keyframes atv-unbox-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .atv-un { display: flex; align-items: center; gap: 4px; min-width: 0; }
 .atv-un__go {
   display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1 1 auto; padding: 0 10px 0 0; margin: 0;
@@ -885,7 +890,7 @@ html.atv-skip-on .upNextContainer.upNextDialog { bottom: calc(var(--atv-skip-bot
 .atv-un__x:hover, .atv-un__x:focus-visible { background: rgba(255, 255, 255, .26); color: #fff; }
 .atv-un__x svg { width: 15px; height: 15px; fill: currentColor; }
 @media (max-width: 600px) {
-  .upNextContainer.upNextDialog { right: 12px; }
+  .upNextContainer.upNextDialog, .atv-unbox { right: 12px; }
   .atv-un__title { max-width: calc(100vw - 150px); }
 }
 /* Mini-Player */
