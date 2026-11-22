@@ -1,5 +1,22 @@
 [
   {
+    "version": "1.13.2",
+    "date": "2026-11-22",
+    "items": [
+      {
+        "icon": "fix",
+        "de": [
+          "Keine hängende Karte mehr über der neuen Folge",
+          "Beim Wechsel zur nächsten Folge konnte Jellyfins alte „Nächste Folge“-Karte mit stehendem Countdown über dem Bild bleiben. Sie verschwindet jetzt."
+        ],
+        "en": [
+          "No more stuck card over the new episode",
+          "When switching to the next episode, Jellyfin’s old “Next episode” card could stay on screen with a frozen countdown. It now goes away."
+        ]
+      }
+    ]
+  },
+  {
     "version": "1.13.1",
     "date": "2026-11-22",
     "items": [
